@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/12 15:06:28 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:50:18 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+/**
+ * main data structure, that can be passed around
+ * @param token_list pointer to first element of token list or NULL,
+	when token list is uninitialised
+ * @param ast pointer to root node of abstract syntax tree (ast)
+ */
 typedef struct s_main_data
 {
 	t_list_dc		*token_list;
@@ -30,6 +36,14 @@ typedef struct s_main_data
 	//.....
 }					t_main_data;
 
+/**
+ * describing all the possible token types,
+	that can be provided by user input
+ * @param TEXT normal text without any quotes: Hello
+ * @param SQTEXT text in single quotes: 'Hello World'
+ * @param DQTEXT text in double quotes: "Hello $0"
+ * @param SYMBOL special control character of the shell, e.g. | >
+ */
 enum				e_token_type
 {
 	TEXT,
@@ -38,12 +52,25 @@ enum				e_token_type
 	SYMBOL
 };
 
+/**
+ * generic for an identified token
+ * @param type
+ * @param value
+ *
+ */
 typedef struct s_token
 {
 	e_token_type	type;
 	char			*value;
 }					t_token;
 
+/**
+ * describing all the possible node types within the ast
+ * @param PIPE
+ * @param EXEC
+ * @param REDIR
+ * @param HEREDOC
+ */
 enum				e_node_type
 {
 	PIPE,
@@ -52,17 +79,34 @@ enum				e_node_type
 	HEREDOC
 };
 
+/**
+ * describing the filedescritors available for input output redirection
+ * @param STDIN
+ * @param STDOUT
+ */
 enum				e_std_fd
 {
 	STDIN = STDIN_FILENO,
 	STDOUT = STDOUT_FILENO
 };
 
+/**
+ * generic serving as a prototype for every specific node type
+ * @param type type identifying the node
+ *
+ */
 typedef struct s_node
 {
 	e_node_type		type;
 }					t_node;
 
+/**
+ * defining a pipe-node in the ast
+ * @param type
+ * @param left_node
+ * @param right_node
+ *
+ */
 typedef struct s_node_pipe
 {
 	e_node_type		type;
@@ -70,6 +114,14 @@ typedef struct s_node_pipe
 	t_node			*right_node;
 }					t_node_pipe;
 
+/**
+ * defining a heredoc-node in the ast
+ * child node execution can onlu happen, when complete herdoc file is read
+ * @param type
+ * @param delimiter
+ * @param child_node
+ *
+ */
 typedef struct s_node_heredoc
 {
 	e_node_type		type;
@@ -77,6 +129,16 @@ typedef struct s_node_heredoc
 	t_node			*child_node;
 }					t_node_heredoc;
 
+/**
+ * defining a redirection-node in the ast
+ * @param type
+ * @param child_node the node to be executed after the redirection happened
+ * @param filename the file the input is read from or written into
+ * @param mode mode to open the file, e.g. O_WRONLY, O_CREATE, O_RDONLY,
+	O_TRUNCATE
+ * @param in_or_out change either stdin or stdout
+ *
+ */
 typedef struct s_node_redir
 {
 	e_node_type		type;
