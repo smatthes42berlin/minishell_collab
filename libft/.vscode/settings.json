@@ -1,0 +1,17 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#243201",
+        "titleBar.activeBackground": "#324601",
+        "titleBar.activeForeground": "#F4FEDB"
+    },
+    "files.associations": {
+        "included_ext_libs.h": "c",
+        "fcntl.h": "c",
+        "stdarg.h": "c",
+        "stdlib.h": "c",
+        "stat.h": "c",
+        "string.h": "c",
+        "types.h": "c",
+        "unistd.h": "c"
+    }
+}
