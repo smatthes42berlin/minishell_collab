@@ -6,17 +6,10 @@
 #    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/13 15:14:08 by smatthes         ###   ########.fr        #
+#    Updated: 2024/01/13 15:18:32 by smatthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# $^ -> all prerequisites with spaces in between
-# $@ -> filename of the target of the rule
-# $< ->  name of the first prerequisite
-# $(info $(ADDHEADERLOC))
-
-
-# -I Flag adds path where header files are searched during preprocessing
 SHELL:=/bin/bash
 CFLAGS = -Wall -Wextra -Werror $(INCLUDEFLAGS) 
 NAME = minishell.a
@@ -29,14 +22,18 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
+# if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
 SUBFOLDERSRC = . /tokeniser
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
 PATHOBJ = build/
 
+# specifies the path, where the compiler will look for files (e.g. *.c, *.h files)
+# that way, you dont have to specify full filepath when listing source files below
 VPATH = $(PATHSRC) $(INCLUDEPATH)
 
+# list all filenames (without path) here
 SRC = 	main.c \
 		tokenise_main.c \
 		tokenise_identify_token.c
