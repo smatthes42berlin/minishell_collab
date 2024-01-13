@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_funcs.h                                  :+:      :+:    :+:   */
+/*   tokenise_identify_token.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 14:21:07 by smatthes         ###   ########.fr       */
+/*   Created: 2024/01/13 14:16:56 by smatthes          #+#    #+#             */
+/*   Updated: 2024/01/13 14:20:53 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_FUNCS_H
-# define MINISHELL_FUNCS_H
+#include "minishell.h"
 
-/* tokenisation/lexer */
+void	skip_ws(char **cur_pos)
+{
+	while (ft_isspace(**cur_pos) && **cur_pos)
+	{
+		(*cur_pos)++;
+	}
+}
 
-int		tokenise(t_main_data *main_data);
-void	skip_ws(char **cur_pos);
-char	*is_symbol(char c);
-char	*is_squote(char c);
-char	*is_dquote(char c);
+char	*is_symbol(char c)
+{
+	return (ft_strchr("<>|", c));
+}
 
-/* parser */
+char	*is_squote(char c)
+{
+	return (ft_strchr("'", c));
+}
 
-/* executor */
-
-#endif
+char	*is_dquote(char c)
+{
+	return (ft_strchr('"', c));
+}

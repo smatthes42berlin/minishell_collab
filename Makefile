@@ -6,7 +6,7 @@
 #    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2023/11/18 14:22:44 by smatthes         ###   ########.fr        #
+#    Updated: 2024/01/13 14:20:07 by smatthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@
 # -I Flag adds path where header files are searched during preprocessing
 SHELL:=/bin/bash
 CFLAGS = -Wall -Wextra -Werror $(INCLUDEFLAGS) 
-NAME = pipex
+NAME = minishell
 LINK= cc
 CC = cc
 
@@ -38,13 +38,8 @@ PATHOBJ = build/obj/
 VPATH = $(PATHSRC) $(INCLUDEPATH)
 
 SRC = 	main.c \
-		process_main.c \
-		process_cmd1.c \
-		process_cmd2.c \
-		utils.c \
-		free.c \
-		exit.c \
-		handle_args.c
+		tokenise_main.c \
+		tokenise_identify_token.c
 		
 OBJFNAME = $(SRC:.c=.o)
 OBJ = $(patsubst %,$(PATHOBJ)%,$(OBJFNAME))
@@ -56,7 +51,7 @@ all: $(NAME)
 $(NAME): $(PATHLIBFT) $(OBJ) 
 	$(LINK) $(CFLAGS) -o $(NAME) $(OBJ) $(PATHLIBFT)
 
-$(PATHOBJ)%.o: %.c pipex.h
+$(PATHOBJ)%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(PATHLIBFT): 
