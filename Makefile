@@ -6,7 +6,7 @@
 #    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/13 15:05:53 by smatthes         ###   ########.fr        #
+#    Updated: 2024/01/13 15:14:08 by smatthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
-SUBFOLDERSRC = .
+SUBFOLDERSRC = . /tokeniser
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
