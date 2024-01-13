@@ -6,12 +6,15 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 14:21:07 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/13 16:53:16 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_FUNCS_H
 # define MINISHELL_FUNCS_H
+
+/* main */
+void	init_main_data(t_main_data *main_data);
 
 /* tokenisation/lexer */
 
