@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:12:59 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 14:21:18 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/13 15:04:47 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	tokenise(t_main_data *main_data)
 
 	cur_pos = main_data->cli_input;
     cur_pos++;
+	return 1;
 	// while (*cur_pos)
 	// {
 	// 	skip_ws(&cur_pos);

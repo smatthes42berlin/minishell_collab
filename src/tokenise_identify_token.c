@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:16:56 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 14:20:53 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/13 15:05:04 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ char	*is_squote(char c)
 
 char	*is_dquote(char c)
 {
-	return (ft_strchr('"', c));
+	return (ft_strchr("\"", c));
 }
