@@ -6,29 +6,18 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 13:22:06 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:06:57 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_TYPEDEF_H
 # define MINISHELL_TYPEDEF_H
 
-# include "lib_main.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
-
 /**
  * main data structure, that can be passed around
- * @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell, NULL when no env vars or uninitialised
+
+	* @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
+	NULL when no env vars or uninitialised
  * @param token_list pointer to first element of token list or NULL,
 	when token list is uninitialised
  * @param ast pointer to root node of abstract syntax tree (ast)
