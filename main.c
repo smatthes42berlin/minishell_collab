@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:02:42 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 13:26:08 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/13 14:14:33 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(void)
 	{
 		// watch out for eof and possbile return of null
 		main_data.cli_input = readline("cli>");
-		if (tokenise(main_data) == -1)
+		if (tokenise(&main_data) == -1)
 			return (1);
 		// if (parse(main_data) == -1)
 		// 	return (2);
