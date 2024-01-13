@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:02:42 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 14:14:33 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/13 16:36:27 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 */
 int	main(void)
 {
-	t_main_data main_data;
+	t_main_data	main_data;
 
-	// init_main_data(&main_data);
+	init_main_data(&main_data);
 	// - set up and handle environment
 	while (1)
 	{
@@ -45,4 +45,12 @@ int	main(void)
 		// 	return (3);
 	}
 	return (0);
+}
+
+void	init_main_data(t_main_data *main_data)
+{
+	main_data->ast = NULL;
+	main_data->cli_input = NULL;
+	main_data->env_vars = NULL;
+	main_data->token_list = NULL;
 }
