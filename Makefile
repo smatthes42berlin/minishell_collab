@@ -1,18 +1,6 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/01/14 09:56:29 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/24 12:56:21 by smatthes         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 SHELL:=/bin/bash
 CFLAGS = -Wall -Wextra -Werror $(INCLUDEFLAGS) 
-NAME = minishell.a
+NAME = minishell
 LINK= cc
 CC = cc
 
@@ -36,8 +24,12 @@ VPATH = $(PATHSRC) $(INCLUDEPATH)
 # list all filenames (without path) here
 SRC = 	main.c \
 		tokenise_main.c \
+		append_token.c \
 		identify_token.c \
 		create_token.c \
+		token_util.c \
+		token_util_2.c \
+		
 		
 OBJFNAME = $(SRC:.c=.o)
 OBJ = $(patsubst %,$(PATHOBJ)%,$(OBJFNAME))
