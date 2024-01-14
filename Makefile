@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/13 15:18:32 by smatthes         ###   ########.fr        #
+#    Created: 2024/01/14 09:56:29 by smatthes          #+#    #+#              #
+#    Updated: 2024/01/14 09:56:32 by smatthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ VPATH = $(PATHSRC) $(INCLUDEPATH)
 # list all filenames (without path) here
 SRC = 	main.c \
 		tokenise_main.c \
-		tokenise_identify_token.c
+		identify_token.c \
+		create_token.c \
 		
 OBJFNAME = $(SRC:.c=.o)
 OBJ = $(patsubst %,$(PATHOBJ)%,$(OBJFNAME))
