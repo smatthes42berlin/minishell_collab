@@ -1,19 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   identify_token.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/13 14:16:56 by smatthes          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/01/20 09:29:52 by smatthes         ###   ########.fr       */
-=======
-/*   Updated: 2024/01/19 15:32:38 by smatthes         ###   ########.fr       */
->>>>>>> 9d8782a (creation of token list workin 1.0)
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 int	identify_token(char **cur_pos, t_token *token)
@@ -95,8 +79,4 @@ int	create_empty_token(char **cur_pos, t_token *token)
 	(*cur_pos)++;
 	printf("created empty token\n");
 	return (0);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 9d8782a (creation of token list workin 1.0)
