@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 14:06:57 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/14 11:02:27 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ enum					e_token_type
 	TEXT,
 	SQTEXT,
 	DQTEXT,
-	SYMBOL
+	SYMBOL,
+	UNDEFINED
 };
 
 /**

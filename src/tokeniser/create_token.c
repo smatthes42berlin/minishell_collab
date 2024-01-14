@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   identify_token.c                                   :+:      :+:    :+:   */
+/*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/13 14:16:56 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/14 09:49:13 by smatthes         ###   ########.fr       */
+/*   Created: 2024/01/13 14:12:59 by smatthes          #+#    #+#             */
+/*   Updated: 2024/01/14 10:19:22 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	skip_ws(char **cur_pos)
+
+t_token	*create_token(void)
 {
-	while (ft_isspace(**cur_pos) && **cur_pos)
-		(*cur_pos)++;
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->type = UNDEFINED;
+	token->value = NULL;
+	return (token);
 }
 
-char	*is_symbol(char c)
-{
-	return (ft_strchr("<>|", c));
-}
-
-char	*is_squote(char c)
-{
-	return (ft_strchr("'", c));
-}
-
-char	*is_dquote(char c)
-{
-	return (ft_strchr("\"", c));
-}
-
-int	has_closing_quote(char *cli_input, char quote_type)
-{
-	return (ft_str_chr_index(cli_input, quote_type));
-}

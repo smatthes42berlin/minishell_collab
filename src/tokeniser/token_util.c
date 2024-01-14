@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenise_identify_token.c                          :+:      :+:    :+:   */
+/*   token_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:16:56 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 15:05:04 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/14 11:02:38 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	skip_ws(char **cur_pos)
 {
 	while (ft_isspace(**cur_pos) && **cur_pos)
-	{
 		(*cur_pos)++;
-	}
 }
 
 char	*is_symbol(char c)
@@ -34,3 +32,9 @@ char	*is_dquote(char c)
 {
 	return (ft_strchr("\"", c));
 }
+
+int	has_closing_quote(char *cli_input, char quote_type)
+{
+	return (ft_str_chr_index(cli_input, quote_type));
+}
+

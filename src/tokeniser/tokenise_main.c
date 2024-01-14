@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:12:59 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/14 09:50:29 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/14 10:18:05 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,22 @@ int	tokenise(t_main_data *main_data)
 	{
 		printf("1\n");
 		skip_ws(&cur_pos);
-		create_token(&cur_pos, main_data);
+		if (get_token(&cur_pos, main_data))
+			return (printf("ERROR\n"));
 	}
 	return (1);
 }
 
-void	create_token(char **cur_pos, t_main_data *main_data)
+int	get_token(char **cur_pos, t_main_data *main_data)
 {
-	if (ft_strchr("\"", **cur_pos))
-		creat_dquote_token(cur_pos, main_data);
-	// else if (ft_strchr("'", **cur_pos))
-	// 	creat_squote_token(cur_pos, main_data);
-	// else if (is_symbol(**cur_pos))
-	// 	create_symbol_token(cur_pos, main_data);
-	// else
-	// 	create_text_token(cur_pos, main_data);
+	t_token	*new_token;
+
+	new_token = create_token();
+	if (!new_token)
+		return (printf("Token creation Error!\n"));
+	if (append_token_list(main_data, new_token))
+		return (printf("Error appending Token to list!\n"));
+	if (identify_token(cur_pos, new_token))
+		return (1);
+	return (0);
 }
