@@ -1,42 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenise_main.c                                    :+:      :+:    :+:   */
+/*   append_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:12:59 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/24 12:59:51 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:59:38 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	tokenise(t_main_data *main_data)
+int	append_token_list(t_main_data *main_data, t_token *token)
 {
-	char	*cur_pos;
+	t_list_dc	*new_lst_elem;
 
-	cur_pos = main_data->cli_input;
-	while (*cur_pos)
-	{
-		printf("1\n");
-		skip_ws(&cur_pos);
-		if (get_token(&cur_pos, main_data))
-			return (printf("ERROR\n"));
-	}
-	return (1);
-}
-
-int	get_token(char **cur_pos, t_main_data *main_data)
-{
-	t_token	*new_token;
-
-	new_token = create_token();
-	if (!new_token)
-		return (printf("Token creation Error!\n"));
-	if (append_token_list(main_data, new_token))
-		return (printf("Error appending Token to list!\n"));
-	if (identify_token(cur_pos, new_token))
-		return (1);
+	new_lst_elem = dc_lst_new(token);
+	if (!new_lst_elem)
+		return (printf("Error: creating new list elem for token"));
+	dc_lst_add_back(&main_data->token_list, new_lst_elem);
 	return (0);
 }

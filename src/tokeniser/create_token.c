@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenise_main.c                                    :+:      :+:    :+:   */
+/*   create_token.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:12:59 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/24 12:59:51 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/24 12:59:42 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	tokenise(t_main_data *main_data)
-{
-	char	*cur_pos;
 
-	cur_pos = main_data->cli_input;
-	while (*cur_pos)
-	{
-		printf("1\n");
-		skip_ws(&cur_pos);
-		if (get_token(&cur_pos, main_data))
-			return (printf("ERROR\n"));
-	}
-	return (1);
+t_token	*create_token(void)
+{
+	t_token	*token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->type = UNDEFINED;
+	token->value = NULL;
+	return (token);
 }
 
-int	get_token(char **cur_pos, t_main_data *main_data)
-{
-	t_token	*new_token;
-
-	new_token = create_token();
-	if (!new_token)
-		return (printf("Token creation Error!\n"));
-	if (append_token_list(main_data, new_token))
-		return (printf("Error appending Token to list!\n"));
-	if (identify_token(cur_pos, new_token))
-		return (1);
-	return (0);
-}
