@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_funcs.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 16:53:16 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:44:27 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,9 @@ char	*is_dquote(char c);
 /* parser */
 
 /* executor */
+void	init_main_data_test(t_main_data *main_data);
+void	test_exece(void);
+int		safe_access_handler(char *path, t_access_mode mode);
+void	safe_execve_handler(t_node_exec *exec);
 
 #endif

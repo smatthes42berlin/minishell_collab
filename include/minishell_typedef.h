@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_typedef.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 14:06:57 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:12:11 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /**
  * main data structure, that can be passed around
 
-	* @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
+ * @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
 	NULL when no env vars or uninitialised
  * @param token_list pointer to first element of token list or NULL,
 	when token list is uninitialised
@@ -38,7 +38,7 @@ typedef struct s_main_data
  * @param TEXT normal text without any quotes: Hello
  * @param SQTEXT text in single quotes: 'Hello World'
  * @param DQTEXT text in double quotes: "Hello $0"
- * @param SYMBOL special control character of the shell, e.g. | >
+ * @param SYMBOL special control character of the shell, e.g. "|" :">""
  */
 enum					e_token_type
 {
@@ -155,6 +155,16 @@ typedef struct s_node_exec
 	char				*file_path;
 	// handle inbuilt
 	char				**argv;
+	char				**env;
 }						t_node_exec;
+
+// -----------------------------exec
+typedef enum e_access_mode 
+{
+	FILE_EXISTS = F_OK,
+	FILE_READABLE = R_OK,
+	FILE_WRITABLE = W_OK,
+	FILE_EXECUTABLE = X_OK
+}	t_access_mode;
 
 #endif

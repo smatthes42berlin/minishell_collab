@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:02:42 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/13 16:36:27 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:19:07 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,21 @@ int	main(void)
 
 	init_main_data(&main_data);
 	// - set up and handle environment
-	while (1)
-	{
-		// watch out for eof and possbile return of null
-		main_data.cli_input = readline("cli>");
-		if (tokenise(&main_data) == -1)
-			return (1);
-		// if (parse(main_data) == -1)
-		// 	return (2);
-		// - (Check if inbuilts that change main process, e.g. cd)
-		// if (execute(main_data) == -1)
-		// 	return (3);
-	}
+	safe_access_handler("/bin/ls", FILE_EXECUTABLE);
+	test_exece();
+	// while (1)
+	// {
+		
+	// 	// watch out for eof and possbile return of null
+	// 	//main_data.cli_input = readline("cli>");
+	// 	//if (tokenise(&main_data) == -1)
+	// 	//	return (1);
+	// 	// if (parse(main_data) == -1)
+	// 	// 	return (2);
+	// 	// - (Check if inbuilts that change main process, e.g. cd)
+	// 	// if (execute(main_data) == -1)
+	// 	// 	return (3);
+	// }
 	return (0);
 }
 
