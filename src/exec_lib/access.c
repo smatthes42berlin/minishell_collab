@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:53:53 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/16 11:35:21 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/16 14:32:56 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static const char	*access_mode_to_str(t_en_access_mode mode);
  * 				[-1]	- error return;
  */
 
-int	safe_access_handler(char *path, t_en_access_mode mode)
+int	access_handler(char *path, t_en_access_mode mode)
 {
 	int	result;
 

@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/15 22:46:06 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/16 14:24:51 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,12 +176,5 @@ typedef enum e_open_mode
 	FILE_READ_WRITE = O_RDWR | O_TRUNC,
 	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
 }	t_en_open_mode;
-
-
-// Gedankenstütze 
-// open -> access check file 
-// 5 mode with an without create 
-// error handling for open 
-
 
 #endif

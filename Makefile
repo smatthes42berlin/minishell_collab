@@ -6,7 +6,7 @@
 #    By: rene <rene@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/16 11:23:46 by rene             ###   ########.fr        #
+#    Updated: 2024/01/16 14:35:11 by rene             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC = 	main.c \
 		example_list.c \
 		errno_print.c \
 		execve.c \
+		open_and_close.c \
 		tokenise_main.c \
 		tokenise_identify_token.c
 		

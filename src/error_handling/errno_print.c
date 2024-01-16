@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:38:05 by rene              #+#    #+#             */
-/*   Updated: 2024/01/16 11:23:04 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/16 15:03:10 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,40 @@
 
 /** errno - descripten 
  * 
+ * errno-typ       | function 
+ * ---------------------------------------------
  *  E2BIG           execve 
- *  EACCES          access, execve
+ *  EACCES          access, execve, open
  *  EAGAIN          execve
- *  EBADF           access
- *  EFAULT          access, execve
- *  EINVAL          access, execve
- *  EIO             access, execve
- *  EISDIR          execve
+ *  EBADF           access, open, close
+ * 	EBUSY			open
+ * 	EDQUOT			open, close				
+ * 	EEXIST			open
+ *  EFAULT          access, execve, open
+ * 	EFBIG			open
+ * 	EINTR			open, close
+ *  EINVAL          access, execve, open
+ *  EIO             access, execve, close
+ *  EISDIR          execve, open
  *  ELIBBAD         execve
- *  ELOOP           access, execve
- *  EMFILE          execve
- *  ENAMETOOLONG    access, execve
- *  ENFILE          execve
- *  ENOENT          access, execve
+ *  ELOOP           access, execve, open
+ *  EMFILE          execve, open
+ *  ENAMETOOLONG    access, execve, open
+ *  ENFILE          execve, open
+ * 	ENODEV			open
+ *  ENOENT          access, execve, open
  *  ENOEXEC         execve
- *  ENOMEM          access, execve
- *  ENOTDIR         access, execve
- *  EPERM           access, execve
- *  EROFS           access
- *  ETXTBSY         access, execve
-
+ *  ENOMEM          access, execve, open
+ * 	ENOSPC			open, close
+ *  ENOTDIR         access, execve, open
+ * 	ENXIO			open
+ * 	EOPNOTSUPP		open
+ * 	EOVERFLOW		open
+ *  EPERM           access, execve, open
+ *  EROFS           access, open
+ *  ETXTBSY         access, execve, open
+ * 	EWOULDBLOCK		open
+ * 
 */
 void error_code_handler(int error_code, const char *msg, const char *mode)
 {
@@ -50,6 +63,12 @@ void error_code_handler(int error_code, const char *msg, const char *mode)
 		printf("EAGAIN %s %s: %s\n", msg, mode, strerror(error_code));
 	else if (EBADF == error_code)
 		printf("EBADF %s %s: %s\n", msg, mode, strerror(error_code));
+	else if (EBUSY == error_code)
+		printf("EBUSY %s %s: %s\n", msg, mode, strerror(error_code));
+	else if (EDQUOT == error_code)
+		printf("EDQUOT %s %s: %s\n", msg, mode, strerror(error_code));
+	else if (EEXIST == error_code)
+		printf("EEXIST %s %s: %s\n", msg, mode, strerror(error_code));
     else if (EFAULT == error_code)
 		printf("EFAULT %s %s: %s\n", msg, mode, strerror(error_code));
     else if (EINVAL == error_code)
@@ -67,21 +86,33 @@ void error_code_handler(int error_code, const char *msg, const char *mode)
     else if (ENAMETOOLONG == error_code)
 		printf("ENAMETOOLONG %s %s: %s\n", msg, mode, strerror(error_code));
     else if (ENFILE == error_code)
-		printf("ENFILE %s %s: %s\n", msg, mode, strerror(error_code));  
+		printf("ENFILE %s %s: %s\n", msg, mode, strerror(error_code));
+    else if (ENODEV == error_code)
+		printf("ENODEV %s %s: %s\n", msg, mode, strerror(error_code));
 	else if (ENOENT == error_code)
 		printf("ENOENT %s %s: %s\n", msg, mode, strerror(error_code));
     else if (ENOEXEC == error_code)
 		printf("ENOEXEC %s %s: %s\n", msg, mode, strerror(error_code));
     else if (ENOMEM == error_code)
 		printf("ENOMEM %s %s: %s\n", msg, mode, strerror(error_code));
+    else if (ENOSPC == error_code)
+		printf("ENOSPC %s %s: %s\n", msg, mode, strerror(error_code));	
     else if (ENOTDIR == error_code)
 		printf("ENOTDIR %s %s: %s\n", msg, mode, strerror(error_code));
+    else if (ENXIO == error_code)
+		printf("ENXIO %s %s: %s\n", msg, mode, strerror(error_code));
+    else if (EOPNOTSUPP == error_code)
+		printf("EOPNOTSUPP %s %s: %s\n", msg, mode, strerror(error_code));
+    else if (EOVERFLOW == error_code)
+		printf("EOVERFLOW %s %s: %s\n", msg, mode, strerror(error_code));
 	else if (EPERM == error_code)
 		printf("EPERM %s %s: %s\n", msg, mode, strerror(error_code));
     else if (EROFS == error_code)
 		printf("EROFS %s %s: %s\n", msg, mode, strerror(error_code));
 	else if (ETXTBSY == error_code)
 		printf("ETXTBSY %s %s: %s\n", msg, mode, strerror(error_code));
+	else if (EWOULDBLOCK == error_code)
+		printf("EWOULDBLOCK %s %s: %s\n", msg, mode, strerror(error_code));	
     else 
         printf("UNKNOWN %s %s: %s\n", msg, mode, strerror(error_code));    
 }

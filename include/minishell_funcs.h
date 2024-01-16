@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/16 08:33:44 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/16 15:06:01 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,13 @@ char	*is_dquote(char c);
 /* executor */
 void	init_main_data_test(t_main_data *main_data);
 void	test_exece(void);
-int		safe_access_handler(char *path, t_en_access_mode mode);
-void	safe_execve_handler(t_node_exec *exec);
+
+
+/* execute lib*/
+int     open_handler(const char *path, t_en_open_mode mode);
+int     close_handler(int fd);
+int	    access_handler(char *path, t_en_access_mode mode);
+void	execve_handler(t_node_exec *exec);
 
 /* error */
 void error_code_handler(int error_code, const char *msg, const char *mode);
