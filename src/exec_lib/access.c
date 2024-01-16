@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:53:53 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/15 17:42:40 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/16 11:35:21 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void			access_error_handler_1(int error_code, t_access_mode mode);
-static void			access_error_handler_2(int error_code, t_access_mode mode);
+static const char	*access_mode_to_str(t_en_access_mode mode);
+// static void			access_error_handler_1(int error_code, t_en_access_mode mode);
+// static void			access_error_handler_2(int error_code, t_en_access_mode mode);
 
 /**
  * @brief using for checking the right of the given path
@@ -24,7 +25,7 @@ static void			access_error_handler_2(int error_code, t_access_mode mode);
  * 				[-1]	- error return;
  */
 
-int	safe_access_handler(char *path, t_access_mode mode)
+int	safe_access_handler(char *path, t_en_access_mode mode)
 {
 	int	result;
 
@@ -34,10 +35,10 @@ int	safe_access_handler(char *path, t_access_mode mode)
 		result = access(path, mode);
 	else
 	{
-		printf("ERROR ACCESS - Wrong Mode given");
+		printf("ERROR 'access' - Wrong Mode given");
 		return (result);
 	}
-	access_error_handler_1(result, mode);
+	error_code_handler(errno, "ERR-access", access_mode_to_str(mode));
 	return (result);
 }
 
@@ -47,29 +48,30 @@ int	safe_access_handler(char *path, t_access_mode mode)
  * @param mode mode for [FILE_EXISTS]; [FILE_READABLE]; [FILE_WRITABLE]; [FILE_EXECUTABLE]
  * @return const char* "FILE_EXISTS"; "FILE_READABLE"; "FILE_WRITABLE"; "FILE_EXECUTABLE"
  */
-static const char	*access_mode_to_str(t_access_mode mode)
+static const char	*access_mode_to_str(t_en_access_mode mode)
 {
 	if (mode == FILE_EXISTS)
-		return ("FILE_EXISTS");
+		return ("MODE-FILE_EXISTS");
 	else if (mode == FILE_READABLE)
-		return ("FILE_READABLE");
+		return ("MODE-FILE_READABLE");
 	else if (mode == FILE_WRITABLE)
-		return ("FILE_WRITABLE");
+		return ("MODE-FILE_WRITABLE");
 	else if (mode == FILE_EXECUTABLE)
-		return ("FILE_EXECUTABLE");
+		return ("MODE-FILE_EXECUTABLE");
 	else
-		return ("UNKNOWN_MODE");
+		return ("MODE-UNKNOWN_MODE");
 }
-/**
- * @brief Errorhandling for 'access' function.
- * Because norminette accept max. 25 lines. 
- * -> split in 2 function 
- * 
- * @param error_code 
- * @param mode 
- */
+/**----------------------------old error Handling--------------------------
+// 
+//  * @brief Errorhandling for 'access' function.
+//  * Because norminette accept max. 25 lines. 
+//  * -> split in 2 function 
+//  * 
+//  * @param error_code 
+//  * @param mode 
+//  
 
-static void	access_error_handler_1(int error_code, t_access_mode mode)
+static void	access_error_handler_1(int error_code, t_en_access_mode mode)
 {
 	if (0 == error_code)
 		return ;
@@ -97,15 +99,15 @@ static void	access_error_handler_1(int error_code, t_access_mode mode)
 	else
 		access_error_handler_2(error_code, mode);
 }
-/**
- * @brief 'access_error_handler' -> split in 2 function.
- * Because norminette accept max. 25 lines.
- * 
- * @param error_code 
- * @param mode 
- */
+// 
+//  * @brief 'access_error_handler' -> split in 2 function.
+//  * Because norminette accept max. 25 lines.
+//  * 
+//  * @param error_code 
+//  * @param mode 
+//  
 
-static void	access_error_handler_2(int error_code, t_access_mode mode)
+static void	access_error_handler_2(int error_code, t_en_access_mode mode)
 {
 	if (ENOENT == error_code)
 		printf("ENOENT ERR-access MODE-%s: %s\n", access_mode_to_str(mode),
@@ -126,3 +128,4 @@ static void	access_error_handler_2(int error_code, t_access_mode mode)
 		printf("ETXTBSY ERR-access MODE-%s: %s\n", access_mode_to_str(mode),
 			strerror(error_code));
 }
+*/

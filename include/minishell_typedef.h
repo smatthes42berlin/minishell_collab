@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_typedef.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/15 18:44:42 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/15 22:46:06 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ typedef enum e_access_mode
 	FILE_READABLE = R_OK,
 	FILE_WRITABLE = W_OK,
 	FILE_EXECUTABLE = X_OK
-}	t_access_mode;
+}	t_en_access_mode;
 
 
 typedef enum e_open_mode
@@ -175,7 +175,8 @@ typedef enum e_open_mode
 	FILE_ONLY_WRITE_APPEND = O_WRONLY | O_APPEND,
 	FILE_READ_WRITE = O_RDWR | O_TRUNC,
 	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
-}
+}	t_en_open_mode;
+
 
 // Gedankenstütze 
 // open -> access check file 

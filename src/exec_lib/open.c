@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   example_list.c                                     :+:      :+:    :+:   */
+/*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/16 11:34:52 by rene             ###   ########.fr       */
+/*   Created: 2024/01/15 22:09:12 by rene              #+#    #+#             */
+/*   Updated: 2024/01/15 22:27:34 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_main_data_test(t_main_data *main_data)
+void open_handler(const char *path, t_en_open_mode mode)
 {
-	main_data->ast->content = NULL;
-	main_data->cli_input = NULL;
-	main_data->env_vars = NULL;
-	main_data->token_list = NULL;
-}
-
-void	test_exece(void)
-{
-	t_node_exec exec;
-	exec.file_path = "/bin/ls";
-	exec.argv = (char *[]){"/bin/ls", "-l", NULL}; 
-	exec.env = (char *[]){"PATH=/bin", NULL};
-	safe_execve_handler(&exec);
+    int result;
+    
+    if(safe_access_handler(&path,FILE_EXISTS) != 0)
+        result = open(path, mode | O_CREAT, S_IRWXU);
+    else
+        result = open(path, mode);
+    if (result)    
 }

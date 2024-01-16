@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rkost <rkost@student.42.fr>                +#+  +:+       +#+         #
+#    By: rene <rene@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/15 14:21:37 by rkost            ###   ########.fr        #
+#    Updated: 2024/01/16 11:23:46 by rene             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser /exec
+SUBFOLDERSRC = . /tokeniser /exec /exec_lib /error_handling
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
@@ -37,6 +37,7 @@ VPATH = $(PATHSRC) $(INCLUDEPATH)
 SRC = 	main.c \
 		access.c \
 		example_list.c \
+		errno_print.c \
 		execve.c \
 		tokenise_main.c \
 		tokenise_identify_token.c

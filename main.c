@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:02:42 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/15 16:19:07 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/16 11:30:14 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int	main(void)
 
 	init_main_data(&main_data);
 	// - set up and handle environment
-	safe_access_handler("/bin/ls", FILE_EXECUTABLE);
+	if (safe_access_handler("/home/rene/Project/42School/Rank03/minishell_collab/test.txt", FILE_EXISTS) == 0)
+		printf("exist\n");
+	else
+		printf("DONT EXIST\n") ;
 	test_exece();
 	// while (1)
 	// {

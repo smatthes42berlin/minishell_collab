@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 12:04:34 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/15 17:46:10 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/16 11:38:25 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	execve_error_handler_1(int error_code);
-static void	execve_error_handler_2(int error_code);
+// static void	execve_error_handler_1(int error_code);
+// static void	execve_error_handler_2(int error_code);
 
 /**
  * @brief using the execve function 
@@ -21,23 +21,33 @@ static void	execve_error_handler_2(int error_code);
  * @param exec -- struct for execve
  */
 void	safe_execve_handler(t_node_exec *exec)
-{
-	if (safe_access_handler(exec->file_path, FILE_EXECUTABLE) != 0)
-		return ;
-	if (execve(exec->file_path, exec->argv, exec->env) == -1)
+{	
+	if (safe_access_handler(exec->file_path, FILE_EXECUTABLE) == 0)
 	{
-		execve_error_handler_1(errno);
-		exit(EXIT_FAILURE);
+		if (execve(exec->file_path, exec->argv, exec->env) == -1)
+		{
+			error_code_handler(errno, "ERR-execve", "(no mode)");
+			exit(EXIT_FAILURE);
+		}
 	}
+	else
+		printf("ERR-execve: (access-Error) No executable file path"
+			"please check the path!");
 }
 
-/**
- * @brief Errorhandling for 'execve' function.
- * Because norminette accept max. 25 lines. 
- * -> split in 2 function 
- * 
- * @param error_code 
- */
+/** ---------------------------- old error handling -------------
+ 
+
+
+static execve_error_handler (int error_code, )
+
+// 
+//  * @brief Errorhandling for 'execve' function.
+//  * Because norminette accept max. 25 lines. 
+//  * -> split in 2 function 
+//  * 
+//  * @param error_code 
+//  
 static void	execve_error_handler_1(int error_code)
 {
 	if (E2BIG == error_code)
@@ -66,12 +76,12 @@ static void	execve_error_handler_1(int error_code)
 		execve_error_handler_2(error_code);
 }
 
-/**
- * @brief 'execve_error_handler' -> split in 2 function.
- * Because norminette accept max. 25 lines.
- * 
- * @param error_code 
- */
+//
+//  * @brief 'execve_error_handler' -> split in 2 function.
+//  * Because norminette accept max. 25 lines.
+//  * 
+//  * @param error_code 
+//  
 static void	execve_error_handler_2(int error_code)
 {
 	if (ENAMETOOLONG == error_code)
@@ -91,3 +101,5 @@ static void	execve_error_handler_2(int error_code)
 	else
 		printf("UNKNOWN ERR-execve: %s\n", strerror(error_code));
 }
+
+*/
