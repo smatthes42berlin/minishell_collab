@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errno_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:38:05 by rene              #+#    #+#             */
-/*   Updated: 2024/01/16 15:03:10 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/16 16:55:39 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
-
 
 /** errno - descripten 
  * 
@@ -51,70 +49,72 @@
  * 	EWOULDBLOCK		open
  * 
 */
-void error_code_handler(int error_code, const char *msg, const char *mode)
+void error_code_handler(int error_code, const char *msg, const char *subj, const char *mode)
 {
     if (0 == error_code)
 	    return ;
-	else if (E2BIG == error_code)
-		printf("E2BIG %s %s: %s\n", msg, mode, strerror(error_code));
+	errno = 0;
+	printf("🚫 ➡️ ");
+	if (E2BIG == error_code) 
+		printf("E2BIG %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (EACCES == error_code)
-		printf("EACCES %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EACCES %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (EAGAIN == error_code)
-		printf("EAGAIN %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EAGAIN %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EBADF == error_code)
-		printf("EBADF %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EBADF %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EBUSY == error_code)
-		printf("EBUSY %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EBUSY %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EDQUOT == error_code)
-		printf("EDQUOT %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EDQUOT %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EEXIST == error_code)
-		printf("EEXIST %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EEXIST %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (EFAULT == error_code)
-		printf("EFAULT %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EFAULT %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (EINVAL == error_code)
-		printf("EINVAL %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EINVAL %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EIO == error_code)
-		printf("EIO %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EIO %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (EISDIR == error_code)
-		printf("EISDIR %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EISDIR %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (ELIBBAD == error_code)
-		printf("ELIBBAD %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ELIBBAD %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (ELOOP == error_code)
-		printf("ELOOP %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ELOOP %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EMFILE == error_code)
-		printf("EMFILE %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EMFILE %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENAMETOOLONG == error_code)
-		printf("ENAMETOOLONG %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ENAMETOOLONG %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENFILE == error_code)
-		printf("ENFILE %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ENFILE %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENODEV == error_code)
-		printf("ENODEV %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ENODEV %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (ENOENT == error_code)
-		printf("ENOENT %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ENOENT %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENOEXEC == error_code)
-		printf("ENOEXEC %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ENOEXEC %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENOMEM == error_code)
-		printf("ENOMEM %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ENOMEM %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENOSPC == error_code)
-		printf("ENOSPC %s %s: %s\n", msg, mode, strerror(error_code));	
+		printf("ENOSPC %s %s %s: %s\n", msg, subj, mode, strerror(error_code));	
     else if (ENOTDIR == error_code)
-		printf("ENOTDIR %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ENOTDIR %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENXIO == error_code)
-		printf("ENXIO %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ENXIO %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (EOPNOTSUPP == error_code)
-		printf("EOPNOTSUPP %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EOPNOTSUPP %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (EOVERFLOW == error_code)
-		printf("EOVERFLOW %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EOVERFLOW %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EPERM == error_code)
-		printf("EPERM %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EPERM %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (EROFS == error_code)
-		printf("EROFS %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("EROFS %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (ETXTBSY == error_code)
-		printf("ETXTBSY %s %s: %s\n", msg, mode, strerror(error_code));
+		printf("ETXTBSY %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EWOULDBLOCK == error_code)
-		printf("EWOULDBLOCK %s %s: %s\n", msg, mode, strerror(error_code));	
+		printf("EWOULDBLOCK %s %s %s: %s\n", msg, subj, mode, strerror(error_code));	
     else 
-        printf("UNKNOWN %s %s: %s\n", msg, mode, strerror(error_code));    
+        printf("UNKNOWN %s %s %s: %s\n", msg, subj, mode, strerror(error_code));    
 }
 
 /** ---------------------------------- complett error handling 

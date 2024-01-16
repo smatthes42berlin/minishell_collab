@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   access.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:53:53 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/16 14:32:56 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/16 17:20:31 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static const char	*access_mode_to_str(t_en_access_mode mode);
+static const char	*access_mode_to_str(enum e_access_mode  mode);
 // static void			access_error_handler_1(int error_code, t_en_access_mode mode);
 // static void			access_error_handler_2(int error_code, t_en_access_mode mode);
 
@@ -25,7 +25,7 @@ static const char	*access_mode_to_str(t_en_access_mode mode);
  * 				[-1]	- error return;
  */
 
-int	access_handler(char *path, t_en_access_mode mode)
+int	access_handler(const char *path, enum e_access_mode mode)
 {
 	int	result;
 
@@ -38,7 +38,8 @@ int	access_handler(char *path, t_en_access_mode mode)
 		printf("ERROR 'access' - Wrong Mode given");
 		return (result);
 	}
-	error_code_handler(errno, "ERR-access", access_mode_to_str(mode));
+	error_code_handler(errno, "ERR-access", path ,access_mode_to_str(mode));
+	//errno = 0;
 	return (result);
 }
 
@@ -48,7 +49,7 @@ int	access_handler(char *path, t_en_access_mode mode)
  * @param mode mode for [FILE_EXISTS]; [FILE_READABLE]; [FILE_WRITABLE]; [FILE_EXECUTABLE]
  * @return const char* "FILE_EXISTS"; "FILE_READABLE"; "FILE_WRITABLE"; "FILE_EXECUTABLE"
  */
-static const char	*access_mode_to_str(t_en_access_mode mode)
+static const char	*access_mode_to_str(enum e_access_mode mode)
 {
 	if (mode == FILE_EXISTS)
 		return ("MODE-FILE_EXISTS");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 12:04:34 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/16 14:38:59 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/16 16:45:46 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
  */
 void	execve_handler(t_node_exec *exec)
 {	
-	if (safe_access_handler(exec->file_path, FILE_EXECUTABLE) == 0)
+	if (access_handler(exec->file_path, FILE_EXECUTABLE) == 0)
 	{
 		if (execve(exec->file_path, exec->argv, exec->env) == -1)
 		{
-			error_code_handler(errno, "ERR-execve", " ");
+			error_code_handler(errno, "ERR-execve", exec->file_path, " ");
 			exit(EXIT_FAILURE);
 		}
 	}

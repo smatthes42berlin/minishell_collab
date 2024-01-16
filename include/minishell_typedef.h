@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_typedef.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/16 14:24:51 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/16 17:22:38 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,23 @@ enum					e_node_type
 	HEREDOC
 };
 
+enum e_access_mode 
+{
+	FILE_EXISTS = F_OK,
+	FILE_READABLE = R_OK,
+	FILE_WRITABLE = W_OK,
+	FILE_EXECUTABLE = X_OK
+};
+
+typedef enum e_open_mode
+{
+	FILE_ONLY_READING = O_RDONLY,
+	FILE_ONLY_WRITE = O_WRONLY | O_TRUNC,
+	FILE_ONLY_WRITE_APPEND = O_WRONLY | O_APPEND,
+	FILE_READ_WRITE = O_RDWR | O_TRUNC,
+	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
+}	t_en_open_mode;
+
 /**
  * describing the filedescritors available for input output redirection
  * @param STDIN
@@ -140,7 +157,7 @@ typedef struct s_node_redir
 	enum e_node_type	type;
 	t_node				*child_node;
 	char				*filename;
-	int					mode;
+	enum e_open_mode	mode;
 	enum e_std_fd		in_or_out;
 }						t_node_redir;
 
@@ -157,24 +174,5 @@ typedef struct s_node_exec
 	char				**argv;
 	char				**env;
 }						t_node_exec;
-
-// -----------------------------exec
-typedef enum e_access_mode 
-{
-	FILE_EXISTS = F_OK,
-	FILE_READABLE = R_OK,
-	FILE_WRITABLE = W_OK,
-	FILE_EXECUTABLE = X_OK
-}	t_en_access_mode;
-
-
-typedef enum e_open_mode
-{
-	FILE_ONLY_READING = O_RDONLY,
-	FILE_ONLY_WRITE = O_WRONLY | O_TRUNC,
-	FILE_ONLY_WRITE_APPEND = O_WRONLY | O_APPEND,
-	FILE_READ_WRITE = O_RDWR | O_TRUNC,
-	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
-}	t_en_open_mode;
 
 #endif
