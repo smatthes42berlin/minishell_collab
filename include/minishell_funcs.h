@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_funcs.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/16 17:31:32 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/17 11:50:27 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ int     open_handler(const char *path, enum e_open_mode  mode);
 int     close_handler(int fd);
 int		access_handler(const char *path, enum e_access_mode mode);
 void	execve_handler(t_node_exec *exec);
+pid_t   fork_handler(void);
+enum    e_pid_satus process_status(pid_t pid, bool block);
+void    pipe_handler(int *pipefd);
+void    pipe_setting(int *pipefd, bool open);
+
+
 
 /* error */
 void error_code_handler(int error_code, const char *msg, const char *subj, const char *mode);

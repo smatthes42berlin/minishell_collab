@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_libs.h                                   :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/17 10:57:20 by rene             ###   ########.fr       */
+/*   Created: 2024/01/17 11:38:37 by rene              #+#    #+#             */
+/*   Updated: 2024/01/17 11:50:48 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_LIBS_H
-# define MINISHELL_LIBS_H
+#include "minishell.h"
 
-# include "lib_main.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <string.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
+void pipe_handler(int *pipefd)
+{
+    if (pipe(pipefd) < 0)
+        error_code_handler(errno, "ERR-pipe", " ", " ");
+}
 
-#endif
+void pipe_setting(int *pipefd, bool open)
+{
+	if (open)
+	{
+		close(pipefd[0]);
+		dup2(pipfd[1], STDOUT_FILENO);
+		close(pipfd[1]);
+	}
+	else
+	{
+		close(pipefd[1]);
+		dup2(pipfd[0], STDIN_FILENO);
+		close(pipfd[0]);
+	}	
+}

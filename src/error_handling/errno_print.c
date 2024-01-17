@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errno_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:38:05 by rene              #+#    #+#             */
-/*   Updated: 2024/01/16 16:55:39 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/17 11:15:48 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
  * ---------------------------------------------
  *  E2BIG           execve 
  *  EACCES          access, execve, open
- *  EAGAIN          execve
+ *  EAGAIN          execve, fork
  *  EBADF           access, open, close
  * 	EBUSY			open
+ * 	ECHILD			wait(pid)
  * 	EDQUOT			open, close				
  * 	EEXIST			open
  *  EFAULT          access, execve, open
  * 	EFBIG			open
- * 	EINTR			open, close
- *  EINVAL          access, execve, open
+ * 	EINTR			open, close, wait(pid)
+ *  EINVAL          access, execve, open, waitpid
  *  EIO             access, execve, close
  *  EISDIR          execve, open
  *  ELIBBAD         execve
@@ -37,13 +38,15 @@
  * 	ENODEV			open
  *  ENOENT          access, execve, open
  *  ENOEXEC         execve
- *  ENOMEM          access, execve, open
+ *  ENOMEM          access, execve, open, fork
  * 	ENOSPC			open, close
+ * 	ENOSYS			fork
  *  ENOTDIR         access, execve, open
  * 	ENXIO			open
  * 	EOPNOTSUPP		open
  * 	EOVERFLOW		open
  *  EPERM           access, execve, open
+ * 	ERESTARTNOINTR	fork
  *  EROFS           access, open
  *  ETXTBSY         access, execve, open
  * 	EWOULDBLOCK		open
@@ -65,6 +68,8 @@ void error_code_handler(int error_code, const char *msg, const char *subj, const
 		printf("EBADF %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EBUSY == error_code)
 		printf("EBUSY %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
+	else if (ECHILD == error_code)
+		printf("ECHILD %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EDQUOT == error_code)
 		printf("EDQUOT %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EEXIST == error_code)
@@ -96,7 +101,9 @@ void error_code_handler(int error_code, const char *msg, const char *subj, const
     else if (ENOMEM == error_code)
 		printf("ENOMEM %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENOSPC == error_code)
-		printf("ENOSPC %s %s %s: %s\n", msg, subj, mode, strerror(error_code));	
+		printf("ENOSPC %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
+	else if (ENOSYS == error_code)
+		printf("ENOSYS %s %s %s: %s\n", msg, subj, mode, strerror(error_code));	
     else if (ENOTDIR == error_code)
 		printf("ENOTDIR %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
     else if (ENXIO == error_code)
@@ -107,12 +114,16 @@ void error_code_handler(int error_code, const char *msg, const char *subj, const
 		printf("EOVERFLOW %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EPERM == error_code)
 		printf("EPERM %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
-    else if (EROFS == error_code)
+	// else if (ERESTARTNOINTR == error_code)
+	// 	printf("ERESTARTNOINTR %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
+	else if (EROFS == error_code)
 		printf("EROFS %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (ETXTBSY == error_code)
 		printf("ETXTBSY %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EWOULDBLOCK == error_code)
-		printf("EWOULDBLOCK %s %s %s: %s\n", msg, subj, mode, strerror(error_code));	
+		printf("EWOULDBLOCK %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
+	else if (1000 == error_code)
+		printf("ERROR %s %s %s: %s\n", msg, subj, mode, " ");	
     else 
         printf("UNKNOWN %s %s %s: %s\n", msg, subj, mode, strerror(error_code));    
 }

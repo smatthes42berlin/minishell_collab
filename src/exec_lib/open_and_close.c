@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_and_close.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:09:12 by rene              #+#    #+#             */
-/*   Updated: 2024/01/16 17:21:57 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/17 07:02:33 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int open_handler(const char *path, enum e_open_mode  mode)
     int result;
     
     result = -1;
-    if(access_handler(path,FILE_EXISTS) != 0)
+    if(access_handler(path,FILE_EXISTS) != 0 && mode != FILE_ONLY_READING)
         result = open(path, mode | O_CREAT, S_IRWXU);
     else
         result = open(path, mode);
@@ -38,10 +38,10 @@ int close_handler(int fd)
 }
 
 /**
- * @brief return the given enum t_access_mode to a String
+ * @brief return the given enum e_open_mode to a String
  * 
- * @param mode mode for [FILE_EXISTS]; [FILE_READABLE]; [FILE_WRITABLE]; [FILE_EXECUTABLE]
- * @return const char* "FILE_EXISTS"; "FILE_READABLE"; "FILE_WRITABLE"; "FILE_EXECUTABLE"
+ * @param mode 
+ * @return const char* 
  */
 static const char	*open_mode_to_str(enum e_open_mode  mode)
 {

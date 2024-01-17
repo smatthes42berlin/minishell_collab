@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_typedef.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/16 17:22:38 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/17 11:58:27 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,63 @@ typedef struct s_main_data
 	t_list_dc			*env_vars;
 	t_list_dc			*token_list;
 	t_list_dc			*ast;
+
 	char				*cli_input;
 	//.....
 }						t_main_data;
+
+//---------------------------------------------------- enum exec beginn---------------------------------
+/**
+ * using for the access mode 
+ * @param FILE_EXISTS
+ * @param FILE_READABLE
+ * @param FILE_WRITABLE
+ * @param FILE_EXECUTABLE
+*/
+enum e_access_mode 
+{
+	FILE_EXISTS = F_OK,
+	FILE_READABLE = R_OK,
+	FILE_WRITABLE = W_OK,
+	FILE_EXECUTABLE = X_OK
+};
+
+/**
+ * using for the open mode
+ * @param FILE_ONLY_READING
+ * @param FILE_ONLY_WRITE
+ * @param FILE_ONLY_WRITE_APPEND
+ * @param FILE_READ_WRITE
+ * @param FILE_READ_WRITE_APPEND
+*/
+enum e_open_mode
+{
+	FILE_ONLY_READING = O_RDONLY,
+	FILE_ONLY_WRITE = O_WRONLY | O_TRUNC,
+	FILE_ONLY_WRITE_APPEND = O_WRONLY | O_APPEND,
+	FILE_READ_WRITE = O_RDWR | O_TRUNC,
+	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
+};
+
+
+enum e_pid_satus
+{
+	PID_STOP_REGULAR,
+	PID_STOP_SIGNAL,
+	PID_BREAK,
+	PID_RUNNING,
+	PID_ERROR
+};
+
+
+typedef struct s_pid_status
+{
+	pid_t 				pid_nbr;
+	int					pipefd[2];
+	enum e_pid_satus 	pid_satus;
+} t_pid_status;
+
+//--------------------------------------------------enum exec end --------------------------------------
 
 /**
  * describing all the possible token types,
@@ -74,23 +128,6 @@ enum					e_node_type
 	REDIR,
 	HEREDOC
 };
-
-enum e_access_mode 
-{
-	FILE_EXISTS = F_OK,
-	FILE_READABLE = R_OK,
-	FILE_WRITABLE = W_OK,
-	FILE_EXECUTABLE = X_OK
-};
-
-typedef enum e_open_mode
-{
-	FILE_ONLY_READING = O_RDONLY,
-	FILE_ONLY_WRITE = O_WRONLY | O_TRUNC,
-	FILE_ONLY_WRITE_APPEND = O_WRONLY | O_APPEND,
-	FILE_READ_WRITE = O_RDWR | O_TRUNC,
-	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
-}	t_en_open_mode;
 
 /**
  * describing the filedescritors available for input output redirection
