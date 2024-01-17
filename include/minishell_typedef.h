@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/17 11:58:27 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/17 19:58:03 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_main_data
 	t_list_dc			*env_vars;
 	t_list_dc			*token_list;
 	t_list_dc			*ast;
-
 	char				*cli_input;
 	//.....
 }						t_main_data;
@@ -148,6 +147,7 @@ enum					e_std_fd
 typedef struct s_node
 {
 	enum e_node_type	type;
+	void				*node_type;
 }						t_node;
 
 /**

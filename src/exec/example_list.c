@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   example_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/16 19:04:00 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/17 20:14:37 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	test_read(void)
 	fd = open_handler(redir.filename, FILE_ONLY_READING);
 	
 	while ((bytesRead = read(fd, buffer, sizeof(buffer) - 1)) > 0) {
-        buffer[bytesRead] = '\0'; // Setze das Ende des Strings
+        buffer[bytesRead] = '\0';
         printf("%s", buffer);
     }
 
@@ -56,8 +56,60 @@ void	test_read(void)
 	close_handler(fd);	
 }
 
-/**
- * @brief Fork Handling 
- * --> pid_t list --> 
- * 
- */
+t_list_dc *set_test_list (void)
+{
+	// command `sleep 2 | ls -l | wc -l
+	t_node_exec *exec_node1;
+	t_node_exec *exec_node2;
+	t_node_exec *exec_node3;
+	t_list_dc *list; 
+	
+	exec_node1 = malloc(sizeof(t_node_exec));
+    exec_node1->type = EXEC; 
+    exec_node1->file_path = "/bin/sleep";
+    exec_node1->argv = (char *[]){"/bin/sleep", "5", NULL}; 
+    exec_node1->env = (char *[]){"PATH=/bin", NULL};
+
+	exec_node2 = malloc(sizeof(t_node_exec));
+    exec_node2->type = EXEC; 
+    exec_node2->file_path = "/bin/ls";
+    exec_node2->argv = (char *[]){"/bin/ls", "-l", NULL};
+    exec_node2->env = (char *[]){"PATH=/bin", NULL};
+
+	exec_node3 = malloc(sizeof(t_node_exec));
+    exec_node3->type = EXEC; 
+    exec_node3->file_path = "/bin/wc";
+    exec_node3->argv = (char *[]){"/bin/wc", "-l", NULL}; 
+    exec_node3->env = (char *[]){"PATH=/bin", NULL};
+	
+	
+	list = malloc(sizeof(t_list_dc));
+	list->prev = NULL;
+	list->content = exec_node1;
+	list->next = malloc(sizeof(t_list_dc));
+	list->next->prev = list;
+	list->next->content = exec_node2;
+	list->next->next = malloc(sizeof(t_list_dc));
+	list->next->next->prev = list->next;
+	list->next->next->content = exec_node3;
+	list->next->next->next = NULL;
+
+	return (list);	
+}
+
+void print_test_list (t_list_dc *list)
+{
+	t_list_dc *list_cp;
+
+	list_cp = list;
+	while (list_cp != NULL)
+	{
+		printf("Path: %s\n", ((t_node_exec *)(list_cp->content))->file_path);
+		list_cp = list_cp->next;
+	}
+}
+
+void list_test_use(void)
+{
+	print_test_list(set_test_list());
+}

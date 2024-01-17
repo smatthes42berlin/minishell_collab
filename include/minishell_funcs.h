@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/17 11:50:27 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/17 20:13:17 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,8 @@ char	*is_dquote(char c);
 /* parser */
 
 /* executor */
-void	init_main_data_test(t_main_data *main_data);
-void	test_exece(void);
-void	test_read(void);
+
+
 
 
 /* execute lib*/
@@ -47,4 +46,10 @@ void    pipe_setting(int *pipefd, bool open);
 /* error */
 void error_code_handler(int error_code, const char *msg, const char *subj, const char *mode);
 
+
+/* test */
+void	test_exece(void);
+void	test_read(void);
+void	init_main_data_test(t_main_data *main_data);
+void list_test_use(void);
 #endif

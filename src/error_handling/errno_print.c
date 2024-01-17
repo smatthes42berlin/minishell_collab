@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:38:05 by rene              #+#    #+#             */
-/*   Updated: 2024/01/17 11:15:48 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/17 12:03:17 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@
  * 	ECHILD			wait(pid)
  * 	EDQUOT			open, close				
  * 	EEXIST			open
- *  EFAULT          access, execve, open
+ *  EFAULT          access, execve, open, pipe
  * 	EFBIG			open
  * 	EINTR			open, close, wait(pid)
- *  EINVAL          access, execve, open, waitpid
+ *  EINVAL          access, execve, open, waitpid, pipe
  *  EIO             access, execve, close
  *  EISDIR          execve, open
  *  ELIBBAD         execve
  *  ELOOP           access, execve, open
- *  EMFILE          execve, open
+ *  EMFILE          execve, open, , pipe
  *  ENAMETOOLONG    access, execve, open
- *  ENFILE          execve, open
+ *  ENFILE          execve, open, pipe
  * 	ENODEV			open
  *  ENOENT          access, execve, open
  *  ENOEXEC         execve

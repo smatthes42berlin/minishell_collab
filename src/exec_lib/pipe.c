@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 11:38:37 by rene              #+#    #+#             */
-/*   Updated: 2024/01/17 11:50:48 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/17 12:01:09 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void pipe_setting(int *pipefd, bool open)
 	if (open)
 	{
 		close(pipefd[0]);
-		dup2(pipfd[1], STDOUT_FILENO);
-		close(pipfd[1]);
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[1]);
 	}
 	else
 	{
 		close(pipefd[1]);
-		dup2(pipfd[0], STDIN_FILENO);
-		close(pipfd[0]);
+		dup2(pipefd[0], STDIN_FILENO);
+		close(pipefd[0]);
 	}	
 }

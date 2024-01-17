@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:02:42 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/16 17:34:27 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/17 20:12:58 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(void)
 	// - set up and handle environment
 	//test_exece();
 	test_read();
+	list_test_use();
 	// while (1)
 	// {
 		
