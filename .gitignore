@@ -1,7 +1,10 @@
 
 
 **/*.o
+**/*.a
+**/*.out
 *.o
 *.a
+*.out
 .vscode/
 .vscode

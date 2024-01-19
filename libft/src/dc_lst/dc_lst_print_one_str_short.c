@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 09:52:03 by smatthes          #+#    #+#             */
-/*   Updated: 2023/09/19 15:23:20 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:17:33 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	dc_lst_print_one_str_short(void *lst_ptr_void)
 {
-	t_list_dc	*lst_ptr;
+	t_list_d	*lst_ptr;
 
 	if (!lst_ptr_void)
 		return ;
-	lst_ptr = (t_list_dc *)lst_ptr_void;
+	lst_ptr = (t_list_d *)lst_ptr_void;
 	ft_printf("%s\n", lst_ptr->content);
 	dc_lst_print_sep();
 	return ;

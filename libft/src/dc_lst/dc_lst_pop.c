@@ -6,15 +6,15 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 09:52:03 by smatthes          #+#    #+#             */
-/*   Updated: 2023/09/19 09:49:41 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:17:32 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_main.h"
 
-t_list_dc	*dc_lst_pop(t_list_dc **lst)
+t_list_d	*dc_lst_pop(t_list_d **lst)
 {
-	t_list_dc	*old_head;
+	t_list_d	*old_head;
 
 	if (!lst || !*lst)
 		return (NULL);

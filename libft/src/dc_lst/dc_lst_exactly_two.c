@@ -6,13 +6,13 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 09:52:03 by smatthes          #+#    #+#             */
-/*   Updated: 2023/09/30 17:59:38 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:17:32 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_main.h"
 
-int	dc_lst_exactly_two(t_list_dc *lst_ptr)
+int	dc_lst_exactly_two(t_list_d *lst_ptr)
 {
 	if (!lst_ptr)
 		return (0);
