@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:16:56 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/14 11:21:05 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:20:56 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,12 @@ int	count_characters(char *cur_pos)
 
 int	symbol_is_valid(char *symbol, int symbol_length)
 {
+	if (is_symbol(*symbol) && symbol_length == 1)
+		return (0);
 	if (symbol[0] == '<' && symbol[1] != '<')
-	{
-		printf("ttt\n");
 		return (1);
-	}
 	if (symbol[0] == '>' && symbol[1] != '>')
-	{
-		printf("%c\n", symbol[0]);
-		printf("%c\n", symbol[1]);
-		printf("aaa\n");
 		return (1);
-	}
 	if (symbol_length >= 3)
 		return (2);
 	return (0);
