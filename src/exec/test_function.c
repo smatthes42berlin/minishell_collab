@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   example_list.c                                     :+:      :+:    :+:   */
+/*   test_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/19 15:34:15 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/19 17:05:56 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	init_main_data_test(t_main_data *main_data)
 
 void	test_exece(void)
 {
-	t_node_exec exec;
-	exec.file_path = "/bin/ls";
-	exec.argv = (char *[]){"/bin/ls", "-l", NULL}; 
-	exec.env = (char *[]){"PATH=/bin", NULL};
-	execve_handler(&exec);
+	t_node_exec *exec = malloc_handler(sizeof(t_node_exec));
+	exec->file_path = "/bin/ls";
+	exec->argv = (char *[]){"/bin/ls", "-l", NULL}; 
+	exec->env = (char *[]){"PATH=/bin", NULL};
+	execve_handler(exec);
 }
 
 void	test_read(void)
@@ -69,8 +69,8 @@ t_node *set_test_list (void)
 	
 	exec_node1 = malloc_handler(sizeof(t_node_exec));
     exec_node1->type = EXEC; 
-    exec_node1->file_path = "/bin/sleep";
-    exec_node1->argv = (char *[]){"/bin/sleep", "5", NULL}; 
+    exec_node1->file_path = "/bin/ls";
+    exec_node1->argv = (char *[]){"/bin/ls", "-l", NULL}; 
     exec_node1->env = (char *[]){"PATH=/bin", NULL};
 
 	exec_node2 = malloc_handler(sizeof(t_node_exec));
@@ -92,7 +92,7 @@ t_node *set_test_list (void)
 	pipe_node2->left_node->type = EXEC;
 	pipe_node2->right_node = malloc_handler(sizeof(t_node));
 	pipe_node2->right_node->node_type = exec_node3;
-	pipe_node2->left_node->type = EXEC;
+	pipe_node2->right_node->type = EXEC;
 
 	pipe_node1 = malloc_handler(sizeof(t_node_pipe));
 	pipe_node1->type = PIPE;
@@ -152,5 +152,5 @@ void print_test_list (t_list_dc *list)
 
 void list_test_use(void)
 {
-	set_test_list();
+	navigate_tree_forward(set_test_list());
 }

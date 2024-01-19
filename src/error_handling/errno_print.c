@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errno_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:38:05 by rene              #+#    #+#             */
-/*   Updated: 2024/01/17 12:03:17 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/19 16:31:55 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void error_code_handler(int error_code, const char *msg, const char *subj, const
 	else if (EWOULDBLOCK == error_code)
 		printf("EWOULDBLOCK %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (1000 == error_code)
-		printf("ERROR %s %s %s: %s\n", msg, subj, mode, " ");	
+		printf("ERROR %s %s %s %s\n", msg, subj, mode, " ");	
     else 
         printf("UNKNOWN %s %s %s: %s\n", msg, subj, mode, strerror(error_code));    
 }
