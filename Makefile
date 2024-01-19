@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rene <rene@student.42.fr>                  +#+  +:+       +#+         #
+#    By: rkost <rkost@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/17 09:43:10 by rene             ###   ########.fr        #
+#    Updated: 2024/01/19 14:46:11 by rkost            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC = 	main.c \
 		errno_print.c \
 		execve.c \
 		fork.c \
+		malloc.c \
 		open_and_close.c \
 		tokenise_main.c \
 		tokenise_identify_token.c

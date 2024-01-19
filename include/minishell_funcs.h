@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_funcs.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/17 20:13:17 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/19 14:52:37 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ pid_t   fork_handler(void);
 enum    e_pid_satus process_status(pid_t pid, bool block);
 void    pipe_handler(int *pipefd);
 void    pipe_setting(int *pipefd, bool open);
-
-
+void 	*malloc_handler(size_t bytes);
 
 /* error */
 void error_code_handler(int error_code, const char *msg, const char *subj, const char *mode);
