@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:12:59 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/14 10:18:05 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:14:50 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	tokenise(t_main_data *main_data)
 		if (get_token(&cur_pos, main_data))
 			return (printf("ERROR\n"));
 	}
+	print_token_list(main_data->token_list);
+	main_data->token_list = NULL;
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:16:56 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/14 11:22:59 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:32:38 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ int	creat_quoted_token(char **cur_pos, t_token *token, char quote_type)
 	closing_quote = has_closing_quote(*cur_pos, quote_type);
 	if (closing_quote == -1)
 		return (printf("Error: no closing quote\n"));
-	if (ft_str_n_dup_int(*cur_pos, closing_quote, &token_val) == -1)
+	if (closing_quote == 0)
+		return (create_empty_token(cur_pos, token));
+	if (ft_str_n_dup_int(*cur_pos, closing_quote + 1, &token_val) == -1)
 		return (printf("Error: duplicating string for token\n"));
 	if (quote_type == '"')
 		token->type = DQTEXT;
@@ -79,5 +81,14 @@ int	creat_quoted_token(char **cur_pos, t_token *token, char quote_type)
 	token->value = token_val;
 	*cur_pos = *cur_pos + closing_quote + 1;
 	printf("created quoted token\n");
+	return (0);
+}
+
+int	create_empty_token(char **cur_pos, t_token *token)
+{
+	token->type = EMPTY;
+	token->value = NULL;
+	(*cur_pos)++;
+	printf("created empty token\n");
 	return (0);
 }
