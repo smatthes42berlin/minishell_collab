@@ -6,7 +6,11 @@
 #    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/14 09:56:29 by smatthes          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/01/20 09:30:40 by smatthes         ###   ########.fr        #
+=======
+#    Updated: 2024/01/19 15:10:11 by smatthes         ###   ########.fr        #
+>>>>>>> 9d8782a (creation of token list workin 1.0)
 #                                                                              #
 # **************************************************************************** #
 
