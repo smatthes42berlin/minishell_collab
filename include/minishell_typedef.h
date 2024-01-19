@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/20 09:27:13 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/20 09:27:45 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_main_data
 {
 	t_list_d			*env_vars;
 	t_list_d			*token_list;
-	t_list_d			*ast;
+	t_node				*ast;
 	char				*cli_input;
 	//.....
 }						t_main_data;
@@ -96,6 +96,8 @@ enum					e_std_fd
 typedef struct s_node
 {
 	enum e_node_type	type;
+	t_node				*left_node;
+	t_node				*right_node;
 }						t_node;
 
 /**
@@ -123,8 +125,9 @@ typedef struct s_node_pipe
 typedef struct s_node_heredoc
 {
 	enum e_node_type	type;
+	t_node				*left_node;
+	t_node				*right_node;
 	char				*delimiter;
-	t_node				*child_node;
 }						t_node_heredoc;
 
 /**
@@ -140,7 +143,8 @@ typedef struct s_node_heredoc
 typedef struct s_node_redir
 {
 	enum e_node_type	type;
-	t_node				*child_node;
+	t_node				*left_node;
+	t_node				*right_node;
 	char				*filename;
 	int					mode;
 	enum e_std_fd		in_or_out;
@@ -154,9 +158,13 @@ typedef struct s_node_redir
 typedef struct s_node_exec
 {
 	enum e_node_type	type;
+	t_node				*left_node;
+	t_node				*right_node;
 	char				*file_path;
 	// handle inbuilt
+	bool				inbuilt;
 	char				**argv;
+	char				**env;
 }						t_node_exec;
 
 #endif
