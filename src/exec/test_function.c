@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/19 17:05:56 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/19 20:49:42 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ t_node *set_test_list (void)
 	
 	exec_node1 = malloc_handler(sizeof(t_node_exec));
     exec_node1->type = EXEC; 
-    exec_node1->file_path = "/bin/ls";
-    exec_node1->argv = (char *[]){"/bin/ls", "-l", NULL}; 
+    exec_node1->file_path = "/bin/sleep";
+    exec_node1->argv = (char *[]){"/bin/sleep", "5", NULL}; 
     exec_node1->env = (char *[]){"PATH=/bin", NULL};
 
 	exec_node2 = malloc_handler(sizeof(t_node_exec));
