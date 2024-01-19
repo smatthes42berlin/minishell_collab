@@ -20,9 +20,9 @@ typedef struct s_node	t_node;
  */
 typedef struct s_main_data
 {
-	t_list_dc			*env_vars;
-	t_list_dc			*token_list;
-	t_list_dc			*ast;
+	t_list_d			*env_vars;
+	t_list_d			*token_list;
+	t_list_d			*ast;
 	char				*cli_input;
 	//.....
 }						t_main_data;
