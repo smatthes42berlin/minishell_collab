@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell_funcs.h                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/24 12:59:11 by smatthes         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_FUNCS_H
 # define MINISHELL_FUNCS_H
 
@@ -34,6 +22,9 @@ int		count_characters(char *cur_pos);
 int		symbol_is_valid(char *symbol, int symbol_length);
 int		create_symbol_token(char **cur_pos, t_token *token);
 int		create_text_token(char **cur_pos, t_token *token);
+void	print_token_list(t_list_dc *token_list);
+void	print_token(t_token *token);
+int		create_empty_token(char **cur_pos, t_token *token);
 
 /* parser */
 
