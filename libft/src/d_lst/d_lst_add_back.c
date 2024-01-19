@@ -14,7 +14,5 @@ void	d_lst_add_back(t_list_d **lst, t_list_d *new)
 		new->prev = NULL;
 		return;
 	}
-	new->prev = last;
-	new->next = NULL;
-	last->next = new;
+		*lst = new;
 }
