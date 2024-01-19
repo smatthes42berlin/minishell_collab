@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dc_lst_add_front.c                                 :+:      :+:    :+:   */
+/*   d_lst_new.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 09:52:03 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/19 17:17:32 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:17:33 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_main.h"
 
-void	dc_lst_add_front(t_list_d **lst, t_list_d *new)
+t_list_d	*d_lst_new(void *content)
 {
-	dc_lst_add_back(lst, new);
-	*lst = new;
+	t_list_d	*lst_ptr;
+
+	lst_ptr = malloc(sizeof(*lst_ptr));
+	if (!lst_ptr)
+		return (NULL);
+	lst_ptr->next = NULL;
+	lst_ptr->content = content;
+	lst_ptr->prev = NULL;
+	return (lst_ptr);
 }

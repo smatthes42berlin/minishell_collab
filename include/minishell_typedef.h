@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/19 15:30:15 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/20 09:27:13 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
  */
 typedef struct s_main_data
 {
-	t_list_dc			*env_vars;
-	t_list_dc			*token_list;
-	t_list_dc			*ast;
+	t_list_d			*env_vars;
+	t_list_d			*token_list;
+	t_list_d			*ast;
 	char				*cli_input;
 	//.....
 }						t_main_data;

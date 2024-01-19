@@ -6,7 +6,7 @@
 #    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/13 15:03:12 by smatthes         ###   ########.fr        #
+#    Updated: 2024/01/19 17:23:11 by smatthes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LINK = cc
 CC = cc
 
 INCLUDESRCPATH = ./include/
-SUBFOLDERSRC = . ascii/ convert/ io/ s_lst/ dc_lst/ mem/ split/ str/ int_arr/ get_next_line/ printf/ str_arr/ math/ files/
+SUBFOLDERSRC = . ascii/ convert/ io/ s_lst/ dc_lst/ d_lst/ mem/ split/ str/ int_arr/ get_next_line/ printf/ str_arr/ math/ files/
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dc_lst_swap.c                                      :+:      :+:    :+:   */
+/*   d_lst_swap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 09:52:03 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/19 17:17:32 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:26:12 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	swap_2(t_list_d *head);
 static void	swap_3(t_list_d *head);
 
-t_list_d	*dc_lst_swap(t_list_d **lst)
+t_list_d	*d_lst_swap(t_list_d **lst)
 {
 	t_list_d	*head;
 
@@ -37,10 +37,10 @@ static void	swap_2(t_list_d *head)
 	t_list_d	*second;
 
 	second = head->next;
-	head->next = second;
+	head->next = NULL;
 	head->prev = second;
 	second->next = head;
-	second->prev = head;
+	second->prev = NULL;
 }
 
 static void	swap_3(t_list_d *head)
@@ -48,10 +48,10 @@ static void	swap_3(t_list_d *head)
 	t_list_d	*second;
 
 	second = head->next;
+	
 	head->next = second->next;
-	second->prev = head->prev;
+	second->prev = NULL;
 	second->next->prev = head;
-	head->prev->next = second;
 	head->prev = second;
 	second->next = head;
 }
