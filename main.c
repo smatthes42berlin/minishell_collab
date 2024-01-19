@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:02:42 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/17 20:12:58 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/19 09:08:43 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	main(void)
 
 	init_main_data(&main_data);
 	// - set up and handle environment
-	//test_exece();
-	test_read();
-	list_test_use();
+	test_exece();
+	//test_read();
+	//list_test_use();
 	// while (1)
 	// {
 		

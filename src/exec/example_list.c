@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/17 20:14:37 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/19 09:07:14 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	init_main_data_test(t_main_data *main_data)
 void	test_exece(void)
 {
 	t_node_exec exec;
-	exec.file_path = "/bin/ls";
-	exec.argv = (char *[]){"/bin/ls", "-l", NULL}; 
+	exec.file_path = "/bin/cat";
+	exec.argv = (char *[]){"/bin/cat", "input", "input2",  NULL}; 
 	exec.env = (char *[]){"PATH=/bin", NULL};
 	execve_handler(&exec);
 }
