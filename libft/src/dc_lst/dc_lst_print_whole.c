@@ -6,16 +6,16 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 09:52:03 by smatthes          #+#    #+#             */
-/*   Updated: 2023/09/19 15:27:25 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:17:33 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_main.h"
 
-static void	print_short(t_list_dc *lst_ptr, const char *type);
-static void	print_long(t_list_dc *lst_ptr, const char *type);
+static void	print_short(t_list_d *lst_ptr, const char *type);
+static void	print_long(t_list_d *lst_ptr, const char *type);
 
-void	dc_lst_print_whole(t_list_dc *lst_ptr, const char *longShort,
+void	dc_lst_print_whole(t_list_d *lst_ptr, const char *longShort,
 		const char *type)
 {
 	if (!lst_ptr)
@@ -35,7 +35,7 @@ void	dc_lst_print_whole(t_list_dc *lst_ptr, const char *longShort,
 	return ;
 }
 
-static void	print_short(t_list_dc *lst_ptr, const char *type)
+static void	print_short(t_list_d *lst_ptr, const char *type)
 {
 	if (str_are_equal(type, "int"))
 		dc_lst_iter_node(lst_ptr, &dc_lst_print_one_int_short);
@@ -43,7 +43,7 @@ static void	print_short(t_list_dc *lst_ptr, const char *type)
 		dc_lst_iter_node(lst_ptr, &dc_lst_print_one_str_short);
 }
 
-static void	print_long(t_list_dc *lst_ptr, const char *type)
+static void	print_long(t_list_d *lst_ptr, const char *type)
 {
 	if (str_are_equal(type, "int"))
 		dc_lst_iter_node(lst_ptr, &dc_lst_print_one_int_long);

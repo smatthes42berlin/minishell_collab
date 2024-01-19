@@ -6,7 +6,7 @@
 /*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 15:23:36 by smatthes          #+#    #+#             */
-/*   Updated: 2023/11/15 17:00:18 by smatthes         ###   ########.fr       */
+/*   Updated: 2024/01/19 19:02:57 by smatthes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_list_dc
 	void				*content;
 	struct s_list_dc	*next;
 	struct s_list_dc	*prev;
-}						t_list_dc;
+}						t_list_d;
 
 typedef struct s_base_info
 {
@@ -132,10 +132,11 @@ t_list					*ft_lstmap(t_list *lst, void *(*f)(void *),
 
 /* double circular linked list */
 
-t_list_dc				*dc_lst_new(void *content);
+t_list_d				*dc_lst_new(void *content);
 
-void					dc_lst_print_whole(t_list_dc *lst_ptr,
-							const char *longShort, const char *type);
+void	dc_lst_print_whole(t_list_d *lst_ptr,
+						const char *longShort,
+						const char *type);
 void					dc_lst_print_one_str_long(void *lst_ptr_void);
 void					dc_lst_print_one_str_short(void *lst_ptr_void);
 void					dc_lst_print_one_int_long(void *lst_ptr_void);
@@ -143,21 +144,39 @@ void					dc_lst_print_one_int_short(void *lst_ptr_void);
 
 void					dc_lst_print_sep(void);
 
-void					dc_lst_add_back(t_list_dc **lst, t_list_dc *new);
-void					dc_lst_add_front(t_list_dc **lst, t_list_dc *new);
-int						dc_lst_size(t_list_dc *lst);
-void					dc_lst_clear(t_list_dc **lst, void (*del)(void *));
-void					dc_lst_del_one(t_list_dc *lst, void (*del)(void *));
-void					dc_lst_iter_node(t_list_dc *lst, void (*f)(void *));
-void					dc_lst_iter_content(t_list_dc *lst, void (*f)(void *));
-t_list_dc				*dc_lst_map(t_list_dc *lst, void *(*f)(void *),
+void					dc_lst_add_back(t_list_d **lst, t_list_d *new);
+void					dc_lst_add_front(t_list_d **lst, t_list_d *new);
+int						dc_lst_size(t_list_d *lst);
+void					dc_lst_clear(t_list_d **lst, void (*del)(void *));
+void					dc_lst_del_one(t_list_d *lst, void (*del)(void *));
+void					dc_lst_iter_node(t_list_d *lst, void (*f)(void *));
+void					dc_lst_iter_content(t_list_d *lst, void (*f)(void *));
+t_list_d				*dc_lst_map(t_list_d *lst, void *(*f)(void *),
 							void (*del)(void *));
-int						dc_lst_exactly_one(t_list_dc *lst_ptr);
-t_list_dc				*dc_lst_pop(t_list_dc **lst);
-int						dc_lst_exactly_one(t_list_dc *lst_ptr);
-int						dc_lst_exactly_two(t_list_dc *lst_ptr);
+int						dc_lst_exactly_one(t_list_d *lst_ptr);
+t_list_d				*dc_lst_pop(t_list_d **lst);
+int						dc_lst_exactly_one(t_list_d *lst_ptr);
+int						dc_lst_exactly_two(t_list_d *lst_ptr);
 
-t_list_dc				*dc_lst_swap(t_list_dc **lst);
+t_list_d				*dc_lst_swap(t_list_d **lst);
+
+/* double linked list non circular*/
+
+t_list_d				*d_lst_new(void *content);
+t_list_d				*d_lst_last(t_list_d *lst);
+void					d_lst_add_back(t_list_d **lst, t_list_d *new);
+void					d_lst_add_front(t_list_d **lst, t_list_d *new);
+void					d_lst_clear(t_list_d **lst, void (*del)(void *));
+void					d_lst_del_one(t_list_d *lst, void (*del)(void *));
+int						d_lst_exactly_one(t_list_d *lst_ptr);
+int						d_lst_exactly_two(t_list_d *lst_ptr);
+int						d_lst_size(t_list_d *lst);
+t_list_d				*d_lst_pop(t_list_d **lst);
+t_list_d				*d_lst_swap(t_list_d **lst);
+t_list_d				*d_lst_map(t_list_d *lst, void *(*f)(void *),
+							void (*del)(void *));
+void					d_lst_iter_content(t_list_d *lst, void (*f)(void *));
+void					d_lst_iter_node(t_list_d *lst, void (*f)(void *));
 
 /* output */
 
@@ -171,7 +190,7 @@ void					ft_putnbr_fd(int n, int fd);
 size_t					ft_putnbr_base_fd_l(int fd, long nbr, const char *base);
 size_t					ft_putnbr_base_fd_ul(int fd, unsigned long nbr,
 							const char *base);
-size_t					ft_putnbr_base_check(const char *base,
+size_t	ft_putnbr_base_check(const char *base,
 							t_base_info *base_info);
 
 /* atoi itoa */
@@ -204,15 +223,15 @@ int						ft_abs(int nb);
 /* files */
 
 int						count_lines_filename(char *filename);
-int						count_lines_size_filename(char *filename,
-							t_file_info *file_info);
+int	count_lines_size_filename(char *filename,
+								t_file_info *file_info);
 int						count_lines_fd(int fd);
 int						count_lines_size_fd(int fd, t_file_info *file_info);
 void					free_file_info_ptr(t_file_info *file_info);
 void					free_file_info(t_file_info file_info);
 int						count_cols_per_line_fd(int fd, t_file_info *file_info);
-int						count_cols_per_line_filename(char *filename,
-							t_file_info *file_info);
+int	count_cols_per_line_filename(char *filename,
+									t_file_info *file_info);
 int						get_file_size_filename(char *filename);
 int						get_file_size_fd(int fd);
 
