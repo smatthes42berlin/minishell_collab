@@ -8,7 +8,6 @@ int	tokenise(t_main_data *main_data)
 	cur_pos = main_data->cli_input;
 	while (*cur_pos)
 	{
-		printf("1\n");
 		skip_ws(&cur_pos);
 		if (get_token(&cur_pos, main_data))
 			return (printf("ERROR\n"));

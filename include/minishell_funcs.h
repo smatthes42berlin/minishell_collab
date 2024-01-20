@@ -22,7 +22,7 @@ int		count_characters(char *cur_pos);
 int		symbol_is_valid(char *symbol, int symbol_length);
 int		create_symbol_token(char **cur_pos, t_token *token);
 int		create_text_token(char **cur_pos, t_token *token);
-void	print_token_list(t_list_dc *token_list);
+void	print_token_list(t_list_d *token_list);
 void	print_token(t_token *token);
 int		create_empty_token(char **cur_pos, t_token *token);
 
