@@ -2,7 +2,7 @@
 
 int	append_token_list(t_main_data *main_data, t_token *token)
 {
-	t_list_dc	*new_lst_elem;
+	t_list_d	*new_lst_elem;
 
 	new_lst_elem = dc_lst_new(token);
 	if (!new_lst_elem)
