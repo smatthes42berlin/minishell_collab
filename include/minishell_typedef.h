@@ -1,19 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell_typedef.h                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/01/20 09:30:09 by smatthes         ###   ########.fr       */
-=======
-/*   Updated: 2024/01/20 09:25:09 by smatthes         ###   ########.fr       */
->>>>>>> 9d8782a (creation of token list workin 1.0)
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_TYPEDEF_H
 # define MINISHELL_TYPEDEF_H
 
@@ -43,6 +27,7 @@ typedef struct s_main_data
  * @param SQTEXT text in single quotes: 'Hello World'
  * @param DQTEXT text in double quotes: "Hello $0"
  * @param SYMBOL special control character of the shell, e.g. | >
+ * @param EMPTY an empty single or double quoted string
  */
 enum					e_token_type
 {
