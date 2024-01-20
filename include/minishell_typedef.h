@@ -1,4 +1,3 @@
-
 #ifndef MINISHELL_TYPEDEF_H
 # define MINISHELL_TYPEDEF_H
 
