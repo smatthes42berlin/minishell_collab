@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/17 19:58:03 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/20 09:17:27 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,19 @@ enum e_pid_satus
 };
 
 
+
 typedef struct s_pid_status
 {
 	pid_t 				pid_nbr;
 	int					pipefd[2];
 	enum e_pid_satus 	pid_satus;
-} t_pid_status;
+} 				t_pid_status;
+
+typedef struct  s_pid_list
+{
+	t_list_dc	*pid_list;
+}				t_pid_list;
+
 
 //--------------------------------------------------enum exec end --------------------------------------
 
@@ -160,6 +167,7 @@ typedef struct s_node
 typedef struct s_node_pipe
 {
 	enum e_node_type	type;
+	char				*name_Pipe;
 	t_node				*left_node;
 	t_node				*right_node;
 }						t_node_pipe;
@@ -207,6 +215,7 @@ typedef struct s_node_exec
 {
 	enum e_node_type	type;
 	char				*file_path;
+	char				*name_exec;
 	// handle inbuilt
 	char				**argv;
 	char				**env;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execve.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 12:04:34 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/16 16:45:46 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/20 11:13:46 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
  */
 void	execve_handler(t_node_exec *exec)
 {	
-	if (access_handler(exec->file_path, FILE_EXECUTABLE) == 0)
+	printf("Exec Path %s\n", exec->file_path);
+	fflush(stdout);
+	if (access_handler(exec->file_path, FILE_EXISTS) == 0)
 	{
 		if (execve(exec->file_path, exec->argv, exec->env) == -1)
 		{

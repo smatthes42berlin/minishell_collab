@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/19 20:49:42 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/20 11:16:22 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	init_main_data_test(t_main_data *main_data)
 	main_data->token_list = NULL;
 }
 
-void	test_exece(void)
-{
-	t_node_exec *exec = malloc_handler(sizeof(t_node_exec));
-	exec->file_path = "/bin/ls";
-	exec->argv = (char *[]){"/bin/ls", "-l", NULL}; 
-	exec->env = (char *[]){"PATH=/bin", NULL};
-	execve_handler(exec);
-}
+// void	test_exece(void)
+// {
+// 	t_node_exec *exec = malloc_handler(sizeof(t_node_exec));
+// 	exec->file_path = "/bin/ls";
+// 	exec->argv = (char *[]){"/bin/ls", "-l", NULL}; 
+// 	exec->env = (char *[]){"PATH=/bin", NULL};
+// 	execve_handler(exec);
+// }
 
 void	test_read(void)
 {
@@ -56,85 +56,188 @@ void	test_read(void)
 	close_handler(fd);	
 }
 
-t_node *set_test_list (void)
-{
-	// command `sleep 2 | ls -l | wc -l
-	t_node_exec *exec_node1;
-	t_node_exec *exec_node2;
-	t_node_exec *exec_node3;
-	t_node_pipe *pipe_node1;
-	t_node_pipe *pipe_node2;
-	t_node *ret;
-	//t_list_dc *list; 
-	
-	exec_node1 = malloc_handler(sizeof(t_node_exec));
-    exec_node1->type = EXEC; 
+t_node *set_test_list(void) {
+    // Initialisierung von exec_node1
+    t_node_exec *exec_node1 = malloc_handler(sizeof(t_node_exec));
+    exec_node1->type = EXEC;
+    exec_node1->name_exec = "sleep-command";
     exec_node1->file_path = "/bin/sleep";
-    exec_node1->argv = (char *[]){"/bin/sleep", "5", NULL}; 
-    exec_node1->env = (char *[]){"PATH=/bin", NULL};
 
-	exec_node2 = malloc_handler(sizeof(t_node_exec));
-    exec_node2->type = EXEC; 
+    char *args1[] = {"/bin/sleep", "6", NULL};
+    size_t argc1 = sizeof(args1) / sizeof(args1[0]);
+    exec_node1->argv = malloc_handler(argc1 * sizeof(char*));
+    for (size_t i = 0; i < argc1; i++) {
+        exec_node1->argv[i] = args1[i];
+    }
+
+    char *env1[] = {"PATH=/bin", NULL};
+    size_t envc1 = sizeof(env1) / sizeof(env1[0]);
+    exec_node1->env = malloc_handler(envc1 * sizeof(char*));
+    for (size_t i = 0; i < envc1; i++) {
+        exec_node1->env[i] = env1[i];
+    }
+
+    // Initialisierung von exec_node2
+    t_node_exec *exec_node2 = malloc_handler(sizeof(t_node_exec));
+    exec_node2->type = EXEC;
+    exec_node2->name_exec = "ls-command";
     exec_node2->file_path = "/bin/ls";
-    exec_node2->argv = (char *[]){"/bin/ls", "-l", NULL};
-    exec_node2->env = (char *[]){"PATH=/bin", NULL};
 
-	exec_node3 = malloc_handler(sizeof(t_node_exec));
-    exec_node3->type = EXEC; 
+    char *args2[] = {"/bin/ls", "-l", NULL};
+    size_t argc2 = sizeof(args2) / sizeof(args2[0]);
+    exec_node2->argv = malloc_handler(argc2 * sizeof(char*));
+    for (size_t i = 0; i < argc2; i++) {
+        exec_node2->argv[i] = args2[i];
+    }
+
+    exec_node2->env = malloc_handler(envc1 * sizeof(char*));
+    for (size_t i = 0; i < envc1; i++) {
+        exec_node2->env[i] = env1[i];
+    }
+
+    // Initialisierung von exec_node3
+    t_node_exec *exec_node3 = malloc_handler(sizeof(t_node_exec));
+    exec_node3->type = EXEC;
+    exec_node3->name_exec = "wc-command";
     exec_node3->file_path = "/bin/wc";
-    exec_node3->argv = (char *[]){"/bin/wc", "-l", NULL}; 
-    exec_node3->env = (char *[]){"PATH=/bin", NULL};
 
-	pipe_node2 = malloc_handler(sizeof(t_node_pipe));
-	pipe_node2->type = PIPE;
-	pipe_node2->left_node = malloc_handler(sizeof(t_node));
-	pipe_node2->left_node->node_type = exec_node2;
-	pipe_node2->left_node->type = EXEC;
-	pipe_node2->right_node = malloc_handler(sizeof(t_node));
-	pipe_node2->right_node->node_type = exec_node3;
-	pipe_node2->right_node->type = EXEC;
+    char *args3[] = {"/bin/wc", "-l", NULL};
+    size_t argc3 = sizeof(args3) / sizeof(args3[0]);
+    exec_node3->argv = malloc_handler(argc3 * sizeof(char*));
+    for (size_t i = 0; i < argc3; i++) {
+        exec_node3->argv[i] = args3[i];
+    }
 
-	pipe_node1 = malloc_handler(sizeof(t_node_pipe));
-	pipe_node1->type = PIPE;
-	pipe_node1->left_node = malloc_handler(sizeof(t_node));
-	pipe_node1->left_node->node_type = exec_node1;
-	pipe_node1->left_node->type = EXEC;
-	pipe_node1->right_node = malloc_handler(sizeof(t_node));
-	pipe_node1->right_node->node_type = pipe_node2;
-	pipe_node1->right_node->type = PIPE;
+    exec_node3->env = malloc_handler(envc1 * sizeof(char*));
+    for (size_t i = 0; i < envc1; i++) {
+        exec_node3->env[i] = env1[i];
+    }
 
-	// pipe_node2 = malloc_handler(sizeof(t_node_pipe));
-	// pipe_node2->type = PIPE;
-	// pipe_node2->left_node = malloc_handler(sizeof(t_node_exec));
-	// pipe_node2->left_node->node_type = exec_node2;
-	// pipe_node2->left_node->type = EXEC;
-	// pipe_node2->right_node = malloc_handler(sizeof(t_node_exec));
-	// pipe_node2->right_node->node_type = exec_node3;
-	// pipe_node2->left_node->type = EXEC;
+    // Initialisierung von pipe_node2
+    t_node_pipe *pipe_node2 = malloc_handler(sizeof(t_node_pipe));
+    pipe_node2->type = PIPE;
+    pipe_node2->name_Pipe = "2. second Pipe";
+    pipe_node2->left_node = malloc_handler(sizeof(t_node));
+    pipe_node2->left_node->node_type = exec_node2;
+    pipe_node2->left_node->type = EXEC;
+    pipe_node2->right_node = malloc_handler(sizeof(t_node));
+    pipe_node2->right_node->node_type = exec_node3;
+    pipe_node2->right_node->type = EXEC;
 
-	// pipe_node1 = malloc_handler(sizeof(t_node_pipe));
-	// pipe_node1->type = PIPE;
-	// pipe_node1->left_node = malloc_handler(sizeof(t_node_exec));
-	// pipe_node1->left_node->node_type = exec_node1;
-	// pipe_node1->left_node->type = EXEC;
-	// pipe_node1->right_node = malloc_handler(sizeof(t_node_pipe));
-	// pipe_node1->right_node->node_type = pipe_node2;
-	// pipe_node1->right_node->type = PIPE;
+    // Initialisierung von pipe_node1
+    t_node_pipe *pipe_node1 = malloc_handler(sizeof(t_node_pipe));
+    pipe_node1->type = PIPE;
+    pipe_node1->name_Pipe = "1. first Pipe";
+    pipe_node1->left_node = malloc_handler(sizeof(t_node));
+    pipe_node1->left_node->node_type = exec_node1;
+    pipe_node1->left_node->type = EXEC;
+    pipe_node1->right_node = malloc_handler(sizeof(t_node));
+    pipe_node1->right_node->node_type = pipe_node2;
+    pipe_node1->right_node->type = PIPE;
 
-	// list = malloc_handler(sizeof(t_list_dc));
-	// list->prev = NULL;
-	// list->content = exec_node1;
-	// list->next = malloc_handler(sizeof(t_list_dc));
-	// list->next->prev = list;
-	// list->next->content = exec_node2;
-	// list->next->next = malloc_handler(sizeof(t_list_dc));
-	// list->next->next->prev = list->next;
-	// list->next->next->content = exec_node3;
-	// list->next->next->next = NULL;
+    // Erstellen des Rückgabeknotens
+    t_node *ret = malloc_handler(sizeof(t_node));
+    ret->node_type = pipe_node1;
+    ret->type = PIPE;
+
+    return ret;
+}
+
+
+
+
+t_node *set_test_list_2(void) {
+    // command `ls -l | wc -l`
+    t_node_exec *exec_node2;
+    t_node_exec *exec_node3;
+    t_node_pipe *pipe_node1;
+    t_node *ret;
+
+    // Initialisierung von exec_node2
+    exec_node2 = malloc_handler(sizeof(t_node_exec));
+    exec_node2->type = EXEC;
+    exec_node2->name_exec = "ls-command";
+    exec_node2->file_path = "/bin/ls";
+
+    // Dynamische Allokation und Initialisierung für argv von exec_node2
+    char *args2[] = {"/bin/ls", "-l", NULL};
+    size_t argc2 = sizeof(args2) / sizeof(args2[0]);
+    exec_node2->argv = malloc_handler(argc2 * sizeof(char*));
+    for (size_t i = 0; i < argc2; i++) {
+        exec_node2->argv[i] = args2[i];
+    }
+
+    // Initialisierung von env für exec_node2 (wenn erforderlich)
+    exec_node2->env = malloc_handler(1 * sizeof(char*));
+    exec_node2->env[0] = NULL;
+
+    // Initialisierung von exec_node3
+    exec_node3 = malloc_handler(sizeof(t_node_exec));
+    exec_node3->type = EXEC;
+    exec_node3->name_exec = "wc-command";
+    exec_node3->file_path = "/bin/wc";
+
+    // Dynamische Allokation und Initialisierung für argv von exec_node3
+    char *args3[] = {"/bin/wc", "-l", NULL};
+    size_t argc3 = sizeof(args3) / sizeof(args3[0]);
+    exec_node3->argv = malloc_handler(argc3 * sizeof(char*));
+    for (size_t i = 0; i < argc3; i++) {
+        exec_node3->argv[i] = args3[i];
+    }
+
+    // Dynamische Allokation und Initialisierung für env von exec_node3
+    char *env3[] = {"PATH=/bin", NULL};
+    size_t envc3 = sizeof(env3) / sizeof(env3[0]);
+    exec_node3->env = malloc_handler(envc3 * sizeof(char*));
+    for (size_t i = 0; i < envc3; i++) {
+        exec_node3->env[i] = env3[i];
+    }
+
+    // Initialisierung von pipe_node1
+    pipe_node1 = malloc_handler(sizeof(t_node_pipe));
+    pipe_node1->type = PIPE;
+    pipe_node1->name_Pipe = "1. first Pipe";
+    pipe_node1->left_node = malloc_handler(sizeof(t_node));
+    pipe_node1->left_node->node_type = exec_node2;
+    pipe_node1->left_node->type = EXEC;
+    pipe_node1->right_node = malloc_handler(sizeof(t_node));
+    pipe_node1->right_node->node_type = exec_node3;
+    pipe_node1->right_node->type = EXEC;
+
+    // Erstellen des Rückgabeknotens
+    ret = malloc_handler(sizeof(t_node));
+    ret->node_type = pipe_node1;
+    ret->type = PIPE;
+
+    return ret;
+}
+
+
+t_node *set_test_list_3 (void)
+{
+	// command ` ls -l | wc -l
+	t_node *ret;
+
+	t_node_exec *exec = malloc_handler(sizeof(t_node_exec));
+	exec->file_path = "/bin/ls";
+	char *args[] = {"/bin/ls", "-l", NULL};
+    size_t argc = sizeof(args) / sizeof(args[0]);
+
+    exec->argv = malloc_handler(argc * sizeof(char*));
+    for (size_t i = 0; i < argc; i++) {
+        exec->argv[i] = args[i];
+    }
+	char *envp[] = {"PATH=/bin", NULL};
+    size_t envc = sizeof(envp) / sizeof(envp[0]);
+
+    exec->env = malloc_handler(envc * sizeof(char*));
+    for (size_t i = 0; i < envc; i++) {
+        exec->env[i] = envp[i];
+    }
 
 	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = pipe_node1;
-	ret->type = PIPE;
+	ret->node_type = exec;
+	ret->type = EXEC;
 	return (ret);	
 }
 
@@ -152,5 +255,17 @@ void print_test_list (t_list_dc *list)
 
 void list_test_use(void)
 {
-	navigate_tree_forward(set_test_list());
+	//int pipefd[2];
+    pid_t pid;
+
+	pid = fork_handler();
+	if (pid == 0) // Kindprozess
+    {
+			navigate_tree_forward(set_test_list_2());
+    }
+    else
+	{
+		wait(NULL);
+	}
+	printf("Ausfürung beendet\n");
 }
