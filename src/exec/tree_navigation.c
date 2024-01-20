@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 16:25:45 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/20 19:22:15 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/20 20:58:49 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,31 @@ void navigate_tree_forward(t_node *node)
     }
 	else if (node->type == REDIR)
 	{
-		printf("i am at the REDIR\n");
-		t_node_redir *redim_node = (t_node_redir *)node->node_type;
-		//Someting to du for dup2 //
-		navigate_tree_forward(redim_node->child_node);
+		t_node_redir *redir_node = (t_node_redir *)node->node_type;
+        // printf("Exec Node: %s\n", redir_node->filename);
+        // fflush(stdout);
+        pid_t pid;
+        int fd;
+        pid = fork_handler();
+        if (pid == 0)
+        {
+            fd = open_handler(redir_node->filename,redir_node->mode);
+            dup2(fd, redir_node->in_or_out);
+            close(fd);
+            navigate_tree_forward(redir_node->child_node);
+        }
+        else
+        {
+            waitpid(pid, NULL, 0);
+        }
 	}
     else if (node->type == EXEC)
 	{
 		t_node_exec *exec_node = (t_node_exec *)node->node_type;
-		//printf("Exec Node: %s\n", exec_node->file_path);
-        fflush(stdout);
+		// printf("Exec Node: %s\n", exec_node->file_path);
+        // fflush(stdout);
 		execve_handler(exec_node);
 	}
     else 
         printf("No Nodetype found\n");
 }
-
-// void pid_nbr_handler(t_pid_status *pid_satus)
-// {
-	
-// }

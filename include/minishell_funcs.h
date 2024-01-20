@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/20 19:21:17 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/20 20:38:29 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,12 @@ void 	*malloc_handler(size_t bytes);
 void error_code_handler(int error_code, const char *msg, const char *subj, const char *mode);
 
 
-/* test */
-t_node_exec *test_cmd_exec(char *command, char *commandname, char *flag);
+/* test enviroment */
+t_node_exec *test_cmd_exec(char *name, char *command, char *flag);
 t_node_pipe *test_cmd_pipe(char *name, enum e_node_type type_left, enum e_node_type type_right, void *node_left, void *node_right);
+t_node_redir *test_cmd_redir(char *name, char *filename, enum e_open_mode mode, enum e_std_fd in_or_out,
+                            enum e_node_type child_typ, void *child_node);
 
-
-
-
-
-void	test_exece(void);
 void	test_read(void);
-void	init_main_data_test(t_main_data *main_data);
 void list_test_use(void);
 #endif

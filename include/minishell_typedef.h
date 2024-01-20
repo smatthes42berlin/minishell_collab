@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/20 09:17:27 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/20 20:18:04 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ typedef struct s_node_redir
 	enum e_node_type	type;
 	t_node				*child_node;
 	char				*filename;
+	char				*name_redir;
 	enum e_open_mode	mode;
 	enum e_std_fd		in_or_out;
 }						t_node_redir;
