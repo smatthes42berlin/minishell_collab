@@ -32,8 +32,9 @@ SRC = 	main.c \
 		print_token_list.c \
 		token_identify_operator.c \
 		token_get.c \
-		check_syntax_n_heredoc.c
-		
+		check_syntax_n_heredoc.c \
+		parser_main.c
+
 		
 OBJFNAME = $(SRC:.c=.o)
 OBJ = $(patsubst %,$(PATHOBJ)%,$(OBJFNAME))
