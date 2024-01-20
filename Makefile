@@ -6,7 +6,7 @@
 #    By: rene <rene@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/20 07:22:34 by rene             ###   ########.fr        #
+#    Updated: 2024/01/20 19:33:47 by rene             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ VPATH = $(PATHSRC) $(INCLUDEPATH)
 # list all filenames (without path) here
 SRC = 	main.c \
 		access.c \
+		test_command.c \
 		test_function.c \
 		tree_navigation.c \
 		errno_print.c \

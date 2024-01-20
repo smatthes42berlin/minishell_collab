@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/20 10:22:03 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/20 19:21:17 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ void error_code_handler(int error_code, const char *msg, const char *subj, const
 
 
 /* test */
+t_node_exec *test_cmd_exec(char *command, char *commandname, char *flag);
+t_node_pipe *test_cmd_pipe(char *name, enum e_node_type type_left, enum e_node_type type_right, void *node_left, void *node_right);
+
+
+
+
+
 void	test_exece(void);
 void	test_read(void);
 void	init_main_data_test(t_main_data *main_data);
