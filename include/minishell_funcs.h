@@ -34,6 +34,8 @@ int		check_syntax_n_heredoc(t_main_data *main_data);
 
 /* parser */
 
+int		parse(t_main_data *main_data);
+
 /* executor */
 
 #endif
