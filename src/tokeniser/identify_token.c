@@ -24,7 +24,6 @@ int	create_text_token(char **cur_pos, t_token *token)
 	token->type = TEXT;
 	token->value = token_val;
 	*cur_pos = *cur_pos + num_characters;
-	printf("created text token\n");
 	return (0);
 }
 
@@ -40,12 +39,10 @@ int	create_symbol_token(char **cur_pos, t_token *token)
 	token->type = SYMBOL;
 	token->value = token_val;
 	symbol_valid = symbol_is_valid(token_val, num_symbols);
-	printf("symbol length %d\n", num_symbols);
 	if (symbol_valid)
 		return (printf("Syntax error near unexpected Token %c\n",
 						(*cur_pos)[symbol_valid]));
 	*cur_pos = *cur_pos + num_symbols;
-	printf("created symbol token\n");
 	return (0);
 }
 
@@ -68,7 +65,6 @@ int	creat_quoted_token(char **cur_pos, t_token *token, char quote_type)
 		token->type = SQTEXT;
 	token->value = token_val;
 	*cur_pos = *cur_pos + closing_quote + 1;
-	printf("created quoted token\n");
 	return (0);
 }
 
@@ -77,6 +73,5 @@ int	create_empty_token(char **cur_pos, t_token *token)
 	token->type = EMPTY;
 	token->value = NULL;
 	(*cur_pos)++;
-	printf("created empty token\n");
 	return (0);
 }

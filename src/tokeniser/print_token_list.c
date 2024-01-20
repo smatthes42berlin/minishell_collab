@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-void	print_token_list(t_list_dc *token_list)
+void	print_token_list(t_list_d *token_list)
 {
-	t_list_dc	*head;
-	t_list_dc	*next;
+	t_list_d	*head;
+	t_list_d	*next;
 
 	head = token_list;
 	if (!token_list)
