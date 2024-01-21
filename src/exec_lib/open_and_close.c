@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:09:12 by rene              #+#    #+#             */
-/*   Updated: 2024/01/17 07:02:33 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/21 06:43:45 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int open_handler(const char *path, enum e_open_mode  mode)
     
     result = -1;
     if(access_handler(path,FILE_EXISTS) != 0 && mode != FILE_ONLY_READING)
-        result = open(path, mode | O_CREAT, S_IRWXU);
+        result = open(path, mode | O_CREAT, 0644);
     else
         result = open(path, mode);
     error_code_handler(errno, "ERR-open path ", path ,open_mode_to_str(mode));   

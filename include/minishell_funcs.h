@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/20 20:38:29 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/21 08:42:42 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int     close_handler(int fd);
 int		access_handler(const char *path, enum e_access_mode mode);
 void	execve_handler(t_node_exec *exec);
 pid_t   fork_handler(void);
+t_pid_list *init_pid_list(t_pid_list *list);
 enum    e_pid_satus process_status(pid_t pid, bool block);
 void    pipe_handler(int *pipefd);
 void    pipe_setting(int *pipefd, bool open);

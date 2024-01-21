@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 16:25:45 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/20 20:58:49 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/21 08:55:21 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,25 @@ void navigate_tree_forward(t_node *node)
 	}
     else 
         printf("No Nodetype found\n");
+}
+
+
+
+void add_pid_list(t_pid_list *pid_li, pid_t pid, int pipefild[2])
+{
+    t_pid_status *pid_satus;
+    t_list_dc *new_node;
+    
+    init_pid_list(pid_li);
+    
+    pid_satus = malloc_handler(sizeof(t_pid_status));
+    new_node = malloc_handler(sizeof(t_list_dc));
+    pid_satus->pid_nbr = pid;
+    ft_memcpy(pid_satus->pipefd, pipefild, sizeof(pid_satus->pipefd));
+    
+    pid_li->pid_list->content = pid_satus;
+    pid_li->pid_list->next = new_node;
+    pid_li->pid_list->next->next = NULL;
+    pid_li->pid_list->next->prev = pid_li;
+    pid_li = pid_li->pid_list->next;
 }
