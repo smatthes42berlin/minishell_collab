@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 09:25:27 by rene              #+#    #+#             */
-/*   Updated: 2024/01/21 08:44:48 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/21 20:33:47 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,15 @@ enum e_pid_satus process_status(pid_t pid, bool block)
     return PID_RUNNING;
 }
 
-t_pid_list *init_pid_list(t_pid_list *list)
+t_pid_list *init_pid_list()
 {
     t_pid_list *ret_list;
     
-    if (list == NULL)
-    {
+
         ret_list = malloc_handler(sizeof(t_pid_list));
         ret_list->pid_list = malloc_handler(sizeof(t_list_dc));
         ret_list->pid_list->prev = NULL;
         ret_list->pid_list->next = NULL;
         return (ret_list);
         printf("\n\n PID_list_wurde_initailisiert \n\n");
-    }
-    
-    return (list);
 }

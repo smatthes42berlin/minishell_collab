@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:02:42 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/21 07:08:26 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/21 20:19:32 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,22 @@ int	main(void)
 	//test_exece();
 	//test_read();
 	//list_test_use();
-	while (1)
-	{
-		list_test_use();
+	list_test_use();
+
+	// while (1)
+	// {
+	// 	//list_test_use();
 		
-		// watch out for eof and possbile return of null
-		// main_data.cli_input = readline("cli>");
-		// if (tokenise(&main_data) == -1)
-		// 	return (1);
-		// if (parse(main_data) == -1)
-		// 	return (2);
-		// - (Check if inbuilts that change main process, e.g. cd)
-		// if (execute(main_data) == -1)
-		// 	return (3);
-	}
+	// 	// watch out for eof and possbile return of null
+	// 	// main_data.cli_input = readline("cli>");
+	// 	// if (tokenise(&main_data) == -1)
+	// 	// 	return (1);
+	// 	// if (parse(main_data) == -1)
+	// 	// 	return (2);
+	// 	// - (Check if inbuilts that change main process, e.g. cd)
+	// 	// if (execute(main_data) == -1)
+	// 	// 	return (3);
+	// }
 	return (0);
 }
 

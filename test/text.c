@@ -4,22 +4,27 @@
 #include <sys/wait.h>
 
 typedef struct s_list {
-    pid_t data;
+    void *data;
     struct s_list *next;
 } t_list;
 
-t_list *create_node(int data) {
+
+t_list *create_node(pid_t pid) {
     t_list *new_node = malloc(sizeof(t_list));
-    if (new_node == NULL) {
+    pid_t *pid_ptr = malloc(sizeof(pid_t));
+    if (new_node == NULL || pid_ptr == NULL) {
+        free(new_node);  // Vermeidung von Speicherlecks
+        free(pid_ptr);
         return NULL;
     }
-    new_node->data = data;
+    *pid_ptr = pid;
+    new_node->data = pid_ptr;
     new_node->next = NULL;
     return new_node;
 }
 
-void append_node(t_list **head, int data) {
-    t_list *new_node = create_node(data);
+void append_node(t_list **head, pid_t pid) {
+    t_list *new_node = create_node(pid);
     if (*head == NULL) {
         *head = new_node;
     } else {
@@ -31,14 +36,19 @@ void append_node(t_list **head, int data) {
     }
 }
 
+
 void print_list(t_list *head) {
     t_list *current = head;
     while (current != NULL) {
-        printf("%d ", current->data);
+        pid_t *pid_ptr = (pid_t *)current->data;
+        if (pid_ptr != NULL) {
+            printf("%d ", *pid_ptr);
+        }
         current = current->next;
     }
     printf("\n");
 }
+
 
 void free_list(t_list *head) {
     t_list *tmp;
@@ -60,12 +70,12 @@ void fill_list_recursively(t_list **list, int current, int max) {
     if (pid == 0) { // Kindprozess
         // Hier könnten Sie execve aufrufen, um einen Befehl auszuführen
         // ...
-
+        fill_list_recursively(list, current + 1, max);
         exit(0); // Beenden des Kindprozesses
     } else if (pid > 0) { // Elternprozess
-        int status;
+       int status;
         printf("%i\n", pid);
-        waitpid(pid, &status, 0); // Wartet auf die Beendigung des Kindprozesses
+       waitpid(pid, &status, 0); // Wartet auf die Beendigung des Kindprozesses
 
         // Fügen Sie hier Informationen zur Liste hinzu, z.B. den PID
         append_node(list, pid);

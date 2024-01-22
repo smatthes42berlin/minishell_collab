@@ -6,7 +6,7 @@
 #    By: rene <rene@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/20 19:33:47 by rene             ###   ########.fr        #
+#    Updated: 2024/01/22 07:53:23 by rene             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC = 	main.c \
 		fork.c \
 		malloc.c \
 		open_and_close.c \
+		pid_list_handler.c \
 		pipe.c \
 		tokenise_main.c \
 		tokenise_identify_token.c

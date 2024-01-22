@@ -6,7 +6,7 @@
 /*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/21 07:08:53 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/22 13:35:13 by rene             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,24 @@ t_node *set_cmd_3(void)
 	return (ret);	
 }
 
+// tree command exeample "cmd | cmd | cmd | cmd"
+t_node *set_cmd_4(void) 
+{
+ 	t_node *ret;
+
+	ret = malloc_handler(sizeof(t_node));
+	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, PIPE, 
+		test_cmd_exec("/bin/ls", "/bin/sleep", "5"),
+		test_cmd_pipe("Pipe 2",  EXEC, PIPE, 
+			test_cmd_exec("grep", "/bin/ls", "-l"),
+			test_cmd_pipe("Pipe 2",  EXEC, EXEC,
+				test_cmd_exec("grep", "/bin/grep", "input"),
+				test_cmd_exec("grep", "/bin/sort", "-r"))));
+	ret->type = PIPE;
+	return (ret);	
+}
+
+
 //tree on redir + command
 t_node *set_redir_in_1(void)
 {
@@ -102,19 +120,57 @@ t_node *set_redir_out_1(void)
 	return (ret);
 }
 
+void wait_for_all_processes(t_list *pid_list) {
+    t_list *current = pid_list;
+    while (current != NULL) {
+        pid_t *pid_ptr = (pid_t *)(current->content);
+        if (pid_ptr != NULL) {
+            waitpid(*pid_ptr, NULL, 0);
+        }
+        current = current->next;
+    }
+}
+
 void list_test_use(void)
 {
 	//int pipefd[2];
-    pid_t pid;
+	t_list *pid_list;
 
-	pid = fork_handler();
-	if (pid == 0) // Kindprozess
-    {		
-			navigate_tree_forward(set_cmd_3());
-    }
-    else
-	{
-		wait(NULL);
-	}
+
+	pid_list = NULL; //init_pid_list();
+	//pid = fork_handler();
+	
+	navigate_tree_forward(set_cmd_3(), &pid_list);
+	//print_pid_list(pid_list);
+	wait_for_all_processes(pid_list);
+	print_list(pid_list);
+	free_list(pid_list);
 	printf("Ausfürung beendet\n");
+
 }
+
+
+
+
+// void list_test_use(void)
+// {
+// 	//int pipefd[2];
+// 	t_list *pid_list;
+// 	pid_t pid;
+
+// 	pid_list = NULL; //init_pid_list();
+// 	pid = fork_handler();
+// 	if (pid == 0) // Kindprozess
+//     {		
+// 			navigate_tree_forward(set_cmd_4(), &pid_list);
+// 			//print_pid_list(pid_list);
+//     }
+//     else
+// 	{
+// 		waitpid(pid, NULL, 0);
+// 	}
+// 	print_list(pid_list);
+// 	free_list(pid_list);
+// 	printf("Ausfürung beendet\n");
+
+// }
