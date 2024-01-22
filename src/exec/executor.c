@@ -6,7 +6,7 @@
 /*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 18:22:41 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/22 20:23:39 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/22 21:12:40 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ void	executor(void)
 {
 	pid_t	pid;
 	t_node	*example;
-
+	t_list *pid_list;
+	
+	pid_list = NULL;
 	example = example_selection();
 	pid = fork_handler();
 	if (pid == 0)
 	{
-		navigate_tree_forward(example);
+		navigate_tree_forward(example, &pid_list);
 	}
 	else
 	{
