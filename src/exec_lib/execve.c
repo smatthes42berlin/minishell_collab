@@ -6,7 +6,7 @@
 /*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 12:04:34 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/22 18:43:32 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/22 19:56:25 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
  *
  * @param exec struct for execve
  */
-void	execve_handler(t_node_exec *exec)
+void	execve_handler(const char *file_path, char **argv, char **env)
 {
-	if (access_handler(exec->file_path, FILE_EXISTS) == 0)
+	if (access_handler(file_path, FILE_EXISTS) == 0)
 	{
-		if (execve(exec->file_path, exec->argv, exec->env) == -1)
+		if (execve(file_path, argv, env) == -1)
 		{
-			error_code_handler(errno, "ERR-execve", exec->file_path, " ");
+			error_code_handler(errno, "ERR-execve", file_path, " ");
 			exit(EXIT_FAILURE);
 		}
 	}

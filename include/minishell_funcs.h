@@ -6,7 +6,7 @@
 /*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/22 18:48:31 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/22 20:23:59 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ char				*is_dquote(char c);
 /* parser */
 
 /* executor */
-void				navigate_tree_forward(t_node *node, t_list **pid_list);
-void				list_test_use(void);
+void				navigate_tree_forward(t_node *node);
+void				executor(void);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
 int					close_handler(int fd);
 int					access_handler(const char *path, enum e_access_mode mode);
-void				execve_handler(t_node_exec *exec);
+void				execve_handler(const char *file_path, char **argv,
+						char **env);
 pid_t				fork_handler(void);
 enum e_pid_satus	process_status(pid_t pid, bool block);
 void				pipe_handler(int *pipefd);
