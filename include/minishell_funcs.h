@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_funcs.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/22 08:44:01 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/22 16:41:52 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ enum    e_pid_satus process_status(pid_t pid, bool block);
 void    pipe_handler(int *pipefd);
 void    pipe_setting(int *pipefd, bool open);
 void 	*malloc_handler(size_t bytes);
-t_list *create_node(pid_t pid);
-void append_node(t_list **head, pid_t pid);
-void print_list(t_list *head);
-void free_list(t_list *head);
-t_list *clone_list(t_list *original);
+void append_node_pid_list(t_list **head, pid_t pid);
+void print_list_pid_list(t_list *head);
+void free_list_pid_list(t_list *head);
+//t_list *clone_list(t_list *original);
+void wait_for_all_processes(t_list *pid_list);
 
 
 /* error */

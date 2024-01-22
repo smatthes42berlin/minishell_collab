@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tree_navigation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 16:25:45 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/22 13:28:49 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/22 16:44:49 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//t_pid_list *add_pid_list(t_pid_list *pid_li, pid_t pid, int pipefild[2]);
-//t_pid_list *clone_pid_list(const t_pid_list *original_list);
-//enum e_node_type node_type(t_node *node);
-
-// void print_pid_list(const t_pid_list *pid_list) {
-//     if (pid_list == NULL || pid_list->pid_list == NULL) {
-//         printf("Die PID-Liste ist leer oder nicht initialisiert.\n");
-//         return;
-//     }
-
-//     t_list_dc *current = pid_list->pid_list;
-//     while (current != NULL) {
-//         t_pid_status *pid_status = (t_pid_status *)current->content;
-//         if (pid_status != NULL) {
-//             printf("PID: %d\n", pid_status->pid_nbr);
-//         }
-//         current = current->next;
-//     }
-// }
 
 void type_exec (t_node *node);
 void type_redim (t_node *node, t_list *pid_list);
@@ -38,76 +18,68 @@ enum e_node_type node_type(t_node *node);
 
 void navigate_tree_forward(t_node *node, t_list **pid_list)
 {
-    //t_pid_list *cloned_pid_list;
-            
+//t_pid_list *cloned_pid_list;
 	if (node == NULL)
 		error_code_handler(1000, "ERR-tree-navigation-forward:", " no node found", "");
 		
-    if (node->type == PIPE)
-    { 
-        t_node_pipe *pipe_node = (t_node_pipe *)node->node_type;
-        int pipefd[2];
-        pid_t pid;
-        pipe_handler(pipefd);
-        pid = fork_handler();
+	if (node->type == PIPE)
+	{ 
+		t_node_pipe *pipe_node = (t_node_pipe *)node->node_type;
+		int pipefd[2];
+		pid_t pid;
+		pipe_handler(pipefd);
+		pid = fork_handler();
 
-        if (pid == 0) // Kindprozess
-        {
-            
-           pipe_setting(pipefd, true);
-           if (node_type(pipe_node->left_node) == REDIR){
-                type_redim(pipe_node->left_node, *pid_list);
-            }
-            else if (node_type(pipe_node->left_node) == EXEC){
-                type_exec(pipe_node->left_node);
-            }
-           
-            //navigate_tree_forward(pipe_node->left_node, pid_list);
-        }
-        else // Elternprozess
-        {
-            append_node(pid_list, pid);
-            printf("New pid nbr: %i\n", pid);
-            pipe_setting(pipefd, false);
-            if (node_type(pipe_node->left_node) == PIPE){
-                navigate_tree_forward(pipe_node->left_node, pid_list);
-            }
-            // Geschachteltes Fork für den rechten Knoten
-            if (node_type(pipe_node->right_node) == REDIR || 
-                node_type(pipe_node->right_node) == EXEC) {
-                pid_t nested_pid = fork_handler();
+		if (pid == 0) // Kindprozess
+		{   
+		pipe_setting(pipefd, true);
+		// if (node_type(pipe_node->left_node) == REDIR){
+		// 		type_redim(pipe_node->left_node, *pid_list);
+		// 	}
+		// 	else if (node_type(pipe_node->left_node) == EXEC){
+		// 		type_exec(pipe_node->left_node);
+		// 	}
 
-                if (nested_pid == 0) { // Geschachtelter Kindprozess
-                    if (node_type(pipe_node->right_node) == REDIR) {
-                        type_redim(pipe_node->right_node, *pid_list);
-                    } else if (node_type(pipe_node->right_node) == EXEC) {
-                        type_exec(pipe_node->right_node);
-                    }
-                    exit(0);
-                } else { // Elternprozess des geschachtelten Forks
-                    waitpid(nested_pid, NULL, 0);
-                }
-            } 
-            else {
-                navigate_tree_forward(pipe_node->right_node, pid_list);
-            }
-            
+		navigate_tree_forward(pipe_node->left_node, pid_list);
+		}
+		else // Elternprozess
+		{
+			
+			append_node_pid_list(pid_list, pid);
+			pipe_setting(pipefd, false);
+			// if (node_type(pipe_node->left_node) == PIPE){
+			// 	navigate_tree_forward(pipe_node->left_node, pid_list);
+			// }
+			// // Geschachteltes Fork für den rechten Knoten
+			// if (node_type(pipe_node->right_node) == REDIR || 
+			// 	node_type(pipe_node->right_node) == EXEC) {
+			// 	pid_t nested_pid = fork_handler();
 
-            //free(cloned_list);
-        }
-        
-    }
+			// 	if (nested_pid == 0) { // Geschachtelter Kindprozess
+			// 		if (node_type(pipe_node->right_node) == REDIR) {
+			// 			type_redim(pipe_node->right_node, *pid_list);
+			// 		} else if (node_type(pipe_node->right_node) == EXEC) {
+			// 			type_exec(pipe_node->right_node);
+			// 		}
+			// 		exit(0);
+			// 	} else { // Elternprozess des geschachtelten Forks
+			// 		waitpid(nested_pid, NULL, 0);
+			// 	}
+			// } 
+			//else {
+				navigate_tree_forward(pipe_node->right_node, pid_list);
+			//}
+			//waitpid(pid, NULL, 0);
+		}
+		
+	}
 	else if (node->type == REDIR)
-        type_redim(node, *pid_list);
-    else if (node->type == EXEC)
-        type_exec(node);
-	// {
-	// 	t_node_exec *exec_node = (t_node_exec *)node->node_type;
-	// 	execve_handler(exec_node);
-	// }
-    else 
-        printf("No Nodetype found\n");
-    //print_list(*pid_list);
+		type_redim(node, *pid_list);
+	else if (node->type == EXEC)
+		type_exec(node);
+	else{
+		printf("No Nodetype found\n");
+	}
 }
 
 void type_exec (t_node *node)
@@ -130,9 +102,7 @@ void type_redim (t_node *node, t_list *pid_list)
         navigate_tree_forward(redir_node->child_node, &pid_list);
     }
     else
-    {
         waitpid(pid, NULL, 0);
-    }  
 }
 
 enum e_node_type node_type(t_node *node)

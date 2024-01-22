@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/22 13:35:13 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/22 17:01:53 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,21 @@ t_node *set_redir_in_1(void)
 	return (ret);
 }
 
+t_node *set_redir_in_1_cmd_2(void)
+{
+	t_node *ret;
+
+	ret = malloc_handler(sizeof(t_node));
+	ret->node_type = test_cmd_pipe("pipe 1", REDIR, PIPE,
+						test_cmd_redir("redim 1", "out", FILE_ONLY_READING, STDIN, EXEC, 
+							test_cmd_exec("Exec 1", "/bin/grep", "nn")),
+						test_cmd_pipe("pipe 2", EXEC, EXEC,
+							test_cmd_exec("exec 2", "/bin/sort", NULL),
+							test_cmd_exec("exec 3", "/bin/uniq", NULL)));
+	ret->type = PIPE;
+	return (ret);
+}
+
 //tree on redir + command
 t_node *set_redir_out_1(void)
 {
@@ -120,36 +135,60 @@ t_node *set_redir_out_1(void)
 	return (ret);
 }
 
-void wait_for_all_processes(t_list *pid_list) {
-    t_list *current = pid_list;
-    while (current != NULL) {
-        pid_t *pid_ptr = (pid_t *)(current->content);
-        if (pid_ptr != NULL) {
-            waitpid(*pid_ptr, NULL, 0);
-        }
-        current = current->next;
-    }
-}
 
+void print_type(t_node *node);
+ 
 void list_test_use(void)
 {
-	//int pipefd[2];
-	t_list *pid_list;
+	pid_t pid;
+	pid = fork_handler();
+	if (pid == 0)
+	{
+				//int pipefd[2];
+		t_list *pid_list;
+		
 
+		pid_list = NULL; //init_pid_list();
+		//pid = fork_handler();
+		
+		//navigate_tree_forward(set_redir_in_1_cmd_2(), &pid_list);
+		t_node *example;
+		t_node *head_example;
+		example = set_redir_in_1_cmd_2();
+		head_example = example;
+		print_type(example);
+		navigate_tree_forward(example, &pid_list);
+		print_type(head_example);
+		navigate_tree_forward(head_example, &pid_list);
+		//print_pid_list(pid_list);
+		wait_for_all_processes(pid_list);
+		print_list_pid_list(pid_list);
+		free_list_pid_list(pid_list);
+		printf("Ausfürung beendet---\n");
+		//fflush(stdout);
+	}
+	else 
+	{
+		waitpid(pid, NULL, 0);
+	}
 
-	pid_list = NULL; //init_pid_list();
-	//pid = fork_handler();
-	
-	navigate_tree_forward(set_cmd_3(), &pid_list);
-	//print_pid_list(pid_list);
-	wait_for_all_processes(pid_list);
-	print_list(pid_list);
-	free_list(pid_list);
-	printf("Ausfürung beendet\n");
 
 }
 
+enum e_node_type type_check(t_node *node)
+{
+	return (node->type);
+}
 
+void print_type(t_node *node)
+{
+	if (node->type == EXEC)
+		printf("EXEC; \n");
+	if (node->type == PIPE)
+		printf("PIPE; \n");
+	if (node->type == REDIR)
+		printf("REDIR; \n");		
+}
 
 
 // void list_test_use(void)
