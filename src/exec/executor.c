@@ -6,7 +6,7 @@
 /*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 18:22:41 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/22 21:12:40 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/22 22:09:17 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,24 @@ t_node	*example_selection(void)
 void	executor(void)
 {
 	pid_t	pid;
+	t_list	*pid_list;
 	t_node	*example;
-	t_list *pid_list;
-	
-	pid_list = NULL;
-	example = example_selection();
-	pid = fork_handler();
-	if (pid == 0)
+
 	{
-		navigate_tree_forward(example, &pid_list);
-	}
-	else
-	{
-		waitpid(pid, NULL, 0);
+		pid = fork_handler();
+		if (pid == 0)
+		{
+			pid_list = NULL;
+			example = set_cmd_3(); // Wenn der Phrase im Kindprozess steht ist der Memory frei! und es gibt keine mem-leaks! 
+			navigate_tree_forward(example, &pid_list);
+			print_list_pid_list(pid_list);
+			wait_for_all_processes(pid_list);
+			free_list_pid_list(pid_list);
+		}
+		else
+		{
+			waitpid(pid, NULL, 0);
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 11:49:43 by rkost             #+#    #+#             */
-/*   Updated: 2024/01/22 20:29:53 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/22 21:32:54 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ t_node	*set_cmd_3(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, PIPE,
-			test_cmd_exec("/bin/ls", "/bin/ls", "-l"), test_cmd_pipe("Pipe 2",
-				EXEC, EXEC, test_cmd_exec("grep", "/bin/grep", ".c"),
+			test_cmd_exec("/bin/ls", "/bin/sleep", "5"), test_cmd_pipe("Pipe 2",
+				EXEC, EXEC, test_cmd_exec("grep", "/bin/ls", "-l"),
 				test_cmd_exec("sort", "/bin/wc", "-l")));
 	ret->type = PIPE;
 	return (ret);
