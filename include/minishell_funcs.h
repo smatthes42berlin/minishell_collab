@@ -6,7 +6,7 @@
 /*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/22 21:09:40 by rkost            ###   ########.fr       */
+/*   Updated: 2024/01/22 23:12:34 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ char				*is_dquote(char c);
 
 /* executor */
 void				navigate_tree_forward(t_node *node, t_list **pid_list);
+void				type_exec(t_node *node);
+void				type_redim(t_node *node, t_list *pid_list);
+void				type_pipe(t_node *node, t_list **pid_list);
+void				redim_exec_check(t_node *node, t_list *pid_list);
 void				executor(void);
 
 /* execute lib*/
