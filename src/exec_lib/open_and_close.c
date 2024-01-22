@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_and_close.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 22:09:12 by rene              #+#    #+#             */
-/*   Updated: 2024/01/21 06:43:45 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/22 18:52:36 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,49 @@
 
 static const char	*open_mode_to_str(enum e_open_mode mode);
 
-int open_handler(const char *path, enum e_open_mode  mode)
+/**
+ * @brief Using the funktion for safe open
+ * 
+ * @param path filepath
+ * @param mode 
+ * @return int -- the number of the file descripter
+ */
+int	open_handler(const char *path, enum e_open_mode mode)
 {
-    int result;
-    
-    result = -1;
-    if(access_handler(path,FILE_EXISTS) != 0 && mode != FILE_ONLY_READING)
-        result = open(path, mode | O_CREAT, 0644);
-    else
-        result = open(path, mode);
-    error_code_handler(errno, "ERR-open path ", path ,open_mode_to_str(mode));   
-    return (result);
+	int	result;
+
+	result = -1;
+	if (access_handler(path, FILE_EXISTS) != 0 && mode != FILE_ONLY_READING)
+		result = open(path, mode | O_CREAT, 0644);
+	else
+		result = open(path, mode);
+	error_code_handler(errno, "ERR-open path ", path, open_mode_to_str(mode));
+	return (result);
 }
 
-int close_handler(int fd)
+/**
+ * @brief use the function for safe close
+ * 
+ * @param fd -- file descripter 
+ * @return int -- errno nbr
+ */
+int	close_handler(int fd)
 {
-	int result;
-    
-    result = -1;
+	int	result;
+
+	result = -1;
 	result = close(fd);
-	error_code_handler(errno, "ERR-close (fd)", ft_itoa(fd)," ");
+	error_code_handler(errno, "ERR-close (fd)", ft_itoa(fd), " ");
 	return (result);
 }
 
 /**
  * @brief return the given enum e_open_mode to a String
- * 
- * @param mode 
- * @return const char* 
+ *
+ * @param mode
+ * @return const char*
  */
-static const char	*open_mode_to_str(enum e_open_mode  mode)
+static const char	*open_mode_to_str(enum e_open_mode mode)
 {
 	if (mode == FILE_ONLY_READING)
 		return ("MODE-FILE_ONLY_READING");
@@ -53,7 +66,7 @@ static const char	*open_mode_to_str(enum e_open_mode  mode)
 		return ("MODE-FILE_ONLY_WRITE_APPEND");
 	else if (mode == FILE_READ_WRITE)
 		return ("MODE-FILE_READ_WRITE");
-    else if (mode == FILE_READ_WRITE_APPEND)
+	else if (mode == FILE_READ_WRITE_APPEND)
 		return ("MODE-FILE_READ_WRITE_APPEND");
 	else
 		return ("MODE-UNKNOWN_MODE");

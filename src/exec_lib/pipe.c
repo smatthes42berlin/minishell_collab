@@ -3,22 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rkost <rkost@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 11:38:37 by rene              #+#    #+#             */
-/*   Updated: 2024/01/17 12:01:09 by rene             ###   ########.fr       */
+/*   Updated: 2024/01/22 19:08:57 by rkost            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void pipe_handler(int *pipefd)
+/**
+ * @brief creat a pipe and check for errors
+ * 
+ * @param pipefd 
+ */
+void	pipe_handler(int *pipefd)
 {
-    if (pipe(pipefd) < 0)
-        error_code_handler(errno, "ERR-pipe", " ", " ");
+	if (pipe(pipefd) < 0)
+		error_code_handler(errno, "ERR-pipe", " ", " ");
 }
 
-void pipe_setting(int *pipefd, bool open)
+/**
+ * @brief set the given pipefild for close or open
+ * 
+ * @param pipefd arry of [2]
+ * @param open if true the pipe is open
+ */
+void	pipe_setting(int *pipefd, bool open)
 {
 	if (open)
 	{
@@ -31,5 +42,5 @@ void pipe_setting(int *pipefd, bool open)
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
-	}	
+	}
 }
