@@ -11,7 +11,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check
+SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /parser
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
