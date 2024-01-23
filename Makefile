@@ -11,7 +11,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser
+SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
@@ -30,7 +30,9 @@ SRC = 	main.c \
 		token_util.c \
 		token_util_2.c \
 		print_token_list.c \
-		token_identify_operator.c
+		token_identify_operator.c \
+		token_get.c \
+		check_syntax_n_heredoc.c
 		
 		
 OBJFNAME = $(SRC:.c=.o)
