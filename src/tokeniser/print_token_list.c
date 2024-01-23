@@ -8,7 +8,7 @@ void	print_token_list(t_list_d *token_list)
 	head = token_list;
 	if (!token_list)
 		return ;
-	printf("********TOKEN_LIST\n\n");
+	printf("\n\n********TOKEN_LIST\n\n");
 	print_token(head->content);
 	next = head->next;
 	while (next != head)

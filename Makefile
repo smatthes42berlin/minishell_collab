@@ -29,7 +29,8 @@ SRC = 	main.c \
 		create_token.c \
 		token_util.c \
 		token_util_2.c \
-		print_token_list.c
+		print_token_list.c \
+		token_identify_operator.c
 		
 		
 OBJFNAME = $(SRC:.c=.o)

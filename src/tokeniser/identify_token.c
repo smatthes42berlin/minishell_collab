@@ -2,76 +2,33 @@
 
 int	identify_token(char **cur_pos, t_token *token)
 {
-	if (ft_strchr("\"", **cur_pos))
-		return (creat_quoted_token(cur_pos, token, '"'));
-	else if (ft_strchr("'", **cur_pos))
-		return (creat_quoted_token(cur_pos, token, '\''));
-	else if (is_symbol(**cur_pos))
-		return (create_symbol_token(cur_pos, token));
+	if (is_operator(**cur_pos))
+		return (create_operator_token(cur_pos, token));
 	else
-		return (create_text_token(cur_pos, token));
-	return (1);
+		return (create_word_token(cur_pos, token));
 }
 
-int	create_text_token(char **cur_pos, t_token *token)
+int	create_word_token(char **cur_pos, t_token *token)
 {
 	char	*token_val;
 	int		num_characters;
 
 	num_characters = count_characters(*cur_pos);
+	if (num_characters == -1)
+		return (printf("ERROR: no closing quote found"));
 	if (ft_str_n_dup_int(*cur_pos, num_characters + 1, &token_val) == -1)
 		return (printf("Error: duplicating string for token\n"));
-	token->type = TEXT;
+	token->type = T_WORD;
 	token->value = token_val;
 	*cur_pos = *cur_pos + num_characters;
 	return (0);
 }
 
-int	create_symbol_token(char **cur_pos, t_token *token)
+int	create_operator_token(char **cur_pos, t_token *token)
 {
-	char	*token_val;
-	int		num_symbols;
-	int		symbol_valid;
-
-	num_symbols = count_symbols(*cur_pos);
-	if (ft_str_n_dup_int(*cur_pos, num_symbols + 1, &token_val) == -1)
-		return (printf("Error: duplicating string for token\n"));
-	token->type = SYMBOL;
-	token->value = token_val;
-	symbol_valid = symbol_is_valid(token_val, num_symbols);
-	if (symbol_valid)
-		return (printf("Syntax error near unexpected Token %c\n",
-						(*cur_pos)[symbol_valid]));
-	*cur_pos = *cur_pos + num_symbols;
-	return (0);
-}
-
-int	creat_quoted_token(char **cur_pos, t_token *token, char quote_type)
-{
-	int		closing_quote;
-	char	*token_val;
-
-	(*cur_pos)++;
-	closing_quote = has_closing_quote(*cur_pos, quote_type);
-	if (closing_quote == -1)
-		return (printf("Error: no closing quote\n"));
-	if (closing_quote == 0)
-		return (create_empty_token(cur_pos, token));
-	if (ft_str_n_dup_int(*cur_pos, closing_quote + 1, &token_val) == -1)
-		return (printf("Error: duplicating string for token\n"));
-	if (quote_type == '"')
-		token->type = DQTEXT;
-	else
-		token->type = SQTEXT;
-	token->value = token_val;
-	*cur_pos = *cur_pos + closing_quote + 1;
-	return (0);
-}
-
-int	create_empty_token(char **cur_pos, t_token *token)
-{
-	token->type = EMPTY;
-	token->value = NULL;
-	(*cur_pos)++;
+	if (identify_operator(cur_pos, token))
+		return (printf("ERROR: Identifying Token Type!"));
+	if (token->type == T_UNDEFINED)
+		return (printf("ERROR: Operator not handled!"));
 	return (0);
 }

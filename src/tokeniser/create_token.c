@@ -8,7 +8,7 @@ t_token	*create_token(void)
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->type = UNDEFINED;
+	token->type = T_UNDEFINED;
 	token->value = NULL;
 	return (token);
 }

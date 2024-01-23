@@ -6,7 +6,7 @@ void	skip_ws(char **cur_pos)
 		(*cur_pos)++;
 }
 
-char	*is_symbol(char c)
+char	*is_operator(char c)
 {
 	return (ft_strchr("<>|", c));
 }
@@ -25,4 +25,3 @@ int	has_closing_quote(char *cli_input, char quote_type)
 {
 	return (ft_str_chr_index(cli_input, quote_type));
 }
-
