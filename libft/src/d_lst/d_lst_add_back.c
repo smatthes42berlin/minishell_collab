@@ -12,7 +12,9 @@ void	d_lst_add_back(t_list_d **lst, t_list_d *new)
 		*lst = new;
 		new->next = NULL;
 		new->prev = NULL;
-		return;
+		return ;
 	}
-		*lst = new;
+	new->prev = last;
+	new->next = NULL;
+	last->next = new;
 }
