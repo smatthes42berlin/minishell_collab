@@ -1,11 +1,11 @@
 #include "minishell.h"
 
-int	count_symbols(char *cur_pos)
+int	count_operators(char *cur_pos)
 {
 	int	num;
 
 	num = 0;
-	while (is_symbol(cur_pos[num]) && cur_pos[num])
+	while (is_operator(cur_pos[num]) && cur_pos[num])
 		num++;
 	return (num);
 }
@@ -13,23 +13,27 @@ int	count_symbols(char *cur_pos)
 int	count_characters(char *cur_pos)
 {
 	int	num;
+	int	closing_quote;
 
 	num = 0;
-	while (!is_symbol(cur_pos[num]) && !ft_isspace(cur_pos[num])
+	while (!is_operator(cur_pos[num]) && !ft_isspace(cur_pos[num])
 		&& cur_pos[num])
+	{
+		if (is_dquote(cur_pos[num]))
+		{
+			closing_quote = has_closing_quote(&(cur_pos[num + 1]), '"');
+			if (closing_quote == -1)
+				return (-1);
+			num = num + closing_quote + 1;
+		}
+		else if (is_squote(cur_pos[num]))
+		{
+			closing_quote = has_closing_quote(&(cur_pos[num + 1]), '\'');
+			if (closing_quote == -1)
+				return (-1);
+			num = num + closing_quote + 1;
+		}
 		num++;
+	}
 	return (num);
-}
-
-int	symbol_is_valid(char *symbol, int symbol_length)
-{
-	if (is_symbol(*symbol) && symbol_length == 1)
-		return (0);
-	if (symbol[0] == '<' && symbol[1] != '<')
-		return (1);
-	if (symbol[0] == '>' && symbol[1] != '>')
-		return (1);
-	if (symbol_length >= 3)
-		return (2);
-	return (0);
 }
