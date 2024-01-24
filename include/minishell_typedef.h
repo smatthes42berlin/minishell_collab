@@ -4,7 +4,9 @@
 /**
  * necessary so we can use t_node inside the t_node struct definition
 */
-typedef struct s_node t_node;
+
+typedef struct s_node	t_node;
+
 
 /**
  * main data structure, that can be passed around
@@ -91,14 +93,20 @@ typedef struct  s_pid_list
  * @param TEXT normal text without any quotes: Hello
  * @param SQTEXT text in single quotes: 'Hello World'
  * @param DQTEXT text in double quotes: "Hello $0"
- * @param SYMBOL special control character of the shell, e.g. "|" :">""
+ * @param operator special control character of the shell, e.g. | >
+ * @param EMPTY an empty single or double quoted string
  */
 enum					e_token_type
 {
-	TEXT,
-	SQTEXT,
-	DQTEXT,
-	SYMBOL
+	T_WORD,
+	T_DLESS,
+	T_DGREAT,
+	T_LESS,
+	T_GREAT,
+	T_PIPE,
+	T_EMPTY,
+	T_ENDOFINPUT,
+	T_UNDEFINED
 };
 
 /**

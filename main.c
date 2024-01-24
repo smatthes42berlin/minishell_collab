@@ -24,13 +24,16 @@ int	main(void)
 	{
 		// watch out for eof and possbile return of null
 		main_data.cli_input = readline("cli>");
+		if (!main_data.cli_input || ft_strlen(main_data.cli_input) == 0)
+			continue ;
 		if (tokenise(&main_data) == -1)
 			return (1);
-		// if (parse(main_data) == -1)
-		// 	return (2);
+		if (parse(&main_data) == -1)
+			return (2);
 		// - (Check if inbuilts that change main process, e.g. cd)
 		// if (execute(main_data) == -1)
 		// 	return (3);
+		d_lst_clear(&main_data.token_list, free);
 	}
 	return (0);
 }

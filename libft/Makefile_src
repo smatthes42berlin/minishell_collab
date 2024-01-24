@@ -38,6 +38,7 @@ SRC =	ft_atoi.c \
 		ft_putnbr_fd.c \
 		ft_striteri.c \
 		ft_strncmp.c \
+		ft_strcmp.c \
 		ft_toupper.c \
 		ft_isascii.c \
 		ft_memcpy.c \
@@ -84,6 +85,7 @@ SRC =	ft_atoi.c \
 		d_lst_exactly_two.c \
 		d_lst_size.c \
 		d_lst_pop.c \
+		d_lst_pop_n.c \
 		d_lst_swap.c \
 		d_lst_map.c \
 		d_lst_iter_content.c \
