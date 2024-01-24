@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile_src                                       :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/26 15:04:01 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/19 19:04:51 by smatthes         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 SRC =	ft_atoi.c \
 		ft_atoi_base_l.c \
@@ -49,6 +38,7 @@ SRC =	ft_atoi.c \
 		ft_putnbr_fd.c \
 		ft_striteri.c \
 		ft_strncmp.c \
+		ft_strcmp.c \
 		ft_toupper.c \
 		ft_isascii.c \
 		ft_memcpy.c \
@@ -95,6 +85,7 @@ SRC =	ft_atoi.c \
 		d_lst_exactly_two.c \
 		d_lst_size.c \
 		d_lst_pop.c \
+		d_lst_pop_n.c \
 		d_lst_swap.c \
 		d_lst_map.c \
 		d_lst_iter_content.c \

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/07 15:23:36 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/19 19:02:57 by smatthes         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LIBFT_H
 # define LIBFT_H
 
@@ -71,6 +59,7 @@ char					*ft_strchr(const char *s, int c);
 char					*ft_strrchr(const char *s, int c);
 ssize_t					ft_str_chr_index(const char *s, int c);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
+int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strnstr(const char *big, const char *little,
 							size_t len);
 int						ft_str_cont_duplic(const char *str);
@@ -172,6 +161,7 @@ int						d_lst_exactly_one(t_list_d *lst_ptr);
 int						d_lst_exactly_two(t_list_d *lst_ptr);
 int						d_lst_size(t_list_d *lst);
 t_list_d				*d_lst_pop(t_list_d **lst);
+t_list_d				*d_lst_pop_n(t_list_d **lst, int n);
 t_list_d				*d_lst_swap(t_list_d **lst);
 t_list_d				*d_lst_map(t_list_d *lst, void *(*f)(void *),
 							void (*del)(void *));

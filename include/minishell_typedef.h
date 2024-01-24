@@ -1,17 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell_typedef.h                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/19 19:28:59 by smatthes         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_TYPEDEF_H
 # define MINISHELL_TYPEDEF_H
+
+/**
+ * necessary so we can use t_node inside the t_node struct definition
+*/
+typedef struct s_node	t_node;
 
 /**
  * main data structure, that can be passed around
@@ -38,14 +31,20 @@ typedef struct s_main_data
  * @param TEXT normal text without any quotes: Hello
  * @param SQTEXT text in single quotes: 'Hello World'
  * @param DQTEXT text in double quotes: "Hello $0"
- * @param SYMBOL special control character of the shell, e.g. | >
+ * @param operator special control character of the shell, e.g. | >
+ * @param EMPTY an empty single or double quoted string
  */
 enum					e_token_type
 {
-	TEXT,
-	SQTEXT,
-	DQTEXT,
-	SYMBOL
+	T_WORD,
+	T_DLESS,
+	T_DGREAT,
+	T_LESS,
+	T_GREAT,
+	T_PIPE,
+	T_EMPTY,
+	T_ENDOFINPUT,
+	T_UNDEFINED
 };
 
 /**
@@ -61,6 +60,17 @@ typedef struct s_token
 }						t_token;
 
 /**
+ * describing the filedescritors available for input output redirection
+ * @param STDIN
+ * @param STDOUT
+ */
+enum					e_std_fd
+{
+	STDIN = STDIN_FILENO,
+	STDOUT = STDOUT_FILENO
+};
+
+/**
  * describing all the possible node types within the ast
  * @param PIPE
  * @param EXEC
@@ -73,17 +83,6 @@ enum					e_node_type
 	EXEC,
 	REDIR,
 	HEREDOC
-};
-
-/**
- * describing the filedescritors available for input output redirection
- * @param STDIN
- * @param STDOUT
- */
-enum					e_std_fd
-{
-	STDIN = STDIN_FILENO,
-	STDOUT = STDOUT_FILENO
 };
 
 /**
