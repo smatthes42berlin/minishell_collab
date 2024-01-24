@@ -1,17 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell_typedef.h                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rene <rene@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 13:01:01 by smatthes          #+#    #+#             */
-/*   Updated: 2024/01/20 20:18:04 by rene             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_TYPEDEF_H
 # define MINISHELL_TYPEDEF_H
+
+/**
+ * necessary so we can use t_node inside the t_node struct definition
+*/
+typedef struct s_node t_node;
 
 /**
  * main data structure, that can be passed around
@@ -121,6 +114,17 @@ typedef struct s_token
 }						t_token;
 
 /**
+ * describing the filedescritors available for input output redirection
+ * @param STDIN
+ * @param STDOUT
+ */
+enum					e_std_fd
+{
+	STDIN = STDIN_FILENO,
+	STDOUT = STDOUT_FILENO
+};
+
+/**
  * describing all the possible node types within the ast
  * @param PIPE
  * @param EXEC
@@ -133,17 +137,6 @@ enum					e_node_type
 	EXEC,
 	REDIR,
 	HEREDOC
-};
-
-/**
- * describing the filedescritors available for input output redirection
- * @param STDIN
- * @param STDOUT
- */
-enum					e_std_fd
-{
-	STDIN = STDIN_FILENO,
-	STDOUT = STDOUT_FILENO
 };
 
 /**
