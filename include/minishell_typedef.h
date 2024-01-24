@@ -221,6 +221,7 @@ typedef struct s_node_exec
 	// handle inbuilt
 	char				**argv;
 	char				**env;
+	bool				is_inbuilt;
 }						t_node_exec;
 
 #endif
