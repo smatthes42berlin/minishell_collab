@@ -7,6 +7,7 @@ void	init_main_data(t_main_data *main_data);
 /* tokenisation/lexer main*/
 
 int		tokenise(t_main_data *main_data);
+void	free_token(void *token);
 
 /* tokenisation/lexer 1 create*/
 
@@ -39,7 +40,11 @@ int		check_heredoc_delim(t_here_doc_info *hdoc_info);
 void	init_hdoc_info(char *delim_raw, t_here_doc_info *hdoc_info);
 int		copy_unquoted_chars(t_here_doc_info *hdoc_info, int i);
 int		handle_quotes(t_here_doc_info *hdoc_info, int *i);
-int		read_heredoc(t_here_doc_info *hdoc_info, t_token **hdoc_operator_token);
+int		read_heredoc(t_here_doc_info *hdoc_info, t_list_d **hdoc_op_token);
+int		parent_get_str_child(t_list_d **hdoc_op_token, int fd[2], int pid);
+int		child_read_hdoc(t_here_doc_info *hdoc_info, int fd[2]);
+int		add_heredoc_str_token(t_list_d **hdoc_op_token, char *res);
+int		remove_here_doc_token(t_main_data *main_data);
 
 /* parser */
 

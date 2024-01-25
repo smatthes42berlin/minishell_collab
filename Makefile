@@ -37,7 +37,9 @@ SRC = 	main.c \
 		check_syntax.c \
 		here_doc_main.c \
 		here_doc_handle_delimiter.c \
-		here_doc_read.c
+		here_doc_read.c \
+		tokenise_free.c \
+		here_doc_remove_here_doc_token.c
 
 		
 OBJFNAME = $(SRC:.c=.o)

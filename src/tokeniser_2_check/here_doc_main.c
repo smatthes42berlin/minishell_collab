@@ -32,9 +32,8 @@ int	check_heredoc(t_list_d **cur_token)
 	init_hdoc_info(next_token_val->value, &hdoc_info);
 	if (check_heredoc_delim(&hdoc_info))
 		return (1);
-	if (read_heredoc(&hdoc_info, &cur_token_val))
+	if (read_heredoc(&hdoc_info, cur_token))
 		return (2);
-	printf("DELIM: %s\n", hdoc_info.delim);
 	return (0);
 }
 

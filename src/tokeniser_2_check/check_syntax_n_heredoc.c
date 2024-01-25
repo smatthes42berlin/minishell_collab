@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+
 int	check_syntax_n_heredoc(t_main_data *main_data)
 {
 	t_list_d	**cur_token;
@@ -15,6 +16,7 @@ int	check_syntax_n_heredoc(t_main_data *main_data)
 	}
 	if (check_syntax((*cur_token)))
 		return (1);
-	return (1);
+	remove_here_doc_token(main_data);
+	return (0);
 }
 
