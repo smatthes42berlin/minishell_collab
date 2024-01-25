@@ -17,8 +17,18 @@ t_node	*example_selection(void)
 
 void	executor(void)
 {
+	pid_t	pid;
 	t_node	*example;
 
 	example = example_selection();
-	navigate_tree_forward(example);
+	pid = fork_handler();
+	if (pid == 0)
+	{
+		navigate_tree_forward(example);
+	}
+	else
+	{
+		waitpid(pid, NULL, 0);
+		//buid_cd();
+	}
 }

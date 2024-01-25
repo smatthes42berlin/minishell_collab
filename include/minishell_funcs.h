@@ -21,6 +21,9 @@ void				type_redim(t_node *node);
 void				type_pipe(t_node *node);
 void				executor(void);
 
+/* builtins */
+void				buid_cd(void);
+
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
 int					close_handler(int fd);
