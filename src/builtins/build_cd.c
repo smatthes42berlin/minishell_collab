@@ -2,5 +2,5 @@
 
 void buid_cd (void)
 {
-	printf("Build cd\n\n"); 
+	printf("Build cd\n"); 
 }
