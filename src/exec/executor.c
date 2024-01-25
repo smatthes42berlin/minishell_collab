@@ -18,26 +18,11 @@ t_node	*example_selection(void)
 
 void	executor(void)
 {
-	pid_t	pid;
-	t_list	*pid_list;
 	t_node	*example;
 
-	{
-		pid = fork_handler();
-		if (pid == 0)
-		{
-			pid_list = NULL;
-			example = set_cmd_3(); // Wenn der Phrase im Kindprozess steht ist der Memory frei! und es gibt keine mem-leaks! 
-			navigate_tree_forward(example, &pid_list);
-			print_list_pid_list(pid_list);
-			wait_for_all_processes(pid_list);
-			free_list_pid_list(pid_list);
-		}
-		else
-		{
-			waitpid(pid, NULL, 0);
-		}
-	}
+	example = set_cmd_3(); // Wenn der Phrase im Kindprozess steht ist der Memory frei! und es gibt keine mem-leaks! 
+	navigate_tree_forward(example);
+
 }
 
 // void	free_string_array(char **array)

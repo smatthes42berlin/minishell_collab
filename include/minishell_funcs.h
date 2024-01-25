@@ -15,11 +15,10 @@ char				*is_dquote(char c);
 /* parser */
 
 /* executor */
-void				navigate_tree_forward(t_node *node, t_list **pid_list);
+void				navigate_tree_forward(t_node *node);
 void				type_exec(t_node *node);
-void				type_redim(t_node *node, t_list *pid_list);
-void				type_pipe(t_node *node, t_list **pid_list);
-void				redim_exec_check(t_node *node, t_list *pid_list);
+void				type_redim(t_node *node);
+void				type_pipe(t_node *node);
 void				executor(void);
 
 /* execute lib*/
