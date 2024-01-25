@@ -81,6 +81,22 @@ t_node	*set_redir_in_1_cmd_2(void)
 	return (ret);
 }
 
+t_node	*set_redir_in_2_cmd_2(void)
+{
+	t_node	*ret;
+
+	ret = malloc_handler(sizeof(t_node));
+	ret->node_type = test_cmd_pipe("pipe 1", REDIR, PIPE,
+			test_cmd_redir("redim 1", "delet_me", FILE_ONLY_READING, STDIN, REDIR,
+				test_cmd_redir("redim 1", "testfile", FILE_ONLY_READING, STDIN, EXEC,
+					test_cmd_exec("exec 1", "/bin/grep", "nn"))),
+			test_cmd_pipe("pipe 2", EXEC, EXEC, test_cmd_exec("exec 2",
+					"/bin/sort", NULL), test_cmd_exec("exec 3", "/bin/uniq",
+					NULL)));
+	ret->type = PIPE;
+	return (ret);
+}
+
 // tree on redir + command
 t_node	*set_redir_out_1(void)
 {

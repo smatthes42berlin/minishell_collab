@@ -32,10 +32,12 @@ enum e_pid_satus	process_status(pid_t pid, bool block);
 void				pipe_handler(int *pipefd);
 void				pipe_setting(int *pipefd, bool open);
 void				*malloc_handler(size_t bytes);
+/*
 void				append_node_pid_list(t_list **head, pid_t pid);
 void				print_list_pid_list(t_list *head);
 void				free_list_pid_list(t_list *head);
 void				wait_for_all_processes(t_list *pid_list);
+*/
 
 /* error */
 void				error_code_handler(int error_code, const char *msg,
@@ -57,6 +59,7 @@ t_node				*set_cmd_3(void);
 t_node				*set_cmd_4(void);
 t_node				*set_redir_in_1(void);
 t_node				*set_redir_in_1_cmd_2(void);
+t_node				*set_redir_in_2_cmd_2(void);
 t_node				*set_redir_out_1(void);
 void				print_type(t_node *node);
 
