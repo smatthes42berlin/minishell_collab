@@ -30,10 +30,10 @@ int	main(void)
 			return (1);
 		if (parse(&main_data) == -1)
 			return (2);
-		// - (Check if inbuilts that change main process, e.g. cd)
-		// if (execute(main_data) == -1)
-		// 	return (3);
-		d_lst_clear(&main_data.token_list, free);
+		// // - (Check if inbuilts that change main process, e.g. cd)
+		// // if (execute(main_data) == -1)
+		// // 	return (3);
+		// d_lst_clear(&main_data.token_list, free);
 	}
 	return (0);
 }

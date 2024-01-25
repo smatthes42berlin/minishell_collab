@@ -162,6 +162,7 @@ int						d_lst_exactly_two(t_list_d *lst_ptr);
 int						d_lst_size(t_list_d *lst);
 t_list_d				*d_lst_pop(t_list_d **lst);
 t_list_d				*d_lst_pop_n(t_list_d **lst, int n);
+t_list_d				*d_lst_pop_current(t_list_d **lst);
 t_list_d				*d_lst_swap(t_list_d **lst);
 t_list_d				*d_lst_map(t_list_d *lst, void *(*f)(void *),
 							void (*del)(void *));
@@ -224,5 +225,6 @@ int	count_cols_per_line_filename(char *filename,
 									t_file_info *file_info);
 int						get_file_size_filename(char *filename);
 int						get_file_size_fd(int fd);
+int						read_whole_file(int fd, char **res);
 
 #endif

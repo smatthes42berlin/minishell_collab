@@ -9,7 +9,8 @@
 # define BUFFER_PARSED -2
 # define NEW_BUFFER -1
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10000
+// #  define BUFFER_SIZE 10000
+#  define BUFFER_SIZE 5
 # endif
 
 // colors

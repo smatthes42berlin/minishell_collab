@@ -33,7 +33,11 @@ SRC = 	main.c \
 		token_identify_operator.c \
 		token_get.c \
 		check_syntax_n_heredoc.c \
-		parser_main.c
+		parser_main.c \
+		check_syntax.c \
+		here_doc_main.c \
+		here_doc_handle_delimiter.c \
+		here_doc_read.c
 
 		
 OBJFNAME = $(SRC:.c=.o)

@@ -86,6 +86,7 @@ SRC =	ft_atoi.c \
 		d_lst_size.c \
 		d_lst_pop.c \
 		d_lst_pop_n.c \
+		d_lst_pop_current.c \
 		d_lst_swap.c \
 		d_lst_map.c \
 		d_lst_iter_content.c \
@@ -131,6 +132,7 @@ SRC =	ft_atoi.c \
 		count_cols_per_line_fd.c \
 		count_cols_per_line_filename.c \
 		get_file_size_fd.c \
-		get_file_size_filename.c
+		get_file_size_filename.c \
+		read_whole_file.c
 
  

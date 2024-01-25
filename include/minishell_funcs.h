@@ -31,6 +31,15 @@ int		create_empty_token(t_main_data *main_data, t_token *token);
 /* tokenisation/lexer 2 check syntax and get heredoc */
 
 int		check_syntax_n_heredoc(t_main_data *main_data);
+int		token_is_operator(t_token *token);
+int		check_syntax(t_list_d *cur_token);
+int		token_syntax_error(char *token_val);
+int		check_heredoc(t_list_d **cur_token);
+int		check_heredoc_delim(t_here_doc_info *hdoc_info);
+void	init_hdoc_info(char *delim_raw, t_here_doc_info *hdoc_info);
+int		copy_unquoted_chars(t_here_doc_info *hdoc_info, int i);
+int		handle_quotes(t_here_doc_info *hdoc_info, int *i);
+int		read_heredoc(t_here_doc_info *hdoc_info, t_token **hdoc_operator_token);
 
 /* parser */
 
