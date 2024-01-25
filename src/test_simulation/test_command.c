@@ -25,7 +25,8 @@ t_node_exec *test_cmd_exec( char *name,
         exec->argv[i] = args1[i];
     }
     exec->argv[argc] = NULL;
-    char *env[] = {"PATH=/bin", NULL};
+    char *env[] = {"LANG=en_US.UTF-8", "PATH=/usr/bin",  NULL}; // "LC_ALL=en_US.UTF-8", "PATH=/usr/bin", NULL};
+    //char *env[] = {"PATH=/bin", NULL};
     exec->argv[argc] = NULL; 
     size_t envc = sizeof(env) / sizeof(env[0]);
     exec->env = malloc_handler(envc * sizeof(char*));

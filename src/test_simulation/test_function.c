@@ -75,7 +75,7 @@ t_node	*set_redir_in_1_cmd_2(void)
 			test_cmd_redir("redim 1", "testfile", FILE_ONLY_READING, STDIN, EXEC,
 				test_cmd_exec("Exec 1", "/bin/grep", "nn")),
 			test_cmd_pipe("pipe 2", EXEC, EXEC, test_cmd_exec("exec 2",
-					"/bin/sort", NULL), test_cmd_exec("exec 3", "/bin/uniq",
+					"/bin/uniq", NULL), test_cmd_exec("exec 3", "/usr/bin/sort",
 					NULL)));
 	ret->type = PIPE;
 	return (ret);
