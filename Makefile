@@ -1,5 +1,7 @@
 SHELL:=/bin/bash
 CFLAGS = -Wall -Wextra -Werror $(INCLUDEFLAGS) 
+# CFLAGS = -Wall -Wextra -Werror -fsanitize=leak  $(INCLUDEFLAGS) 
+# CFLAGS = -Wall -Wextra -Werror fsanitize=addressmak  $(INCLUDEFLAGS) 
 NAME = minishell
 LINK= cc
 CC = cc
@@ -38,6 +40,8 @@ SRC = 	main.c \
 		here_doc_main.c \
 		here_doc_handle_delimiter.c \
 		here_doc_read.c \
+		here_doc_read_parent.c \
+		here_doc_read_child.c \
 		tokenise_free.c \
 		here_doc_remove_here_doc_token.c
 

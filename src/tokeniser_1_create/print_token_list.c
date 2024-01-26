@@ -26,7 +26,7 @@ void	print_token_list(t_list_d *token_list)
 void	print_token(t_token *token)
 {
 	printf("********\n");
-	printf("token type = %d\n", token->type);
-	printf("token value = %s\n", token->value);
+	printf("token type = $%d$\n", token->type);
+	printf("token value = $%s$\n", token->value);
 	printf("********\n\n");
 }

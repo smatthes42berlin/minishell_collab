@@ -16,7 +16,7 @@ int	remove_here_doc_token(t_main_data *main_data)
 			if (!cur_token->prev)
 				main_data->token_list = cur_token->next;
 			tmp = d_lst_pop_current(&cur_token);
-			d_lst_del_one(tmp, &free_token);
+			d_lst_del_one(tmp, free_token);
 		}
 		else
 			cur_token = cur_token->next;

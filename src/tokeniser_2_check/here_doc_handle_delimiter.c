@@ -53,7 +53,6 @@ int	copy_unquoted_chars(t_here_doc_info *hdoc_info, int i)
 				- hdoc_info->num_char_no_quote]), hdoc_info->num_char_no_quote
 			+ 1, &hdoc_info->tmp) == -1)
 		return (printf("Error: Malloc when joining delim string!"));
-	free(hdoc_info->delim);
 	hdoc_info->delim = hdoc_info->tmp;
 	hdoc_info->tmp = NULL;
 	hdoc_info->num_char_no_quote = 0;
