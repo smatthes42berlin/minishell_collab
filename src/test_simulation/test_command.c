@@ -2,7 +2,8 @@
 
 t_node_exec *test_cmd_exec( char *name, 
                             char *command,
-                            char *flag)
+                            char *flag,
+                            bool inbuild)
 {
     t_node_exec *exec;
     char *args1[3]; 
@@ -33,6 +34,7 @@ t_node_exec *test_cmd_exec( char *name,
     for (size_t i = 0; i < envc; i++) {
         exec->env[i] = env[i];
     }
+    exec->inbuild = inbuild;
     return (exec);
 }
 

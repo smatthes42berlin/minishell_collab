@@ -208,6 +208,7 @@ typedef struct s_node_exec
 	// handle inbuilt
 	char				**argv;
 	char				**env;
+	bool				inbuild;
 }						t_node_exec;
 
 #endif

@@ -6,7 +6,7 @@
 #    By: rkost <rkost@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/25 16:37:00 by rkost            ###   ########.fr        #
+#    Updated: 2024/01/27 11:02:30 by rkost            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ VPATH = $(PATHSRC) $(INCLUDEPATH)
 SRC = 	main.c \
 		build_cd.c \
 		build_echo.c \
+		choose_builtin.c \
 		access.c \
 		executor.c \
 		test_command.c \

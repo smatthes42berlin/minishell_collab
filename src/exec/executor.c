@@ -6,6 +6,7 @@ t_node	*example_selection(void)
 
 	// ret = set_cmd_1();
 	ret = set_cmd_2();
+	//ret = set_cmd_2_cp();
 	//ret = set_cmd_3();
 	// ret = set_cmd_4();
 	// ret = set_redir_in_1();
@@ -29,6 +30,5 @@ void	executor(void)
 	else
 	{
 		waitpid(pid, NULL, 0);
-		//buid_cd();
 	}
 }

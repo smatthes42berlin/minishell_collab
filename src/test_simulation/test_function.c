@@ -6,7 +6,7 @@ t_node	*set_cmd_1(void)
 	t_node	*ret;
 
 	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_exec("sleep", "/bin/ls", "-l");
+	ret->node_type = test_cmd_exec("sleep", "/bin/pwd", NULL, true);
 	ret->type = EXEC;
 	return (ret);
 }
@@ -18,8 +18,20 @@ t_node	*set_cmd_2(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, EXEC,
-						test_cmd_exec("sleep", "/bin/pwd", NULL), 
-						test_cmd_exec("ls", "/bin/xargs", "ls"));
+						test_cmd_exec("sleep", "/bin/ls", "-l", false), 
+						test_cmd_exec("ls", "pwd", NULL, true));
+	ret->type = PIPE;
+	return (ret);
+}
+
+t_node	*set_cmd_2_cp(void)
+{
+	t_node	*ret;
+
+	ret = malloc_handler(sizeof(t_node));
+	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, EXEC,
+						test_cmd_exec("pwd", "pwd", NULL, true), 
+						test_cmd_exec("ls", "/bin/ls", "-l", false));
 	ret->type = PIPE;
 	return (ret);
 }
@@ -31,9 +43,9 @@ t_node	*set_cmd_3(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, PIPE,
-			test_cmd_exec("/bin/ls", "/bin/sleep", "5"), test_cmd_pipe("Pipe 2",
-				EXEC, EXEC, test_cmd_exec("grep", "/bin/ls", "-l"),
-				test_cmd_exec("sort", "/bin/wc", "-l")));
+			test_cmd_exec("/bin/ls", "/bin/sleep", "5", false), test_cmd_pipe("Pipe 2",
+				EXEC, EXEC, test_cmd_exec("grep", "/bin/ls", "-l", false),
+				test_cmd_exec("sort", "/bin/wc", "-l", false)));
 	ret->type = PIPE;
 	return (ret);
 }
@@ -45,11 +57,11 @@ t_node	*set_cmd_4(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, PIPE,
-			test_cmd_exec("/bin/ls", "/bin/sleep", "5"), test_cmd_pipe("Pipe 2",
-				EXEC, PIPE, test_cmd_exec("grep", "/bin/ls", "-l"),
+			test_cmd_exec("/bin/ls", "/bin/sleep", "5", false), test_cmd_pipe("Pipe 2",
+				EXEC, PIPE, test_cmd_exec("grep", "/bin/ls", "-l", false),
 				test_cmd_pipe("Pipe 2", EXEC, EXEC, test_cmd_exec("grep",
-						"/bin/grep", "input"), test_cmd_exec("grep",
-						"/bin/sort", "-r"))));
+						"/bin/grep", "input", false), test_cmd_exec("grep",
+						"/bin/sort", "-r", false))));
 	ret->type = PIPE;
 	return (ret);
 }
@@ -61,7 +73,7 @@ t_node	*set_redir_in_1(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_redir("redir", "out", FILE_ONLY_READING, STDIN,
-			EXEC, test_cmd_exec("grep", "/bin/grep", "nn"));
+			EXEC, test_cmd_exec("grep", "/bin/grep", "nn", false));
 	ret->type = REDIR;
 	return (ret);
 }
@@ -73,10 +85,10 @@ t_node	*set_redir_in_1_cmd_2(void)
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_pipe("pipe 1", REDIR, PIPE,
 			test_cmd_redir("redim 1", "testfile", FILE_ONLY_READING, STDIN, EXEC,
-				test_cmd_exec("Exec 1", "/bin/grep", "nn")),
+				test_cmd_exec("Exec 1", "/bin/grep", "nn", false)),
 			test_cmd_pipe("pipe 2", EXEC, EXEC, test_cmd_exec("exec 2",
-					"/bin/uniq", NULL), test_cmd_exec("exec 3", "/usr/bin/sort",
-					NULL)));
+					"/bin/uniq", NULL, false), test_cmd_exec("exec 3", "/usr/bin/sort",
+					NULL, false)));
 	ret->type = PIPE;
 	return (ret);
 }
@@ -89,10 +101,10 @@ t_node	*set_redir_in_2_cmd_2(void)
 	ret->node_type = test_cmd_pipe("pipe 1", REDIR, PIPE,
 			test_cmd_redir("redim 1", "delet_me", FILE_ONLY_READING, STDIN, REDIR,
 				test_cmd_redir("redim 1", "testfile", FILE_ONLY_READING, STDIN, EXEC,
-					test_cmd_exec("exec 1", "/bin/grep", "nn"))),
+					test_cmd_exec("exec 1", "/bin/grep", "nn", false))),
 			test_cmd_pipe("pipe 2", EXEC, EXEC, test_cmd_exec("exec 2",
-					"/bin/sort", NULL), test_cmd_exec("exec 3", "/bin/uniq",
-					NULL)));
+					"/bin/sort", NULL, false), test_cmd_exec("exec 3", "/bin/uniq",
+					NULL, false)));
 	ret->type = PIPE;
 	return (ret);
 }
@@ -104,7 +116,7 @@ t_node	*set_redir_out_1(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_redir("redir", "out", FILE_ONLY_WRITE_APPEND,
-			STDOUT, EXEC, test_cmd_exec("ls", "/bin/ls", "-l"));
+			STDOUT, EXEC, test_cmd_exec("ls", "/bin/ls", "-l", false));
 	ret->type = REDIR;
 	return (ret);
 }
