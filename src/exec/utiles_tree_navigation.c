@@ -6,6 +6,7 @@ void	type_exec(t_node *node)
 
 	exec_node = (t_node_exec *)node->node_type;
 	//printf("Node %s\n", exec_node->name_exec);
+	if (exec_node->)
 	execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 }
 

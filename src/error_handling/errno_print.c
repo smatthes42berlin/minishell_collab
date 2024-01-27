@@ -5,28 +5,28 @@
  * errno-typ       | function 
  * ---------------------------------------------
  *  E2BIG           execve 
- *  EACCES          access, execve, open
+ *  EACCES          access, execve, open, getcwd
  *  EAGAIN          execve, fork
  *  EBADF           access, open, close
  * 	EBUSY			open
  * 	ECHILD			wait(pid)
  * 	EDQUOT			open, close				
  * 	EEXIST			open
- *  EFAULT          access, execve, open, pipe
+ *  EFAULT          access, execve, open, pipe, getcwd
  * 	EFBIG			open
  * 	EINTR			open, close, wait(pid)
- *  EINVAL          access, execve, open, waitpid, pipe
+ *  EINVAL          access, execve, open, waitpid, pipe, getcwd
  *  EIO             access, execve, close
  *  EISDIR          execve, open
  *  ELIBBAD         execve
  *  ELOOP           access, execve, open
  *  EMFILE          execve, open, , pipe
- *  ENAMETOOLONG    access, execve, open
+ *  ENAMETOOLONG    access, execve, open, getcwd
  *  ENFILE          execve, open, pipe
  * 	ENODEV			open
- *  ENOENT          access, execve, open
+ *  ENOENT          access, execve, open, getcwd
  *  ENOEXEC         execve
- *  ENOMEM          access, execve, open, fork
+ *  ENOMEM          access, execve, open, fork, getcwd
  * 	ENOSPC			open, close
  * 	ENOSYS			fork
  *  ENOTDIR         access, execve, open
@@ -35,6 +35,7 @@
  * 	EOVERFLOW		open
  *  EPERM           access, execve, open
  * 	ERESTARTNOINTR	fork
+ * 	ERANGE			getcwd
  *  EROFS           access, open
  *  ETXTBSY         access, execve, open
  * 	EWOULDBLOCK		open
@@ -104,6 +105,8 @@ void error_code_handler(int error_code, const char *msg, const char *subj, const
 		printf("EPERM %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	// else if (ERESTARTNOINTR == error_code)
 	// 	printf("ERESTARTNOINTR %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
+	else if (ERANGE == error_code)
+		printf("ERANGE %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (EROFS == error_code)
 		printf("EROFS %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (ETXTBSY == error_code)
@@ -112,8 +115,11 @@ void error_code_handler(int error_code, const char *msg, const char *subj, const
 		printf("EWOULDBLOCK %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	else if (1000 == error_code)
 		printf("ERROR %s %s %s %s\n", msg, subj, mode, " ");	
-    else 
-        printf("UNKNOWN %s %s %s: %s\n", msg, subj, mode, strerror(error_code));    
+    else
+	{
+        printf("UNKNOWN %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
+	}
+	exit(EXIT_FAILURE);   
 }
 
 /** ---------------------------------- complett error handling 
