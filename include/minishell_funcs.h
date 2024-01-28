@@ -23,6 +23,8 @@ void				executor(void);
 
 
 /* builtins */
+t_node_exec			*check_buildin(t_node *node);
+char				*chose_buildin(t_node_exec *node);
 bool				check_and_choose_buildin(t_node *node, int *pipefd, bool open);
 char 				*build_pwd(void);
 
@@ -69,5 +71,11 @@ t_node				*set_redir_in_1_cmd_2(void);
 t_node				*set_redir_in_2_cmd_2(void);
 t_node				*set_redir_out_1(void);
 void				print_type(t_node *node);
+
+// --build pwd
+t_node	*set_pwd_allone(void);
+t_node	*set_pwd_beginn_1(void);
+t_node	*set_pwd_begin_2(void);
+t_node	*set_pwd_end(void);
 
 #endif

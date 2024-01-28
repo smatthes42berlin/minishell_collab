@@ -4,8 +4,14 @@ void	type_exec(t_node *node)
 {
 	t_node_exec	*exec_node;
 
-	exec_node = (t_node_exec *)node->node_type;
-	execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
+	exec_node = check_buildin(node);
+	if (NULL == exec_node)
+	{
+		exec_node = (t_node_exec *)node->node_type;
+		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
+	}
+	else
+		printf("%s\n",chose_buildin(exec_node));
 }
 
 void	type_redim(t_node *node)
@@ -20,8 +26,6 @@ void	type_redim(t_node *node)
 	close(fd);
 	navigate_tree_forward(redir_node->child_node);
 }
-
-
 
 void	type_pipe(t_node *node)
 {
