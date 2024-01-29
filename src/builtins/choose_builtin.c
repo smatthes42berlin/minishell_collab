@@ -1,15 +1,5 @@
 #include "minishell.h"
 
-bool str_equal(const char *s1, const char *s2)
-{
-    while (*s1 && (*s1 == *s2))
-    {
-        s1++;
-        s2++;
-    }
-    return (*s1 == *s2);
-}
-
 t_node_exec *check_buildin(t_node *node)
 {
     t_node_exec	*exec_node;
@@ -24,9 +14,13 @@ t_node_exec *check_buildin(t_node *node)
 
 char    *chose_buildin(t_node_exec *node)
 {
-    if (str_equal(node->file_path, "pwd"))
+    if (str_are_equal(node->file_path, "pwd"))
     {
         return(build_pwd());
+    }
+    if (str_are_equal(node->file_path, "cd"))
+    {
+        return(buid_cd(node));
     }
     return(NULL);
 }

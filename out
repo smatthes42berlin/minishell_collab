@@ -1,0 +1,12 @@
+total 64
+drwxrwxr-x 2 rene rene  4096 Jan 29 09:16 build
+-rw-rw-r-- 1 rene rene     9 Jan 26 08:26 delet_me
+drwxrwxr-x 2 rene rene  4096 Jan 27 20:20 include
+drwxrwxr-x 6 rene rene  4096 Jan 28 18:59 libft
+-rw-rw-r-- 1 rene rene   625 Jan 25 08:05 main.c
+-rw-rw-r-- 1 rene rene  2520 Jan 28 18:59 Makefile
+-rwxrwxr-x 1 rene rene 32080 Jan 29 09:16 minishell.a
+-rw-r--r-- 1 rene rene     0 Jan 29 09:17 out
+drwxrwxr-x 8 rene rene  4096 Jan 26 11:49 src
+-rw-rw-r-- 1 rene rene    57 Jan 26 08:26 testfile
+/home/rene/Project/42School/Rank03/minishell_collab

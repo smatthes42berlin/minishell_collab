@@ -27,6 +27,7 @@ t_node_exec			*check_buildin(t_node *node);
 char				*chose_buildin(t_node_exec *node);
 bool				check_and_choose_buildin(t_node *node, int *pipefd, bool open);
 char 				*build_pwd(void);
+char 				*buid_cd (t_node_exec *node);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
@@ -70,12 +71,18 @@ t_node				*set_redir_in_1(void);
 t_node				*set_redir_in_1_cmd_2(void);
 t_node				*set_redir_in_2_cmd_2(void);
 t_node				*set_redir_out_1(void);
+
 void				print_type(t_node *node);
 
 // --build pwd
-t_node	*set_pwd_allone(void);
-t_node	*set_pwd_beginn_1(void);
-t_node	*set_pwd_begin_2(void);
-t_node	*set_pwd_end(void);
+t_node				*set_pwd_allone(void);
+t_node				*set_pwd_beginn_1(void);
+t_node				*set_pwd_begin_2(void);
+t_node				*set_pwd_end(void);
+t_node				*set_pwd_redir_out(void);
+
+t_node				*set_cd_absolut(void);
+t_node				*set_cd_relativ(void);
+t_node				*set_cd_relativ_revers(void);
 
 #endif

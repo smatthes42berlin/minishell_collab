@@ -14,10 +14,13 @@ int	open_handler(const char *path, enum e_open_mode mode)
 	int	result;
 
 	result = -1;
-	if (access_handler(path, FILE_EXISTS) != 0 && mode != FILE_ONLY_READING)
+	if (mode != FILE_ONLY_READING)
 		result = open(path, mode | O_CREAT, 0644);
 	else
-		result = open(path, mode);
+	{
+		if (access_handler(path, FILE_EXISTS) != 0) 
+			result = open(path, mode);
+	}
 	error_code_handler(errno, "ERR-open path ", path, open_mode_to_str(mode));
 	return (result);
 }

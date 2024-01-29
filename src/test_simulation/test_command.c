@@ -1,5 +1,15 @@
 #include "minishell.h"
 
+bool str_equal_test(const char *s1, const char *s2)
+{
+    while (*s1 && (*s1 == *s2))
+    {
+        s1++;
+        s2++;
+    }
+    return (*s1 == *s2);
+}
+
 t_node_exec *test_cmd_exec( char *name, 
                             char *command,
                             char *flag,
@@ -12,23 +22,36 @@ t_node_exec *test_cmd_exec( char *name,
     exec->type = EXEC;
     exec->name_exec = name;
     exec->file_path = command;
-    args1[0] = command;
-    args1[2] = NULL;
-    if (flag == NULL)
-        args1[1] = NULL;
-    else
-        args1[1] = flag;
-    size_t argc = 0;
-    while (args1[argc] != NULL)
-        argc++;
-    exec->argv = malloc_handler((argc + 1) * sizeof(char*));
-    for (size_t i = 0; i < argc; i++) {
-        exec->argv[i] = args1[i];
+    if (str_equal_test(command,"cd") == false)
+    {   args1[0] = command;
+        args1[2] = NULL;
+        if (flag == NULL)
+            args1[1] = NULL;
+        else
+            args1[1] = flag;
+        size_t argc = 0;
+        while (args1[argc] != NULL)
+            argc++;
+        exec->argv = malloc_handler((argc + 1) * sizeof(char*));
+        for (size_t i = 0; i < argc; i++) {
+            exec->argv[i] = args1[i];
+        }
+        exec->argv[argc] = NULL;
     }
-    exec->argv[argc] = NULL;
-    char *env[] = {"LANG=en_US.UTF-8", "PATH=/usr/bin",  NULL}; // "LC_ALL=en_US.UTF-8", "PATH=/usr/bin", NULL};
-    //char *env[] = {"PATH=/bin", NULL};
-    exec->argv[argc] = NULL; 
+    else
+    {
+        args1[0] = flag;
+        args1[1] = NULL;
+        size_t argc = 0;
+        while (args1[argc] != NULL)
+            argc++;
+        exec->argv = malloc_handler((argc + 1) * sizeof(char*));
+        for (size_t i = 0; i < argc; i++) {
+            exec->argv[i] = args1[i];
+        }
+        exec->argv[argc] = NULL;
+    }
+    char *env[] = {"LANG=en_US.UTF-8", "PATH=/usr/bin",  NULL}; // "LC_ALL=en_US.UTF-8", "PATH=/usr/bin", NULL}; 
     size_t envc = sizeof(env) / sizeof(env[0]);
     exec->env = malloc_handler(envc * sizeof(char*));
     for (size_t i = 0; i < envc; i++) {
