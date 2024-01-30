@@ -25,12 +25,7 @@ char *cler_str(char *path)
 // return alltime NULL
 char *buid_cd (t_node_exec *node)
 {
-	//char *dir;
-	
-
-	//printf("%s\n", node->argv[0]);
-	//printf("%s\n", cler_str(node->argv[0]));
-	printf("%s\n", getcwd(NULL,0));
+	//printf("%s\n", getcwd(NULL,0));
 	if (chdir(cler_str(node->argv[0])) == -1)
 		error_code_handler(errno, "ERR-chdir", "CD -Command", "");
 	printf("%s\n", getcwd(NULL,0));
