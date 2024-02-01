@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: rene <rene@student.42.fr>                  +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/01/16 09:47:09 by rene             ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 include Makefile_src
 
@@ -20,7 +9,7 @@ LINK = cc
 CC = cc
 
 INCLUDESRCPATH = ./include/
-SUBFOLDERSRC = . ascii/ convert/ io/ s_lst/ dc_lst/ mem/ split/ str/ int_arr/ get_next_line/ printf/ str_arr/ math/ files/
+SUBFOLDERSRC = . ascii/ convert/ io/ s_lst/ dc_lst/ d_lst/ mem/ split/ str/ int_arr/ get_next_line/ printf/ str_arr/ math/ files/
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/

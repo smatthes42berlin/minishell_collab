@@ -23,7 +23,7 @@ typedef struct s_list_dc
 	void				*content;
 	struct s_list_dc	*next;
 	struct s_list_dc	*prev;
-}						t_list_dc;
+}						t_list_d;
 
 typedef struct s_base_info
 {
@@ -40,6 +40,15 @@ typedef struct s_split_sq
 	char				c;
 	const char			*s;
 }						t_split_sq;
+
+typedef struct s_arr_char_key_info
+{
+	int					arr_len;
+	char				*val;
+	int					key_len;
+	int					key_occ_n;
+	char				**cpy;
+}						t_arr_char_key_info;
 
 /* ascci char checks n manip */
 
@@ -59,6 +68,7 @@ char					*ft_strchr(const char *s, int c);
 char					*ft_strrchr(const char *s, int c);
 ssize_t					ft_str_chr_index(const char *s, int c);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
+int						ft_strcmp(const char *s1, const char *s2);
 char					*ft_strnstr(const char *big, const char *little,
 							size_t len);
 int						ft_str_cont_duplic(const char *str);
@@ -120,10 +130,11 @@ t_list					*ft_lstmap(t_list *lst, void *(*f)(void *),
 
 /* double circular linked list */
 
-t_list_dc				*dc_lst_new(void *content);
+t_list_d				*dc_lst_new(void *content);
 
-void					dc_lst_print_whole(t_list_dc *lst_ptr,
-							const char *longShort, const char *type);
+void	dc_lst_print_whole(t_list_d *lst_ptr,
+						const char *longShort,
+						const char *type);
 void					dc_lst_print_one_str_long(void *lst_ptr_void);
 void					dc_lst_print_one_str_short(void *lst_ptr_void);
 void					dc_lst_print_one_int_long(void *lst_ptr_void);
@@ -131,21 +142,41 @@ void					dc_lst_print_one_int_short(void *lst_ptr_void);
 
 void					dc_lst_print_sep(void);
 
-void					dc_lst_add_back(t_list_dc **lst, t_list_dc *new);
-void					dc_lst_add_front(t_list_dc **lst, t_list_dc *new);
-int						dc_lst_size(t_list_dc *lst);
-void					dc_lst_clear(t_list_dc **lst, void (*del)(void *));
-void					dc_lst_del_one(t_list_dc *lst, void (*del)(void *));
-void					dc_lst_iter_node(t_list_dc *lst, void (*f)(void *));
-void					dc_lst_iter_content(t_list_dc *lst, void (*f)(void *));
-t_list_dc				*dc_lst_map(t_list_dc *lst, void *(*f)(void *),
+void					dc_lst_add_back(t_list_d **lst, t_list_d *new);
+void					dc_lst_add_front(t_list_d **lst, t_list_d *new);
+int						dc_lst_size(t_list_d *lst);
+void					dc_lst_clear(t_list_d **lst, void (*del)(void *));
+void					dc_lst_del_one(t_list_d *lst, void (*del)(void *));
+void					dc_lst_iter_node(t_list_d *lst, void (*f)(void *));
+void					dc_lst_iter_content(t_list_d *lst, void (*f)(void *));
+t_list_d				*dc_lst_map(t_list_d *lst, void *(*f)(void *),
 							void (*del)(void *));
-int						dc_lst_exactly_one(t_list_dc *lst_ptr);
-t_list_dc				*dc_lst_pop(t_list_dc **lst);
-int						dc_lst_exactly_one(t_list_dc *lst_ptr);
-int						dc_lst_exactly_two(t_list_dc *lst_ptr);
+int						dc_lst_exactly_one(t_list_d *lst_ptr);
+t_list_d				*dc_lst_pop(t_list_d **lst);
+int						dc_lst_exactly_one(t_list_d *lst_ptr);
+int						dc_lst_exactly_two(t_list_d *lst_ptr);
 
-t_list_dc				*dc_lst_swap(t_list_dc **lst);
+t_list_d				*dc_lst_swap(t_list_d **lst);
+
+/* double linked list non circular*/
+
+t_list_d				*d_lst_new(void *content);
+t_list_d				*d_lst_last(t_list_d *lst);
+void					d_lst_add_back(t_list_d **lst, t_list_d *new);
+void					d_lst_add_front(t_list_d **lst, t_list_d *new);
+void					d_lst_clear(t_list_d **lst, void (*del)(void *));
+void					d_lst_del_one(t_list_d *lst, void (*del)(void *));
+int						d_lst_exactly_one(t_list_d *lst_ptr);
+int						d_lst_exactly_two(t_list_d *lst_ptr);
+int						d_lst_size(t_list_d *lst);
+t_list_d				*d_lst_pop(t_list_d **lst);
+t_list_d				*d_lst_pop_n(t_list_d **lst, int n);
+t_list_d				*d_lst_pop_current(t_list_d **lst);
+t_list_d				*d_lst_swap(t_list_d **lst);
+t_list_d				*d_lst_map(t_list_d *lst, void *(*f)(void *),
+							void (*del)(void *));
+void					d_lst_iter_content(t_list_d *lst, void (*f)(void *));
+void					d_lst_iter_node(t_list_d *lst, void (*f)(void *));
 
 /* output */
 
@@ -159,7 +190,7 @@ void					ft_putnbr_fd(int n, int fd);
 size_t					ft_putnbr_base_fd_l(int fd, long nbr, const char *base);
 size_t					ft_putnbr_base_fd_ul(int fd, unsigned long nbr,
 							const char *base);
-size_t					ft_putnbr_base_check(const char *base,
+size_t	ft_putnbr_base_check(const char *base,
 							t_base_info *base_info);
 
 /* atoi itoa */
@@ -183,6 +214,12 @@ void					free_str_arr_null(char **str_arr);
 void					free_str_arr(char **str_arr, int num);
 void					print_str_arr_null(char **arr);
 void					print_str_arr(char **arr, int num);
+int						ft_arr_char_occ_num_n(char **arr, char *key);
+char					**ft_arr_char_rem_n(char **arr, char *key);
+char					**ft_arr_char_add(char **arr, char *val);
+char					**ft_arr_cpy_char_null(char **arr);
+char					**ft_arr_char_add_replace_n(char **arr, char *val);
+char					*ft_arr_char_get_val(char **arr, char *key);
 
 /* math */
 
@@ -192,16 +229,17 @@ int						ft_abs(int nb);
 /* files */
 
 int						count_lines_filename(char *filename);
-int						count_lines_size_filename(char *filename,
-							t_file_info *file_info);
+int	count_lines_size_filename(char *filename,
+								t_file_info *file_info);
 int						count_lines_fd(int fd);
 int						count_lines_size_fd(int fd, t_file_info *file_info);
 void					free_file_info_ptr(t_file_info *file_info);
 void					free_file_info(t_file_info file_info);
 int						count_cols_per_line_fd(int fd, t_file_info *file_info);
-int						count_cols_per_line_filename(char *filename,
-							t_file_info *file_info);
+int	count_cols_per_line_filename(char *filename,
+									t_file_info *file_info);
 int						get_file_size_filename(char *filename);
 int						get_file_size_fd(int fd);
+int						read_whole_file(int fd, char **res);
 
 #endif

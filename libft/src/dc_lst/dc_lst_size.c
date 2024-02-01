@@ -1,9 +1,9 @@
 #include "lib_main.h"
 
-int	dc_lst_size(t_list_dc *lst)
+int	dc_lst_size(t_list_d *lst)
 {
 	int			size;
-	t_list_dc	*head;
+	t_list_d	*head;
 
 	size = 0;
 	head = lst;

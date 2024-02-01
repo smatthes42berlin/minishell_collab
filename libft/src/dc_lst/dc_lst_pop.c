@@ -1,8 +1,8 @@
 #include "lib_main.h"
 
-t_list_dc	*dc_lst_pop(t_list_dc **lst)
+t_list_d	*dc_lst_pop(t_list_d **lst)
 {
-	t_list_dc	*old_head;
+	t_list_d	*old_head;
 
 	if (!lst || !*lst)
 		return (NULL);

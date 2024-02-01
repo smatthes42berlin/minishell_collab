@@ -1,6 +1,6 @@
 #include "lib_main.h"
 
-void	dc_lst_add_back(t_list_dc **lst, t_list_dc *new)
+void	dc_lst_add_back(t_list_d **lst, t_list_d *new)
 {
 	if (!new)
 		return ;

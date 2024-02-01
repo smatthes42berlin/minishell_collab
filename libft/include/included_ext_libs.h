@@ -9,5 +9,6 @@
 # include <math.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <stdbool.h>
 
 #endif

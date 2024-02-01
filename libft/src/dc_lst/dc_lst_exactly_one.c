@@ -1,6 +1,6 @@
 #include "lib_main.h"
 
-int	dc_lst_exactly_one(t_list_dc *lst_ptr)
+int	dc_lst_exactly_one(t_list_d *lst_ptr)
 {
 	if (!lst_ptr)
 		return (0);

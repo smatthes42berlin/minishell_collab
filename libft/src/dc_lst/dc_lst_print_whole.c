@@ -1,9 +1,9 @@
 #include "lib_main.h"
 
-static void	print_short(t_list_dc *lst_ptr, const char *type);
-static void	print_long(t_list_dc *lst_ptr, const char *type);
+static void	print_short(t_list_d *lst_ptr, const char *type);
+static void	print_long(t_list_d *lst_ptr, const char *type);
 
-void	dc_lst_print_whole(t_list_dc *lst_ptr, const char *longShort,
+void	dc_lst_print_whole(t_list_d *lst_ptr, const char *longShort,
 		const char *type)
 {
 	if (!lst_ptr)
@@ -23,7 +23,7 @@ void	dc_lst_print_whole(t_list_dc *lst_ptr, const char *longShort,
 	return ;
 }
 
-static void	print_short(t_list_dc *lst_ptr, const char *type)
+static void	print_short(t_list_d *lst_ptr, const char *type)
 {
 	if (str_are_equal(type, "int"))
 		dc_lst_iter_node(lst_ptr, &dc_lst_print_one_int_short);
@@ -31,7 +31,7 @@ static void	print_short(t_list_dc *lst_ptr, const char *type)
 		dc_lst_iter_node(lst_ptr, &dc_lst_print_one_str_short);
 }
 
-static void	print_long(t_list_dc *lst_ptr, const char *type)
+static void	print_long(t_list_d *lst_ptr, const char *type)
 {
 	if (str_are_equal(type, "int"))
 		dc_lst_iter_node(lst_ptr, &dc_lst_print_one_int_long);

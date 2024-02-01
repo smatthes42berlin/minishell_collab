@@ -14,7 +14,7 @@
  * @param main_data data structure,
 	that contains all the necessary data for the shell and gets passed around
 */
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
 	executor();
 	return (0);

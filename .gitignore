@@ -1,7 +1,20 @@
 
-
+# ignore all files without extension
+*
+!*/
+!*.*
+#
 **/*.o
+**/*.a
+**/*.out
+**/*.txt
+**/*.sh
 *.o
 *.a
+*.txt
+*.sh
+*.out
 .vscode/
 .vscode
+**/minishell
+

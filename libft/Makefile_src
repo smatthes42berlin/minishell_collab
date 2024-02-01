@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile_src                                       :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: smatthes <smatthes@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/26 15:04:01 by smatthes          #+#    #+#              #
-#    Updated: 2023/11/15 11:16:18 by smatthes         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 SRC =	ft_atoi.c \
 		ft_atoi_base_l.c \
@@ -49,6 +38,7 @@ SRC =	ft_atoi.c \
 		ft_putnbr_fd.c \
 		ft_striteri.c \
 		ft_strncmp.c \
+		ft_strcmp.c \
 		ft_toupper.c \
 		ft_isascii.c \
 		ft_memcpy.c \
@@ -85,7 +75,26 @@ SRC =	ft_atoi.c \
 		dc_lst_exactly_one.c \
 		dc_lst_exactly_two.c \
 		dc_lst_swap.c \
+		d_lst_new.c \
+		d_lst_last.c \
+		d_lst_add_front.c \
+		d_lst_add_back.c \
+		d_lst_clear.c \
+		d_lst_del_one.c \
+		d_lst_exactly_one.c \
+		d_lst_exactly_two.c \
+		d_lst_size.c \
+		d_lst_pop.c \
+		d_lst_pop_n.c \
+		d_lst_pop_current.c \
+		d_lst_swap.c \
+		d_lst_map.c \
+		d_lst_iter_content.c \
+		d_lst_iter_node.c \
 		ft_arr_len_char.c \
+		ft_arr_char_rem_n.c \
+		ft_arr_char_occ_num_n.c \
+		ft_arr_char_add.c \
 		ft_putstr_fd_len.c \
 		ft_putstr_fd_len_only_print.c \
 		ft_putchar_fd_len.c \
@@ -112,6 +121,9 @@ SRC =	ft_atoi.c \
 		free_str_arr.c \
 		free_str_arr_null.c \
 		ft_arr_cpy_char.c \
+		ft_arr_cpy_char_null.c \
+		ft_arr_char_add_replace.c \
+		ft_arr_char_get_val.c \
 		print_str_arr_null.c \
 		print_str_arr.c \
 		int_arr_int_index.c \
@@ -126,6 +138,7 @@ SRC =	ft_atoi.c \
 		count_cols_per_line_fd.c \
 		count_cols_per_line_filename.c \
 		get_file_size_fd.c \
-		get_file_size_filename.c
+		get_file_size_filename.c \
+		read_whole_file.c
 
  
