@@ -2,7 +2,7 @@
 # define MINISHELL_FUNCS_H
 
 /* main */
-void	init_main_data(t_main_data *main_data);
+int		init_main_data(t_main_data *main_data);
 
 /* tokenisation/lexer main*/
 
@@ -50,6 +50,18 @@ int		add_heredoc_str_token(t_list_d **hdoc_op_token, char *res,
 			t_here_doc_info *hdoc_info);
 int		remove_here_doc_token(t_main_data *main_data);
 int		free_heredoc_info_code(t_here_doc_info *hdoc_info, int code);
+
+/* environment */
+
+int		init_env_vars(t_main_data *main_data, char *envp[]);
+int		env_del_var(t_main_data *main_data, char *val);
+int		env_set_var(t_main_data *main_data, char *val);
+void	env_print(t_main_data *main_data);
+char	*env_get_var(t_main_data *main_data, char *key);
+
+/* expander */
+
+int		expand(t_main_data *main_data);
 
 /* parser */
 

@@ -13,7 +13,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /parser
+SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
@@ -43,7 +43,13 @@ SRC = 	main.c \
 		here_doc_read_parent.c \
 		here_doc_read_child.c \
 		tokenise_free.c \
-		here_doc_remove_here_doc_token.c
+		here_doc_remove_here_doc_token.c \
+		env_init.c \
+		env_del_var.c \
+		env_print.c \
+		env_set_var.c \
+		env_get_var.c \
+		expander_main.c
 
 		
 OBJFNAME = $(SRC:.c=.o)

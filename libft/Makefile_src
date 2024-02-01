@@ -92,6 +92,9 @@ SRC =	ft_atoi.c \
 		d_lst_iter_content.c \
 		d_lst_iter_node.c \
 		ft_arr_len_char.c \
+		ft_arr_char_rem_n.c \
+		ft_arr_char_occ_num_n.c \
+		ft_arr_char_add.c \
 		ft_putstr_fd_len.c \
 		ft_putstr_fd_len_only_print.c \
 		ft_putchar_fd_len.c \
@@ -118,6 +121,9 @@ SRC =	ft_atoi.c \
 		free_str_arr.c \
 		free_str_arr_null.c \
 		ft_arr_cpy_char.c \
+		ft_arr_cpy_char_null.c \
+		ft_arr_char_add_replace.c \
+		ft_arr_char_get_val.c \
 		print_str_arr_null.c \
 		print_str_arr.c \
 		int_arr_int_index.c \

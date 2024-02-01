@@ -41,6 +41,15 @@ typedef struct s_split_sq
 	const char			*s;
 }						t_split_sq;
 
+typedef struct s_arr_char_key_info
+{
+	int					arr_len;
+	char				*val;
+	int					key_len;
+	int					key_occ_n;
+	char				**cpy;
+}						t_arr_char_key_info;
+
 /* ascci char checks n manip */
 
 int						ft_isprint(int c);
@@ -205,6 +214,12 @@ void					free_str_arr_null(char **str_arr);
 void					free_str_arr(char **str_arr, int num);
 void					print_str_arr_null(char **arr);
 void					print_str_arr(char **arr, int num);
+int						ft_arr_char_occ_num_n(char **arr, char *key);
+char					**ft_arr_char_rem_n(char **arr, char *key);
+char					**ft_arr_char_add(char **arr, char *val);
+char					**ft_arr_cpy_char_null(char **arr);
+char					**ft_arr_char_add_replace_n(char **arr, char *val);
+char					*ft_arr_char_get_val(char **arr, char *key);
 
 /* math */
 

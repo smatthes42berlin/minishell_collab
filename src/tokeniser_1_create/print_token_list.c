@@ -9,14 +9,11 @@ void	print_token_list(t_list_d *token_list)
 		return ;
 	printf("\n\n********TOKEN_LIST\n\n");
 	next = token_list;
-	printf("Oo\n");
 	// token_test = next->next->content;
 	// printf("$%s$\n", token_test->value);
 	while (next->next)
 	{
-		printf("Aa\n");
 		print_token(next->content);
-		printf("Cc\n");
 		next = next->next;
 	}
 	print_token(next->content);

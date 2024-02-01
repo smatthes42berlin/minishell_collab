@@ -10,7 +10,6 @@ int	read_whole_file(int fd, char **res)
 
 	*res = NULL;
 	num_bytes = read(fd, buffer, BUFFER_SIZE);
-	ft_printf("num_bytes = $%d$\n", num_bytes);
 	if (num_bytes == -1)
 		return (-1);
 	if (num_bytes == 0)
