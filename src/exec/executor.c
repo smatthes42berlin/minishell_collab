@@ -15,11 +15,11 @@ t_node	*example_selection(void)
 	// ret = set_redir_out_1();
 
 	// ---- build pwd -----
-	 ret = set_pwd_allone(); // pwd
-	// ret = set_pwd_beginn_1(); // pwd | grep home
+	//  ret = set_pwd_allone(); // pwd
+	//  ret = set_pwd_beginn_1(); // pwd | grep home
 	//  ret = set_pwd_begin_2(); // pwd | ls -l 
-	// ret = set_pwd_end(); // ls -l | pwd
-	// ret = set_pwd_redir_out(); ///pwd > out
+	//  ret = set_pwd_end(); // ls -l | pwd
+	 ret = set_pwd_redir_out(); ///pwd > out
 
 	// ---- build cd 
 		// ret = set_cd_absolut();
