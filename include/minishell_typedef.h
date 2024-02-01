@@ -190,9 +190,8 @@ typedef struct s_node_pipe
 typedef struct s_node_heredoc
 {
 	enum e_node_type	type;
-	t_node				*left_node;
-	t_node				*right_node;
-	char				*delimiter;
+	t_node				*child_node;
+	int				read_fd;
 }						t_node_heredoc;
 
 /**
@@ -208,8 +207,7 @@ typedef struct s_node_heredoc
 typedef struct s_node_redir
 {
 	enum e_node_type	type;
-	t_node				*left_node;
-	t_node				*right_node;
+	t_node				*child_node;
 	char				*filename;
 	char				*name_redir;
 	enum e_open_mode	mode;
@@ -224,8 +222,6 @@ typedef struct s_node_redir
 typedef struct s_node_exec
 {
 	enum e_node_type	type;
-	t_node				*left_node;
-	t_node				*right_node;
 	char				*file_path;
 	char				*name_exec;
 	// handle inbuilt
