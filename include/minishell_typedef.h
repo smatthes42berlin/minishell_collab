@@ -7,11 +7,11 @@
 
 typedef struct s_node	t_node;
 
-
 /**
  * main data structure, that can be passed around
 
- * @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
+
+	* @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
 	NULL when no env vars or uninitialised
  * @param token_list pointer to first element of token list or NULL,
 	when token list is uninitialised
@@ -20,9 +20,9 @@ typedef struct s_node	t_node;
  */
 typedef struct s_main_data
 {
-	t_list_dc			*env_vars;
-	t_list_dc			*token_list;
-	t_list_dc			*ast;
+	char				**env_vars;
+	t_list_d			*token_list;
+	t_node				*ast;
 	char				*cli_input;
 	//.....
 }						t_main_data;
@@ -35,7 +35,7 @@ typedef struct s_main_data
  * @param FILE_WRITABLE
  * @param FILE_EXECUTABLE
 */
-enum e_access_mode 
+enum					e_access_mode
 {
 	FILE_EXISTS = F_OK,
 	FILE_READABLE = R_OK,
@@ -51,7 +51,7 @@ enum e_access_mode
  * @param FILE_READ_WRITE
  * @param FILE_READ_WRITE_APPEND
 */
-enum e_open_mode
+enum					e_open_mode
 {
 	FILE_ONLY_READING = O_RDONLY,
 	FILE_ONLY_WRITE = O_WRONLY | O_TRUNC,
@@ -60,8 +60,7 @@ enum e_open_mode
 	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
 };
 
-
-enum e_pid_satus
+enum					e_pid_satus
 {
 	PID_STOP_REGULAR,
 	PID_STOP_SIGNAL,
@@ -70,20 +69,17 @@ enum e_pid_satus
 	PID_ERROR
 };
 
-
-
 typedef struct s_pid_status
 {
-	pid_t 				pid_nbr;
+	pid_t				pid_nbr;
 	int					pipefd[2];
-	enum e_pid_satus 	pid_satus;
-} 				t_pid_status;
+	enum e_pid_satus	pid_satus;
+}						t_pid_status;
 
-typedef struct  s_pid_list
+typedef struct s_pid_list
 {
-	t_list_dc	*pid_list;
-}				t_pid_list;
-
+	t_list_d			*pid_list;
+}						t_pid_list;
 
 //--------------------------------------------------enum exec end --------------------------------------
 
@@ -108,6 +104,16 @@ enum					e_token_type
 	T_ENDOFINPUT,
 	T_UNDEFINED
 };
+
+typedef struct s_here_doc_info
+{
+	char				*delim;
+	char				*delim_raw;
+	char				*tmp;
+	bool				quoted;
+	int					num_char_no_quote;
+	int					index_close_quote;
+}						t_here_doc_info;
 
 /**
  * generic for an identified token
@@ -184,8 +190,9 @@ typedef struct s_node_pipe
 typedef struct s_node_heredoc
 {
 	enum e_node_type	type;
+	t_node				*left_node;
+	t_node				*right_node;
 	char				*delimiter;
-	t_node				*child_node;
 }						t_node_heredoc;
 
 /**
@@ -201,7 +208,8 @@ typedef struct s_node_heredoc
 typedef struct s_node_redir
 {
 	enum e_node_type	type;
-	t_node				*child_node;
+	t_node				*left_node;
+	t_node				*right_node;
 	char				*filename;
 	char				*name_redir;
 	enum e_open_mode	mode;
@@ -216,9 +224,12 @@ typedef struct s_node_redir
 typedef struct s_node_exec
 {
 	enum e_node_type	type;
+	t_node				*left_node;
+	t_node				*right_node;
 	char				*file_path;
 	char				*name_exec;
 	// handle inbuilt
+	bool				inbuilt;
 	char				**argv;
 	char				**env;
 	bool				is_inbuilt;
