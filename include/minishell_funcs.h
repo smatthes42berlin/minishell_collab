@@ -75,11 +75,13 @@ void				type_exec(t_node *node);
 void				type_redim(t_node *node);
 void				type_pipe(t_node *node);
 void				executor(void);
+void				free_ast(t_node *node);
 
 /* builtins */
 t_node_exec			*check_buildin(t_node *node);
 char				*chose_buildin(t_node_exec *node);
-bool    			check_and_choose_buildin(t_node *node, int *pipefd, bool direction);
+bool				check_and_choose_buildin(t_node *node, int *pipefd,
+						bool direction);
 char				*build_pwd(void);
 char				*buid_cd(t_node_exec *node);
 

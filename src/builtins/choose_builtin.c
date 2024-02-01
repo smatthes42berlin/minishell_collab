@@ -28,13 +28,15 @@ char	*chose_buildin(t_node_exec *node)
 bool	check_and_choose_buildin(t_node *node, int *pipefd, bool direction)
 {
 	t_node_exec *exec_node;
+	char *temp_str;
 
 	exec_node = check_buildin(node);
 	if (NULL == exec_node)
 	{
 		return (false);
 	}
-	pipe_setting(pipefd, direction, chose_buildin(exec_node));
-
+	temp_str = chose_buildin(exec_node);
+	pipe_setting(pipefd, direction, temp_str);
+	free(temp_str);
 	return (true);
 }

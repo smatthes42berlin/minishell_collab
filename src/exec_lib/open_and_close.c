@@ -18,6 +18,7 @@ int	open_handler(const char *path, enum e_open_mode mode)
 		result = open(path, mode | O_CREAT, 0644);
 	else
 	{
+		printf("fucking %s\n", path);
 		if (access_handler(path, FILE_EXISTS) != 0) 
 			result = open(path, mode);
 	}

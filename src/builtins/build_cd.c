@@ -6,7 +6,7 @@ char *cler_str(char *path)
 	int i;
 	char **str;
 	char *ret;
-	
+
 	ret = "";
 	i = -1;
 	str = ft_split_str(path, "/");

@@ -6,7 +6,7 @@ t_node	*set_cmd_1(void)
 	t_node	*ret;
 
 	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_exec("sleep", "/bin/pwd", NULL, true);
+	ret->node_type = test_cmd_exec("pwd", "/bin/ls", "-l", false);
 	ret->type = EXEC;
 	return (ret);
 }
@@ -18,8 +18,8 @@ t_node	*set_cmd_2(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, EXEC,
-						test_cmd_exec("sleep", "pwd", NULL, true), 
-						test_cmd_exec("ls", "/bin/grep", "home", false));
+						test_cmd_exec("ls", "/bin/ls", "-l", false), 
+						test_cmd_exec("grep", "/bin/grep", ".c", false));
 	ret->type = PIPE;
 	return (ret);
 }

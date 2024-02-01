@@ -24,6 +24,7 @@ int	access_handler(const char *path, enum e_access_mode mode)
 		printf("ERROR 'access' - Wrong Mode given");
 		return (result);
 	}
+	printf("path: %s\n", path);
 	error_code_handler(errno, "ERR-access", path, access_mode_to_str(mode));
 	return (result);
 }

@@ -23,8 +23,9 @@ void	type_redim(t_node *node)
 	//printf("Node %s\n", redir_node->name_redir);
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	dup2(fd, redir_node->in_or_out);
-	close(fd);
+	
 	navigate_tree_forward(redir_node->child_node);
+	close(fd);
 }
 
 void	type_pipe(t_node *node)

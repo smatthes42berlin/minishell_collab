@@ -16,47 +16,34 @@ t_node_exec *test_cmd_exec( char *name,
                             bool inbuild)
 {
     t_node_exec *exec;
-    char *args1[3]; 
+    char **args1; 
     
     exec = malloc_handler(sizeof(t_node_exec));
     exec->type = EXEC;
-    exec->name_exec = name;
-    exec->file_path = command;
+    exec->name_exec = strdup(name);
+    exec->file_path = strdup(command);
+    args1 = malloc_handler(3 * sizeof(char*));
     if (str_equal_test(command,"cd") == false)
-    {   args1[0] = command;
-        args1[2] = NULL;
+    {   args1[0] = strdup(command);
         if (flag == NULL)
             args1[1] = NULL;
         else
-            args1[1] = flag;
-        size_t argc = 0;
-        while (args1[argc] != NULL)
-            argc++;
-        exec->argv = malloc_handler((argc + 1) * sizeof(char*));
-        for (size_t i = 0; i < argc; i++) {
-            exec->argv[i] = args1[i];
-        }
-        exec->argv[argc] = NULL;
+            args1[1] = strdup(flag);
+        args1[2] = NULL;
     }
     else
     {
-        args1[0] = flag;
-        args1[1] = NULL;
-        size_t argc = 0;
-        while (args1[argc] != NULL)
-            argc++;
-        exec->argv = malloc_handler((argc + 1) * sizeof(char*));
-        for (size_t i = 0; i < argc; i++) {
-            exec->argv[i] = args1[i];
-        }
-        exec->argv[argc] = NULL;
+        args1[0] = strdup(command);
+        args1[1] = strdup(flag);
+        args1[2] = NULL;
     }
-    char *env[] = {"LANG=en_US.UTF-8", "PATH=/usr/bin",  NULL}; // "LC_ALL=en_US.UTF-8", "PATH=/usr/bin", NULL}; 
-    size_t envc = sizeof(env) / sizeof(env[0]);
-    exec->env = malloc_handler(envc * sizeof(char*));
-    for (size_t i = 0; i < envc; i++) {
-        exec->env[i] = env[i];
-    }
+    exec->argv = args1;
+
+    exec->env = malloc_handler(3 * sizeof(char*));
+    exec->env[0] = ft_strdup("LANG=en_US.UTF-8");
+    exec->env[1] = ft_strdup("PATH=/usr/bin");
+    exec->env[2] = NULL;
+
     exec->inbuilt = inbuild;
     return (exec);
 }
