@@ -7,7 +7,7 @@ t_node_exec *check_buildin(t_node *node)
     if (node->type != EXEC)
         return (NULL);
     exec_node = (t_node_exec *)node->node_type;
-    if (exec_node->inbuild == false)
+    if (exec_node->inbuilt == false)
         return (NULL);
     return (exec_node);
 }
@@ -39,7 +39,7 @@ bool    check_and_choose_buildin(t_node *node, int *pipefd, bool open)
     //printf("file_path %s\n\n", exec_node->file_path);
     // if (str_equal(exec_node->file_path, "pwd"))
     // {
-        pipe_setting(pipefd, open, chose_buildin(exec_node));
+    pipe_setting(pipefd, open, chose_buildin(exec_node));
     //}
     return (true);
 }

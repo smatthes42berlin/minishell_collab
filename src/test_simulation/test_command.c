@@ -57,7 +57,7 @@ t_node_exec *test_cmd_exec( char *name,
     for (size_t i = 0; i < envc; i++) {
         exec->env[i] = env[i];
     }
-    exec->inbuild = inbuild;
+    exec->inbuilt = inbuild;
     return (exec);
 }
 
