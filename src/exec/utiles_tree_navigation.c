@@ -11,8 +11,34 @@ void	type_exec(t_node *node)
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 	}
 	else
-		printf("%s\n",chose_buildin(exec_node));
+		printf("%s\n", chose_buildin(exec_node));
 }
+
+// void	type_redim(t_node *node)
+// {
+// 	t_node_redir	*redir_node;
+// 	pid_t			pid;
+// 	int				fd;
+// 	int				pipefd[2];
+
+// 	redir_node = (t_node_redir *)node->node_type;
+// 	pid = fork_handler();
+// 	pipe_handler(pipefd);
+// 	if (pid == 0)
+// 	{
+// 		pipe_setting(pipefd,true,NULL);
+// 		fd = open_handler(redir_node->filename, redir_node->mode);
+// 		dup2(fd, redir_node->in_or_out);
+// 		close(fd);
+
+// 		//navigate_tree_forward(redir_node->child_node)
+// 	}
+// 	else{
+// 		pipe_setting(pipefd,false,NULL);
+// 		navigate_tree_forward(redir_node->child_node);
+// 		waitpid(pid, NULL, 0);
+// 	}
+// }
 
 void	type_redim(t_node *node)
 {
@@ -20,12 +46,20 @@ void	type_redim(t_node *node)
 	int				fd;
 
 	redir_node = (t_node_redir *)node->node_type;
-	//printf("Node %s\n", redir_node->name_redir);
 	fd = open_handler(redir_node->filename, redir_node->mode);
-	dup2(fd, redir_node->in_or_out);
-	
+	if (fd == -1)
+	{
+		error_code_handler(errno, "ERR-open_handler in \"type_redim\"", "", "");
+		return ;
+	}
+	if (dup2(fd, redir_node->in_or_out) == -1)
+	{
+		close_handler(fd);
+		error_code_handler(errno, "ERR-dub_2 in \"type_redim\"", "", "");
+		return ;
+	}
+	close_handler(fd);
 	navigate_tree_forward(redir_node->child_node);
-	close(fd);
 }
 
 void	type_pipe(t_node *node)
@@ -40,7 +74,8 @@ void	type_pipe(t_node *node)
 	main_pid = fork_handler();
 	if (main_pid == 0)
 	{
-		if (false == check_and_choose_buildin(pipe_node->left_node, pipefd, true))
+		if (false == check_and_choose_buildin(pipe_node->left_node, pipefd,
+				true))
 		{
 			// printf("\n\n NO inbuild LEFT SIDE!\n\n");
 			pipe_setting(pipefd, true, NULL);
@@ -53,9 +88,10 @@ void	type_pipe(t_node *node)
 		nested_pid = fork_handler();
 		if (nested_pid == 0)
 		{
-			if (false == check_and_choose_buildin(pipe_node->right_node, pipefd, false))
+			if (false == check_and_choose_buildin(pipe_node->right_node, pipefd,
+					false))
 			{
-				//printf("\n\n NO inbuild Rigt SIDE!\n\n");
+				// printf("\n\n NO inbuild Rigt SIDE!\n\n");
 				navigate_tree_forward(pipe_node->right_node);
 			}
 		}

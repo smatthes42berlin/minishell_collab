@@ -58,7 +58,7 @@ t_node_pipe *test_cmd_pipe( char *name,
     t_node_pipe *pipe;
     pipe = malloc_handler(sizeof(t_node_pipe));
     pipe->type = PIPE;
-    pipe->name_Pipe = name;
+    pipe->name_Pipe = ft_strdup(name);
     pipe->left_node = malloc_handler(sizeof(t_node));
     pipe->left_node->node_type = node_left;
     pipe->left_node->type = type_left;
@@ -78,8 +78,8 @@ t_node_redir *test_cmd_redir(    char *name,
     t_node_redir *redir;
     redir = malloc_handler(sizeof(t_node_redir));
     redir->type = REDIR;
-    redir->name_redir = name;
-    redir->filename = filename;
+    redir->name_redir = ft_strdup(name);
+    redir->filename = ft_strdup(filename);
     redir->mode = mode;
     redir->in_or_out = in_or_out;
     redir->child_node = malloc_handler(sizeof(t_node));

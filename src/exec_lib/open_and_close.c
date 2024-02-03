@@ -4,32 +4,40 @@ static const char	*open_mode_to_str(enum e_open_mode mode);
 
 /**
  * @brief Using the funktion for safe open
- * 
+ *
  * @param path filepath
- * @param mode 
+ * @param mode
  * @return int -- the number of the file descripter
  */
 int	open_handler(const char *path, enum e_open_mode mode)
 {
 	int	result;
 
-	result = -1;
-	if (mode != FILE_ONLY_READING)
-		result = open(path, mode | O_CREAT, 0644);
-	else
+	if (mode == FILE_ONLY_READING)
 	{
-		printf("fucking %s\n", path);
-		if (access_handler(path, FILE_EXISTS) != 0) 
+		if (access_handler(path, FILE_EXISTS) == 0)
 			result = open(path, mode);
+		else
+		{
+			error_code_handler(errno, "ERR-access", 
+				" File don't exist -> Path: ", path);
+			return (-1);
+		}
 	}
-	error_code_handler(errno, "ERR-open path ", path, open_mode_to_str(mode));
+	else
+		result = open(path, mode | O_CREAT, 0644);
+	if (result == -1)
+	{
+		error_code_handler(errno, "ERR-open path ", path,
+			open_mode_to_str(mode));
+	}
 	return (result);
 }
 
 /**
  * @brief use the function for safe close
- * 
- * @param fd -- file descripter 
+ *
+ * @param fd -- file descripter
  * @return int -- errno nbr
  */
 int	close_handler(int fd)

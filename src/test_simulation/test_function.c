@@ -6,7 +6,7 @@ t_node	*set_cmd_1(void)
 	t_node	*ret;
 
 	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_exec("pwd", "/bin/ls", "-l", false);
+	ret->node_type = test_cmd_exec("ls", "/bin/ls", "-l", false);
 	ret->type = EXEC;
 	return (ret);
 }
@@ -115,7 +115,7 @@ t_node	*set_redir_out_1(void)
 	t_node	*ret;
 
 	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_redir("redir", "out", FILE_ONLY_WRITE,
+	ret->node_type = test_cmd_redir("redir", "outtt", FILE_ONLY_WRITE_APPEND,
 			STDOUT, EXEC, test_cmd_exec("ls", "/bin/ls", "-l", false));
 	ret->type = REDIR;
 	return (ret);
