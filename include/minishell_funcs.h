@@ -74,7 +74,7 @@ void				navigate_tree_forward(t_node *node);
 void				type_exec(t_node *node);
 void				type_redim(t_node *node);
 void				type_pipe(t_node *node);
-void				executor();
+void				executor();//t_main_data data);
 void				free_ast(t_node *node);
 
 /* builtins */

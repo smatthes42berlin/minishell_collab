@@ -1,0 +1,6 @@
+==14814== Memcheck, a memory error detector
+==14814== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14814== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==14814== Command: ./minishell
+==14814== Parent PID: 14813
+==14814== 

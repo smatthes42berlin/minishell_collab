@@ -12,15 +12,15 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	}
 	 init_main_data(&main_data);
-	// if (init_env_vars(&main_data, envp))
-	// 	return (1);
+	if (init_env_vars(&main_data, envp))
+		return (1);
 	printf("---------------------TESTCASE:--------------\n\n");
 
 	executor();
 
 	printf("\n\n----------------------------------\n\n");
 
-	//free_main_exit(&main_data, 1, 0);
+	free_main_exit(&main_data, 1, 0);
 	return (0);
 }
 

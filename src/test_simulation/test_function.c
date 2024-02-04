@@ -57,10 +57,10 @@ t_node	*set_cmd_4(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, PIPE,
-			test_cmd_exec("/bin/ls", "/bin/sleep", "5", false), test_cmd_pipe("Pipe 2",
+			test_cmd_exec("/bin/ls", "/bin/sleep", "2", false), test_cmd_pipe("Pipe 2",
 				EXEC, PIPE, test_cmd_exec("grep", "/bin/ls", "-l", false),
 				test_cmd_pipe("Pipe 2", EXEC, EXEC, test_cmd_exec("grep",
-						"/bin/grep", "input", false), test_cmd_exec("grep",
+						"/bin/grep", ".c", false), test_cmd_exec("grep",
 						"/bin/sort", "-r", false))));
 	ret->type = PIPE;
 	return (ret);

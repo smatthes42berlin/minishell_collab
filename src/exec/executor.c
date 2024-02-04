@@ -4,13 +4,13 @@ t_node	*example_selection(void)
 {
 	t_node	*ret;
 
-	//ret = set_cmd_1();
+	// ret = set_cmd_1();
 	//  ret = set_cmd_2();
-	 // ret = set_cmd_2_cp();
+	// ret = set_cmd_2_cp();
 	// ret = set_cmd_3();
-	 ret = set_cmd_4();
+	ret = set_cmd_4();
 	// ret = set_redir_in_1();
-	 // ret = set_redir_in_1_cmd_2();
+	// ret = set_redir_in_1_cmd_2();
 	// ret = set_redir_in_2_cmd_2();
 	// ret = set_redir_out_1();
 	// ---- build pwd -----
@@ -20,23 +20,19 @@ t_node	*example_selection(void)
 	//  ret = set_pwd_end(); // ls -l | pwd
 	// ret = set_pwd_redir_out(); ///pwd > out
 	// ---- build cd
-	 //ret = set_cd_absolut();
+	// ret = set_cd_absolut();
 	// ret = set_cd_relativ();
 	// ret = set_cd_relativ_revers();
 	return (ret);
 }
 
-void	executor()
+void	executor()//t_main_data data)
 {
 	pid_t	pid;
 	t_node *example;
-	// if (main_data->ast == NULL)
-	// 	printf("Ast NULL;"); 
 
-		// example = example_selection();
-		// navigate_tree_forward(example);
-		// free_ast(example);
-		// //exit(0);
+	// if (data.ast != NULL)
+	// 	printf("NOTING");
 
 	pid = fork_handler();
 	if (pid == 0)
