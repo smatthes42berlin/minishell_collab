@@ -1,4 +1,5 @@
 #include "minishell.h"
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_main_data	main_data;
@@ -16,7 +17,7 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	printf("---------------------TESTCASE:--------------\n\n");
 
-	executor();
+	executor(&main_data);
 
 	printf("\n\n----------------------------------\n\n");
 

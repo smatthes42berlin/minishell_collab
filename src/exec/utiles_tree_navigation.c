@@ -14,33 +14,7 @@ void	type_exec(t_node *node)
 		printf("%s\n", chose_buildin(exec_node));
 }
 
-// void	type_redim(t_node *node)
-// {
-// 	t_node_redir	*redir_node;
-// 	pid_t			pid;
-// 	int				fd;
-// 	int				pipefd[2];
-
-// 	redir_node = (t_node_redir *)node->node_type;
-// 	pid = fork_handler();
-// 	pipe_handler(pipefd);
-// 	if (pid == 0)
-// 	{
-// 		pipe_setting(pipefd,true,NULL);
-// 		fd = open_handler(redir_node->filename, redir_node->mode);
-// 		dup2(fd, redir_node->in_or_out);
-// 		close(fd);
-
-// 		//navigate_tree_forward(redir_node->child_node)
-// 	}
-// 	else{
-// 		pipe_setting(pipefd,false,NULL);
-// 		navigate_tree_forward(redir_node->child_node);
-// 		waitpid(pid, NULL, 0);
-// 	}
-// }
-
-void	type_redim(t_node *node)
+void	type_redim(t_main_data *data, t_node *node)
 {
 	t_node_redir	*redir_node;
 	int				fd;
@@ -59,17 +33,19 @@ void	type_redim(t_node *node)
 		return ;
 	}
 	close_handler(fd);
-	navigate_tree_forward(redir_node->child_node);
+	navigate_tree_forward(data, redir_node->child_node);
 }
 
-void	type_pipe(t_node *node)
+void	type_pipe(t_main_data *data, t_node *node)
 {
 	t_node_pipe *pipe_node;
 	int pipefd[2];
 	pid_t main_pid;
 	pid_t nested_pid;
 
+	
 	pipe_node = (t_node_pipe *)node->node_type;
+	//printf("\n\nNODE: %s\n\n", pipe_node->name_Pipe);
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
 	if (main_pid == 0)
@@ -79,7 +55,7 @@ void	type_pipe(t_node *node)
 		{
 			// printf("\n\n NO inbuild LEFT SIDE!\n\n");
 			pipe_setting(pipefd, true, NULL);
-			navigate_tree_forward(pipe_node->left_node);
+			navigate_tree_forward(data, pipe_node->left_node);
 		}
 	}
 	else
@@ -92,7 +68,7 @@ void	type_pipe(t_node *node)
 					false))
 			{
 				// printf("\n\n NO inbuild Rigt SIDE!\n\n");
-				navigate_tree_forward(pipe_node->right_node);
+				navigate_tree_forward(data, pipe_node->right_node);
 			}
 		}
 		else

@@ -26,20 +26,18 @@ t_node	*example_selection(void)
 	return (ret);
 }
 
-void	executor()//t_main_data data)
+void	executor(t_main_data *data)
 {
 	pid_t	pid;
-	t_node *example;
-
-	// if (data.ast != NULL)
-	// 	printf("NOTING");
+	//t_node *example;
 
 	pid = fork_handler();
 	if (pid == 0)
 	{
-		example = example_selection();
-		navigate_tree_forward(example);
-		free_ast(example);
+		if (data->ast == NULL)
+			data->ast = example_selection();
+		navigate_tree_forward(data, data->ast);
+		free_ast(data->ast);
 		exit(0);
 	}
 	else
