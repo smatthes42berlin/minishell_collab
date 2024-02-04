@@ -20,10 +20,6 @@ void	pipe_handler(int *pipefd)
  */
 void	pipe_setting(int *pipefd, bool open, char *str)
 {
-	// const int bufferSize = 1024;
-	// char buffer[bufferSize];
-	// ssize_t bytesRead;
-
 	if (open)
 	{
 		close(pipefd[0]);
@@ -35,15 +31,10 @@ void	pipe_setting(int *pipefd, bool open, char *str)
 	}
 	else
 	{
-		close(pipefd[1]); // Schließen des Schreib-Endpunkts der Pipe
+		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		if (str != NULL)
 			printf("%s\n", str);
-		close(pipefd[0]); // Schließen des Lese-Endpunkts der Pipe
+		close(pipefd[0]);
 	}
-	// {
-	// 	close(pipefd[1]);
-	// 	dup2(pipefd[0], STDIN_FILENO);
-	// 	close(pipefd[0]);
-	// }
 }

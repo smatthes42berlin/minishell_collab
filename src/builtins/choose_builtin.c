@@ -12,7 +12,7 @@ t_node_exec	*check_buildin(t_node *node)
 	return (exec_node);
 }
 
-char	*chose_buildin(t_node_exec *node)
+char	*chose_buildin(t_main_data *data, t_node_exec *node)
 {
 	if (str_are_equal(node->file_path, "pwd"))
 	{
@@ -20,12 +20,12 @@ char	*chose_buildin(t_node_exec *node)
 	}
 	if (str_are_equal(node->file_path, "cd"))
 	{
-		return (buid_cd(node));
+		return (buid_cd(data, node));
 	}
 	return (NULL);
 }
 
-bool	check_and_choose_buildin(t_node *node, int *pipefd, bool direction)
+bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipefd, bool direction)
 {
 	t_node_exec *exec_node;
 	char *temp_str;
@@ -35,7 +35,7 @@ bool	check_and_choose_buildin(t_node *node, int *pipefd, bool direction)
 	{
 		return (false);
 	}
-	temp_str = chose_buildin(exec_node);
+	temp_str = chose_buildin(data ,exec_node);
 	pipe_setting(pipefd, direction, temp_str);
 	free(temp_str);
 	return (true);

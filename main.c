@@ -19,6 +19,14 @@ int	main(int argc, char *argv[], char *envp[])
 
 	executor(&main_data);
 
+	// printf("%s\n", env_get_var(&main_data, "OLDPWD"));
+	// printf("%s\n", env_get_var(&main_data, "PWD"));
+	// env_print(&main_data);
+	// env_set_var(&main_data, "OLDPWD=Testttttttttttttttttttttttttttt");
+	// env_set_var(&main_data, "PWD=Testttttttttttttttttttttttttttt");
+	// printf("\n\n%s\n\n\n", env_get_var(&main_data, "OLDPWD"));
+	// env_print(&main_data);
+
 	printf("\n\n----------------------------------\n\n");
 
 	free_main_exit(&main_data, 1, 0);

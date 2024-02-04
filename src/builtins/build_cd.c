@@ -1,7 +1,37 @@
 #include "minishell.h"
 
 // clear the string from "./" an dubbel /
-char *cler_str(char *path)
+static char *clear_str(char *path);
+static void set_env_cd (t_main_data *data, char *keyword);
+
+// return alltime NULL
+char *buid_cd (t_main_data *data, t_node_exec *node)
+{
+	set_env_cd(data, "OLDPWD=");
+	printf("\nclearsting: %s ; %s\n", clear_str(node->argv[0]), node->argv[0]);
+	if (chdir(clear_str(node->argv[0])) == -1)
+		error_code_handler(errno, "ERR-chdir", "CD -Command --> ", node->argv[0]);
+	set_env_cd(data, "PWD=");
+	printf("%s\n", getcwd(NULL,0));
+	return (NULL);
+}
+
+static void set_env_cd (t_main_data *data, char *keyword)
+{
+	char *path;
+	char *str;
+	
+
+	path = build_pwd();
+	str = ft_strjoin(keyword, path);
+	printf("\n\n Changing from %s\n\n", str );
+	env_set_var(data, str);
+	free(str);
+	free(path);
+}
+
+// clear the string from "./" an dubbel /
+static char *clear_str(char *path)
 {
 	int i;
 	char **str;
@@ -22,17 +52,7 @@ char *cler_str(char *path)
 	return (ret);	
 }
 
-// return alltime NULL
-char *buid_cd (t_node_exec *node)
-{
-	//printf("%s\n", getcwd(NULL,0));
-	if (chdir(node->argv[0]) == -1)
-		error_code_handler(errno, "ERR-chdir", "CD -Command --> ", node->argv[0]);
-	
-	printf("%s\n", getcwd(NULL,0));
-	return (NULL);
-}
-
+//-----------------------------------------Tests -----------------------
 
 t_node	*set_cd_absolut(void)
 {

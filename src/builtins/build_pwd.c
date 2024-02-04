@@ -9,11 +9,7 @@ char	*build_pwd(void)
 	{
 		error_code_handler(errno, "ERR-getcwd", "", "");
 	}
-	// printf("Current directory: %s\n", cwd);
-	//   write(STDOUT_FILENO, cwd, ft_strlen(cwd));
-	//   write(STDOUT_FILENO, "\n", 1);
 	return (cwd);
-	// free(cwd);
 }
 
 // -------------------- Test function ----------------------------------------

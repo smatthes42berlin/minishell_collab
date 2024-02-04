@@ -1,6 +1,29 @@
-/home/rkost/Project/Rank03/minishell_collab
-/home/rkost/Project/Rank03/minishell_collab
-Anna 
-Bernnd
-/home/rkost/Project/Rank03/minishell_collab
-/home/rkost/Project/Rank03/minishell_collab
+total 104
+drwxrwxr-x  2 rene rene  4096 Feb  4 19:19 build
+-rw-rw-r--  1 rene rene   727 Feb  4 18:36 create_valgrind_logging.sh
+-rw-rw-r--  1 rene rene     9 Feb  4 18:36 delet_me
+drwxrwxr-x  2 rene rene  4096 Feb  4 18:36 include
+drwxrwxr-x  6 rene rene  4096 Feb  4 18:37 libft
+-rw-rw-r--  1 rene rene   727 Feb  4 18:36 main.c
+-rw-rw-r--  1 rene rene  3221 Feb  4 18:46 Makefile
+-rwxrwxr-x  1 rene rene 59944 Feb  4 19:19 minishell
+-rw-r--r--  1 rene rene     0 Feb  4 19:16 out
+-rw-r--r--  1 rene rene  1376 Feb  4 19:18 outtt
+drwxrwxr-x 13 rene rene  4096 Feb  4 18:46 src
+-rw-rw-r--  1 rene rene    57 Feb  4 18:36 testfile
+drwxrwxr-x  2 rene rene  4096 Feb  4 18:47 valgrind_logs
+total 108
+drwxrwxr-x  2 rene rene  4096 Feb  4 19:19 build
+-rw-rw-r--  1 rene rene   727 Feb  4 18:36 create_valgrind_logging.sh
+-rw-rw-r--  1 rene rene     9 Feb  4 18:36 delet_me
+drwxrwxr-x  2 rene rene  4096 Feb  4 18:36 include
+drwxrwxr-x  6 rene rene  4096 Feb  4 18:37 libft
+-rw-rw-r--  1 rene rene   727 Feb  4 18:36 main.c
+-rw-rw-r--  1 rene rene  3221 Feb  4 18:46 Makefile
+-rwxrwxr-x  1 rene rene 59944 Feb  4 19:19 minishell
+-rw-r--r--  1 rene rene   688 Feb  4 19:19 out
+-rw-r--r--  1 rene rene  1376 Feb  4 19:18 outtt
+drwxrwxr-x 13 rene rene  4096 Feb  4 18:46 src
+-rw-rw-r--  1 rene rene    57 Feb  4 18:36 testfile
+drwxrwxr-x  2 rene rene  4096 Feb  4 18:47 valgrind_logs
+/home/rene/Project/42School/Rank03/minishell_collab
