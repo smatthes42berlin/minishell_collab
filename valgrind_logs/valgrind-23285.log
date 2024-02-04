@@ -1,6 +1,0 @@
-==23285== Memcheck, a memory error detector
-==23285== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==23285== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==23285== Command: ./minishell
-==23285== Parent PID: 23283
-==23285== 
