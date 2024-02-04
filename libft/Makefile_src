@@ -24,6 +24,7 @@ SRC =	ft_atoi.c \
 		ft_putchar_fd.c \
 		ft_strchr.c \
 		ft_strlen.c \
+		ins_repl_str.c \
 		ft_substr.c \
 		ft_isalnum.c \
 		ft_memchr.c \
@@ -31,6 +32,9 @@ SRC =	ft_atoi.c \
 		ft_strdup.c \
 		ft_str_n_dup.c \
 		ft_str_n_dup_int.c \
+		str_contains_str_index.c \
+		split_str_str_first_occ.c \
+		ins_repl_str.c \
 		ft_strmapi.c \
 		ft_tolower.c \
 		ft_isalpha.c \
@@ -139,6 +143,9 @@ SRC =	ft_atoi.c \
 		count_cols_per_line_filename.c \
 		get_file_size_fd.c \
 		get_file_size_filename.c \
-		read_whole_file.c
+		read_whole_file.c \
+		free_char_variadic_msg.c \
+		free_char_variadic_code.c
+
 
  

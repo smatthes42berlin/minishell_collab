@@ -6,6 +6,7 @@
 */
 
 typedef struct s_node	t_node;
+typedef struct s_token	t_token;
 
 /**
  * main data structure, that can be passed around
@@ -100,8 +101,7 @@ enum					e_token_type
 	T_LESS,
 	T_GREAT,
 	T_PIPE,
-	T_EMPTY,
-	T_ENDOFINPUT,
+	T_HEREDOC,
 	T_UNDEFINED
 };
 
@@ -115,6 +115,23 @@ typedef struct s_here_doc_info
 	int					index_close_quote;
 }						t_here_doc_info;
 
+typedef struct s_expansion_info
+{
+	t_token				*cur_token;
+	t_main_data			*main_data;
+	bool				inside_dquotes;
+	char				*cur_pos;
+	int					cur_pos_index;
+}						t_expansion_info;
+
+typedef struct s_parse_info
+{
+	t_list_d			*next;
+	t_token				*cur_token;
+	t_node				*root_node_ast;
+	t_node				*cur_pipe;
+}						t_parse_info;
+
 /**
  * generic for an identified token
  * @param type
@@ -125,6 +142,7 @@ typedef struct s_token
 {
 	enum e_token_type	type;
 	char				*value;
+	bool				parsed;
 }						t_token;
 
 /**
@@ -161,6 +179,10 @@ enum					e_node_type
 typedef struct s_node
 {
 	enum e_node_type	type;
+	t_node				*parent_node;
+	t_node				*left_node;
+	t_node				*right_node;
+	char				*token_value;
 	void				*node_type;
 }						t_node;
 
@@ -174,9 +196,10 @@ typedef struct s_node
 typedef struct s_node_pipe
 {
 	enum e_node_type	type;
-	char				*name_Pipe;
+	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
+	char				*token_value;
 }						t_node_pipe;
 
 /**
@@ -190,8 +213,11 @@ typedef struct s_node_pipe
 typedef struct s_node_heredoc
 {
 	enum e_node_type	type;
-	t_node				*child_node;
-	int				read_fd;
+	t_node				*parent_node;
+	t_node				*left_node;
+	t_node				*right_node;
+	char				*token_value;
+	int					read_fd;
 }						t_node_heredoc;
 
 /**
@@ -207,9 +233,11 @@ typedef struct s_node_heredoc
 typedef struct s_node_redir
 {
 	enum e_node_type	type;
-	t_node				*child_node;
+	t_node				*parent_node;
+	t_node				*left_node;
+	t_node				*right_node;
+	char				*token_value;
 	char				*filename;
-	char				*name_redir;
 	enum e_open_mode	mode;
 	enum e_std_fd		in_or_out;
 }						t_node_redir;
@@ -222,10 +250,11 @@ typedef struct s_node_redir
 typedef struct s_node_exec
 {
 	enum e_node_type	type;
+	t_node				*parent_node;
+	t_node				*left_node;
+	t_node				*right_node;
+	char				*token_value;
 	char				*file_path;
-	char				*name_exec;
-	// handle inbuilt
-	bool				inbuilt;
 	char				**argv;
 	char				**env;
 	bool				is_inbuilt;

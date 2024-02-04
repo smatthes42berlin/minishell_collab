@@ -11,12 +11,29 @@ void	free_token(void *token);
 void	free_main_exit(t_main_data *main_data, int program_state,
 			int exit_code);
 
-/* tokenisation/lexer 1 create*/
+/* gen util */
 
-void	skip_ws(char **cur_pos);
+bool	token_is_pipe(t_token *token);
+bool	token_is_redir_in(t_token *token);
+bool	token_is_redir_out_trunc(t_token *token);
+bool	token_is_redir_out_app(t_token *token);
+bool	token_is_here_doc(t_token *token);
+bool	token_is_operator_token(t_token *token);
+bool	token_is_redir(t_token *token);
 char	*is_operator(char c);
 char	*is_squote(char c);
 char	*is_dquote(char c);
+char	*is_dollar_char(char c);
+bool	is_valid_var_name_char(char c);
+bool	token_is_word(t_token *token);
+bool	node_is_pipe(t_node *node);
+bool	node_is_hdoc(t_node *node);
+bool	node_is_exec(t_node *node);
+bool	node_is_redir(t_node *node);
+
+/* tokenisation/lexer 1 create*/
+
+void	skip_ws(char **cur_pos);
 int		has_closing_quote(char *cli_input, char quote_type);
 int		get_token(t_main_data *main_data, char **cur_pos);
 int		append_token_list(t_main_data *main_data, t_token *token);
@@ -62,11 +79,48 @@ char	*env_get_var(t_main_data *main_data, char *key);
 /* expander */
 
 int		expand(t_main_data *main_data);
+int		check_expansion(t_token *token, t_main_data *main_data);
+int		expand_token_val(t_expansion_info *expansion_info);
+int		expand_variable(t_expansion_info *expansion_info);
+char	*get_key_env_var(t_expansion_info *expansion_info);
+int		go_to_next_char(t_expansion_info *expansion_info);
+int	check_for_fixed_expansions(t_expansion_info *expansion_info,
+								bool *found);
+int		skip_to_closing_quote(t_expansion_info *expansion_info);
+int		check_dquote_start_end(t_expansion_info *expansion_info);
+int		adjust_cur_pos_num(t_expansion_info *expansion_info, int num_add);
+int	adjust_cur_pos_str_len(t_expansion_info *expansion_info,
+							char *insert_str);
+int		check_for_variable_expansions(t_expansion_info *expansion_info);
+int		insert_env_var(t_expansion_info *expansion_info, char *env_var_name,
+			char *key);
+int	check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
+										bool *found,
+										char *spec_var_symbol,
+										char *spec_var_name);
 
 /* parser */
 
 int		parse(t_main_data *main_data);
-
+bool	pipe_node_left_defined(t_node_pipe *node);
+int		set_node_as_ast_root(t_parse_info *parse_info, t_node *new_node);
+int		adjust_prev_nodes_ast(t_parse_info *parse_info, t_node *new_node);
+int		is_first_node_of_ast(t_parse_info *parse_info);
+int		set_as_root(t_parse_info *parse_info, t_node *node);
+int		check_new_root_node(t_parse_info *parse_info, t_node *new_node);
+int		got_to_nth_next_token(int num, t_parse_info *parse_info);
+int		set_n_token_as_parsed(int num, t_parse_info *parse_info);
+void	print_ast(t_node *root, int depth);
+int		create_redir_node(t_parse_info *parse_info);
+int		create_hdoc_node(t_parse_info *parse_info);
+int		create_pipe_node(t_parse_info *parse_info);
+int		create_exec_node(t_parse_info *parse_info);
+int		add_all_but_pipe_ast(t_parse_info *parse_info, t_node *new_node);
+int	add_pipe_ast(t_parse_info *parse_info,
+					t_node_pipe *new_node);
+int		set_exec_args_as_parsed(t_parse_info *parse_info);
+int	append_to_last_redir(t_node *branch_parent,
+							t_node *new_node);
 /* executor */
 
 #endif

@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 t_token	*create_token(void)
 {
 	t_token	*token;
@@ -10,6 +9,6 @@ t_token	*create_token(void)
 		return (NULL);
 	token->type = T_UNDEFINED;
 	token->value = NULL;
+	token->parsed = false;
 	return (token);
 }
-

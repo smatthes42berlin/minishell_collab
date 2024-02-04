@@ -14,6 +14,8 @@ int	parent_get_str_child(t_list_d **hdoc_op_token, int fd[2], int pid,
 		res_wait = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 		res_wait = WTERMSIG(status);
+	if (res_wait)
+		return (printf("Error: problem in heredoc child writing to pipe"));
 	if (read_whole_file(fd[0], &res))
 		return (printf("Error: reading from pipe"));
 	if (close(fd[0]) == -1)
@@ -44,5 +46,6 @@ int	add_heredoc_str_token(t_list_d **hdoc_op_token, char *res,
 	}
 	free(next_token_val->value);
 	next_token_val->value = res;
+	next_token_val->type = T_HEREDOC;
 	return (0);
 }

@@ -110,9 +110,3 @@ static int	split_at_occurs(char const *str, char const *split_at,
 		return (1);
 	return (0);
 }
-
-// int	main(void)
-// {
-// 	char **res = ft_split_str("aaabbaaa", "bb");
-// 	return (0);
-// }
