@@ -25,7 +25,7 @@ t_node	*example_selection(void)
 
 	// --------------------------------------- build cd ------
  	//ret = set_cd_absolut();
-	//ret = set_cd_relativ();
+	ret = set_cd_relativ();
 	// ret = set_cd_relativ_revers();
 	return (ret);
 	// Maybe test case 
@@ -58,6 +58,21 @@ void	executor(t_main_data *data)
 		//env_set_var(data, "PWD=Testttttttttttttttttttttttttttt");
 		waitpid(pid, NULL, 0);
 	}
+	
+	close(pipe_struct->pipefd[1]); // Schreibende schließen
+
+    char buffer[BUFFER_SIZE];
+    ssize_t bytes_read;
+    while ((bytes_read = read(pipe_struct->pipefd[0], buffer, sizeof(buffer))) > 0) {
+            // Annahme: BUFFER_SIZE reicht aus, um jede Umgebungsvariable komplett zu lesen
+            // In der Praxis müssten Sie möglicherweise die Daten in Schleifen lesen und zusammensetzen
+        for (int i = 0; i < bytes_read; )
+		{
+            printf("Empfangen: %s\n", &buffer[i]);
+            i += strlen(&buffer[i]) + 1;
+		}
+    }
+    close(pipe_struct->pipefd[0]); // Leseende schließen
 	// printf("%s\n", env_get_var(data, "OLDPWD"));
 	// printf("%s\n", env_get_var(data, "PWD"));
 
