@@ -29,18 +29,21 @@ t_node	*example_selection(void)
 void	executor(t_main_data *data)
 {
 	pid_t	pid;
+	int 	pipefd[2];
+	t_pipefd 	*pipe_struct;
 
+	pipe_struct = malloc(sizeof(t_pipefd));
 	// printf("%s\n", env_get_var(data, "OLDPWD"));
 	// printf("%s\n-----------------------\n", env_get_var(data, "PWD"));
-
+	pipe_handler(pipefd);
+	pipe_struct->pipefd = pipefd;
 	pid = fork_handler();
 	if (pid == 0)
 	{
 		if (data->ast == NULL)
 			data->ast = example_selection();
-		navigate_tree_forward(data, data->ast);
+		navigate_tree_forward(data, data->ast, pipe_struct);
 		free_ast(data->ast);
-		
 		exit(0);
 	}
 	else

@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-static void type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,  pid_t main_pid, int *pipefd);
+static void type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node, pid_t main_pid, t_pipefd *pipe_struct_pipe, t_pipefd *pipe_struct_main);
 
-void	type_exec(t_main_data *data, t_node *node)
+void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_exec	*exec_node;
 	char	*temp_str;
@@ -14,13 +14,13 @@ void	type_exec(t_main_data *data, t_node *node)
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 	}
 	else
-		temp_str = chose_buildin(data, exec_node);
+		temp_str = chose_buildin(data, exec_node, pipe_struct);
 	if ((data->ast->type == REDIR || data->ast->type == EXEC) && temp_str != NULL)
 		printf("%s\n", temp_str);
 	free(temp_str);
 }
 
-void	type_redim(t_main_data *data, t_node *node)
+void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_redir	*redir_node;
 	int				fd;
@@ -39,47 +39,49 @@ void	type_redim(t_main_data *data, t_node *node)
 		return ;
 	}
 	close_handler(fd);
-	navigate_tree_forward(data, redir_node->child_node);
+	navigate_tree_forward(data, redir_node->child_node, pipe_struct);
 }
 
-void	type_pipe(t_main_data *data, t_node *node)
+void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_pipe *pipe_node;
 	int pipefd[2];
-	//int pipefd_env[2];
 	pid_t main_pid;
+	t_pipefd *pipe_struct_pipe;
 	
 	pipe_node = (t_node_pipe *)node->node_type;
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
+	pipe_struct_pipe = malloc(sizeof(t_pipefd));
+	pipe_struct_pipe->pipefd = pipefd;
 	if (main_pid == 0)
 	{
-		if (false == check_and_choose_buildin(data, pipe_node->left_node, pipefd,
-				true))
+		pipe_struct_pipe->direction = true;
+		if (false == check_and_choose_buildin(data, pipe_node->left_node, pipe_struct_pipe, pipe_struct))
 		{
 			pipe_setting(pipefd, true, NULL);
-			navigate_tree_forward(data, pipe_node->left_node);
+			navigate_tree_forward(data, pipe_node->left_node, pipe_struct);
 		}
 	}
 	else
 	{
-		type_pipe_nested_pid(data, pipe_node, main_pid, pipefd);
+		pipe_struct_pipe->direction = false;
+		type_pipe_nested_pid(data, pipe_node, main_pid, pipe_struct_pipe, pipe_struct);
 	}
 }
 
 
-static void type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node, pid_t main_pid, int *pipefd)
+static void type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node, pid_t main_pid, t_pipefd *pipe_struct_pipe, t_pipefd *pipe_struct_main)
 {
 		pid_t nested_pid;
 
-		pipe_setting(pipefd, false, NULL);
+		pipe_setting(pipe_struct_pipe->pipefd, pipe_struct_pipe->direction, NULL);
 		nested_pid = fork_handler();
 		if (nested_pid == 0)
 		{
-			if (false == check_and_choose_buildin(data, pipe_node->right_node, pipefd,
-					false))
+			if (false == check_and_choose_buildin(data, pipe_node->right_node, pipe_struct_pipe, pipe_struct_main))
 			{
-				navigate_tree_forward(data, pipe_node->right_node);
+				navigate_tree_forward(data, pipe_node->right_node, pipe_struct_main);
 			}
 		}
 		else

@@ -60,14 +60,22 @@ enum					e_open_mode
 	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
 };
 
-// enum					e_pid_satus
-// {
-// 	PID_STOP_REGULAR,
-// 	PID_STOP_SIGNAL,
-// 	PID_BREAK,
-// 	PID_RUNNING,
-// 	PID_ERROR
-// };
+enum					e_pid_satus
+{
+	PID_STOP_REGULAR,
+	PID_STOP_SIGNAL,
+	PID_BREAK,
+	PID_RUNNING,
+	PID_ERROR
+};
+
+
+typedef struct s_pipefd_main
+{
+	int		*pipefd;
+	bool	direction;
+}				t_pipefd;
+
 
 // typedef struct s_pid_status
 // {

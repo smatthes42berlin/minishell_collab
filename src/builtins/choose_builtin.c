@@ -12,8 +12,11 @@ t_node_exec	*check_buildin(t_node *node)
 	return (exec_node);
 }
 
-char	*chose_buildin(t_main_data *data, t_node_exec *node)
+char	*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 {
+	if (pipe_struct->direction != true)
+		printf("NOTING - DEBUGGER"); //empty for debuger 
+
 	if (str_are_equal(node->file_path, "pwd"))
 	{
 		return (build_pwd());
@@ -25,7 +28,7 @@ char	*chose_buildin(t_main_data *data, t_node_exec *node)
 	return (NULL);
 }
 
-bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipefd, bool direction)
+bool	check_and_choose_buildin(t_main_data *data, t_node *node, t_pipefd *pipe_struct_pipe, t_pipefd *pipe_struct_main)
 {
 	t_node_exec *exec_node;
 	char *temp_str;
@@ -35,8 +38,9 @@ bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipefd, bool
 	{
 		return (false);
 	}
-	temp_str = chose_buildin(data ,exec_node);
-	pipe_setting(pipefd, direction, temp_str);
+	temp_str = chose_buildin(data ,exec_node, pipe_struct_main);
+	pipe_setting(pipe_struct_pipe->pipefd, pipe_struct_pipe->direction, temp_str);
+	free(pipe_struct_pipe);
 	free(temp_str);
 	return (true);
 }

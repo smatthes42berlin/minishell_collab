@@ -70,17 +70,17 @@ int					expand(t_main_data *main_data);
 int					parse(t_main_data *main_data);
 
 /* executor */
-void				navigate_tree_forward(t_main_data *data, t_node *node);
-void				type_exec(t_main_data *data, t_node *node);
-void				type_redim(t_main_data *data, t_node *node);
-void				type_pipe(t_main_data *data, t_node *node);
+void				navigate_tree_forward(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
+void				type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
+void				type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
+void				type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
 void				executor(t_main_data *data);
 void				free_ast(t_node *node);
 
 /* builtins */
 t_node_exec			*check_buildin(t_node *node);
-char				*chose_buildin(t_main_data *data, t_node_exec *node);
-bool				check_and_choose_buildin(t_main_data *data, t_node *node, int *pipefd, bool direction);
+char				*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct);
+bool				check_and_choose_buildin(t_main_data *data, t_node *node, t_pipefd *pipe_struct_pipe, t_pipefd *pipe_struct_main);
 char				*build_pwd(void);
 char				*buid_cd (t_main_data *data, t_node_exec *node);
 
