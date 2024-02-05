@@ -4,26 +4,33 @@ t_node	*example_selection(void)
 {
 	t_node	*ret;
 
-	// ret = set_cmd_1();
-	//  ret = set_cmd_2();
-	// ret = set_cmd_2_cp();
-	// ret = set_cmd_3();
-	ret = set_cmd_4();
-	// ret = set_redir_in_1();
-	// ret = set_redir_in_1_cmd_2();
-	// ret = set_redir_in_2_cmd_2();
-	// ret = set_redir_out_1();
-	// ---- build pwd -----
-	// ret = set_pwd_allone(); // pwd
-	// ret = set_pwd_beginn_1(); // pwd | grep home
-	// ret = set_pwd_begin_2(); // pwd | ls -l
-	// ret = set_pwd_end(); // ls -l | pwd
-	// ret = set_pwd_redir_out(); ///pwd > out
-	// ---- build cd
-	 //ret = set_cd_absolut();
-	 //ret = set_cd_relativ();
+	// ret = set_cmd_1();							// ls -l;
+	// ret = set_cmd_2();  					// ls -l | grep ".c"
+	 ret = set_cmd_2_cp();					// pwd | ls -l
+	// ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
+	// ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
+	
+	// ret = set_redir_in_1();					// < input grep "nn" 
+	// ret = set_redir_in_1_cmd_2();			// < input grep "nn" | uniq | sort 
+	// ret = set_redir_in_2_cmd_2();			// < input_befor < input grep "nn" | sort | uniq	
+	// ret = set_redir_out_1_append();			// ls -l >> out 
+	// ret = set_redir_out_1();					// ls -l > out 
+	
+	// ---------------------------------------- build pwd -----
+	// ret = set_pwd_allone(); 					// pwd
+	// ret = set_pwd_beginn_1(); 				// pwd | grep home
+	// ret = set_pwd_begin_2(); 				// pwd | ls -l
+	// ret = set_pwd_end(); 					// ls -l | pwd
+	// ret = set_pwd_redir_out(); 				// pwd > out
+
+	// --------------------------------------- build cd ------
+ 	//ret = set_cd_absolut();
+	//ret = set_cd_relativ();
 	// ret = set_cd_relativ_revers();
 	return (ret);
+	// Maybe test case 
+// sleep |  < input grep "nn" | uniq | sort -r 
+
 }
 
 void	executor(t_main_data *data)
@@ -54,5 +61,5 @@ void	executor(t_main_data *data)
 	// printf("%s\n", env_get_var(data, "OLDPWD"));
 	// printf("%s\n", env_get_var(data, "PWD"));
 
-	env_print(data);
+//	env_print(data);
 }

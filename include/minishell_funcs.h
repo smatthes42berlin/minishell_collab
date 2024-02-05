@@ -125,6 +125,7 @@ t_node				*set_cmd_4(void);
 t_node				*set_redir_in_1(void);
 t_node				*set_redir_in_1_cmd_2(void);
 t_node				*set_redir_in_2_cmd_2(void);
+t_node				*set_redir_out_1_append(void);
 t_node				*set_redir_out_1(void);
 
 void				print_type(t_node *node);
