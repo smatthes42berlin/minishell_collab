@@ -9,7 +9,7 @@ t_node	*example_selection(void)
 	// ret = set_cmd_1();							// ls -l;
 	// ret = set_cmd_2();  					// ls -l | grep ".c"
 	// ret = set_cmd_2_cp();					// pwd | ls -l
-	ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
+	 ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
 	// ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
 	
 	// ret = set_redir_in_1();					// < input grep "nn" 
@@ -42,7 +42,7 @@ void	executor(t_main_data *data)
 	t_pipefd 	*pipe_struct;
 
 	pipe_handler(pipefd);
-	pipe_struct = malloc(sizeof(t_pipefd));
+	pipe_struct = malloc_handler(sizeof(t_pipefd));
 	pipe_struct->pipefd = pipefd;
 	pid = fork_handler();
 	if (pid == 0)
@@ -50,23 +50,16 @@ void	executor(t_main_data *data)
 		if (data->ast == NULL)
 			data->ast = example_selection();
 		navigate_tree_forward(data, data->ast, pipe_struct);
-
+		free(pipe_struct); 
 		free_ast(data->ast);
 		exit(0);
 	}
 	else
 	{
-				read_pipe(data, pipe_struct);
-		free(pipe_struct); 	
-		//env_set_var(data, "PWD=Testttttttttttttttttttttttttttt");
 		waitpid(pid, NULL, 0);
 	}
-	
-	// read_pipe(data, pipe_struct);
-
-	// free(pipe_struct); 
-
-//	env_print(data);
+	read_pipe(data, pipe_struct);
+	free(pipe_struct); // double free child process
 }
 
 
