@@ -82,7 +82,7 @@ t_node_exec			*check_buildin(t_node *node);
 char				*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct);
 bool				check_and_choose_buildin(t_main_data *data, t_node *node, t_pipefd *pipe_struct_pipe, t_pipefd *pipe_struct_main);
 char				*build_pwd(void);
-char 				*build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
+char 				*build_cd (t_node_exec *node, t_pipefd *pipefd);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);

@@ -14,16 +14,19 @@ t_node_exec	*check_buildin(t_node *node)
 
 char	*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 {
-	if (pipe_struct->direction != true)
-		printf("NOTING - DEBUGGER"); //empty for debuger 
 
+	//!!!!!unused data for debugger (data) ---> delet later 
+	if (data->ast == NULL)
+		printf("AST == NULL!\n");
+
+	//!!!!!
 	if (str_are_equal(node->file_path, "pwd"))
 	{
 		return (build_pwd());
 	}
 	if (str_are_equal(node->file_path, "cd"))
 	{
-		return (build_cd(data, node, pipe_struct));
+		return (build_cd(node, pipe_struct));
 	}
 	return (NULL);
 }

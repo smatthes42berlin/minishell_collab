@@ -52,8 +52,6 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	pid_t		main_pid;
 	t_pipefd	*pipe_struct_pipe;
 
-	printf("starting PIPE\n");
-
 	pipe_node = (t_node_pipe *)node->node_type;
 	pipe_handler(pipefd);
 	main_pid = fork_handler();

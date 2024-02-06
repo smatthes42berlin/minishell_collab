@@ -6,15 +6,11 @@ static char *read_pwd (char *keyword);
 static void pipesetting_for_env(t_pipefd *pipefd, char **env);
 
 // return alltime NULL
-char *build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
+char *build_cd (t_node_exec *node, t_pipefd *pipefd)
 {
 	char *env_new[3];
 	char *clear_str;
 
-// Uselese maybe only for data if i am needet later ?
-	if (data->ast == NULL)
-		printf("NOTING CD DEBUGGER");
-	
 	env_new[0] = read_pwd("OLDPWD=");
 	clear_str = ft_clear_str(node->argv[0]);
 	if (chdir(clear_str) == -1)
@@ -38,7 +34,6 @@ static void pipesetting_for_env(t_pipefd *pipefd, char **env)
 	close(pipefd->pipefd[0]);
 	while (env[i_count] != NULL)
 	{
-		printf("New env - write : %s\n", env[i_count]);
         write(pipefd->pipefd[1], env[i_count], strlen(env[i_count]) + 1);
         i_count++;
     }
@@ -76,7 +71,8 @@ static char *ft_clear_str(char *path)
 			&& str[i][1] == '\0')
 			;
 		else
-		{	str_tmp = ft_strjoin(ret, str[i]);
+		{	
+			str_tmp = ft_strjoin(ret, str[i]);
 			free(ret);
 			ret = ft_strjoin(str_tmp, "/");
 			free(str_tmp);
