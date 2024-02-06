@@ -65,7 +65,7 @@ t_node	*set_pwd_redir_out(void)
 	t_node *ret;
 
 	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_redir("Redir", "out", FILE_ONLY_WRITE_APPEND,
+	ret->node_type = test_cmd_redir("Redir", "out", FILE_ONLY_WRITE,
 			STDOUT, EXEC, test_cmd_exec("pwd", "pwd", NULL, true));
 	ret->type = REDIR;
 	return (ret);

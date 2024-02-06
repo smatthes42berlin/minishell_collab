@@ -11,7 +11,7 @@ t_node	*example_selection(void)
 	// ret = set_cmd_2();  					// ls -l | grep ".c"
 	// ret = set_cmd_2_cp();					// pwd | ls -l
 	// ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
-	 //ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
+	// ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
 	
 	// ret = set_redir_in_1();					// < input grep "nn" 
 	// ret = set_redir_in_1_cmd_2();			// < input grep "nn" | uniq | sort 
@@ -23,7 +23,7 @@ t_node	*example_selection(void)
 	// ret = set_pwd_allone(); 					// pwd
 	// ret = set_pwd_beginn_1(); 				// pwd | grep home
 	// ret = set_pwd_begin_2(); 				// pwd | ls -l
-	 //ret = set_pwd_end(); 					// ls -l | pwd
+	// ret = set_pwd_end(); 					// ls -l | pwd
 	// ret = set_pwd_redir_out(); 				// pwd > out
 
 	// --------------------------------------- build cd ------
@@ -63,8 +63,8 @@ void	executor(t_main_data *data)
 	read_pipe(data, pipe_struct);
 	free(pipe_struct); // double free child process
 
-	//printf("\n\nPWD : %s\n", env_get_var(data, "PWD"));
-	//printf(" OPLDPD : %s\n", env_get_var(data, "OLDPWD"));
+	// printf("\n\n  PWD : %s\n", env_get_var(data, "PWD"));
+	// printf(" OPLDPD : %s\n", env_get_var(data, "OLDPWD"));
 }
 
 
