@@ -47,13 +47,15 @@ static void pipesetting_for_env(t_pipefd *pipefd, char **env)
 
 static char *read_pwd (char *keyword)
 {
-	char *path;
-	char *str;
+	char *str_tmp;
+	char *ret;
 	
-	path = build_pwd();
-	str = ft_strjoin(keyword, path);
-	free(path);
-	return (str);
+	ret = build_pwd();
+	str_tmp = ft_strjoin(keyword, ret);
+	free(ret);
+	ret = ft_strjoin(ADD_ENV, str_tmp);
+	free(str_tmp);
+	return (ret);
 }
 
 // clear the string from "./" an dubbel /

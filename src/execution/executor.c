@@ -1,6 +1,7 @@
 #include "minishell.h"
 
 static void read_pipe(t_main_data *data, t_pipefd *pipe_struct);
+static void env_add_clr(t_main_data *data, char *env_var);
 
 t_node	*example_selection(void)
 {
@@ -9,7 +10,7 @@ t_node	*example_selection(void)
 	// ret = set_cmd_1();							// ls -l;
 	// ret = set_cmd_2();  					// ls -l | grep ".c"
 	// ret = set_cmd_2_cp();					// pwd | ls -l
-	 ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
+	 //ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
 	// ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
 	
 	// ret = set_redir_in_1();					// < input grep "nn" 
@@ -27,7 +28,7 @@ t_node	*example_selection(void)
 
 	// --------------------------------------- build cd ------
  	// ret = set_cd_absolut();
-	// ret = set_cd_relativ();
+	 ret = set_cd_relativ();
 	// ret = set_cd_relativ_revers();
 	return (ret);
 	// Maybe test case 
@@ -41,6 +42,7 @@ void	executor(t_main_data *data)
 	int 	pipefd[2];
 	t_pipefd 	*pipe_struct;
 
+	env_print(data);
 	pipe_handler(pipefd);
 	pipe_struct = malloc_handler(sizeof(t_pipefd));
 	pipe_struct->pipefd = pipefd;
@@ -60,6 +62,12 @@ void	executor(t_main_data *data)
 	}
 	read_pipe(data, pipe_struct);
 	free(pipe_struct); // double free child process
+
+	
+	printf("\n\n");
+	env_print(data);
+	//printf("\n\nPWD : %s\n", env_get_var(data, "PWD"));
+	//printf(" OPLDPD : %s\n", env_get_var(data, "OLDPWD"));
 }
 
 
@@ -76,12 +84,24 @@ static void read_pipe(t_main_data *data, t_pipefd *pipe_struct)
             // In der Praxis müssten Sie möglicherweise die Daten in Schleifen lesen und zusammensetzen
         while (i_count < bytes_read)
 		{
-			env_set_var(data, &buffer[i_count]);
-            printf("Empfangen: %s\n", &buffer[i_count]);
+			env_add_clr(data, &buffer[i_count]);
+            //printf("Empfangen: %s\n", &buffer[i_count]);
             i_count += strlen(&buffer[i_count]) + 1;
 		}
     }
     close(pipe_struct->pipefd[0]); // Leseende schließen
 	//printf("OLDPWD ---- %s\n", env_get_var(data, "OLDPWD"));
 	//printf("   PWD ---- %s\n", env_get_var(data, "PWD"));
+}
+static void env_add_clr(t_main_data *data, char *env_var)
+{
+	if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
+	{
+		env_set_var(data, env_var + ft_strlen(ADD_ENV));
+		// printf("i found ADD -->  %s\n", env_var + ft_strlen(ADD_ENV));
+	}
+	else if (ft_strncmp(env_var, CLR_ENV, ft_strlen(CLR_ENV)) == 0)
+	{
+		printf("i found CLEAR -->  %s\n", env_var + ft_strlen(CLR_ENV));
+	}
 }

@@ -1,6 +1,9 @@
 #ifndef MINISHELL_TYPEDEF_H
 # define MINISHELL_TYPEDEF_H
 
+# define ADD_ENV "ADD="
+# define CLR_ENV "CLR="
+
 /**
  * necessary so we can use t_node inside the t_node struct definition
 */
