@@ -49,21 +49,22 @@ void	executor(t_main_data *data)
 	{
 		if (data->ast == NULL)
 			data->ast = example_selection();
-		navigate_tree_forward(data, data->ast, pipe_struct);	
-		free(pipe_struct); 
+		navigate_tree_forward(data, data->ast, pipe_struct);
+
 		free_ast(data->ast);
 		exit(0);
 	}
 	else
 	{
-		
+				read_pipe(data, pipe_struct);
+		free(pipe_struct); 	
 		//env_set_var(data, "PWD=Testttttttttttttttttttttttttttt");
 		waitpid(pid, NULL, 0);
 	}
 	
-	read_pipe(data, pipe_struct);
+	// read_pipe(data, pipe_struct);
 
-	//free(pipe_struct); 
+	// free(pipe_struct); 
 
 //	env_print(data);
 }
