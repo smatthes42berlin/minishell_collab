@@ -7,10 +7,10 @@ t_node	*example_selection(void)
 {
 	t_node	*ret;
 
-	// ret = set_cmd_1();							// ls -l;
+	 ret = set_cmd_1();							// ls -l;
 	// ret = set_cmd_2();  					// ls -l | grep ".c"
 	// ret = set_cmd_2_cp();					// pwd | ls -l
-	 ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
+	// ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
 	 //ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
 	
 	// ret = set_redir_in_1();					// < input grep "nn" 
