@@ -23,12 +23,12 @@ t_node	*example_selection(void)
 	// ret = set_pwd_allone(); 					// pwd
 	// ret = set_pwd_beginn_1(); 				// pwd | grep home
 	// ret = set_pwd_begin_2(); 				// pwd | ls -l
-	// ret = set_pwd_end(); 					// ls -l | pwd
+	 ret = set_pwd_end(); 					// ls -l | pwd
 	// ret = set_pwd_redir_out(); 				// pwd > out
 
 	// --------------------------------------- build cd ------
  	// ret = set_cd_absolut();
-	 ret = set_cd_relativ();
+	// ret = set_cd_relativ();
 	// ret = set_cd_relativ_revers();
 	return (ret);
 	// Maybe test case 
@@ -42,7 +42,6 @@ void	executor(t_main_data *data)
 	int 	pipefd[2];
 	t_pipefd 	*pipe_struct;
 
-	env_print(data);
 	pipe_handler(pipefd);
 	pipe_struct = malloc_handler(sizeof(t_pipefd));
 	pipe_struct->pipefd = pipefd;
@@ -63,9 +62,6 @@ void	executor(t_main_data *data)
 	read_pipe(data, pipe_struct);
 	free(pipe_struct); // double free child process
 
-	
-	printf("\n\n");
-	env_print(data);
 	//printf("\n\nPWD : %s\n", env_get_var(data, "PWD"));
 	//printf(" OPLDPD : %s\n", env_get_var(data, "OLDPWD"));
 }

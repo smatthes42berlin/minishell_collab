@@ -43,7 +43,6 @@ bool	check_and_choose_buildin(t_main_data *data, t_node *node, t_pipefd *pipe_st
 	}
 	temp_str = chose_buildin(data ,exec_node, pipe_struct_main);
 	pipe_setting(pipe_struct_pipe->pipefd, pipe_struct_pipe->direction, temp_str);
-	free(pipe_struct_pipe);
 	free(temp_str);
 	return (true);
 }
