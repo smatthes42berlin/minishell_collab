@@ -10,14 +10,13 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	char		*temp_str;
 
 	temp_str = NULL;
-	exec_node = check_buildin(node);
-	if (NULL == exec_node)
+	exec_node = (t_node_exec *)node->node_type;
+	//exec_node = check_buildin(node);
+	if (false == exec_node->inbuilt)
 	{
-		exec_node = (t_node_exec *)node->node_type;
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 	}
-	else
-		temp_str = chose_buildin(data, exec_node, pipe_struct);
+	temp_str = chose_buildin(data, exec_node, pipe_struct);
 	if ((data->ast->type == REDIR || data->ast->type == EXEC)
 		&& temp_str != NULL)
 		printf("%s\n", temp_str);
@@ -53,6 +52,8 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	pid_t		main_pid;
 	t_pipefd	*pipe_struct_pipe;
 
+	printf("starting PIPE\n");
+
 	pipe_node = (t_node_pipe *)node->node_type;
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
@@ -74,6 +75,7 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 		type_pipe_nested_pid(data, pipe_node, main_pid, pipe_struct_pipe,
 			pipe_struct);
 	}
+	free(pipe_struct_pipe);
 }
 
 static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
