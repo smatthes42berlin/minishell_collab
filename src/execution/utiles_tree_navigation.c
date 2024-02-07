@@ -1,8 +1,8 @@
 #include "minishell.h"
 
 static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
-				pid_t main_pid, t_pipefd *pipe_struct_pipe,
-				t_pipefd *pipe_struct_main);
+		pid_t main_pid, int *pipefd, bool direction, t_pipefd *pipe_struct_main);
+static bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipefd, bool direction, t_pipefd *pipe_struct_main);
 
 void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
@@ -22,6 +22,7 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 		printf("%s\n", temp_str);
 	free(temp_str);
 }
+
 
 void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
@@ -50,18 +51,14 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	t_node_pipe	*pipe_node;
 	int			pipefd[2];
 	pid_t		main_pid;
-	t_pipefd	*pipe_struct_pipe;
 
 	pipe_node = (t_node_pipe *)node->node_type;
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
-	pipe_struct_pipe = malloc(sizeof(t_pipefd));
-	pipe_struct_pipe->pipefd = pipefd;
 	if (main_pid == 0)
 	{
-		pipe_struct_pipe->direction = true;
 		if (false == check_and_choose_buildin(data, pipe_node->left_node,
-				pipe_struct_pipe, pipe_struct))
+				pipefd, true, pipe_struct))
 		{
 			pipe_setting(pipefd, true, NULL);
 			navigate_tree_forward(data, pipe_node->left_node, pipe_struct);
@@ -69,24 +66,21 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	}
 	else
 	{
-		pipe_struct_pipe->direction = false;
-		type_pipe_nested_pid(data, pipe_node, main_pid, pipe_struct_pipe,
+		type_pipe_nested_pid(data, pipe_node, main_pid, pipefd, false, 
 			pipe_struct);
 	}
-	free(pipe_struct_pipe);
 }
 
 static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
-		pid_t main_pid, t_pipefd *pipe_struct_pipe, t_pipefd *pipe_struct_main)
+		pid_t main_pid, int *pipefd, bool direction, t_pipefd *pipe_struct_main)
 {
 	pid_t nested_pid;
-
-	pipe_setting(pipe_struct_pipe->pipefd, pipe_struct_pipe->direction, NULL);
+	pipe_setting(pipefd, direction, NULL);
 	nested_pid = fork_handler();
 	if (nested_pid == 0)
 	{
 		if (false == check_and_choose_buildin(data, pipe_node->right_node,
-				pipe_struct_pipe, pipe_struct_main))
+				pipefd, direction, pipe_struct_main))
 		{
 			navigate_tree_forward(data, pipe_node->right_node,
 				pipe_struct_main);
@@ -97,4 +91,20 @@ static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
 		waitpid(main_pid, NULL, 0);
 		waitpid(nested_pid, NULL, 0);
 	}
+}
+
+static bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipefd, bool direction, t_pipefd *pipe_struct_main)
+{
+	t_node_exec *exec_node;
+	char *temp_str;
+
+	if (node->type != EXEC)
+		return (false);
+	exec_node = (t_node_exec *)node->node_type;
+	if (exec_node->inbuilt == false)
+		return (false);
+	temp_str = chose_buildin(data ,exec_node, pipe_struct_main);
+	pipe_setting(pipefd, direction, temp_str);
+	free(temp_str);
+	return (true);
 }

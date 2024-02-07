@@ -19,7 +19,8 @@ t_node	*set_pwd_allone(void)
 	t_node	*ret;
 
 	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_exec("pwd", "pwd", NULL, true), ret->type = EXEC;
+	ret->node_type = test_cmd_exec("pwd", "pwd", NULL, true);
+	ret->type = EXEC;
 	return (ret);
 }
 
@@ -30,7 +31,7 @@ t_node	*set_pwd_beginn_1(void)
 
 	ret = malloc_handler(sizeof(t_node));
 	ret->node_type = test_cmd_pipe("Pipe 1", EXEC, EXEC, test_cmd_exec("pwd",
-				"pwd", NULL, true), test_cmd_exec("ls", "/bin/grep", "home",
+				"pwd", NULL, true), test_cmd_exec("grep", "/bin/grep", "home",
 				false));
 	ret->type = PIPE;
 	return (ret);
