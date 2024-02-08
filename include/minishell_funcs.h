@@ -44,8 +44,6 @@ int		count_characters(char *cur_pos);
 int		identify_operator(char **cur_pos, t_token *token);
 int		create_operator_token(char **cur_pos, t_token *token);
 int		create_word_token(char **cur_pos, t_token *token);
-void	print_token_list(t_list_d *token_list);
-void	print_token(t_token *token);
 int		create_empty_token(t_main_data *main_data, t_token *token);
 
 /* tokenisation/lexer 2 check syntax and get heredoc */
@@ -67,6 +65,12 @@ int		add_heredoc_str_token(t_list_d **hdoc_op_token, char *res,
 			t_here_doc_info *hdoc_info);
 int		remove_here_doc_token(t_main_data *main_data);
 int		free_heredoc_info_code(t_here_doc_info *hdoc_info, int code);
+int		pipe_as_first_token(t_list_d *next_token, t_token *cur_token_val);
+int	two_pipes_in_a_row(t_token *cur_token_val,
+						t_token *next_token_val);
+int		operator_as_last_token(t_list_d *next_token, t_token *cur_token_val);
+int		operator_after_operator_execpt_pipe(
+	t_token *cur_token_val, t_token *next_token_val);
 
 /* environment */
 
@@ -110,7 +114,6 @@ int		set_as_root(t_parse_info *parse_info, t_node *node);
 int		check_new_root_node(t_parse_info *parse_info, t_node *new_node);
 int		got_to_nth_next_token(int num, t_parse_info *parse_info);
 int		set_n_token_as_parsed(int num, t_parse_info *parse_info);
-void	print_ast(t_node *root, int depth);
 int		create_redir_node(t_parse_info *parse_info);
 int		create_hdoc_node(t_parse_info *parse_info);
 int		create_pipe_node(t_parse_info *parse_info);
@@ -119,8 +122,30 @@ int		add_all_but_pipe_ast(t_parse_info *parse_info, t_node *new_node);
 int	add_pipe_ast(t_parse_info *parse_info,
 					t_node_pipe *new_node);
 int		set_exec_args_as_parsed(t_parse_info *parse_info);
-int	append_to_last_redir(t_node *branch_parent,
-							t_node *new_node);
+int		append_to_last_redir(t_parse_info *parse_info, t_node *new_node);
+int		change_form_of_ast(t_parse_info *parse_info);
+int		init_generic_node_param(t_node *node, enum e_node_type type);
+int	get_cmd_arguments(t_parse_info *parse_info,
+						t_node_exec *exec_node);
+int		copy_argument(t_node_exec *exec_node, char *new_arg);
+int		got_to_nth_next_lst(t_list_d **lst, int n);
+int		check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path);
+int		check_path_combination(char *cur_path_val, char *cmd_arg,
+			char **exec_path);
+int		get_path(char *envp[], char ***path);
+int		check_if_cmd_exists(t_node_exec *exec_node);
+int		check_if_inbuilt(t_node_exec *exec_node);
+
+/* printing for debugging */
+
+void	print_token_list(t_list_d *token_list);
+void	print_token(t_token *token);
+void	print_ast(t_node *root, int depth);
+int		print_redir_node(t_node_redir *node, int mode);
+int		print_pipe_node(t_node_pipe *node, int mode);
+int		print_hdoc_node(t_node_heredoc *node, int mode);
+int		print_exec_node(t_node_exec *node, int mode);
+
 /* executor */
 
 #endif

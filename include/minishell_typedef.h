@@ -129,7 +129,10 @@ typedef struct s_parse_info
 	t_list_d			*next;
 	t_token				*cur_token;
 	t_node				*root_node_ast;
+	t_node				*ast_rene;
+	t_node				*ast_steffen;
 	t_node				*cur_pipe;
+	t_main_data			*main_data;
 }						t_parse_info;
 
 /**
@@ -182,7 +185,6 @@ typedef struct s_node
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
-	char				*token_value;
 	void				*node_type;
 }						t_node;
 
@@ -199,7 +201,6 @@ typedef struct s_node_pipe
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
-	char				*token_value;
 }						t_node_pipe;
 
 /**
@@ -216,7 +217,6 @@ typedef struct s_node_heredoc
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
-	char				*token_value;
 	int					read_fd;
 }						t_node_heredoc;
 
@@ -236,7 +236,6 @@ typedef struct s_node_redir
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
-	char				*token_value;
 	char				*filename;
 	enum e_open_mode	mode;
 	enum e_std_fd		in_or_out;
@@ -253,7 +252,6 @@ typedef struct s_node_exec
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
-	char				*token_value;
 	char				*file_path;
 	char				**argv;
 	char				**env;

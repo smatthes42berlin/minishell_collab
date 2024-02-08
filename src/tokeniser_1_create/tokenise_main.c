@@ -15,8 +15,7 @@ int	tokenise(t_main_data *main_data)
 			return (printf("ERROR\n"));
 		skip_ws(&cur_pos);
 	}
-	// if (check_syntax_n_heredoc(main_data))
-	// 	return (1);
-	check_syntax_n_heredoc(main_data);
+	if (check_syntax_n_heredoc(main_data))
+		return (1);
 	return (0);
 }

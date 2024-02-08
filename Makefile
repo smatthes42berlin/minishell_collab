@@ -13,7 +13,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /gen_util/
+SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /gen_util /print
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
@@ -57,8 +57,20 @@ SRC = 	main.c \
 		parser_util.c \
 		parser_main.c \
 		print_ast.c \
-		parser_create_nodes.c \
-		parser_add_nodes_ast.c
+		parser_add_nodes_ast.c \
+		parser_append_to_last_redir.c \
+		check_syntax_util.c \
+		parser_change_form_ast.c \
+		parser_create_node_exec.c \
+		parser_create_node_exec_util.c \
+		parser_create_node_hdoc.c \
+		parser_create_node_pipe.c \
+		parser_create_node_redir.c \
+		parser_create_node_util.c \
+		print_redir_node.c \
+		print_hdoc_node.c \
+		print_exec_node.c \
+		print_pipe_node.c
 
 #parser_main.c
 	

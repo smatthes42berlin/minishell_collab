@@ -13,9 +13,8 @@ int	check_syntax_n_heredoc(t_main_data *main_data)
 			return (2);
 		cur_token = &(*cur_token)->next;
 	}
-	check_syntax(*cur_token);
-	// if (check_syntax(*cur_token))
-	// 	return (1);
+	if (check_syntax(*cur_token))
+		return (1);
 	remove_here_doc_token(main_data);
 	return (0);
 }

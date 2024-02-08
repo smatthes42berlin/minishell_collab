@@ -31,9 +31,10 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	test_case = 1;
 	if (test_case == 1)
-		// test_str = ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 | wc -l < in_4 > 2 | echo $HOME $_");
-		// test_str = ft_strdup("< in_1 echo < in_2 | cat < in_3");
-		test_str = ft_strdup("< in_1 echo < in_2 < 1 < 2 Hello < 3");
+		// test_str = ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 | wc-l < in_4 > 2 | echo Hello");
+		// test_str = ft_strdup("<< 1 echo || << 2 cat");
+		// test_str = ft_strdup("echo");
+		test_str = ft_strdup("exit | echo | < 1.in >> 2.in cat arg_1 arg_2| << 1 echo arg1 < 2.in arg2 | <<1 wc -l -s | ls < 2.in > 3.out");
 	if (test_case == 2)
 		test_str = ft_strdup("<< >> < | >");
 	if (test_case == 3)
@@ -61,15 +62,18 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		// watch out for eof and possbile return of null
-		// main_dwata.cli_input = readline("cli>");
 		main_data.cli_input = test_str;
+		// main_data.cli_input = readline("cli>");
 		if (!main_data.cli_input || ft_strlen(main_data.cli_input) == 0)
 			free_main_exit(&main_data, 2, 1);
+		printf("main: before tokenise\n");
 		if (tokenise(&main_data))
 			free_main_exit(&main_data, 3, 2);
+		printf("main: before expand\n");
 		if (expand(&main_data))
 			free_main_exit(&main_data, 3, 3);
-		print_token_list(main_data.token_list);
+		printf("main: before parse\n");
+		// print_token_list(main_data.token_list);
 		// write heredocs to pipe here
 		exit_code = parse(&main_data);
 		printf("\n\nEXIT CODE = $%d$\n\n", exit_code);
