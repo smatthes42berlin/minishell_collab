@@ -11,6 +11,7 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 
 	temp_str = NULL;
 	exec_node = (t_node_exec *)node->node_type;
+	printf("NODE :%s\n", exec_node->name_exec);
 	//exec_node = check_buildin(node);
 	if (false == exec_node->inbuilt)
 	{
@@ -29,7 +30,9 @@ void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	t_node_redir	*redir_node;
 	int				fd;
 
+	
 	redir_node = (t_node_redir *)node->node_type;
+	printf("NODE :%s\n", redir_node->name_redir);
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	if (fd == -1)
 	{
@@ -55,7 +58,10 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	int			pipefd[2];
 	pid_t		main_pid;
 
+
+
 	pipe_node = (t_node_pipe *)node->node_type;
+	printf("NODE :%s\n", pipe_node->name_Pipe);
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
 	if (main_pid == 0)

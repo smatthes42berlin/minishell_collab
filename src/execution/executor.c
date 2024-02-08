@@ -18,11 +18,11 @@ t_node	*example_selection(void)
 	// ret = set_redir_in_2_cmd_2();			// < input_befor < input grep "nn" | sort | uniq	
 	// ret = set_redir_out_1_append();			// ls -l >> out 
 	// ret = set_redir_out_1();					// ls -l > out
-	 ret = set_redir_out_empty();				// > out
+	// ret = set_redir_out_empty();				// > out
 	
 	// ---------------------------------------- build pwd -----
 	// ret = set_pwd_allone(); 					// pwd
-	// ret = set_pwd_beginn_1(); 					// pwd | grep home
+	// ret = set_pwd_beginn_1(); 				// pwd | grep home
 	// ret = set_pwd_begin_2(); 				// pwd | ls -l
 	// ret = set_pwd_end(); 					// ls -l | pwd
 	// ret = set_pwd_redir_out(); 				// pwd > out
@@ -31,6 +31,9 @@ t_node	*example_selection(void)
 	// ret = set_cd_absolut();
 	// ret = set_cd_relativ();
 	// ret = set_cd_relativ_revers();
+ 	//	ret = set_cd_redir_out();			// cd src/execution > out
+	 ret = set_cd_cmd_2();					// cd src/execution | ls -l | wc -l
+
 	return (ret);
 	// Maybe test case 
 // sleep |  < input grep "nn" | uniq | sort -r 
@@ -88,12 +91,12 @@ static void read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 		}
     }
     close(pipe_struct->pipefd[0]); // Leseende schließen
-	printf("OLDPWD ---- %s\n", env_get_var(data, "OLDPWD"));
-	printf("   PWD ---- %s\n", env_get_var(data, "PWD"));
-	char *cwd;
-	cwd = getcwd(NULL, 0);
-	printf("\ncwd: %s\n", cwd);
-	free(cwd);
+	// printf("OLDPWD ---- %s\n", env_get_var(data, "OLDPWD"));
+	// printf("   PWD ---- %s\n", env_get_var(data, "PWD"));
+	// char *cwd;
+	// cwd = getcwd(NULL, 0);
+	// printf("\ncwd: %s\n", cwd);
+	// free(cwd);
 }
 static void env_add_clr(t_main_data *data, char *env_var)
 {
@@ -105,5 +108,11 @@ static void env_add_clr(t_main_data *data, char *env_var)
 	else if (ft_strncmp(env_var, CLR_ENV, ft_strlen(CLR_ENV)) == 0)
 	{
 		printf("i found CLEAR -->  %s\n", env_var + ft_strlen(CLR_ENV));
+	}
+	else if (ft_strncmp(env_var, ADD_CD, ft_strlen(ADD_CD)) == 0)
+	{
+		if (chdir( env_var + ft_strlen(ADD_CD) + 4) == -1)
+			error_code_handler(errno, "ERR-chdir", "CD -Command --> ", "");
+		//printf("i found CD -->  %s\n", env_var + ft_strlen(ADD_CD) + 4);
 	}
 }

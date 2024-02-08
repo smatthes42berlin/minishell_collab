@@ -8,13 +8,14 @@ char	*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 		printf("AST == NULL!\n");
 
 	//!!!!!
+	
 	if (str_are_equal(node->file_path, "pwd"))
 	{
 		return (build_pwd());
 	}
 	if (str_are_equal(node->file_path, "cd"))
 	{
-		return (build_cd(node, pipe_struct));
+		return (build_cd(data, node, pipe_struct));
 	}
 	return (NULL);
 }

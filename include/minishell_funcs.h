@@ -81,7 +81,7 @@ void				free_ast(t_node *node);
 //t_node_exec			*check_buildin(t_node *node);
 char				*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct);
 char				*build_pwd(void);
-char 				*build_cd (t_node_exec *node, t_pipefd *pipefd);
+char 				*build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
@@ -140,5 +140,7 @@ t_node				*set_pwd_redir_out(void);
 t_node				*set_cd_absolut(void);
 t_node				*set_cd_relativ(void);
 t_node				*set_cd_relativ_revers(void);
+t_node				*set_cd_redir_out(void);
+t_node				*set_cd_cmd_2(void);
 
 #endif

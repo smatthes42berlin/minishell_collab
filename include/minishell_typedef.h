@@ -3,6 +3,7 @@
 
 # define ADD_ENV "ADD="
 # define CLR_ENV "CLR="
+# define ADD_CD "CD="
 
 /**
  * necessary so we can use t_node inside the t_node struct definition
