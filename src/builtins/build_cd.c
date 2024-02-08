@@ -10,6 +10,7 @@ char *build_cd (t_node_exec *node, t_pipefd *pipefd)
 {
 	char *env_new[3];
 	char *clear_str;
+	int i;
 
 	env_new[0] = read_pwd("OLDPWD=");
 	clear_str = ft_clear_str(node->argv[0]);
@@ -18,11 +19,9 @@ char *build_cd (t_node_exec *node, t_pipefd *pipefd)
 	env_new[1] = read_pwd("PWD=");
 	env_new[2] = NULL;
 	pipesetting_for_env(pipefd, env_new);
-	free(env_new[0]);
-	free(env_new[1]);
-	free(env_new[2]);
-	
-	//free_str_arr_null(env_new);
+	i = 0;	
+	while (i < 3)
+		free(env_new[i]);
 	free(clear_str);
 	return (NULL);
 }

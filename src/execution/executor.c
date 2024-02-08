@@ -11,13 +11,14 @@ t_node	*example_selection(void)
 	// ret = set_cmd_2();  					// ls -l | grep ".c"
 	// ret = set_cmd_2_cp();					// pwd | ls -l
 	// ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
-	 ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
+	// ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
 	
 	// ret = set_redir_in_1();					// < input grep "nn" 
 	// ret = set_redir_in_1_cmd_2();			// < input grep "nn" | uniq | sort 
 	// ret = set_redir_in_2_cmd_2();			// < input_befor < input grep "nn" | sort | uniq	
 	// ret = set_redir_out_1_append();			// ls -l >> out 
-	// ret = set_redir_out_1();					// ls -l > out 
+	// ret = set_redir_out_1();					// ls -l > out
+	 ret = set_redir_out_empty();				// > out
 	
 	// ---------------------------------------- build pwd -----
 	// ret = set_pwd_allone(); 					// pwd
@@ -27,7 +28,7 @@ t_node	*example_selection(void)
 	// ret = set_pwd_redir_out(); 				// pwd > out
 
 	// --------------------------------------- build cd ------
- 	// ret = set_cd_absolut();
+	// ret = set_cd_absolut();
 	// ret = set_cd_relativ();
 	// ret = set_cd_relativ_revers();
 	return (ret);
@@ -87,8 +88,12 @@ static void read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 		}
     }
     close(pipe_struct->pipefd[0]); // Leseende schließen
-	//printf("OLDPWD ---- %s\n", env_get_var(data, "OLDPWD"));
-	//printf("   PWD ---- %s\n", env_get_var(data, "PWD"));
+	printf("OLDPWD ---- %s\n", env_get_var(data, "OLDPWD"));
+	printf("   PWD ---- %s\n", env_get_var(data, "PWD"));
+	char *cwd;
+	cwd = getcwd(NULL, 0);
+	printf("\ncwd: %s\n", cwd);
+	free(cwd);
 }
 static void env_add_clr(t_main_data *data, char *env_var)
 {

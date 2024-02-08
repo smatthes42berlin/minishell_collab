@@ -151,6 +151,7 @@ enum					e_std_fd
 
 /**
  * describing all the possible node types within the ast
+ * @param NOTHING    for redim e.g. > out 
  * @param PIPE
  * @param EXEC
  * @param REDIR
@@ -158,6 +159,7 @@ enum					e_std_fd
  */
 enum					e_node_type
 {
+	NOTHING,
 	PIPE,
 	EXEC,
 	REDIR,

@@ -43,7 +43,10 @@ void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 		return ;
 	}
 	close_handler(fd);
-	navigate_tree_forward(data, redir_node->child_node, pipe_struct);
+	if (redir_node->child_node->type == NOTHING)
+		return ;
+	else
+		navigate_tree_forward(data, redir_node->child_node, pipe_struct);
 }
 
 void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
