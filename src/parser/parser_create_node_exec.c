@@ -29,7 +29,7 @@ int	create_exec_node(t_parse_info *parse_info)
 	init_generic_node_param((t_node *)exec_node, EXEC);
 	if (init_exec_node_param(parse_info, exec_node))
 		return (1);
-	if (check_if_is_inbuilt(exec_node))
+	if (check_if_inbuilt(exec_node))
 		return (1);
 	if (check_if_cmd_exists(exec_node))
 		return (1);

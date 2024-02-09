@@ -30,6 +30,26 @@ int					create_word_token(char **cur_pos, t_token *token);
 void				print_token_list(t_list_d *token_list);
 void				print_token(t_token *token);
 int					create_empty_token(t_main_data *main_data, t_token *token);
+bool				token_is_operator_token(t_token *token);
+bool				token_is_redir(t_token *token);
+bool				token_is_word(t_token *token);
+char				*is_operator(char c);
+char				*is_squote(char c);
+char				*is_dquote(char c);
+char				*is_dollar_char(char c);
+bool				is_valid_var_name_char(char c);
+bool				token_is_operator_token(t_token *token);
+bool				token_is_redir(t_token *token);
+bool				token_is_word(t_token *token);
+bool				token_is_pipe(t_token *token);
+bool				token_is_redir_in(t_token *token);
+bool				token_is_redir_out_trunc(t_token *token);
+bool				token_is_redir_out_app(t_token *token);
+bool				token_is_here_doc(t_token *token);
+bool				node_is_pipe(t_node *node);
+bool				node_is_hdoc(t_node *node);
+bool				node_is_exec(t_node *node);
+bool				node_is_redir(t_node *node);
 
 /* tokenisation/lexer 2 check syntax and get heredoc */
 int					pipe_as_first_token(t_list_d *cur_token,
@@ -129,7 +149,7 @@ int					check_path_combination(char *cur_path_val, char *cmd_arg,
 						char **exec_path);
 int					get_path(char *envp[], char ***path);
 int					check_if_cmd_exists(t_node_exec *exec_node);
-int					check_if_is_inbuilt(t_node_exec *exec_node);
+int					check_if_inbuilt(t_node_exec *exec_node);
 
 /* printing for debugging */
 
@@ -150,7 +170,7 @@ void				type_redim(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
 void				type_pipe(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
-void				executor(t_main_data *data);
+int				executor(t_main_data *data);
 void				free_ast(t_node *node);
 
 /* builtins */

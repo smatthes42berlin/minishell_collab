@@ -2,7 +2,7 @@
 
 char *build_echo(t_node_exec *node)
 {
-    return(node->argv[0]);
+    return(node->argv[1]);
 }
 
 // //----------------------------------Test settings ------------------------
