@@ -1,6 +1,10 @@
 #ifndef MINISHELL_TYPEDEF_H
 # define MINISHELL_TYPEDEF_H
 
+# define ADD_ENV "ADD="
+# define CLR_ENV "CLR="
+# define ADD_CD "CD="
+
 /**
  * necessary so we can use t_node inside the t_node struct definition
 */
@@ -70,17 +74,25 @@ enum					e_pid_satus
 	PID_ERROR
 };
 
-typedef struct s_pid_status
-{
-	pid_t				pid_nbr;
-	int					pipefd[2];
-	enum e_pid_satus	pid_satus;
-}						t_pid_status;
 
-typedef struct s_pid_list
+typedef struct s_pipefd_main
 {
-	t_list_d			*pid_list;
-}						t_pid_list;
+	int		*pipefd;
+	bool	direction;
+}				t_pipefd;
+
+
+// typedef struct s_pid_status
+// {
+// 	pid_t				pid_nbr;
+// 	int					pipefd[2];
+// 	enum e_pid_satus	pid_satus;
+// }						t_pid_status;
+
+// typedef struct s_pid_list
+// {
+// 	t_list_d			*pid_list;
+// }						t_pid_list;
 
 //--------------------------------------------------enum exec end --------------------------------------
 
@@ -163,6 +175,7 @@ enum					e_std_fd
 
 /**
  * describing all the possible node types within the ast
+ * @param NOTHING    for redim e.g. > out 
  * @param PIPE
  * @param EXEC
  * @param REDIR
@@ -170,6 +183,7 @@ enum					e_std_fd
  */
 enum					e_node_type
 {
+	NOTHING,
 	PIPE,
 	EXEC,
 	REDIR,

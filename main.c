@@ -1,19 +1,5 @@
 #include "minishell.h"
 
-/**
- * main function and entry point into shell
- * first initialise the main_data structure to mostly NULL
-
-	* then set up all the environment variables coming from main parameter envp and determined via system calls
- * then listen to line input in infinite loop
- * when line entered
- * tokenise the line
- * parse the token list
-	* check,if calls are in builts that change main process and must thus be called inside of it
-    * execute the ast
- * @param main_data data structure,
-	that contains all the necessary data for the shell and gets passed around
-*/
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_main_data	main_data;
@@ -89,6 +75,7 @@ int	main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
+
 int	init_main_data(t_main_data *main_data)
 {
 	main_data->ast = NULL;
@@ -98,20 +85,3 @@ int	init_main_data(t_main_data *main_data)
 	main_data->env_vars = NULL;
 	return (0);
 }
-
-// int	main(void)
-// {
-// 	char *t_1 = "1 ";
-// 	char *t_2 = "2 ";
-// 	char *t_3 = "3\n";
-
-// 	char *res;
-
-// 	int test;
-
-// 	test = ft_join_n_str(&res, 3, t_1, t_2, t_3);
-// 	printf("$%d$\n", test);
-// 	printf("$%s$\n", res);
-// 	free(res);
-// 	return (1);
-// }
