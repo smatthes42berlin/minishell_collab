@@ -2,7 +2,7 @@
 #include "minishell.h"
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-								t_node_exec *exec_node);
+				t_node_exec *exec_node);
 
 // typedef struct s_node_exec
 // {
@@ -65,7 +65,7 @@ int	check_if_inbuilt(t_node_exec *exec_node)
 }
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-								t_node_exec *exec_node)
+		t_node_exec *exec_node)
 {
 	exec_node->argv = NULL;
 	exec_node->file_path = parse_info->cur_token->value;
@@ -91,19 +91,18 @@ int	check_if_cmd_exists(t_node_exec *exec_node)
 	return (0);
 }
 
-int	get_cmd_arguments(t_parse_info *parse_info,
-						t_node_exec *exec_node)
+int	get_cmd_arguments(t_parse_info *parse_info, t_node_exec *exec_node)
 {
 	t_list_d	*lst;
 	t_token		*token;
 
 	lst = parse_info->next->next;
-	token = lst->content;
-	if (exec_node->file_path)
-		if (copy_argument(exec_node, exec_node->file_path))
-			return (1);
+	if (copy_cmd_name_to_args_arr(exec_node))
+		return (1);
 	while (lst && !token_is_pipe(token))
 	{
+		if (lst)
+			token = lst->content;
 		if (token_is_redir(token))
 			got_to_nth_next_lst(&lst, 2);
 		else if (token_is_here_doc(token))
@@ -115,9 +114,15 @@ int	get_cmd_arguments(t_parse_info *parse_info,
 				return (1);
 			got_to_nth_next_lst(&lst, 1);
 		}
-		if (lst)
-			token = lst->content;
 	}
+	return (0);
+}
+
+int	copy_cmd_name_to_args_arr(t_node_exec *exec_node)
+{
+	if (exec_node->file_path)
+		if (copy_argument(exec_node, exec_node->file_path))
+			return (printf("Error adding an argument to exec node arg list"));
 	return (0);
 }
 

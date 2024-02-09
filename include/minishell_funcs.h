@@ -150,6 +150,7 @@ int					check_path_combination(char *cur_path_val, char *cmd_arg,
 int					get_path(char *envp[], char ***path);
 int					check_if_cmd_exists(t_node_exec *exec_node);
 int					check_if_inbuilt(t_node_exec *exec_node);
+int					copy_cmd_name_to_args_arr(t_node_exec *exec_node);
 
 /* printing for debugging */
 
@@ -170,7 +171,7 @@ void				type_redim(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
 void				type_pipe(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
-int				executor(t_main_data *data);
+int					executor(t_main_data *data);
 void				free_ast(t_node *node);
 
 /* builtins */
