@@ -129,7 +129,12 @@ typedef struct s_parse_info
 	t_list_d			*next;
 	t_token				*cur_token;
 	t_node				*root_node_ast;
+
+	t_node				*ast_rene;
+	t_node				*ast_steffen;
 	t_node				*cur_pipe;
+	t_main_data			*main_data;
+
 }						t_parse_info;
 
 /**
