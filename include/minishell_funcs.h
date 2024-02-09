@@ -151,6 +151,7 @@ int					get_path(char *envp[], char ***path);
 int					check_if_cmd_exists(t_node_exec *exec_node);
 int					check_if_inbuilt(t_node_exec *exec_node);
 int					copy_cmd_name_to_args_arr(t_node_exec *exec_node);
+int					check_if_cmd_is_folder(t_node_exec *exec_node);
 
 /* printing for debugging */
 

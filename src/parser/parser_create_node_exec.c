@@ -35,12 +35,28 @@ int	create_exec_node(t_parse_info *parse_info)
 		return (1);
 	if (get_cmd_arguments(parse_info, exec_node))
 		return (1);
-	// if (check_access_if_cmd_is_folder(parse_info, exec_node))
-	// 	return (1);
+	if (check_if_cmd_is_folder(exec_node))
+		return (1);
 	if (add_all_but_pipe_ast(parse_info, (t_node *)exec_node))
 		return (1);
 	print_exec_node(exec_node, 1);
 	set_n_token_as_parsed(1, parse_info);
+	return (0);
+}
+
+int	check_if_cmd_is_folder(t_node_exec *exec_node)
+{
+	struct stat	statbuf;
+
+	if (!exec_node->file_path || exec_node->is_inbuilt)
+		return (0);
+	if (stat(exec_node->file_path, &statbuf))
+		return (1);
+	if (S_ISDIR(statbuf.st_mode))
+	{
+		free(exec_node->file_path);
+		exec_node->file_path = NULL;
+	}
 	return (0);
 }
 
@@ -67,6 +83,7 @@ int	check_if_inbuilt(t_node_exec *exec_node)
 static int	init_exec_node_param(t_parse_info *parse_info,
 		t_node_exec *exec_node)
 {
+	
 	exec_node->argv = NULL;
 	exec_node->file_path = parse_info->cur_token->value;
 	exec_node->is_inbuilt = false;
@@ -99,10 +116,12 @@ int	get_cmd_arguments(t_parse_info *parse_info, t_node_exec *exec_node)
 	lst = parse_info->next->next;
 	if (copy_cmd_name_to_args_arr(exec_node))
 		return (1);
-	while (lst && !token_is_pipe(token))
+	while (lst)
 	{
 		if (lst)
 			token = lst->content;
+		if(token_is_pipe(token))
+			break;
 		if (token_is_redir(token))
 			got_to_nth_next_lst(&lst, 2);
 		else if (token_is_here_doc(token))
