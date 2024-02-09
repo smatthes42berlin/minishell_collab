@@ -23,10 +23,10 @@ void	pipe_setting(int *pipefd, bool open, char *str)
 	if (open)
 	{
 		close(pipefd[0]);
-		if (str == NULL)
-			dup2(pipefd[1], STDOUT_FILENO);
-		else
-			write(pipefd[1], str, ft_strlen(str));
+
+	    if (str != NULL)
+            write(pipefd[1], str, ft_strlen(str));
+		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 	}
 	else
@@ -35,6 +35,15 @@ void	pipe_setting(int *pipefd, bool open, char *str)
 		dup2(pipefd[0], STDIN_FILENO);
 		if (str != NULL)
 			printf("%s\n", str);
+		// Lesen und Ausgabe des Inhalts aus der Pipe
+			// char buffer[1024];
+			// ssize_t bytesRead;
+			// printf("----------Reding from PIPE-----------\n");
+			// while ((bytesRead = read(pipefd[0], buffer, sizeof(buffer))) > 0) {
+			// 	write(STDOUT_FILENO, buffer, bytesRead);
+			// }
+			// printf("----------End of PIPE READING-----------\n");
+		////////////////////////////////////
 		close(pipefd[0]);
 	}
 }
