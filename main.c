@@ -50,7 +50,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		// watch out for eof and possbile return of null
 		main_data.cli_input = test_str;
-		// main_data.cli_input = readline("cli>");
+		main_data.cli_input = readline("cli>");
 		if (!main_data.cli_input || ft_strlen(main_data.cli_input) == 0)
 			free_main_exit(&main_data, 2, 1);
 		printf("main: before tokenise\n");
@@ -68,8 +68,8 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			free_main_exit(&main_data, 3, 4);
 		}
-		// // if (execute(main_data) == -1)
-		// // 	return (3);
+		if (executor(&main_data) == -1)
+			return (3);
 		free_main_exit(&main_data, 3, 0);
 	}
 	return (0);

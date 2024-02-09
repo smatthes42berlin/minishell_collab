@@ -1,7 +1,7 @@
 #include "minishell.h"
 
-static void read_pipe(t_main_data *data, t_pipefd *pipe_struct);
-static void env_add_clr(t_main_data *data, char *env_var);
+static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct);
+static void	env_add_clr(t_main_data *data, char *env_var);
 
 // t_node	*example_selection(void)
 // {
@@ -11,15 +11,16 @@ static void env_add_clr(t_main_data *data, char *env_var);
 // 	// ret = set_cmd_2();  					// ls -l | grep ".c"
 // 	// ret = set_cmd_2_cp();					// pwd | ls -l
 // 	// ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
-// 	// ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
-	
-// 	// ret = set_redir_in_1();					// < input grep "nn" 
-// 	// ret = set_redir_in_1_cmd_2();			// < input grep "nn" | uniq | sort 
-// 	// ret = set_redir_in_2_cmd_2();			// < input_befor < input grep "nn" | sort | uniq	
-// 	// ret = set_redir_out_1_append();			// ls -l >> out 
+// 	// ret = set_cmd_4();						// sleep 2 | ls
+								// -l | grep ".c" | sort -r
+
+// 	// ret = set_redir_in_1();					// < input grep "nn"
+// 	// ret = set_redir_in_1_cmd_2();			// < input grep "nn" | uniq | sort
+// 	// ret = set_redir_in_2_cmd_2();			// < input_befor < input grep "nn" | sort | uniq
+// 	// ret = set_redir_out_1_append();			// ls -l >> out
 // 	// ret = set_redir_out_1();					// ls -l > out
 // 	// ret = set_redir_out_empty();				// > out
-	
+
 // 	// ---------------------------------------- build pwd -----
 // 	// ret = set_pwd_allone(); 					// pwd
 // 	// ret = set_pwd_beginn_1(); 				// pwd | grep home
@@ -32,26 +33,29 @@ static void env_add_clr(t_main_data *data, char *env_var);
 // 	// ret = set_cd_relativ();
 // 	// ret = set_cd_relativ_revers();
 //  	//	ret = set_cd_redir_out();			// cd src/execution > out
-// 	// ret = set_cd_cmd_2();					// cd src/execution | ls -l | wc -l
+// 	// ret = set_cd_cmd_2();					// cd src/execution | ls -l | wc
+							// -l
 
 // 	// --------------------------------------- build echo ------
 // 	// ret = set_echo_singel();					// echo Das ist ein Testfile
 // 	// ret = set_echo_option();					// echo -n Das ist ein Testfile
-// 	 ret = set_echo_redir();					// echo Das ist ein Testfile >> out
-// 	// ret = set_echo_redim_cmd_2();     		// echo Das ist ein Testfile >> out | ls -l | wc -l
+// 		ret = set_echo_redir();					// echo Das ist ein Testfile >> out
+// 	// ret = set_echo_redim_cmd_2();     		// echo Das ist ein Testfile >> out | ls
+				// -l | wc -l
 
 // 	return (ret);
-// 	// Maybe test case 
-// // sleep |  < input grep "nn" | uniq | sort -r 
+// 	// Maybe test case
+// // sleep |  < input grep "nn" | uniq | sort -r
 
 // }
 
-void	executor(t_main_data *data)
+int	executor(t_main_data *data)
 {
-	pid_t	pid;
-	int 	pipefd[2];
-	t_pipefd 	*pipe_struct;
+	pid_t		pid;
+	int			pipefd[2];
+	t_pipefd	*pipe_struct;
 
+	printf("here!\n");
 	pipe_handler(pipefd);
 	pipe_struct = malloc_handler(sizeof(t_pipefd));
 	pipe_struct->pipefd = pipefd;
@@ -61,7 +65,7 @@ void	executor(t_main_data *data)
 		// if (data->ast == NULL)
 		// 	data->ast = example_selection();
 		navigate_tree_forward(data, data->ast, pipe_struct);
-		free(pipe_struct); 
+		free(pipe_struct);
 		free_ast(data->ast);
 		free_main_exit(data, 1, 0);
 		exit(0);
@@ -72,39 +76,43 @@ void	executor(t_main_data *data)
 	}
 	read_pipe(data, pipe_struct);
 	free(pipe_struct); // double free child process
-
 	// printf("\n\n  PWD : %s\n", env_get_var(data, "PWD"));
 	// printf(" OPLDPD : %s\n", env_get_var(data, "OLDPWD"));
+	return (0);
 }
 
-
-static void read_pipe(t_main_data *data, t_pipefd *pipe_struct)
+static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
-    char buffer[BUFFER_SIZE];
-    ssize_t bytes_read;
-	int i_count;
+	char	buffer[BUFFER_SIZE];
+	ssize_t	bytes_read;
+	int		i_count;
 
 	i_count = 0;
 	close(pipe_struct->pipefd[1]); // Schreibende schließen
-    while ((bytes_read = read(pipe_struct->pipefd[0], buffer, sizeof(buffer))) > 0) {
-            // Annahme: BUFFER_SIZE reicht aus, um jede Umgebungsvariable komplett zu lesen
-            // In der Praxis müssten Sie möglicherweise die Daten in Schleifen lesen und zusammensetzen
-        while (i_count < bytes_read)
+	while ((bytes_read = read(pipe_struct->pipefd[0], buffer,
+				sizeof(buffer))) > 0)
+	{
+		// Annahme: BUFFER_SIZE reicht aus,
+			// um jede Umgebungsvariable komplett zu lesen
+		// In der Praxis müssten Sie möglicherweise die Daten in Schleifen lesen und zusammensetzen
+		while (i_count < bytes_read)
 		{
 			env_add_clr(data, &buffer[i_count]);
-            //printf("Empfangen: %s\n", &buffer[i_count]);
-            i_count += strlen(&buffer[i_count]) + 1;
+			// printf("Empfangen: %s\n", &buffer[i_count]);
+			i_count += strlen(&buffer[i_count]) + 1;
 		}
-    }
-    close(pipe_struct->pipefd[0]); // Leseende schließen
-	// printf("OLDPWD ---- %s\n", env_get_var(data, "OLDPWD"));
-	// printf("   PWD ---- %s\n", env_get_var(data, "PWD"));
-	// char *cwd;
-	// cwd = getcwd(NULL, 0);
-	// printf("\ncwd: %s\n", cwd);
-	// free(cwd);
+	}
+	close(pipe_struct->pipefd[0]); // Leseende schließen
+									// printf("OLDPWD ---- %s\n",
+										env_get_var(data, "OLDPWD");
+									// printf("   PWD ---- %s\n",
+										env_get_var(data, "PWD");
+									// char *cwd;
+									// cwd = getcwd(NULL, 0);
+									// printf("\ncwd: %s\n", cwd);
+									// free(cwd);
 }
-static void env_add_clr(t_main_data *data, char *env_var)
+static void	env_add_clr(t_main_data *data, char *env_var)
 {
 	if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
 	{
@@ -117,8 +125,8 @@ static void env_add_clr(t_main_data *data, char *env_var)
 	}
 	else if (ft_strncmp(env_var, ADD_CD, ft_strlen(ADD_CD)) == 0)
 	{
-		if (chdir( env_var + ft_strlen(ADD_CD) + 4) == -1)
+		if (chdir(env_var + ft_strlen(ADD_CD) + 4) == -1)
 			error_code_handler(errno, "ERR-chdir", "CD -Command --> ", "");
-		//printf("i found CD -->  %s\n", env_var + ft_strlen(ADD_CD) + 4);
+		// printf("i found CD -->  %s\n", env_var + ft_strlen(ADD_CD) + 4);
 	}
 }

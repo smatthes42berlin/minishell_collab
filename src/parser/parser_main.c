@@ -28,7 +28,7 @@ int	parse(t_main_data *main_data)
 	printf("\n\n\n");
 	change_form_of_ast(&parse_info);
 	print_ast(parse_info.ast_rene, 0);
-	main_data->ast = parse_info.root_node_ast;
+	main_data->ast = parse_info.ast_rene;
 	return (0);
 }
 
