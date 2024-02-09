@@ -7,21 +7,23 @@ static bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipef
 void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_exec	*exec_node;
-	char		*temp_str;
+	//char		*temp_str;
 
-	temp_str = NULL;
+	if (data->ast == NULL && pipe_struct == NULL)
+		printf("noting");
+	///temp_str = NULL;
 	exec_node = (t_node_exec *)node->node_type;
-	printf("NODE :%s\n", exec_node->name_exec);
+	//printf("NODE :%s\n", exec_node->name_exec);
 	//exec_node = check_buildin(node);
 	if (false == exec_node->inbuilt)
 	{
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 	}
-	temp_str = chose_buildin(data, exec_node, pipe_struct);
-	if ((data->ast->type == REDIR || data->ast->type == EXEC)
-		&& temp_str != NULL)
-		printf("%s\n", temp_str);
-	free(temp_str);
+//	temp_str = chose_buildin(data, exec_node, pipe_struct);
+	// if ((data->ast->type == REDIR || data->ast->type == EXEC)
+	// 	&& temp_str != NULL)
+	// 	printf("%s", temp_str);
+///	free(temp_str);
 }
 
 
@@ -45,11 +47,11 @@ void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 		error_code_handler(errno, "ERR-dub_2 in \"type_redim\"", "", "");
 		return ;
 	}
-	close_handler(fd);
 	if (redir_node->child_node->type == NOTHING)
 		return ;
 	else
 		navigate_tree_forward(data, redir_node->child_node, pipe_struct);
+	close_handler(fd);
 }
 
 void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
@@ -58,10 +60,8 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	int			pipefd[2];
 	pid_t		main_pid;
 
-
-
 	pipe_node = (t_node_pipe *)node->node_type;
-	printf("NODE :%s\n", pipe_node->name_Pipe);
+	//printf("NODE :%s\n", pipe_node->name_Pipe);
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
 	if (main_pid == 0)

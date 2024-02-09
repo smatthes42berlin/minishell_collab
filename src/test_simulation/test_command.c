@@ -20,7 +20,8 @@ t_node_exec	*test_cmd_exec(char *name, char *command, char *flag, bool inbuild)
 	exec->name_exec = strdup(name);
 	exec->file_path = strdup(command);
 	args1 = malloc_handler(3 * sizeof(char *));
-	if (str_equal_test(command, "cd") == false)
+	if ((str_equal_test(command, "cd") == false) &&
+		(str_equal_test(command, "echo") == false))
 	{
 		args1[0] = strdup(command);
 		if (flag == NULL)

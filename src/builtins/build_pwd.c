@@ -2,14 +2,17 @@
 
 char	*build_pwd(void)
 {
-	char	*cwd;
+	char	*ret;
+	char	*str_tmp;
 
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
+	str_tmp = getcwd(NULL, 0);
+	if (str_tmp == NULL)
 	{
 		error_code_handler(errno, "ERR-getcwd", "", "");
 	}
-	return (cwd);
+	ret = ft_strjoin(str_tmp, "\n");
+	free(str_tmp);
+	return (ret);
 }
 
 // -------------------- Test function ----------------------------------------

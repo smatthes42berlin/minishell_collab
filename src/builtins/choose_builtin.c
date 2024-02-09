@@ -17,5 +17,9 @@ char	*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 	{
 		return (build_cd(data, node, pipe_struct));
 	}
+	if (str_are_equal(node->file_path, "echo"))
+	{
+		return (build_echo(node));
+	}
 	return (NULL);
 }

@@ -32,7 +32,13 @@ t_node	*example_selection(void)
 	// ret = set_cd_relativ();
 	// ret = set_cd_relativ_revers();
  	//	ret = set_cd_redir_out();			// cd src/execution > out
-	 ret = set_cd_cmd_2();					// cd src/execution | ls -l | wc -l
+	// ret = set_cd_cmd_2();					// cd src/execution | ls -l | wc -l
+
+	// --------------------------------------- build echo ------
+	// ret = set_echo_singel();					// echo Das ist ein Testfile
+	// ret = set_echo_option();					// echo -n Das ist ein Testfile
+	 ret = set_echo_redir();					// echo Das ist ein Testfile >> out
+	// ret = set_echo_redim_cmd_2();     		// echo Das ist ein Testfile >> out | ls -l | wc -l
 
 	return (ret);
 	// Maybe test case 
