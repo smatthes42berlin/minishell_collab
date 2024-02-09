@@ -18,6 +18,7 @@ void	free_main_exit(t_main_data *main_data, int program_state, int exit_code)
 	if (program_state >= 3)
 		d_lst_clear(&main_data->token_list, free_token);
 	init_main_data(main_data);
+	rl_clear_history();
 	if (exit_code >= 0)
 		exit(exit_code);
 }

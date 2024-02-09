@@ -20,7 +20,8 @@ int	main(int argc, char *argv[], char *envp[])
 		// test_str = ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 | wc-l < in_4 > 2 | echo Hello");
 		// test_str = ft_strdup("<< 1 echo || << 2 cat");
 		// test_str = ft_strdup("echo");
-		// test_str = ft_strdup("exit | echo | < 1.in >> 2.in cat arg_1 arg_2| << 1 echo arg1 < 2.in arg2 | <<1 wc -l -s | ls < 2.in > 3.out");
+		// test_str = ft_strdup("exit | echo | < 1.in >> 2.in cat arg_1 arg_2| << 1 echo arg1 < 2.in arg2 | <<1 wc
+				// -l -s | ls < 2.in > 3.out");
 		test_str = ft_strdup("<< 1 cat <in_1 | echo <in_2 hi | <in_3 wc > 2");
 	if (test_case == 2)
 		test_str = ft_strdup("<< >> < | >");
@@ -52,7 +53,9 @@ int	main(int argc, char *argv[], char *envp[])
 		main_data.cli_input = test_str;
 		main_data.cli_input = readline("cli>");
 		if (!main_data.cli_input || ft_strlen(main_data.cli_input) == 0)
-			free_main_exit(&main_data, 2, 1);
+			continue ;
+		// free_main_exit(&main_data, 2, -1);
+		add_history(main_data.cli_input);
 		printf("main: before tokenise\n");
 		if (tokenise(&main_data))
 			free_main_exit(&main_data, 3, 2);
@@ -61,7 +64,6 @@ int	main(int argc, char *argv[], char *envp[])
 			free_main_exit(&main_data, 3, 3);
 		printf("main: before parse\n");
 		// print_token_list(main_data.token_list);
-		// write heredocs to pipe here
 		exit_code = parse(&main_data);
 		printf("\n\nEXIT CODE = $%d$\n\n", exit_code);
 		if (exit_code)
@@ -70,11 +72,10 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		if (executor(&main_data) == -1)
 			return (3);
-		free_main_exit(&main_data, 3, 0);
+		// free_main_exit(&main_data, 3, 0);
 	}
 	return (0);
 }
-
 
 int	init_main_data(t_main_data *main_data)
 {
