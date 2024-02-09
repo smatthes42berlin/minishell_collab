@@ -8,7 +8,9 @@ char	*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 		printf("AST == NULL!\n");
 
 	//!!!!!
-	
+	printf("I am in choose_buildin\n");
+	//print_exec_node(node, 1);
+
 	if (str_are_equal(node->file_path, "pwd"))
 	{
 		return (build_pwd());

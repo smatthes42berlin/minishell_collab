@@ -2,6 +2,9 @@
 
 char *build_echo(t_node_exec *node)
 {
+    printf("I am in echo\n\n--------------------\n");
+   // printf("%s\n-------\n", node->argv[1]);
+    print_exec_node(node, 1);
     return(node->argv[1]);
 }
 
