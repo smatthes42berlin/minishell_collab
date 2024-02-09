@@ -165,13 +165,14 @@ int					print_redir_node(t_node_redir *node, int mode);
 int					print_pipe_node(t_node_pipe *node, int mode);
 int					print_hdoc_node(t_node_heredoc *node, int mode);
 int					print_exec_node(t_node_exec *node, int mode);
+void				print_debugging_info_executer(int on_off, int txt, void *param);
 
 /* executor */
 void				navigate_tree_forward(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
 void				type_exec(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
-void				type_redim(t_main_data *data, t_node *node,
+void				type_redir(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
 void				type_pipe(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);

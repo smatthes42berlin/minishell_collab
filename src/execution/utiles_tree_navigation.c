@@ -12,13 +12,14 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	char		*temp_str;
 
 	exec_node = (t_node_exec *)node;
-	printf("i am in EXEC %s\n", exec_node->file_path);
-	fflush(STDOUT_FILENO);
-	print_exec_node(exec_node, 1);
+	print_debugging_info_executer(INT_DEBUG, 4, NULL);
+	//print_exec_node(exec_node, 1);
 	if (exec_node->file_path != NULL)
 		printf("%s :  command not found", exec_node->argv[0]);
 	if (false == exec_node->is_inbuilt)
+	{
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
+	}
 	temp_str = NULL;
 	temp_str = chose_buildin(data, exec_node, pipe_struct);
 	if ((data->ast->type == REDIR || data->ast->type == EXEC)
@@ -27,22 +28,23 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	free(temp_str);
 }
 
-void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
+void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_redir	*redir_node;
 	int				fd;
 
+	print_debugging_info_executer(INT_DEBUG, 5, NULL);
 	redir_node = (t_node_redir *)node;
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	if (fd == -1)
 	{
-		error_code_handler(errno, "ERR-open_handler in \"type_redim\"", "", "");
+		error_code_handler(errno, "ERR-open_handler in \"type_redir\"", "", "");
 		return ;
 	}
 	if (dup2(fd, redir_node->in_or_out) == -1)
 	{
 		close_handler(fd);
-		error_code_handler(errno, "ERR-dub_2 in \"type_redim\"", "", "");
+		error_code_handler(errno, "ERR-dub_2 in \"type_redir\"", "", "");
 		return ;
 	}
 	if (redir_node->left_node->type == NOTHING)
@@ -59,7 +61,7 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	pid_t		main_pid;
 
 	pipe_node = (t_node_pipe *)node;
-	
+	print_debugging_info_executer(INT_DEBUG, 6, NULL);;
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
 	if (main_pid == 0)
