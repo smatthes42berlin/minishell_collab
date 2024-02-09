@@ -3,48 +3,48 @@
 static void read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 static void env_add_clr(t_main_data *data, char *env_var);
 
-t_node	*example_selection(void)
-{
-	t_node	*ret;
+// t_node	*example_selection(void)
+// {
+// 	t_node	*ret;
 
-	// ret = set_cmd_1();							// ls -l;
-	// ret = set_cmd_2();  					// ls -l | grep ".c"
-	// ret = set_cmd_2_cp();					// pwd | ls -l
-	// ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
-	// ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
+// 	// ret = set_cmd_1();							// ls -l;
+// 	// ret = set_cmd_2();  					// ls -l | grep ".c"
+// 	// ret = set_cmd_2_cp();					// pwd | ls -l
+// 	// ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
+// 	// ret = set_cmd_4();						// sleep 2 | ls -l | grep ".c" | sort -r
 	
-	// ret = set_redir_in_1();					// < input grep "nn" 
-	// ret = set_redir_in_1_cmd_2();			// < input grep "nn" | uniq | sort 
-	// ret = set_redir_in_2_cmd_2();			// < input_befor < input grep "nn" | sort | uniq	
-	// ret = set_redir_out_1_append();			// ls -l >> out 
-	// ret = set_redir_out_1();					// ls -l > out
-	// ret = set_redir_out_empty();				// > out
+// 	// ret = set_redir_in_1();					// < input grep "nn" 
+// 	// ret = set_redir_in_1_cmd_2();			// < input grep "nn" | uniq | sort 
+// 	// ret = set_redir_in_2_cmd_2();			// < input_befor < input grep "nn" | sort | uniq	
+// 	// ret = set_redir_out_1_append();			// ls -l >> out 
+// 	// ret = set_redir_out_1();					// ls -l > out
+// 	// ret = set_redir_out_empty();				// > out
 	
-	// ---------------------------------------- build pwd -----
-	// ret = set_pwd_allone(); 					// pwd
-	// ret = set_pwd_beginn_1(); 				// pwd | grep home
-	// ret = set_pwd_begin_2(); 				// pwd | ls -l
-	// ret = set_pwd_end(); 					// ls -l | pwd
-	// ret = set_pwd_redir_out(); 				// pwd > out
+// 	// ---------------------------------------- build pwd -----
+// 	// ret = set_pwd_allone(); 					// pwd
+// 	// ret = set_pwd_beginn_1(); 				// pwd | grep home
+// 	// ret = set_pwd_begin_2(); 				// pwd | ls -l
+// 	// ret = set_pwd_end(); 					// ls -l | pwd
+// 	// ret = set_pwd_redir_out(); 				// pwd > out
 
-	// --------------------------------------- build cd ------
-	// ret = set_cd_absolut();
-	// ret = set_cd_relativ();
-	// ret = set_cd_relativ_revers();
- 	//	ret = set_cd_redir_out();			// cd src/execution > out
-	// ret = set_cd_cmd_2();					// cd src/execution | ls -l | wc -l
+// 	// --------------------------------------- build cd ------
+// 	// ret = set_cd_absolut();
+// 	// ret = set_cd_relativ();
+// 	// ret = set_cd_relativ_revers();
+//  	//	ret = set_cd_redir_out();			// cd src/execution > out
+// 	// ret = set_cd_cmd_2();					// cd src/execution | ls -l | wc -l
 
-	// --------------------------------------- build echo ------
-	// ret = set_echo_singel();					// echo Das ist ein Testfile
-	// ret = set_echo_option();					// echo -n Das ist ein Testfile
-	 ret = set_echo_redir();					// echo Das ist ein Testfile >> out
-	// ret = set_echo_redim_cmd_2();     		// echo Das ist ein Testfile >> out | ls -l | wc -l
+// 	// --------------------------------------- build echo ------
+// 	// ret = set_echo_singel();					// echo Das ist ein Testfile
+// 	// ret = set_echo_option();					// echo -n Das ist ein Testfile
+// 	 ret = set_echo_redir();					// echo Das ist ein Testfile >> out
+// 	// ret = set_echo_redim_cmd_2();     		// echo Das ist ein Testfile >> out | ls -l | wc -l
 
-	return (ret);
-	// Maybe test case 
-// sleep |  < input grep "nn" | uniq | sort -r 
+// 	return (ret);
+// 	// Maybe test case 
+// // sleep |  < input grep "nn" | uniq | sort -r 
 
-}
+// }
 
 void	executor(t_main_data *data)
 {
@@ -58,8 +58,8 @@ void	executor(t_main_data *data)
 	pid = fork_handler();
 	if (pid == 0)
 	{
-		if (data->ast == NULL)
-			data->ast = example_selection();
+		// if (data->ast == NULL)
+		// 	data->ast = example_selection();
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct); 
 		free_ast(data->ast);

@@ -33,7 +33,6 @@ SRC = 	main.c \
 		executor.c \
 		free_ast.c \
 		test_command.c \
-		test_function.c \
 		utiles_tree_navigation.c \
 		tree_navigation.c \
 		errno_print.c \

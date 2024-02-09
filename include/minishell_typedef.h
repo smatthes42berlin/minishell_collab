@@ -224,7 +224,7 @@ typedef struct s_node_pipe
  * child node execution can onlu happen, when complete herdoc file is read
  * @param type
  * @param delimiter
- * @param child_node
+ * @param left_node
  *
  */
 typedef struct s_node_heredoc
@@ -239,7 +239,7 @@ typedef struct s_node_heredoc
 /**
  * defining a redirection-node in the ast
  * @param type
- * @param child_node the node to be executed after the redirection happened
+ * @param left_node the node to be executed after the redirection happened
  * @param filename the file the input is read from or written into
  * @param mode mode to open the file, e.g. O_WRONLY, O_CREATE, O_RDONLY,
 	O_TRUNCATE

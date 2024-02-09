@@ -91,58 +91,58 @@ static char *ft_clear_str(char *path)
 
 //-----------------------------------------Tests -----------------------
 
-t_node	*set_cd_absolut(void)
-{
-	t_node	*ret;
+// t_node	*set_cd_absolut(void)
+// {
+// 	t_node	*ret;
 
-	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_exec("test cd", "cd", "/home/rkost/Project/Rank03/minishell_collab/src/execution", true);
-	ret->type = EXEC;
-	return (ret);
-}
+// 	ret = malloc_handler(sizeof(t_node));
+// 	ret->node_type = test_cmd_exec("test cd", "cd", "/home/rkost/Project/Rank03/minishell_collab/src/execution", true);
+// 	ret->type = EXEC;
+// 	return (ret);
+// }
 
-t_node	*set_cd_relativ(void)
-{
-	t_node	*ret;
+// t_node	*set_cd_relativ(void)
+// {
+// 	t_node	*ret;
 
-	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_exec("test cd", "cd", "src/execution", true);
-	ret->type = EXEC;
-	return (ret);
-}
+// 	ret = malloc_handler(sizeof(t_node));
+// 	ret->node_type = test_cmd_exec("test cd", "cd", "src/execution", true);
+// 	ret->type = EXEC;
+// 	return (ret);
+// }
 
-t_node	*set_cd_relativ_revers(void)
-{
-	t_node	*ret;
+// t_node	*set_cd_relativ_revers(void)
+// {
+// 	t_node	*ret;
 
-	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_exec("test cd", "cd", ".././././../////trash", true);
-	ret->type = EXEC;
-	return (ret);
-}
+// 	ret = malloc_handler(sizeof(t_node));
+// 	ret->node_type = test_cmd_exec("test cd", "cd", ".././././../////trash", true);
+// 	ret->type = EXEC;
+// 	return (ret);
+// }
 
-t_node	*set_cd_redir_out(void)
-{
-	t_node	*ret;
+// t_node	*set_cd_redir_out(void)
+// {
+// 	t_node	*ret;
 
-	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_redir("redir", "out", FILE_ONLY_WRITE, STDOUT, EXEC, 
-		test_cmd_exec("test cd", "cd", "src/execution", true));
-	ret->type = REDIR;
-	return (ret);
-}
+// 	ret = malloc_handler(sizeof(t_node));
+// 	ret->node_type = test_cmd_redir("redir", "out", FILE_ONLY_WRITE, STDOUT, EXEC, 
+// 		test_cmd_exec("test cd", "cd", "src/execution", true));
+// 	ret->type = REDIR;
+// 	return (ret);
+// }
 
-t_node	*set_cd_cmd_2(void)
-{
-	t_node	*ret;
+// t_node	*set_cd_cmd_2(void)
+// {
+// 	t_node	*ret;
 
-	ret = malloc_handler(sizeof(t_node));
-	ret->node_type = test_cmd_pipe("PIPE 1", EXEC, PIPE,
-		test_cmd_exec("EXEC 1", "cd", "src/execution", true),
-		test_cmd_pipe("PIPE 2", EXEC, EXEC, 
-			test_cmd_exec("EXEC 2", "/bin/ls", "-l", false),
-			test_cmd_exec("EXEC 3", "/bin/wc", "-l", false)));
-	ret->type = PIPE;
-	return (ret);
+// 	ret = malloc_handler(sizeof(t_node));
+// 	ret->node_type = test_cmd_pipe("PIPE 1", EXEC, PIPE,
+// 		test_cmd_exec("EXEC 1", "cd", "src/execution", true),
+// 		test_cmd_pipe("PIPE 2", EXEC, EXEC, 
+// 			test_cmd_exec("EXEC 2", "/bin/ls", "-l", false),
+// 			test_cmd_exec("EXEC 3", "/bin/wc", "-l", false)));
+// 	ret->type = PIPE;
+// 	return (ret);
 
-}
+// }
