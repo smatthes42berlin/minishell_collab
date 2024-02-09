@@ -1,5 +1,10 @@
 #include "minishell.h"
 
+// rules
+// no two pipes after each other
+// no operator without anything that follows
+// no two operators after each other except for any operator after pipe except for pipe
+
 int	check_syntax(t_list_d *cur_token)
 {
 	t_list_d	*next_token;
@@ -10,31 +15,15 @@ int	check_syntax(t_list_d *cur_token)
 	next_token = cur_token->next;
 	if (next_token)
 		next_token_val = next_token->content;
-	if (!(cur_token->prev) && cur_token_val->type == T_PIPE)
-	{
-		printf("\n1\n");
+	if (pipe_as_first_token(cur_token, cur_token_val))
 		return (token_syntax_error(cur_token_val->value));
-	}
-	if (token_is_operator(cur_token_val) && !next_token)
-	{
-		printf("\n2\n");
+	if (operator_as_last_token(next_token, cur_token_val))
 		return (token_syntax_error("newline"));
-	}
-	if (token_is_operator(cur_token_val) && token_is_operator(next_token_val))
-	{
-		printf("\n3\n");
+	if (operator_after_operator_execpt_pipe(cur_token_val, next_token_val))
 		return (token_syntax_error(next_token_val->value));
-	}
+	if (two_pipes_in_a_row(cur_token_val, next_token_val))
+		return (token_syntax_error(next_token_val->value));
 	return (0);
-}
-
-int	token_is_operator(t_token *token)
-{
-	if (!token)
-		return (0);
-	return (token->type == T_DLESS || token->type == T_DGREAT
-		|| token->type == T_LESS || token->type == T_GREAT
-		|| token->type == T_PIPE);
 }
 
 int	token_syntax_error(char *token_val)

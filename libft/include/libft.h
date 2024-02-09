@@ -75,6 +75,8 @@ int						ft_str_cont_duplic(const char *str);
 int						ft_str_cont_chars(const char *str, const char *set);
 int						str_are_equal(const char *s1, const char *s2);
 int						str_is_empty(const char *str);
+int	str_contains_str_index(const char *big,
+							const char *little);
 
 /* str manip */
 
@@ -94,6 +96,11 @@ char					*ft_strtrim(char const *s1, char const *set);
 char					*ft_strmapi(char const *s, char (*f)(unsigned int,
 								char));
 void					ft_striteri(char *s, void (*f)(unsigned int, char *));
+int	split_str_str_first_occ(char const *s,
+							char const *split_at,
+							char ***res);
+int						ins_replace_str(char *org_str, char **res,
+							char *repl_str, char *ins_str);
 
 /* split */
 
@@ -241,5 +248,10 @@ int	count_cols_per_line_filename(char *filename,
 int						get_file_size_filename(char *filename);
 int						get_file_size_fd(int fd);
 int						read_whole_file(int fd, char **res);
+
+/* free */
+
+int						free_char_variadic_code(int code, int num, ...);
+int						free_char_variadic_msg(char *msg, int num, ...);
 
 #endif

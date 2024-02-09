@@ -3,7 +3,6 @@
 // check operators directly for syntax errors
 // start heredoc driectly when recognised
 
-
 int	tokenise(t_main_data *main_data)
 {
 	char	*cur_pos;
@@ -16,6 +15,7 @@ int	tokenise(t_main_data *main_data)
 			return (printf("ERROR\n"));
 		skip_ws(&cur_pos);
 	}
-	check_syntax_n_heredoc(main_data);
+	if (check_syntax_n_heredoc(main_data))
+		return (1);
 	return (0);
 }

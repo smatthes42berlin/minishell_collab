@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rene <rene@student.42.fr>                  +#+  +:+       +#+         #
+#    By: rkost <rkost@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/02/04 18:46:54 by rene             ###   ########.fr        #
+#    Updated: 2024/02/09 10:51:55 by rkost            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /test_simulation /builtins
+SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /test_simulation /builtins /gen_util /print
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
@@ -60,12 +60,10 @@ SRC = 	main.c \
 		identify_token.c \
 		create_token.c \
 		token_util.c \
-		token_util_2.c \
 		print_token_list.c \
 		token_identify_operator.c \
 		token_get.c \
 		check_syntax_n_heredoc.c \
-		parser_main.c \
 		check_syntax.c \
 		here_doc_main.c \
 		here_doc_handle_delimiter.c \
@@ -79,7 +77,33 @@ SRC = 	main.c \
 		env_print.c \
 		env_set_var.c \
 		env_get_var.c \
-		expander_main.c
+		expander_main.c \
+		expander_util.c \
+		expander_expand_var.c \
+		is_something_char.c \
+		is_something_token.c \
+		is_something_token_2.c \
+		is_something_node.c \
+		parser_util.c \
+		parser_main.c \
+		print_ast.c \
+		parser_add_nodes_ast.c \
+		parser_append_to_last_redir.c \
+		check_syntax_util.c \
+		parser_change_form_ast.c \
+		parser_create_node_exec.c \
+		parser_create_node_exec_util.c \
+		parser_create_node_hdoc.c \
+		parser_create_node_pipe.c \
+		parser_create_node_redir.c \
+		parser_create_node_util.c \
+		print_redir_node.c \
+		print_hdoc_node.c \
+		print_exec_node.c \
+		print_pipe_node.c
+
+#parser_main.c
+	
 
 		
 OBJFNAME = $(SRC:.c=.o)

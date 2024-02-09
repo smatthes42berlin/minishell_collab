@@ -9,7 +9,7 @@ int	ft_str_n_dup_int(const char *s, int n, char **res)
 	*res = NULL;
 	if (!s)
 		return (1);
-	if (n == 0)
+	if (n <= 0)
 	{
 		str_len = ft_strlen(s);
 		n = str_len + 1;
