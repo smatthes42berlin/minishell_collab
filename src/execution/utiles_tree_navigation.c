@@ -13,7 +13,6 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 		printf("noting");
 	///temp_str = NULL;
 	exec_node = (t_node_exec *)node->node_type;
-	//printf("NODE :%s\n", exec_node->name_exec);
 	//exec_node = check_buildin(node);
 	if (false == exec_node->inbuilt)
 	{
@@ -34,7 +33,6 @@ void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 
 	
 	redir_node = (t_node_redir *)node->node_type;
-	printf("NODE :%s\n", redir_node->name_redir);
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	if (fd == -1)
 	{
@@ -47,10 +45,10 @@ void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 		error_code_handler(errno, "ERR-dub_2 in \"type_redim\"", "", "");
 		return ;
 	}
-	if (redir_node->child_node->type == NOTHING)
+	if (redir_node->left_node->type == NOTHING)
 		return ;
 	else
-		navigate_tree_forward(data, redir_node->child_node, pipe_struct);
+		navigate_tree_forward(data, redir_node->left_node, pipe_struct);
 	close_handler(fd);
 }
 
@@ -61,7 +59,6 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	pid_t		main_pid;
 
 	pipe_node = (t_node_pipe *)node->node_type;
-	//printf("NODE :%s\n", pipe_node->name_Pipe);
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
 	if (main_pid == 0)

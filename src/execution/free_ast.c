@@ -38,7 +38,6 @@ static void	free_exec(t_node *node)
 		free_str_arr_null(exec_node->argv);
 		free_str_arr_null(exec_node->env);
 		free(exec_node->file_path);
-		free(exec_node->name_exec);
 		free(exec_node);
 	}
 	free(node);
@@ -53,9 +52,8 @@ static void	free_redim(t_node *node)
 	if (redir_node != NULL)
 	{
 		free(redir_node->filename);
-		free(redir_node->name_redir);
-		if (redir_node->child_node != NULL)
-			free_ast(redir_node->child_node);
+		if (redir_node->left_node != NULL)
+			free_ast(redir_node->left_node);
 		free(redir_node);
 	}
 	free(node);
@@ -72,7 +70,6 @@ static void	free_pipe(t_node *node)
 			free_ast(pipe_node->left_node);
 		if (pipe_node->right_node != NULL)
 			free_ast(pipe_node->right_node);
-		free(pipe_node->name_Pipe);
 		free(pipe_node);
 	}
 	free(node);
