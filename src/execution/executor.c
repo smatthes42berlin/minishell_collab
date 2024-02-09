@@ -55,7 +55,6 @@ int	executor(t_main_data *data)
 	int			pipefd[2];
 	t_pipefd	*pipe_struct;
 
-
 	printf("here!\n");
 	pipe_handler(pipefd);
 	pipe_struct = malloc_handler(sizeof(t_pipefd));

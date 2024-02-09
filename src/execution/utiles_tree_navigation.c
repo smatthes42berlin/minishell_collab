@@ -1,60 +1,38 @@
 #include "minishell.h"
 
 static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
-		pid_t main_pid, int *pipefd, bool direction, t_pipefd *pipe_struct_main);
-static bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipefd, bool direction, t_pipefd *pipe_struct_main);
+				pid_t main_pid, int *pipefd, bool direction,
+				t_pipefd *pipe_struct_main);
+static bool	check_and_choose_buildin(t_main_data *data, t_node *node,
+				int *pipefd, bool direction, t_pipefd *pipe_struct_main);
 
 void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_exec	*exec_node;
 	char		*temp_str;
 
-	printf("I am in exec \n");
-	if (data->ast == NULL && pipe_struct == NULL)
-		printf("noting");
 	exec_node = (t_node_exec *)node;
-
+	printf("i am in EXEC %s\n", exec_node->file_path);
+	fflush(STDOUT_FILENO);
+	print_exec_node(exec_node, 1);
+	if (exec_node->file_path != NULL)
+		printf("%s :  command not found", exec_node->argv[0]);
 	if (false == exec_node->is_inbuilt)
-	{
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
-	}
 	temp_str = NULL;
 	temp_str = chose_buildin(data, exec_node, pipe_struct);
-	printf("tmp str ---|%s|\n", temp_str);
-	
-	print_type(node);
-	if (exec_node->type == EXEC)
-	{
-		printf("+++%s\n", temp_str);
-	}
-
-	if (exec_node->type == EXEC)
-		printf("exec is \n");
-
-	printf("%p \n", temp_str);
-	printf("%p \n", exec_node);
-
-	// if (node_is_exec(exec_node) && temp_str != NULL)
-	if (exec_node->type == EXEC)
-	{
-		printf("======%s", temp_str);
-	}
-	if (exec_node->type == EXEC)
-	{
-		printf("+++%s", temp_str);
-	}
-	// if ((data->ast->type == REDIR || data->ast->type == EXEC) && temp_str != NULL)
-	// 	printf("====%s", temp_str);
+	if ((data->ast->type == REDIR || data->ast->type == EXEC)
+		&& temp_str != NULL)
+		printf("%s\n", temp_str);
 	free(temp_str);
 }
-
 
 void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_redir	*redir_node;
 	int				fd;
 
-	redir_node = (t_node_redir *)node->node_type;
+	redir_node = (t_node_redir *)node;
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	if (fd == -1)
 	{
@@ -80,7 +58,8 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	int			pipefd[2];
 	pid_t		main_pid;
 
-	pipe_node = (t_node_pipe *)node->node_type;
+	pipe_node = (t_node_pipe *)node;
+	
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
 	if (main_pid == 0)
@@ -94,7 +73,7 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	}
 	else
 	{
-		type_pipe_nested_pid(data, pipe_node, main_pid, pipefd, false, 
+		type_pipe_nested_pid(data, pipe_node, main_pid, pipefd, false,
 			pipe_struct);
 	}
 }
@@ -102,7 +81,8 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
 		pid_t main_pid, int *pipefd, bool direction, t_pipefd *pipe_struct_main)
 {
-	pid_t nested_pid;
+	pid_t	nested_pid;
+
 	pipe_setting(pipefd, direction, NULL);
 	nested_pid = fork_handler();
 	if (nested_pid == 0)
@@ -121,17 +101,18 @@ static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
 	}
 }
 
-static bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipefd, bool direction, t_pipefd *pipe_struct_main)
+static bool	check_and_choose_buildin(t_main_data *data, t_node *node,
+		int *pipefd, bool direction, t_pipefd *pipe_struct_main)
 {
 	t_node_exec *exec_node;
 	char *temp_str;
 
 	if (node->type != EXEC)
 		return (false);
-	exec_node = (t_node_exec *)node->node_type;
+	exec_node = (t_node_exec *)node;
 	if (exec_node->is_inbuilt == false)
 		return (false);
-	temp_str = chose_buildin(data ,exec_node, pipe_struct_main);
+	temp_str = chose_buildin(data, exec_node, pipe_struct_main);
 	pipe_setting(pipefd, direction, temp_str);
 	free(temp_str);
 	return (true);
