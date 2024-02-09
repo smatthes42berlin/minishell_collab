@@ -24,7 +24,7 @@ int	create_redir_node(t_parse_info *parse_info)
 	if (add_all_but_pipe_ast(parse_info, node_generic))
 		return (1);
 	set_n_token_as_parsed(2, parse_info);
-	// print_redir_node(redir_node, true);
+	print_redir_node(redir_node, true);
 	return (0);
 }
 

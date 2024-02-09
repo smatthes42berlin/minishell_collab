@@ -37,7 +37,6 @@ int	create_exec_node(t_parse_info *parse_info)
 		return (1);
 	// if (check_access_if_cmd_is_folder(parse_info, exec_node))
 	// 	return (1);
-	// add name of executable to args array
 	if (add_all_but_pipe_ast(parse_info, (t_node *)exec_node))
 		return (1);
 	print_exec_node(exec_node, 1);

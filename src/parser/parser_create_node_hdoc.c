@@ -21,7 +21,7 @@ int	create_hdoc_node(t_parse_info *parse_info)
 	if (add_all_but_pipe_ast(parse_info, node_generic))
 		return (1);
 	set_n_token_as_parsed(1, parse_info);
-	// print_hdoc_node(hdoc_node, true);
+	print_hdoc_node(hdoc_node, true);
 	return (0);
 }
 

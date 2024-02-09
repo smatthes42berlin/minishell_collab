@@ -14,6 +14,6 @@ int	create_pipe_node(t_parse_info *parse_info)
 	if (add_pipe_ast(parse_info, pipe_node))
 		return (1);
 	set_n_token_as_parsed(1, parse_info);
-	// print_pipe_node(pipe_node, true);
+	print_pipe_node(pipe_node, true);
 	return (0);
 }

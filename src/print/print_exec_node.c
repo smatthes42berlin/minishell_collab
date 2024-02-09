@@ -3,7 +3,7 @@
 int	print_exec_node(t_node_exec *node, int mode)
 {
 	if (mode == 0)
-		printf("Exec: %s, args: %s", node->file_path, );
+		printf("Exec: %s", node->file_path);
 	else
 	{
 		printf("\n***********************************\n");
