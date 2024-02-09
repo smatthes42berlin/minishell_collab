@@ -51,7 +51,8 @@ int	main(int argc, char *argv[], char *envp[])
 		// test_str = ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 | wc-l < in_4 > 2 | echo Hello");
 		// test_str = ft_strdup("<< 1 echo || << 2 cat");
 		// test_str = ft_strdup("echo");
-		// test_str = ft_strdup("exit | echo | < 1.in >> 2.in cat arg_1 arg_2| << 1 echo arg1 < 2.in arg2 | <<1 wc -l -s | ls < 2.in > 3.out");
+		// test_str = ft_strdup("exit | echo | < 1.in >> 2.in cat arg_1 arg_2| << 1 echo arg1 < 2.in arg2 | <<1 wc
+				// -l -s | ls < 2.in > 3.out");
 		test_str = ft_strdup("<< 1 cat <in_1 | echo <in_2 hi | <in_3 wc > 2");
 	if (test_case == 2)
 		test_str = ft_strdup("<< >> < | >");
@@ -110,7 +111,6 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 	return (0);
 }
-
 
 int	init_main_data(t_main_data *main_data)
 {
