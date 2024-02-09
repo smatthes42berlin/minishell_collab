@@ -226,7 +226,7 @@ t_node_redir		*test_cmd_redir(char *filename, enum e_open_mode mode,
 // t_node				*set_redir_out_1(void);
 // t_node				*set_redir_out_empty(void);
 
-// void				print_type(t_node *node);
+ void					print_type(t_node *node);
 
 // // test -- build pwd
 // t_node				*set_pwd_allone(void);

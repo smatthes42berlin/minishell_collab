@@ -12,7 +12,7 @@ static void	env_add_clr(t_main_data *data, char *env_var);
 // 	// ret = set_cmd_2_cp();					// pwd | ls -l
 // 	// ret = set_cmd_3();						// sleep 2 | ls -l | wc -l
 // 	// ret = set_cmd_4();						// sleep 2 | ls
-								// -l | grep ".c" | sort -r
+// -l | grep ".c" | sort -r
 
 // 	// ret = set_redir_in_1();					// < input grep "nn"
 // 	// ret = set_redir_in_1_cmd_2();			// < input grep "nn" | uniq | sort
@@ -34,14 +34,14 @@ static void	env_add_clr(t_main_data *data, char *env_var);
 // 	// ret = set_cd_relativ_revers();
 //  	//	ret = set_cd_redir_out();			// cd src/execution > out
 // 	// ret = set_cd_cmd_2();					// cd src/execution | ls -l | wc
-							// -l
+// -l
 
 // 	// --------------------------------------- build echo ------
 // 	// ret = set_echo_singel();					// echo Das ist ein Testfile
 // 	// ret = set_echo_option();					// echo -n Das ist ein Testfile
 // 		ret = set_echo_redir();					// echo Das ist ein Testfile >> out
 // 	// ret = set_echo_redim_cmd_2();     		// echo Das ist ein Testfile >> out | ls
-				// -l | wc -l
+// -l | wc -l
 
 // 	return (ret);
 // 	// Maybe test case
@@ -55,6 +55,7 @@ int	executor(t_main_data *data)
 	int			pipefd[2];
 	t_pipefd	*pipe_struct;
 
+
 	printf("here!\n");
 	pipe_handler(pipefd);
 	pipe_struct = malloc_handler(sizeof(t_pipefd));
@@ -62,8 +63,6 @@ int	executor(t_main_data *data)
 	pid = fork_handler();
 	if (pid == 0)
 	{
-		// if (data->ast == NULL)
-		// 	data->ast = example_selection();
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct);
 		free_ast(data->ast);
@@ -76,8 +75,6 @@ int	executor(t_main_data *data)
 	}
 	read_pipe(data, pipe_struct);
 	free(pipe_struct); // double free child process
-	// printf("\n\n  PWD : %s\n", env_get_var(data, "PWD"));
-	// printf(" OPLDPD : %s\n", env_get_var(data, "OLDPWD"));
 	return (0);
 }
 
@@ -93,7 +90,7 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 				sizeof(buffer))) > 0)
 	{
 		// Annahme: BUFFER_SIZE reicht aus,
-			// um jede Umgebungsvariable komplett zu lesen
+		// um jede Umgebungsvariable komplett zu lesen
 		// In der Praxis müssten Sie möglicherweise die Daten in Schleifen lesen und zusammensetzen
 		while (i_count < bytes_read)
 		{
@@ -104,13 +101,13 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 	}
 	close(pipe_struct->pipefd[0]); // Leseende schließen
 									// printf("OLDPWD ---- %s\n",
-										env_get_var(data, "OLDPWD");
-									// printf("   PWD ---- %s\n",
-										env_get_var(data, "PWD");
-									// char *cwd;
-									// cwd = getcwd(NULL, 0);
-									// printf("\ncwd: %s\n", cwd);
-									// free(cwd);
+	env_get_var(data, "OLDPWD");
+	// printf("   PWD ---- %s\n",
+	env_get_var(data, "PWD");
+	// char *cwd;
+	// cwd = getcwd(NULL, 0);
+	// printf("\ncwd: %s\n", cwd);
+	// free(cwd);
 }
 static void	env_add_clr(t_main_data *data, char *env_var)
 {

@@ -2,7 +2,7 @@
 
 void	navigate_tree_forward(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
-	//print_type(node);
+	printf("I am in navigation\n");
 	if (node == NULL)
 		error_code_handler(1000, "ERR-tree-navigation no node", "", "");
 	if (node->type == PIPE)

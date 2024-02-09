@@ -7,22 +7,45 @@ static bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipef
 void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_exec	*exec_node;
-	//char		*temp_str;
+	char		*temp_str;
 
+	printf("I am in exec \n");
 	if (data->ast == NULL && pipe_struct == NULL)
 		printf("noting");
-	///temp_str = NULL;
-	exec_node = (t_node_exec *)node->node_type;
-	//exec_node = check_buildin(node);
+	exec_node = (t_node_exec *)node;
+
 	if (false == exec_node->is_inbuilt)
 	{
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 	}
-//	temp_str = chose_buildin(data, exec_node, pipe_struct);
-	// if ((data->ast->type == REDIR || data->ast->type == EXEC)
-	// 	&& temp_str != NULL)
-	// 	printf("%s", temp_str);
-///	free(temp_str);
+	temp_str = NULL;
+	temp_str = chose_buildin(data, exec_node, pipe_struct);
+	printf("tmp str ---|%s|\n", temp_str);
+	
+	print_type(node);
+	if (exec_node->type == EXEC)
+	{
+		printf("+++%s\n", temp_str);
+	}
+
+	if (exec_node->type == EXEC)
+		printf("exec is \n");
+
+	printf("%p \n", temp_str);
+	printf("%p \n", exec_node);
+
+	// if (node_is_exec(exec_node) && temp_str != NULL)
+	if (exec_node->type == EXEC)
+	{
+		printf("======%s", temp_str);
+	}
+	if (exec_node->type == EXEC)
+	{
+		printf("+++%s", temp_str);
+	}
+	// if ((data->ast->type == REDIR || data->ast->type == EXEC) && temp_str != NULL)
+	// 	printf("====%s", temp_str);
+	free(temp_str);
 }
 
 
@@ -31,7 +54,6 @@ void	type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	t_node_redir	*redir_node;
 	int				fd;
 
-	
 	redir_node = (t_node_redir *)node->node_type;
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	if (fd == -1)
