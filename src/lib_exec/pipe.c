@@ -16,7 +16,7 @@ void	pipe_handler(int *pipefd)
  *
  * @param pipefd arry of [2]
  * @param open if true the pipe is open
- * @param str str is for the inbuild's function
+ * @param str str is for the is_inbuilt's function
  */
 void	pipe_setting(int *pipefd, bool open, char *str)
 {

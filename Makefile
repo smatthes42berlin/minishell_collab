@@ -6,7 +6,7 @@
 #    By: rkost <rkost@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 14:58:39 by smatthes          #+#    #+#              #
-#    Updated: 2024/02/09 10:51:55 by rkost            ###   ########.fr        #
+#    Updated: 2024/02/09 11:25:50 by rkost            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,6 @@ SRC = 	main.c \
 		executor.c \
 		free_ast.c \
 		test_command.c \
-		test_function.c \
 		utiles_tree_navigation.c \
 		tree_navigation.c \
 		errno_print.c \

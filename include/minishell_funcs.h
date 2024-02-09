@@ -32,7 +32,14 @@ void				print_token(t_token *token);
 int					create_empty_token(t_main_data *main_data, t_token *token);
 
 /* tokenisation/lexer 2 check syntax and get heredoc */
-
+int					pipe_as_first_token(t_list_d *cur_token,
+						t_token *cur_token_val);
+int					operator_as_last_token(t_list_d *next_token,
+						t_token *cur_token_val);
+int					two_pipes_in_a_row(t_token *cur_token_val,
+						t_token *next_token_val);
+int					operator_after_operator_execpt_pipe(t_token *cur_token_val,
+						t_token *next_token_val);
 int					check_syntax_n_heredoc(t_main_data *main_data);
 int					token_is_operator(t_token *token);
 int					check_syntax(t_list_d *cur_token);
@@ -63,84 +70,97 @@ char				*env_get_var(t_main_data *main_data, char *key);
 
 /* expander */
 
-int		expand(t_main_data *main_data);
-int		check_expansion(t_token *token, t_main_data *main_data);
-int		expand_token_val(t_expansion_info *expansion_info);
-int		expand_variable(t_expansion_info *expansion_info);
-char	*get_key_env_var(t_expansion_info *expansion_info);
-int		go_to_next_char(t_expansion_info *expansion_info);
-int	check_for_fixed_expansions(t_expansion_info *expansion_info,
-								bool *found);
-int		skip_to_closing_quote(t_expansion_info *expansion_info);
-int		check_dquote_start_end(t_expansion_info *expansion_info);
-int		adjust_cur_pos_num(t_expansion_info *expansion_info, int num_add);
-int	adjust_cur_pos_str_len(t_expansion_info *expansion_info,
-							char *insert_str);
-int		check_for_variable_expansions(t_expansion_info *expansion_info);
-int		insert_env_var(t_expansion_info *expansion_info, char *env_var_name,
-			char *key);
-int	check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
-										bool *found,
-										char *spec_var_symbol,
-										char *spec_var_name);
+int					expand(t_main_data *main_data);
+int					check_expansion(t_token *token, t_main_data *main_data);
+int					expand_token_val(t_expansion_info *expansion_info);
+int					expand_variable(t_expansion_info *expansion_info);
+char				*get_key_env_var(t_expansion_info *expansion_info);
+int					go_to_next_char(t_expansion_info *expansion_info);
+int					check_for_fixed_expansions(t_expansion_info *expansion_info,
+						bool *found);
+int					skip_to_closing_quote(t_expansion_info *expansion_info);
+int					check_dquote_start_end(t_expansion_info *expansion_info);
+int					adjust_cur_pos_num(t_expansion_info *expansion_info,
+						int num_add);
+int					adjust_cur_pos_str_len(t_expansion_info *expansion_info,
+						char *insert_str);
+int					check_for_variable_expansions(t_expansion_info *expansion_info);
+int					insert_env_var(t_expansion_info *expansion_info,
+						char *env_var_name, char *key);
+int					check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
+						bool *found, char *spec_var_symbol,
+						char *spec_var_name);
 
 /* parser */
 
-int		parse(t_main_data *main_data);
-bool	pipe_node_left_defined(t_node_pipe *node);
-int		set_node_as_ast_root(t_parse_info *parse_info, t_node *new_node);
-int		adjust_prev_nodes_ast(t_parse_info *parse_info, t_node *new_node);
-int		is_first_node_of_ast(t_parse_info *parse_info);
-int		set_as_root(t_parse_info *parse_info, t_node *node);
-int		check_new_root_node(t_parse_info *parse_info, t_node *new_node);
-int		got_to_nth_next_token(int num, t_parse_info *parse_info);
-int		set_n_token_as_parsed(int num, t_parse_info *parse_info);
-int		create_redir_node(t_parse_info *parse_info);
-int		create_hdoc_node(t_parse_info *parse_info);
-int		create_pipe_node(t_parse_info *parse_info);
-int		create_exec_node(t_parse_info *parse_info);
-int		add_all_but_pipe_ast(t_parse_info *parse_info, t_node *new_node);
-int	add_pipe_ast(t_parse_info *parse_info,
-					t_node_pipe *new_node);
-int		set_exec_args_as_parsed(t_parse_info *parse_info);
-int		append_to_last_redir(t_parse_info *parse_info, t_node *new_node);
-int		change_form_of_ast(t_parse_info *parse_info);
-int		init_generic_node_param(t_node *node, enum e_node_type type);
-int	get_cmd_arguments(t_parse_info *parse_info,
+int					parse(t_main_data *main_data);
+bool				pipe_node_left_defined(t_node_pipe *node);
+int					set_node_as_ast_root(t_parse_info *parse_info,
+						t_node *new_node);
+int					adjust_prev_nodes_ast(t_parse_info *parse_info,
+						t_node *new_node);
+int					is_first_node_of_ast(t_parse_info *parse_info);
+int					set_as_root(t_parse_info *parse_info, t_node *node);
+int					check_new_root_node(t_parse_info *parse_info,
+						t_node *new_node);
+int					got_to_nth_next_token(int num, t_parse_info *parse_info);
+int					set_n_token_as_parsed(int num, t_parse_info *parse_info);
+int					create_redir_node(t_parse_info *parse_info);
+int					create_hdoc_node(t_parse_info *parse_info);
+int					create_pipe_node(t_parse_info *parse_info);
+int					create_exec_node(t_parse_info *parse_info);
+int					add_all_but_pipe_ast(t_parse_info *parse_info,
+						t_node *new_node);
+int					add_pipe_ast(t_parse_info *parse_info,
+						t_node_pipe *new_node);
+int					set_exec_args_as_parsed(t_parse_info *parse_info);
+int					append_to_last_redir(t_parse_info *parse_info,
+						t_node *new_node);
+int					change_form_of_ast(t_parse_info *parse_info);
+int					init_generic_node_param(t_node *node,
+						enum e_node_type type);
+int					get_cmd_arguments(t_parse_info *parse_info,
 						t_node_exec *exec_node);
-int		copy_argument(t_node_exec *exec_node, char *new_arg);
-int		got_to_nth_next_lst(t_list_d **lst, int n);
-int		check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path);
-int		check_path_combination(char *cur_path_val, char *cmd_arg,
-			char **exec_path);
-int		get_path(char *envp[], char ***path);
-int		check_if_cmd_exists(t_node_exec *exec_node);
-int		check_if_inbuilt(t_node_exec *exec_node);
+int					copy_argument(t_node_exec *exec_node, char *new_arg);
+int					got_to_nth_next_lst(t_list_d **lst, int n);
+int					check_cmd_access(char **env_vars, char *cmd_arg,
+						char **exec_path);
+int					check_path_combination(char *cur_path_val, char *cmd_arg,
+						char **exec_path);
+int					get_path(char *envp[], char ***path);
+int					check_if_cmd_exists(t_node_exec *exec_node);
+int					check_if_is_inbuilt(t_node_exec *exec_node);
 
 /* printing for debugging */
 
-void	print_token_list(t_list_d *token_list);
-void	print_token(t_token *token);
-void	print_ast(t_node *root, int depth);
-int		print_redir_node(t_node_redir *node, int mode);
-int		print_pipe_node(t_node_pipe *node, int mode);
-int		print_hdoc_node(t_node_heredoc *node, int mode);
-int		print_exec_node(t_node_exec *node, int mode);
+void				print_token_list(t_list_d *token_list);
+void				print_token(t_token *token);
+void				print_ast(t_node *root, int depth);
+int					print_redir_node(t_node_redir *node, int mode);
+int					print_pipe_node(t_node_pipe *node, int mode);
+int					print_hdoc_node(t_node_heredoc *node, int mode);
+int					print_exec_node(t_node_exec *node, int mode);
 
 /* executor */
-void				navigate_tree_forward(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
-void				type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
-void				type_redim(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
-void				type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
+void				navigate_tree_forward(t_main_data *data, t_node *node,
+						t_pipefd *pipe_struct);
+void				type_exec(t_main_data *data, t_node *node,
+						t_pipefd *pipe_struct);
+void				type_redim(t_main_data *data, t_node *node,
+						t_pipefd *pipe_struct);
+void				type_pipe(t_main_data *data, t_node *node,
+						t_pipefd *pipe_struct);
 void				executor(t_main_data *data);
 void				free_ast(t_node *node);
 
 /* builtins */
-//t_node_exec			*check_buildin(t_node *node);
-char				*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct);
+// t_node_exec			*check_buildin(t_node *node);
+char				*chose_buildin(t_main_data *data, t_node_exec *node,
+						t_pipefd *pipe_struct);
 char				*build_pwd(void);
-char 				*build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
-char 				*build_echo(t_node_exec *node);
+char				*build_cd(t_main_data *data, t_node_exec *node,
+						t_pipefd *pipefd);
+char				*build_echo(t_node_exec *node);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
@@ -166,47 +186,46 @@ void				error_code_handler(int error_code, const char *msg,
 
 /* test enviroment */
 // -> test cmd!
-t_node_exec			*test_cmd_exec(char *name, char *command, char *flag,
-						bool inbuild);
-t_node_pipe			*test_cmd_pipe(char *name, enum e_node_type type_left,
+t_node_exec			*test_cmd_exec(char *command, char *flag, bool is_inbuilt);
+t_node_pipe			*test_cmd_pipe(enum e_node_type type_left,
 						enum e_node_type type_right, void *node_left,
 						void *node_right);
-t_node_redir		*test_cmd_redir(char *name, char *filename,
-						enum e_open_mode mode, enum e_std_fd in_or_out,
-						enum e_node_type child_typ, void *left_node);
-// -> examples
-t_node				*set_cmd_1(void);
-t_node				*set_cmd_2(void);
-t_node				*set_cmd_2_cp(void);
-t_node				*set_cmd_3(void);
-t_node				*set_cmd_4(void);
-t_node				*set_redir_in_1(void);
-t_node				*set_redir_in_1_cmd_2(void);
-t_node				*set_redir_in_2_cmd_2(void);
-t_node				*set_redir_out_1_append(void);
-t_node				*set_redir_out_1(void);
-t_node				*set_redir_out_empty(void);
+t_node_redir		*test_cmd_redir(char *filename, enum e_open_mode mode,
+						enum e_std_fd in_or_out, enum e_node_type child_typ,
+						void *left_node);
+// // -> examples
+// t_node				*set_cmd_1(void);
+// t_node				*set_cmd_2(void);
+// t_node				*set_cmd_2_cp(void);
+// t_node				*set_cmd_3(void);
+// t_node				*set_cmd_4(void);
+// t_node				*set_redir_in_1(void);
+// t_node				*set_redir_in_1_cmd_2(void);
+// t_node				*set_redir_in_2_cmd_2(void);
+// t_node				*set_redir_out_1_append(void);
+// t_node				*set_redir_out_1(void);
+// t_node				*set_redir_out_empty(void);
 
-void				print_type(t_node *node);
+// void				print_type(t_node *node);
 
-// test -- build pwd
-t_node				*set_pwd_allone(void);
-t_node				*set_pwd_beginn_1(void);
-t_node				*set_pwd_begin_2(void);
-t_node				*set_pwd_end(void);
-t_node				*set_pwd_redir_out(void);
+// // test -- build pwd
+// t_node				*set_pwd_allone(void);
+// t_node				*set_pwd_beginn_1(void);
+// t_node				*set_pwd_begin_2(void);
+// t_node				*set_pwd_end(void);
+// t_node				*set_pwd_redir_out(void);
 
-// test -- build cd
-t_node				*set_cd_absolut(void);
-t_node				*set_cd_relativ(void);
-t_node				*set_cd_relativ_revers(void);
-t_node				*set_cd_redir_out(void);
-t_node				*set_cd_cmd_2(void);
+// // test -- build cd
+// t_node				*set_cd_absolut(void);
+// t_node				*set_cd_relativ(void);
+// t_node				*set_cd_relativ_revers(void);
+// t_node				*set_cd_redir_out(void);
+// t_node				*set_cd_cmd_2(void);
 
-// test -- build echo
-t_node				*set_echo_singel(void);
-t_node				*set_echo_option(void);
-t_node				*set_echo_redir(void);
-t_node				*set_echo_redim_cmd_2(void);
+// // test -- build echo
+// t_node				*set_echo_singel(void);
+// t_node				*set_echo_option(void);
+// t_node				*set_echo_redir(void);
+// t_node				*set_echo_redim_cmd_2(void);
 
 #endif

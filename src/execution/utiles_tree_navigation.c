@@ -14,7 +14,7 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	///temp_str = NULL;
 	exec_node = (t_node_exec *)node->node_type;
 	//exec_node = check_buildin(node);
-	if (false == exec_node->inbuilt)
+	if (false == exec_node->is_inbuilt)
 	{
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 	}
@@ -107,7 +107,7 @@ static bool	check_and_choose_buildin(t_main_data *data, t_node *node, int *pipef
 	if (node->type != EXEC)
 		return (false);
 	exec_node = (t_node_exec *)node->node_type;
-	if (exec_node->inbuilt == false)
+	if (exec_node->is_inbuilt == false)
 		return (false);
 	temp_str = chose_buildin(data ,exec_node, pipe_struct_main);
 	pipe_setting(pipefd, direction, temp_str);
