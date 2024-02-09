@@ -2,7 +2,7 @@
 #include "minishell.h"
 
 static int	identify_token_in_parser(t_parse_info *parse_info,
-									int *token_create_success);
+				int *token_create_success);
 
 int	parse(t_main_data *main_data)
 {
@@ -17,7 +17,7 @@ int	parse(t_main_data *main_data)
 	{
 		parse_info.cur_token = parse_info.next->content;
 		token_recognised = identify_token_in_parser(&parse_info,
-													&token_create_success);
+				&token_create_success);
 		if (token_recognised || token_create_success)
 		{
 			// here function to free current ast needed
@@ -33,7 +33,7 @@ int	parse(t_main_data *main_data)
 }
 
 static int	identify_token_in_parser(t_parse_info *parse_info,
-									int *token_create_success)
+		int *token_create_success)
 {
 	*token_create_success = 0;
 	if (parse_info->cur_token->parsed)
