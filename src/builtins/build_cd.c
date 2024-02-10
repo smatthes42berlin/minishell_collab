@@ -2,35 +2,43 @@
 
 // clear the string from "./" an dubbel /
 static char *ft_clear_str(char *path);
-static char *creat_env_var(char *keyword, char *type);
+static char *creat_env_var(char *keyword, char *type, bool newline);
 static void pipe_str_arr_write(t_pipefd *pipefd, char **env);
+static char *absoult_or_relativ_path(char *path);
 
 // return alltime NULL
 char *build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
 	char *env_new[4];
-	char *clear_str;
+	char *str_tmp;
 	int i;
 
-	env_new[0] = creat_env_var("OLDPWD=", ADD_ENV);
-	clear_str = ft_clear_str(node->argv[0]);
-	if (chdir(clear_str) == -1)
-		error_code_handler(errno, "ERR-chdir", "CD -Command --> ", node->argv[0]);
-	env_new[1] = creat_env_var("PWD=", ADD_ENV);
-
 	if (data->ast->type == PIPE)
-		env_new[2] = NULL;
+	{
+		return (NULL);
+	}
+	env_new[0] = creat_env_var("OLDPWD=", ADD_ENV, true);
+	if (node->argv[1] == NULL)
+	{
+		str_tmp = env_get_var(data, "HOME");
+		i = chdir(str_tmp);
+	}
 	else
-		env_new[2] = creat_env_var("PWD=", ADD_CD);
-	env_new[3] = NULL;
-
+	{
+		str_tmp = ft_clear_str(node->argv[1]);
+		i = chdir(str_tmp);
+	}
+	if (i == -1)
+		error_code_handler(errno, "ERR-chdir", "CD -Command cd -buid funktion --> ", str_tmp);
+	env_new[1] = creat_env_var("PWD=", ADD_ENV, true);
+	env_new[2] = creat_env_var("PWD=", ADD_CD, false);
+	env_new[3] = NULL;	
 	pipe_str_arr_write(pipefd, env_new);
-	i = -1;	
-	while (++i < 4)
+	i = 0;	
+	while (0 < 4)
 		free(env_new[i]);
-	free(clear_str);
+	free(str_tmp);
 	return (NULL);
-	
 }
 
 static void pipe_str_arr_write(t_pipefd *pipefd, char **env)
@@ -47,12 +55,12 @@ static void pipe_str_arr_write(t_pipefd *pipefd, char **env)
 	close(pipefd->pipefd[1]);
 }
 
-static char *creat_env_var(char *keyword, char *type)
+static char *creat_env_var(char *keyword, char *type, bool newline)
 {
 	char *str_tmp;
 	char *ret;
 	
-	ret = build_pwd();
+	ret = build_pwd(newline);
 	str_tmp = ft_strjoin(keyword, ret);
 	free(ret);
 	ret = ft_strjoin(type, str_tmp);
@@ -68,9 +76,8 @@ static char *ft_clear_str(char *path)
 	char *ret;
 	char *str_tmp;
 
-	ret = malloc_handler(sizeof(char));
-	ret[0] = '\0'; 
 	i = -1;
+	ret = absoult_or_relativ_path(path);
 	str = ft_split_str(path, "/");
 	while (str[++i] != NULL)
 	{
@@ -89,6 +96,24 @@ static char *ft_clear_str(char *path)
 	return (ret);	
 }
 
+static char *absoult_or_relativ_path(char *path)
+{
+	char *ret;
+
+	ret = NULL;
+	if (path[0] == '/')
+	{
+		ret = malloc_handler(sizeof(char) * 2);
+		ret[0] = '/';
+		ret[1] = '\0'; 
+	}
+	else
+	{
+		ret = malloc_handler(sizeof(char));
+		ret[0] = '\0'; 
+	}
+	return(ret); 
+}
 //-----------------------------------------Tests -----------------------
 
 // t_node	*set_cd_absolut(void)

@@ -13,7 +13,7 @@ char	*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 
 	if (str_are_equal(node->file_path, "pwd"))
 	{
-		return (build_pwd());
+		return (build_pwd(true));
 	}
 	if (str_are_equal(node->file_path, "cd"))
 	{

@@ -14,18 +14,25 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	exec_node = (t_node_exec *)node;
 	print_debugging_info_executer(INT_DEBUG, 4, NULL);
 	//print_exec_node(exec_node, 1);
-	if (exec_node->file_path != NULL)
-		printf("%s :  command not found", exec_node->argv[0]);
+	if (exec_node->file_path == NULL)
+		printf("%s :  command not found\n", exec_node->argv[0]);
 	if (false == exec_node->is_inbuilt)
 	{
+		print_debugging_info_executer(INT_DEBUG, 7, NULL);
+		print_debugging_info_executer(INT_DEBUG, 10, node);
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 	}
-	temp_str = NULL;
-	temp_str = chose_buildin(data, exec_node, pipe_struct);
-	if ((data->ast->type == REDIR || data->ast->type == EXEC)
-		&& temp_str != NULL)
-		printf("%s\n", temp_str);
-	free(temp_str);
+	else
+	{
+		print_debugging_info_executer(INT_DEBUG, 8, NULL);
+		print_debugging_info_executer(INT_DEBUG, 10, node);
+		temp_str = NULL;
+		temp_str = chose_buildin(data, exec_node, pipe_struct);
+		if ((data->ast->type == REDIR || data->ast->type == EXEC)
+			&& temp_str != NULL)
+			printf("%s\n", temp_str);
+		free(temp_str);
+	}
 }
 
 void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
@@ -64,7 +71,7 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	print_debugging_info_executer(INT_DEBUG, 6, NULL);;
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
-	//print_exec_node((t_node_exec *)pipe_node->left_node, 1);
+	print_exec_node((t_node_exec *)pipe_node->left_node, 1);
 	if (main_pid == 0)
 	{
 		if (false == check_and_choose_buildin(data, pipe_node->left_node,
