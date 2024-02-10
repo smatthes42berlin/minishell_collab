@@ -64,6 +64,7 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	print_debugging_info_executer(INT_DEBUG, 6, NULL);;
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
+	//print_exec_node((t_node_exec *)pipe_node->left_node, 1);
 	if (main_pid == 0)
 	{
 		if (false == check_and_choose_buildin(data, pipe_node->left_node,

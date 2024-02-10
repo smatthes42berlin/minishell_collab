@@ -60,13 +60,23 @@ int	executor(t_main_data *data)
 	pipe_struct = malloc_handler(sizeof(t_pipefd));
 	pipe_struct->pipefd = pipefd;
 	pid = fork_handler();
+	
 	if (pid == 0)
 	{
+		//printf("child exexuter\n");
+		// t_node_pipe *test = set_cmd_2();
+
+		// free_ast(data->ast);
+		// data->ast = malloc_handler(sizeof(t_node));
+		// data->ast =(void *)test;
+		// data->ast->type = PIPE;
+		//print_exec_node((t_node_exec *)data->ast, 1);
+
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct);
 		free_ast(data->ast);
 		free_main_exit(data, 1, 0);
-		exit(0);
+		//exit(0);
 	}
 	else
 	{

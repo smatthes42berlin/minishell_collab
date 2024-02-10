@@ -221,8 +221,8 @@ t_node_redir		*test_cmd_redir(char *filename, enum e_open_mode mode,
 						enum e_std_fd in_or_out, enum e_node_type child_typ,
 						void *left_node);
 // // -> examples
-// t_node				*set_cmd_1(void);
-// t_node				*set_cmd_2(void);
+t_node_exec				*set_cmd_1(void);
+t_node_pipe				*set_cmd_2(void);
 // t_node				*set_cmd_2_cp(void);
 // t_node				*set_cmd_3(void);
 // t_node				*set_cmd_4(void);
