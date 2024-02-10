@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	*build_pwd(void)
+char	*build_pwd(bool newline)
 {
 	char	*ret;
 	char	*str_tmp;
@@ -10,7 +10,14 @@ char	*build_pwd(void)
 	{
 		error_code_handler(errno, "ERR-getcwd", "", "");
 	}
-	ret = ft_strjoin(str_tmp, "\n");
+	if (newline)
+	{
+		ret = ft_strjoin(str_tmp, "\n");	
+	}
+	else
+	{
+		ret = ft_strdup(str_tmp);
+	}
 	free(str_tmp);
 	return (ret);
 }

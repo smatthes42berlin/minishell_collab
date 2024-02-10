@@ -53,8 +53,6 @@ enum					e_access_mode
  * @param FILE_ONLY_READING
  * @param FILE_ONLY_WRITE
  * @param FILE_ONLY_WRITE_APPEND
- * @param FILE_READ_WRITE
- * @param FILE_READ_WRITE_APPEND
 */
 enum					e_open_mode
 {

@@ -119,7 +119,7 @@ void error_code_handler(int error_code, const char *msg, const char *subj, const
 	{
         printf("UNKNOWN %s %s %s: %s\n", msg, subj, mode, strerror(error_code));
 	}
-	exit(EXIT_FAILURE);   
+	//exit(EXIT_FAILURE);   
 }
 
 /** ---------------------------------- complett error handling 
