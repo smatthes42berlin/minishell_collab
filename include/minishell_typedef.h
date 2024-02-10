@@ -33,7 +33,6 @@ typedef struct s_main_data
 	//.....
 }						t_main_data;
 
-//---------------------------------------------------- enum exec beginn---------------------------------
 /**
  * using for the access mode 
  * @param FILE_EXISTS
@@ -62,8 +61,6 @@ enum					e_open_mode
 	FILE_ONLY_READING = O_RDONLY,
 	FILE_ONLY_WRITE = O_WRONLY | O_TRUNC,
 	FILE_ONLY_WRITE_APPEND = O_WRONLY | O_APPEND,
-	FILE_READ_WRITE = O_RDWR | O_TRUNC,
-	FILE_READ_WRITE_APPEND = O_RDWR | O_TRUNC | O_APPEND
 };
 
 enum					e_pid_satus
@@ -75,27 +72,11 @@ enum					e_pid_satus
 	PID_ERROR
 };
 
-
 typedef struct s_pipefd_main
 {
 	int		*pipefd;
 	bool	direction;
 }				t_pipefd;
-
-
-// typedef struct s_pid_status
-// {
-// 	pid_t				pid_nbr;
-// 	int					pipefd[2];
-// 	enum e_pid_satus	pid_satus;
-// }						t_pid_status;
-
-// typedef struct s_pid_list
-// {
-// 	t_list_d			*pid_list;
-// }						t_pid_list;
-
-//--------------------------------------------------enum exec end --------------------------------------
 
 /**
  * describing all the possible token types,

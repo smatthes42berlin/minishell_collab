@@ -60,8 +60,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (expand(&main_data))
 			free_main_exit(&main_data, 3, 3);
 		printf("main: before parse\n");
-		// print_token_list(main_data.token_list);
-		// write heredocs to pipe here
+		// //print_token_list(main_data.token_list);
+		// // write heredocs to pipe here
 		exit_code = parse(&main_data);
 		printf("\n\nEXIT CODE = $%d$\n\n", exit_code);
 		if (exit_code)
@@ -70,7 +70,7 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		if (executor(&main_data) == -1)
 			return (3);
-		free_main_exit(&main_data, 3, 0);
+	//	free_main_exit(&main_data, 3, 0);
 	}
 	return (0);
 }

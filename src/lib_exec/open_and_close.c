@@ -64,10 +64,6 @@ static const char	*open_mode_to_str(enum e_open_mode mode)
 		return ("MODE-FILE_ONLY_WRITE");
 	else if (mode == FILE_ONLY_WRITE_APPEND)
 		return ("MODE-FILE_ONLY_WRITE_APPEND");
-	else if (mode == FILE_READ_WRITE)
-		return ("MODE-FILE_READ_WRITE");
-	else if (mode == FILE_READ_WRITE_APPEND)
-		return ("MODE-FILE_READ_WRITE_APPEND");
 	else
 		return ("MODE-UNKNOWN_MODE");
 }
