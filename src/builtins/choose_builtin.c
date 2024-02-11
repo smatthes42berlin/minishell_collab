@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char	*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
+char	**chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 {
 
 	//!!!!!unused data for debugger (data) ---> delet later 
@@ -8,12 +8,15 @@ char	*chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 		printf("AST == NULL!\n");
 
 	//!!!!!
-	printf("I am in choose_buildin\n");
+	print_debugging_info_executer(INT_DEBUG, 9, NULL);
 	//print_exec_node(node, 1);
 
 	if (str_are_equal(node->file_path, "pwd"))
 	{
-		return (build_pwd(true));
+		char **str;
+
+		str = build_pwd(true);
+		return (str);
 	}
 	if (str_are_equal(node->file_path, "cd"))
 	{

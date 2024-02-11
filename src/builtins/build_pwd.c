@@ -1,10 +1,12 @@
 #include "minishell.h"
 
-char	*build_pwd(bool newline)
+char	**build_pwd(bool newline)
 {
-	char	*ret;
+	char	**ret;
 	char	*str_tmp;
 
+	print_debugging_info_executer(INT_DEBUG, 24, NULL);
+	ret = malloc(sizeof(char *) * 2);
 	str_tmp = getcwd(NULL, 0);
 	if (str_tmp == NULL)
 	{
@@ -12,12 +14,13 @@ char	*build_pwd(bool newline)
 	}
 	if (newline)
 	{
-		ret = ft_strjoin(str_tmp, "\n");	
+		ret[0] = ft_strjoin(str_tmp, "\n");	
 	}
 	else
 	{
-		ret = ft_strdup(str_tmp);
+		ret[0] = ft_strdup(str_tmp);
 	}
+	ret[1] = NULL;
 	free(str_tmp);
 	return (ret);
 }

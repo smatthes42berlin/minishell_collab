@@ -178,12 +178,13 @@ void				free_ast(t_node *node);
 
 /* builtins */
 // t_node_exec			*check_buildin(t_node *node);
-char				*chose_buildin(t_main_data *data, t_node_exec *node,
+char				**chose_buildin(t_main_data *data, t_node_exec *node,
 						t_pipefd *pipe_struct);
-char				*build_pwd(bool newline);
-char				*build_cd(t_main_data *data, t_node_exec *node,
+bool    			is_last_node(t_node *node, char *compare);
+char				**build_pwd(bool newline);
+char				**build_cd(t_main_data *data, t_node_exec *node,
 						t_pipefd *pipefd);
-char				*build_echo(t_node_exec *node);
+char				**build_echo(t_node_exec *node);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
@@ -194,7 +195,7 @@ void				execve_handler(const char *file_path, char **argv,
 pid_t				fork_handler(void);
 enum e_pid_satus	process_status(pid_t pid, bool block);
 void				pipe_handler(int *pipefd);
-void				pipe_setting(int *pipefd, bool open, char *str);
+void				pipe_setting(int *pipefd, bool open, char **str);
 void				*malloc_handler(size_t bytes);
 /*
 void				append_node_pid_list(t_list **head, pid_t pid);

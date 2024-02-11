@@ -3,35 +3,40 @@
 static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
 				pid_t main_pid, int *pipefd, bool direction,
 				t_pipefd *pipe_struct_main);
-static bool	check_and_choose_buildin(t_main_data *data, t_node *node,
-				int *pipefd, bool direction, t_pipefd *pipe_struct_main);
+// static bool	check_and_choose_buildin(t_main_data *data, t_node *node,
+// 				int *pipefd, bool direction, t_pipefd *pipe_struct_main);
 
 void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_exec	*exec_node;
-	char		*temp_str;
+	char		**temp_str;
+	int			i_count;
 
 	exec_node = (t_node_exec *)node;
 	print_debugging_info_executer(INT_DEBUG, 4, NULL);
 	//print_exec_node(exec_node, 1);
 	if (exec_node->file_path == NULL)
 		printf("%s :  command not found\n", exec_node->argv[0]);
+	print_debugging_info_executer(INT_DEBUG, 10, node);
 	if (false == exec_node->is_inbuilt)
 	{
 		print_debugging_info_executer(INT_DEBUG, 7, NULL);
-		print_debugging_info_executer(INT_DEBUG, 10, node);
 		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
 	}
 	else
 	{
 		print_debugging_info_executer(INT_DEBUG, 8, NULL);
-		print_debugging_info_executer(INT_DEBUG, 10, node);
 		temp_str = NULL;
 		temp_str = chose_buildin(data, exec_node, pipe_struct);
-		if ((data->ast->type == REDIR || data->ast->type == EXEC)
-			&& temp_str != NULL)
-			printf("%s\n", temp_str);
-		free(temp_str);
+		if (is_last_node(data->ast, exec_node->file_path))
+		{
+			i_count = 0;
+			while (temp_str[i_count] != NULL)
+			{
+				printf("%s", temp_str[i_count++]);
+			}
+		}
+		free_str_arr_null(temp_str);
 	}
 }
 
@@ -71,15 +76,14 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	print_debugging_info_executer(INT_DEBUG, 6, NULL);;
 	pipe_handler(pipefd);
 	main_pid = fork_handler();
-	print_exec_node((t_node_exec *)pipe_node->left_node, 1);
 	if (main_pid == 0)
 	{
-		if (false == check_and_choose_buildin(data, pipe_node->left_node,
-				pipefd, true, pipe_struct))
-		{
+		// if (false == check_and_choose_buildin(data, pipe_node->left_node,
+		// 		pipefd, true, pipe_struct))
+		// {
 			pipe_setting(pipefd, true, NULL);
 			navigate_tree_forward(data, pipe_node->left_node, pipe_struct);
-		}
+		// }
 	}
 	else
 	{
@@ -97,12 +101,12 @@ static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
 	nested_pid = fork_handler();
 	if (nested_pid == 0)
 	{
-		if (false == check_and_choose_buildin(data, pipe_node->right_node,
-				pipefd, direction, pipe_struct_main))
-		{
+		// if (false == check_and_choose_buildin(data, pipe_node->right_node,
+		// 		pipefd, direction, pipe_struct_main))
+		// {
 			navigate_tree_forward(data, pipe_node->right_node,
 				pipe_struct_main);
-		}
+	//	}
 	}
 	else
 	{
@@ -111,19 +115,19 @@ static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
 	}
 }
 
-static bool	check_and_choose_buildin(t_main_data *data, t_node *node,
-		int *pipefd, bool direction, t_pipefd *pipe_struct_main)
-{
-	t_node_exec *exec_node;
-	char *temp_str;
+// static bool	check_and_choose_buildin(t_main_data *data, t_node *node,
+// 		int *pipefd, bool direction, t_pipefd *pipe_struct_main)
+// {
+// 	t_node_exec *exec_node;
+// 	char **temp_str;
 
-	if (node->type != EXEC)
-		return (false);
-	exec_node = (t_node_exec *)node;
-	if (exec_node->is_inbuilt == false)
-		return (false);
-	temp_str = chose_buildin(data, exec_node, pipe_struct_main);
-	pipe_setting(pipefd, direction, temp_str);
-	free(temp_str);
-	return (true);
-}
+// 	if (node->type != EXEC)
+// 		return (false);
+// 	exec_node = (t_node_exec *)node;
+// 	if (exec_node->is_inbuilt == false)
+// 		return (false);
+// 	temp_str = chose_buildin(data, exec_node, pipe_struct_main);
+// 	pipe_setting(pipefd, direction, temp_str);
+// 	free(temp_str);
+// 	return (true);
+// }
