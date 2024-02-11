@@ -34,7 +34,7 @@ void	pipe_setting(int *pipefd, bool open, char **str)
 		{
 			while (str[i_count] != NULL)
 			{
-				printf("write in pipe :|%s|\n", str[i_count]);
+				//printf("write in pipe :|%s|\n", str[i_count]);
 				write(pipefd[1], str[i_count], ft_strlen(str[i_count]) + 1);
 				i_count++;
 			}

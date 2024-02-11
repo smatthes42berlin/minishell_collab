@@ -184,7 +184,7 @@ bool    			is_last_node(t_node *node, char *compare);
 char				**build_pwd(bool newline);
 char				**build_cd(t_main_data *data, t_node_exec *node,
 						t_pipefd *pipefd);
-char				**build_echo(t_node_exec *node);
+char 				**build_echo(t_main_data *data, t_node_exec *node);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
