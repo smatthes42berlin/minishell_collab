@@ -3,20 +3,10 @@
 char	**chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct)
 {
 
-	//!!!!!unused data for debugger (data) ---> delet later 
-	if (data->ast == NULL)
-		printf("AST == NULL!\n");
-
-	//!!!!!
 	print_debugging_info_executer(INT_DEBUG, 9, NULL);
-	//print_exec_node(node, 1);
-
 	if (str_are_equal(node->file_path, "pwd"))
 	{
-		char **str;
-
-		str = build_pwd(true);
-		return (str);
+		return (build_pwd(true));
 	}
 	if (str_are_equal(node->file_path, "cd"))
 	{
@@ -24,7 +14,7 @@ char	**chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct
 	}
 	if (str_are_equal(node->file_path, "echo"))
 	{
-		return (build_echo(node));
+		return (build_echo(data, node));
 	}
 	return (NULL);
 }

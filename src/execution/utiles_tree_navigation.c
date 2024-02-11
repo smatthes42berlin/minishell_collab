@@ -36,6 +36,8 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 				printf("%s", temp_str[i_count++]);
 			}
 		}
+		// printf ("printing in exec \n");
+		// print_str_arr_null(temp_str);
 		free_str_arr_null(temp_str);
 	}
 }
