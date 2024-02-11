@@ -18,14 +18,27 @@ void	pipe_handler(int *pipefd)
  * @param open if true the pipe is open
  * @param str str is for the is_inbuilt's function
  */
-void	pipe_setting(int *pipefd, bool open, char *str)
+void	pipe_setting(int *pipefd, bool open, char **str)
 {
+	char	buffer[BUFFER_SIZE];
+	ssize_t	bytes_read;
+	int		i_count;
+
 	if (open)
 	{
-		close(pipefd[0]);
+		int i_count; 
 
+		i_count = 0;
+		close(pipefd[0]);
 	    if (str != NULL)
-            write(pipefd[1], str, ft_strlen(str));
+		{
+			while (str[i_count] != NULL)
+			{
+				printf("write in pipe :|%s|\n", str[i_count]);
+				write(pipefd[1], str[i_count], ft_strlen(str[i_count]) + 1);
+				i_count++;
+			}
+		}
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[1]);
 	}
@@ -34,16 +47,19 @@ void	pipe_setting(int *pipefd, bool open, char *str)
 		close(pipefd[1]);
 		dup2(pipefd[0], STDIN_FILENO);
 		if (str != NULL)
-			printf("%s\n", str);
-		// Lesen und Ausgabe des Inhalts aus der Pipe
-			// char buffer[1024];
-			// ssize_t bytesRead;
-			// printf("----------Reding from PIPE-----------\n");
-			// while ((bytesRead = read(pipefd[0], buffer, sizeof(buffer))) > 0) {
-			// 	write(STDOUT_FILENO, buffer, bytesRead);
-			// }
-			// printf("----------End of PIPE READING-----------\n");
-		////////////////////////////////////
+		{
+			i_count = 0;	
+			while ((bytes_read = read(pipefd[0], buffer,
+							sizeof(buffer))) > 0)
+			{
+				while (i_count < bytes_read)
+				{
+					printf("%s", &buffer[i_count]);
+					i_count += strlen(&buffer[i_count]) + 1;
+				}
+			}
+		}
 		close(pipefd[0]);
 	}
 }
+

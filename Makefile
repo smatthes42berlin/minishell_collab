@@ -51,6 +51,7 @@ SRC = 	main.c \
 		token_get.c \
 		check_syntax_n_heredoc.c \
 		check_syntax.c \
+		check_last_node.c \
 		here_doc_main.c \
 		here_doc_handle_delimiter.c \
 		here_doc_read.c \

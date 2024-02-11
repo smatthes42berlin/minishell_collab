@@ -2,9 +2,6 @@
 
 void print_debugging_info_executer(int on_off, int txt, void *param)
 {
-	if (param != NULL)
-		printf("para == 0");
-
 	if (on_off == 1)
 	{
 		if (txt == 1)
@@ -23,6 +20,8 @@ void print_debugging_info_executer(int on_off, int txt, void *param)
 			printf("-------EXCE inbulilt FALSE--\n");
 		if (txt == 8)
 			printf("-------EXCE inbulilt TRUE--\n");
+		if (txt == 9)
+			printf("----------BUILDIN chossen\n");
 		if (txt == 10)
 		{
 			t_node_exec *exec_node = (t_node_exec *)param;
@@ -53,7 +52,18 @@ void print_debugging_info_executer(int on_off, int txt, void *param)
 			char *str = (char *)param;
 			printf("--Executer - End Jump to CD given str : |%s|\n", str);
 		}
-		
+		if (txt == 23)
+		{
+			printf("--Buildin -- echo\n");
+		}
+		if (txt == 24)
+		{
+			printf("--Buildin -- pwd\n");
+		}
+		if (txt == 25)
+		{
+			printf("--Buildin -- cd\n");
+		}	
 	}
 	return ;
 }

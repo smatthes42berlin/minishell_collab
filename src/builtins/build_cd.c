@@ -3,11 +3,10 @@
 // clear the string from "./" an dubbel /
 static char *ft_clear_str(char *path);
 static char *creat_env_var(char *keyword, char *type, bool newline);
-static void pipe_str_arr_write(t_pipefd *pipefd, char **env);
 static char *absoult_or_relativ_path(char *path);
 
 // return alltime NULL
-char *build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
+char **build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
 	char *env_new[4];
 	char *str_tmp;
@@ -33,39 +32,27 @@ char *build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	env_new[1] = creat_env_var("PWD=", ADD_ENV, true);
 	env_new[2] = creat_env_var("PWD=", ADD_CD, false);
 	env_new[3] = NULL;	
-	pipe_str_arr_write(pipefd, env_new);
-	i = 0;	
-	while (0 < 4)
-		free(env_new[i]);
-	free(str_tmp);
+	pipe_setting(pipefd->pipefd, true ,env_new);
+	// i = 0;	
+	// while (0 < 4)
+	// free(env_new[i]);
+	// free(str_tmp);
 	return (NULL);
-}
-
-static void pipe_str_arr_write(t_pipefd *pipefd, char **env)
-{
-	int i_count;
-	i_count = 0; 
-	close(pipefd->pipefd[0]);
-	while (env[i_count] != NULL)
-	{
-		printf("%s", env[i_count]);
-        write(pipefd->pipefd[1], env[i_count], strlen(env[i_count]) + 1);
-        i_count++;
-    }
-	close(pipefd->pipefd[1]);
 }
 
 static char *creat_env_var(char *keyword, char *type, bool newline)
 {
 	char *str_tmp;
-	char *ret;
+	char **ret;
+	char *char_ret;
 	
 	ret = build_pwd(newline);
-	str_tmp = ft_strjoin(keyword, ret);
-	free(ret);
-	ret = ft_strjoin(type, str_tmp);
+	str_tmp = ft_strjoin(keyword, ret[0]);
+	free(ret[0]);
+	free(ret[1]);
+	char_ret = ft_strjoin(type, str_tmp);
 	free(str_tmp);
-	return (ret);
+	return (char_ret);
 }
 
 // clear the string from "./" an dubbel /
@@ -76,6 +63,7 @@ static char *ft_clear_str(char *path)
 	char *ret;
 	char *str_tmp;
 
+	print_debugging_info_executer(INT_DEBUG, 25, NULL);
 	i = -1;
 	ret = absoult_or_relativ_path(path);
 	str = ft_split_str(path, "/");

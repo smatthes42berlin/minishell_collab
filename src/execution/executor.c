@@ -25,6 +25,7 @@ int	executor(t_main_data *data)
 	int			pipefd[2];
 	t_pipefd	*pipe_struct;
 
+	printf("##########################################################\n");
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
 	pipe_handler(pipefd);
 	pipe_struct = malloc_handler(sizeof(t_pipefd));
@@ -33,8 +34,6 @@ int	executor(t_main_data *data)
 	
 	if (pid == 0)
 	{
-		//manuel_test_mode(data);
-
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct);
 		free_ast(data->ast);
@@ -48,8 +47,7 @@ int	executor(t_main_data *data)
 	read_pipe(data, pipe_struct);
 	free(pipe_struct); // double free child process
 	print_debugging_info_executer(INT_DEBUG, 2, NULL);
-	printf("PWD = %s\n",  env_get_var(data, "PWD"));
-	printf("OLDPWD = %s\n",  env_get_var(data, "OLDPWD"));
+	printf("##########################################################\n");
 	return (0);
 }
 
