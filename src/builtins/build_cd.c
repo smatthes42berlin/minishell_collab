@@ -33,10 +33,6 @@ char **build_cd (t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	env_new[2] = creat_env_var("PWD=", ADD_CD, false);
 	env_new[3] = NULL;	
 	pipe_setting(pipefd->pipefd, true ,env_new);
-	// i = 0;	
-	// while (0 < 4)
-	// free(env_new[i]);
-	// free(str_tmp);
 	return (NULL);
 }
 

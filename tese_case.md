@@ -3,6 +3,10 @@
 
 ToDo
 - [ ] `ls -l | grep ".c" `
-- exit return values 
+- exit return values
+- How to handel the command `VAR=Test_var export VAR`
+
+
+
 - buildtin testen
 

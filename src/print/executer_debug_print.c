@@ -63,6 +63,10 @@ void print_debugging_info_executer(int on_off, int txt, void *param)
 		if (txt == 25)
 		{
 			printf("--Buildin -- cd\n");
+		}
+		if (txt == 26)
+		{
+			printf("--Buildin -- export\n");
 		}	
 	}
 	return ;
