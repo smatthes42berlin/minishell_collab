@@ -67,6 +67,14 @@ void print_debugging_info_executer(int on_off, int txt, void *param)
 		if (txt == 26)
 		{
 			printf("--Buildin -- export\n");
+		}
+		if (txt == 27)
+		{
+			printf("--Buildin -- unset\n");
+		}
+		if (txt == 28)
+		{
+			printf("--Buildin -- env\n");
 		}	
 	}
 	return ;

@@ -20,5 +20,13 @@ char	**chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct
 	{
 		return (build_export(data, node, pipe_struct));
 	}
+	if (str_are_equal(node->file_path, "unset"))
+	{
+		return(build_unset(data, node, pipe_struct));
+	}
+	if (str_are_equal(node->file_path, "env"))
+	{
+		return(build_env(data));
+	}
 	return (NULL);
 }
