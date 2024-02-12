@@ -33,7 +33,7 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 			i_count = 0;
 			while (temp_str[i_count] != NULL)
 			{
-				printf("%s", temp_str[i_count++]);
+				printf("EXEC OUTPUT: %s", temp_str[i_count++]);
 			}
 		}
 		// printf ("printing in exec \n");

@@ -188,6 +188,7 @@ char				**build_pwd(bool newline);
 char				**build_cd(t_main_data *data, t_node_exec *node,
 						t_pipefd *pipefd);
 char 				**build_echo(t_main_data *data, t_node_exec *node);
+char 				*add_newline(char *str, bool newline);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
