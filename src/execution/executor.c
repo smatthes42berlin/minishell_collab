@@ -87,6 +87,7 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 	else if (ft_strncmp(env_var, CLR_ENV, ft_strlen(CLR_ENV)) == 0)
 	{
 		print_debugging_info_executer(INT_DEBUG, 21, env_var);
+		env_del_var(data, env_var + ft_strlen(CLR_ENV));
 	}
 	else if (ft_strncmp(env_var, ADD_CD, ft_strlen(ADD_CD)) == 0)
 	{

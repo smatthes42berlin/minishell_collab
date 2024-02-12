@@ -4,6 +4,7 @@
 # define ADD_ENV "ADD="
 # define CLR_ENV "CLR="
 # define ADD_CD "CD="
+# define PRINT_ENV "PRINT="
 # define INT_DEBUG 1
 
 /**
