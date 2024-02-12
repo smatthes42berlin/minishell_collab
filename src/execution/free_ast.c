@@ -14,6 +14,9 @@ void	free_ast(t_node *node)
 		free_exec(node);
 }
 
+
+
+
 static void	free_exec(t_node *node)
 {
 	t_node_exec	*exec_node;
