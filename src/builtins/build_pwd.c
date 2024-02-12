@@ -12,14 +12,7 @@ char	**build_pwd(bool newline)
 	{
 		error_code_handler(errno, "ERR-getcwd", "", "");
 	}
-	if (newline)
-	{
-		ret[0] = ft_strjoin(str_tmp, "\n");	
-	}
-	else
-	{
-		ret[0] = ft_strdup(str_tmp);
-	}
+	ret[0] = add_newline(str_tmp, newline);
 	ret[1] = NULL;
 	free(str_tmp);
 	return (ret);
