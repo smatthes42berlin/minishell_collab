@@ -81,7 +81,7 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		if (executor(&main_data) == -1)
 			return (3);
-		free_main_exit(&main_data, 3, 0);
+		//free_main_exit(&main_data, 3, 0);
 	}
 	return (0);
 }
