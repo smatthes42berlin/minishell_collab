@@ -12,6 +12,11 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	char		**temp_str;
 	int			i_count;
 
+	if (node == NULL)
+	{
+		printf("the point is null!");
+		return ;
+	}
 	exec_node = (t_node_exec *)node;
 	print_debugging_info_executer(INT_DEBUG, 4, NULL);
 	//print_exec_node(exec_node, 1);
@@ -26,14 +31,14 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	else
 	{
 		print_debugging_info_executer(INT_DEBUG, 8, NULL);
-		temp_str = NULL;
+		//temp_str = NULL;
 		temp_str = chose_buildin(data, exec_node, pipe_struct);
-		if (is_last_node(data->ast, exec_node->file_path))
+		if (is_last_node(data->ast, exec_node->file_path) && (temp_str != NULL))
 		{
 			i_count = 0;
 			while (temp_str[i_count] != NULL)
 			{
-				printf("EXEC OUTPUT: %s", temp_str[i_count++]);
+				printf("%s", temp_str[i_count++]);
 			}
 		}
 		// printf ("printing in exec \n");

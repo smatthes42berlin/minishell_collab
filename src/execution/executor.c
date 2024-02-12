@@ -36,7 +36,7 @@ int	executor(t_main_data *data)
 	{
 		//manuel_test_mode(data);
 		navigate_tree_forward(data, data->ast, pipe_struct);
-		free(pipe_struct);
+		//free(pipe_struct);
 		free_ast(data->ast);
 		free_main_exit(data, 1, 0);
 		free_main_exit(data, 2, 0);

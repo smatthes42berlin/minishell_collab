@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static char **set_used_arg(t_main_data *data, char **arg, bool newline);
+static void replace_env_in_str_arr(t_main_data *data, char **arg);
+//static char **set_used_arg(t_main_data *data, char **arg, bool newline);
 static char *str_arr_to_str(char **str, bool newline);
 
 char **build_echo(t_main_data *data, t_node_exec *node)
@@ -8,15 +9,20 @@ char **build_echo(t_main_data *data, t_node_exec *node)
     char **ret;
     char **tmp_str_1;
     bool newline;
+    int i_beginn_cp;
 
     tmp_str_1 = NULL;
+    i_beginn_cp = 1;
     newline = false;
     print_debugging_info_executer(INT_DEBUG, 23, NULL);
     if (!ft_strcmp(node->argv[1], "-n"))
     {
+        i_beginn_cp = 2;
         newline = true;
     }
-    tmp_str_1 = set_used_arg(data, node->argv, newline);
+    tmp_str_1 = copy_str_arr(node->argv, i_beginn_cp);
+    replace_env_in_str_arr(data ,tmp_str_1);
+  //  tmp_str_1 = set_used_arg(data, node->argv newline);
    // print_str_arr_null(tmp_str_1);
     ret = malloc_handler(sizeof(char *) * 2);
     ret[0] = str_arr_to_str(tmp_str_1, !newline);
@@ -25,42 +31,67 @@ char **build_echo(t_main_data *data, t_node_exec *node)
     return(ret);
 }
 
-static int start_point(bool newline)
-{
-    if (newline)
-        return (2);
-    return (1);
-}
-
-static char **set_used_arg(t_main_data *data, char **arg, bool newline)
+static void replace_env_in_str_arr(t_main_data *data, char **arg)
 {
     int i_count;
-    char **ret;
     char *tmp_str;
-    int i_beginn;
 
-    i_beginn = start_point(newline);
-    i_count = i_beginn;
-   // printf("i count |%d| -- |%d|\n", i_count, i_beginn);
-    while(arg[i_count] != NULL)
-        i_count++;
-   // printf("i count |%d| -- |%d| Malloc size |%d|\n", i_count, i_beginn, i_count - i_beginn + 1);
-    ret = malloc_handler(sizeof(char *) * (i_count - i_beginn + 1));
-    ret[i_count - i_beginn] = NULL;
-    i_count = i_beginn;
+    i_count = 0;
     while(arg[i_count] != NULL)
     {   
-        if (arg[i_count][0] == '$' && arg[i_count][1] != '\0')
+
+        if (arg[i_count][0] == '$' && arg[i_count][1] != '\0' && arg[i_count] != NULL) 
         {
-            tmp_str = env_get_var(data, arg[i_count] + 1);
-            ret[i_count-i_beginn] = ft_strdup(tmp_str);
+            tmp_str = ft_strdup(arg[i_count]);
+            free(arg[i_count]);
+            arg[i_count] = NULL;
+            arg[i_count] = env_get_var(data, tmp_str);
+            free(tmp_str);
+            tmp_str = NULL;
         }
-        else
-            ret[i_count-i_beginn] = ft_strdup(arg[i_count]);
         i_count++;
     }
-    return(ret);
 }
+
+
+/*
+// static int start_point(bool newline)
+// {
+//     if (newline)
+//         return (2);
+//     return (1);
+// }
+
+// static char **set_used_arg(t_main_data *data, char **arg, bool newline)
+// {
+//     int i_count;
+//     char **ret;
+//     char *tmp_str;
+//     int i_beginn;
+
+//     i_beginn = start_point(newline);
+//     i_count = i_beginn;
+//    // printf("i count |%d| -- |%d|\n", i_count, i_beginn);
+//     while(arg[i_count] != NULL)
+//         i_count++;
+//    // printf("i count |%d| -- |%d| Malloc size |%d|\n", i_count, i_beginn, i_count - i_beginn + 1);
+//     ret = malloc_handler(sizeof(char *) * (i_count - i_beginn + 1));
+//     ret[i_count - i_beginn] = NULL;
+//     i_count = i_beginn;
+//     while(arg[i_count] != NULL)
+//     {   
+//         if (arg[i_count][0] == '$' && arg[i_count][1] != '\0')
+//         {
+//             tmp_str = env_get_var(data, arg[i_count] + 1);
+//             ret[i_count-i_beginn] = ft_strdup(tmp_str);
+//         }
+//         else
+//             ret[i_count-i_beginn] = ft_strdup(arg[i_count]);
+//         i_count++;
+//     }
+//     return(ret);
+// }
+*/
 
 static char *str_arr_to_str(char **str, bool newline) 
 {
