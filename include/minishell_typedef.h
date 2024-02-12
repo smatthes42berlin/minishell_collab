@@ -4,7 +4,7 @@
 # define ADD_ENV "ADD="
 # define CLR_ENV "CLR="
 # define ADD_CD "CD="
-# define INT_DEBUG 0
+# define INT_DEBUG 1
 
 /**
  * necessary so we can use t_node inside the t_node struct definition

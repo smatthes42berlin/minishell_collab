@@ -28,6 +28,7 @@ SRC = 	main.c \
 		build_cd.c \
 		build_pwd.c \
 		build_echo.c \
+		build_export.c \
 		choose_builtin.c \
 		build_utiles.c \
 		access.c \
