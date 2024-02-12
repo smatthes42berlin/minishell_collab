@@ -51,6 +51,8 @@ int	executor(t_main_data *data)
 	free(pipe_struct); // double free child process
 	print_debugging_info_executer(INT_DEBUG, 2, NULL);
 	printf("##########################################################\n");
+	printf("env_HOME |%s|\n", env_get_var(data, "HOME"));
+	printf("env_PWD |%s|\n", env_get_var(data, "PWD"));
 	return (0);
 }
 
@@ -79,7 +81,7 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 {
 	if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
 	{
-		print_debugging_info_executer(INT_DEBUG, 20, env_var);
+		print_debugging_info_executer(1, 20, env_var);
 		env_set_var(data, env_var + ft_strlen(ADD_ENV));
 	}
 	else if (ft_strncmp(env_var, CLR_ENV, ft_strlen(CLR_ENV)) == 0)

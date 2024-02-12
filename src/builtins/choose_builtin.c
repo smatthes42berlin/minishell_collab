@@ -16,5 +16,9 @@ char	**chose_buildin(t_main_data *data, t_node_exec *node, t_pipefd *pipe_struct
 	{
 		return (build_echo(data, node));
 	}
+	if (str_are_equal(node->file_path, "export"))
+	{
+		return (build_export(data, node, pipe_struct));
+	}
 	return (NULL);
 }
