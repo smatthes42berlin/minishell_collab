@@ -165,7 +165,8 @@ int					print_redir_node(t_node_redir *node, int mode);
 int					print_pipe_node(t_node_pipe *node, int mode);
 int					print_hdoc_node(t_node_heredoc *node, int mode);
 int					print_exec_node(t_node_exec *node, int mode);
-void				print_debugging_info_executer(int on_off, int txt, void *param);
+void				print_debugging_info_executer(int on_off, int txt,
+						void *param);
 
 /* executor */
 void				navigate_tree_forward(t_main_data *data, t_node *node,
@@ -176,6 +177,8 @@ void				type_redir(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
 void				type_pipe(t_main_data *data, t_node *node,
 						t_pipefd *pipe_struct);
+void				type_heredoc(t_main_data *data, t_node *node,
+						t_pipefd *pipe_struct);
 int					executor(t_main_data *data);
 void				free_ast(t_node *node);
 
@@ -183,16 +186,18 @@ void				free_ast(t_node *node);
 // t_node_exec			*check_buildin(t_node *node);
 char				**chose_buildin(t_main_data *data, t_node_exec *node,
 						t_pipefd *pipe_struct);
-bool    			is_last_node(t_node *node, char *compare);
+bool				is_last_node(t_node *node, char *compare);
 char				**build_pwd(bool newline);
 char				**build_cd(t_main_data *data, t_node_exec *node,
 						t_pipefd *pipefd);
-char 				**build_echo(t_main_data *data, t_node_exec *node);
-char				**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
-char				**build_unset(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
-char				**build_env(t_main_data *data); 
-char 				*add_newline(char *str, bool newline);
-char 				**copy_str_arr(char **arg, int i_beginn);
+char				**build_echo(t_main_data *data, t_node_exec *node);
+char				**build_export(t_main_data *data, t_node_exec *node,
+						t_pipefd *pipefd);
+char				**build_unset(t_main_data *data, t_node_exec *node,
+						t_pipefd *pipefd);
+char				**build_env(t_main_data *data);
+char				*add_newline(char *str, bool newline);
+char				**copy_str_arr(char **arg, int i_beginn);
 
 /* execute lib*/
 int					open_handler(const char *path, enum e_open_mode mode);
@@ -227,8 +232,8 @@ t_node_redir		*test_cmd_redir(char *filename, enum e_open_mode mode,
 						enum e_std_fd in_or_out, enum e_node_type child_typ,
 						void *left_node);
 // // -> examples
-t_node_exec				*set_cmd_1(void);
-t_node_pipe				*set_cmd_2(void);
+t_node_exec			*set_cmd_1(void);
+t_node_pipe			*set_cmd_2(void);
 // t_node				*set_cmd_2_cp(void);
 // t_node				*set_cmd_3(void);
 // t_node				*set_cmd_4(void);
@@ -239,7 +244,7 @@ t_node_pipe				*set_cmd_2(void);
 // t_node				*set_redir_out_1(void);
 // t_node				*set_redir_out_empty(void);
 
- void					print_type(t_node *node);
+void				print_type(t_node *node);
 
 // // test -- build pwd
 // t_node				*set_pwd_allone(void);

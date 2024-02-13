@@ -75,7 +75,11 @@ void print_debugging_info_executer(int on_off, int txt, void *param)
 		if (txt == 28)
 		{
 			printf("--Buildin -- env\n");
-		}	
+		}
+		if (txt == 29)
+		{
+			printf("-----type Heredoc--\n");
+		}
 	}
 	return ;
 }

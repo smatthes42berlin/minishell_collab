@@ -5,7 +5,7 @@
 # define CLR_ENV "CLR="
 # define ADD_CD "CD="
 # define PRINT_ENV "PRINT="
-# define INT_DEBUG 1
+# define INT_DEBUG 0
 
 /**
  * necessary so we can use t_node inside the t_node struct definition
@@ -16,9 +16,7 @@ typedef struct s_token	t_token;
 
 /**
  * main data structure, that can be passed around
-
-
-	* @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
+ * @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
 	NULL when no env vars or uninitialised
  * @param token_list pointer to first element of token list or NULL,
 	when token list is uninitialised

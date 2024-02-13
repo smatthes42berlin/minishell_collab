@@ -93,18 +93,18 @@ t_node_pipe	*set_cmd_2(void)
 // 
 // t_node	*set_redir_in_2_cmd_2(void)
 // {
-	// t_node	*ret;
-// 
-	// ret = malloc_handler(sizeof(t_node));
-	// ret->node_type = test_cmd_pipe( REDIR, PIPE,
-			// test_cmd_redir( "input_befor", FILE_ONLY_READING, STDIN, REDIR,
-				// test_cmd_redir( "input", FILE_ONLY_READING, STDIN, EXEC,
-					// test_cmd_exec("exec 1", "/bin/grep", "nn", false))),
-			// test_cmd_pipe("pipe 2", EXEC, EXEC, test_cmd_exec("exec 2",
-					// "/bin/sort", NULL, false), test_cmd_exec("exec 3", "/bin/uniq",
-					// NULL, false)));
-	// ret->type = PIPE;
-	// return (ret);
+// 	t_node	*ret;
+
+// 	ret = malloc_handler(sizeof(t_node));
+// 	ret->node_type = test_cmd_pipe( REDIR, PIPE,
+// 			test_cmd_redir( "input_befor",,  STDIN, REDIR,
+// 				test_cmd_redir( "input", FILE_ONLY_READING, STDIN, EXEC,
+// 					test_cmd_exec("exec 1", "/bin/grep", "nn", false))),
+// 			test_cmd_pipe("pipe 2", EXEC, EXEC, test_cmd_exec("exec 2",
+// 					"/bin/sort", NULL, false), test_cmd_exec("exec 3", "/bin/uniq",
+// 					NULL, false)));
+// 	ret->type = PIPE;
+// 	return (ret);
 // }
 // 
 // tree on redir + command
