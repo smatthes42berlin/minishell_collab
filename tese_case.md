@@ -9,6 +9,6 @@ ToDo
 - was wir testen könnten 
 - was weist du über die Signals 
 - wie weit ist bei dir das History add 
-
+- mit enter komme ich raus das sollte auf `strg+c` sein 
 - buildtin testen
 

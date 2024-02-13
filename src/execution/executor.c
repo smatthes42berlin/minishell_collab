@@ -51,8 +51,8 @@ int	executor(t_main_data *data)
 	free(pipe_struct); // double free child process
 	print_debugging_info_executer(INT_DEBUG, 2, NULL);
 	printf("##########################################################\n");
-	printf("env_HOME |%s|\n", env_get_var(data, "HOME"));
-	printf("env_PWD |%s|\n", env_get_var(data, "PWD"));
+	//printf("env_HOME |%s|\n", env_get_var(data, "HOME"));
+	//printf("env_PWD |%s|\n", env_get_var(data, "PWD"));
 	return (0);
 }
 

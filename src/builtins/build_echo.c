@@ -19,7 +19,7 @@ char	**build_echo(t_main_data *data, t_node_exec *node)
 		i_beginn_cp = 2;
 		newline = true;
 	}
-	tmp_str_1 = copy_str_arr(node->argv, i_beginn_cp);
+	tmp_str_1 = copy_str_arr(node->argv, i_beginn_cp, false);
 	replace_env_in_str_arr(data, tmp_str_1);
 	ret = malloc_handler(sizeof(char *) * 2);
 	ret[0] = str_arr_to_str(tmp_str_1, !newline);
