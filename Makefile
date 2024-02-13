@@ -36,7 +36,10 @@ SRC = 	main.c \
 		access.c \
 		executor.c \
 		free_ast.c \
-		utiles_tree_navigation.c \
+		exec_type_exec.c \
+		exec_type_pipe.c \
+		exec_type_redir.c \
+		exec_type_heredoc.c \
 		tree_navigation.c \
 		errno_print.c \
 		execve.c \
