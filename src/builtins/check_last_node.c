@@ -7,8 +7,6 @@ static char	*check_pipe(t_node *node);
 
 bool	is_last_node(t_node *node, char *compare)
 {
-	// char *str_tmp = last_node(node);
-	// printf("I am here compare |%s| -- ||\n", compare);//, str_tmp);
 	if (str_are_equal(last_node(node), compare))
 	{
 		return (true);

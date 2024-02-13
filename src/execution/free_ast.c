@@ -14,27 +14,10 @@ void	free_ast(t_node *node)
 		free_exec(node);
 }
 
-void	free_str_arr_tes(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != NULL)
-	{
-		free(str[i]);
-		i++;
-	}
-}
-
-
-
-
 static void	free_exec(t_node *node)
 {
 	t_node_exec	*exec_node;
 
-	//printf("Freeing : ");
-	//print_type(node);
 	exec_node = (t_node_exec *)node;
 	if (exec_node != NULL)
 	{
@@ -81,11 +64,6 @@ static void	free_redim(t_node *node)
 			redir_node = NULL;
 		}
 	}
-	// if (node != NULL)
-	// {
-	// 	free(node);
-	// 	node = NULL;
-	// }
 }
 
 static void	free_pipe(t_node *node)
@@ -105,9 +83,4 @@ static void	free_pipe(t_node *node)
 			pipe_node = NULL;
 		}
 	}
-	// if (node != NULL)
-	// {
-	// 	free(node);
-	// 	node = NULL;
-	// }
 }

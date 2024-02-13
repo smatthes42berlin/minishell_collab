@@ -14,7 +14,7 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 
 	if (data->ast->type == PIPE)
 		return (NULL);
-	env_new[0] = creat_env_var("OLDPWD=", ADD_ENV, true);
+	env_new[0] = creat_env_var("OLDPWD=", ADD_ENV, false);
 	if (node->argv[1] == NULL)
 		str_tmp = env_get_var(data, "HOME");
 	else
@@ -23,7 +23,7 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	if (i == -1)
 		error_code_handler(errno, 
 		"ERR-chdir", "CD -Command cd-buid funktion --> ", str_tmp);
-	env_new[1] = creat_env_var("PWD=", ADD_ENV, true);
+	env_new[1] = creat_env_var("PWD=", ADD_ENV, false);
 	env_new[2] = creat_env_var("PWD=", ADD_CD, false);
 	env_new[3] = NULL;
 	pipe_setting(pipefd->pipefd, true, env_new);
