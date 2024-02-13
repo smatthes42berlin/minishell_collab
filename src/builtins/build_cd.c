@@ -76,6 +76,8 @@ static char *ft_clear_str(char *path)
 			free(str_tmp);
 		}
 	}
+
+	
 	free_str_arr_null(str);
 	return (ret);	
 }
