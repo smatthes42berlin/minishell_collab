@@ -14,12 +14,18 @@ t_node_exec	*set_cmd_1(void)
 t_node_pipe	*set_cmd_2(void)
 {
 	t_node_pipe	*ret;
+	t_node_exec *exec_left = test_cmd_exec("/usr/bin/ls", "-l", false);
+	t_node_exec *exec_rigt = test_cmd_exec( "/usr/bin/grep", ".c", false);
+
 
 	//ret = malloc_handler(sizeof(t_node_pipe));
 	ret = test_cmd_pipe( EXEC, EXEC,
-		test_cmd_exec("/usr/bin/ls", "-l", false), 
-		test_cmd_exec( "/usr/bin/grep", ".c", false));
+		exec_left, 
+		exec_rigt);
 	ret->type = PIPE;
+
+	print_exec_node(exec_left, 1);
+	print_exec_node(exec_rigt, 1);
 	return (ret);
 }
 // 
