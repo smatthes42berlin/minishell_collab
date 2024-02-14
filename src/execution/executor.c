@@ -34,7 +34,7 @@ int	executor(t_main_data *data)
 	
 	if (pid == 0)
 	{
-		//manuel_test_mode(data);
+		manuel_test_mode(data);
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		//free(pipe_struct);
 		free_ast(data->ast);
