@@ -9,14 +9,11 @@ void	free_token(void *token)
 	free(token);
 }
 
-void	free_main_exit(t_main_data *main_data, int program_state, int exit_code)
+void	free_main_exit(t_main_data *main_data, int exit_code)
 {
-	if (program_state >= 1)
-		free_str_arr_null(main_data->env_vars);
-	if (program_state >= 2)
-		free(main_data->cli_input);
-	if (program_state >= 3)
-		d_lst_clear(&main_data->token_list, free_token);
+	free_str_arr_null(main_data->env_vars);
+	free(main_data->cli_input);
+	d_lst_clear(&main_data->token_list, free_token);
 	init_main_data(main_data);
 	rl_clear_history();
 	if (exit_code >= 0)
