@@ -6,7 +6,7 @@ static int	free_res(char ***res, int ret_code, int free_what);
 static int	handle_empty_strings(char const *s, char const *split_at,
 				char ***res);
 
-int	split_str_str_first_occ(char const *s, char const *split_at, char ***res)
+int	split_str_str_after_index(char const *s, char const *split_at, char ***res, int index)
 {
 	int	split_start;
 	int	split_at_len;
@@ -20,7 +20,7 @@ int	split_str_str_first_occ(char const *s, char const *split_at, char ***res)
 		return (1);
 	if (str_is_empty(s) || str_is_empty(split_at))
 		return (handle_empty_strings(s, split_at, res));
-	split_start = str_contains_str_index(s, split_at);
+	split_start = str_contains_str_index(s + index, split_at) + index;
 	if (split_start == -1)
 		return (dup_otherwise_empty(res, s, NULL));
 	if (split_start == 0)

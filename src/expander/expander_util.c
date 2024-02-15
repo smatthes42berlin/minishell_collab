@@ -4,11 +4,12 @@ int	skip_to_closing_quote(t_expansion_info *expansion_info)
 {
 	int	index_closing_quote;
 
-	go_to_next_char(expansion_info);
+	remove_quote(expansion_info->cur_pos);
 	index_closing_quote = has_closing_quote(expansion_info->cur_pos, '\'');
-	expansion_info->cur_pos = expansion_info->cur_pos + index_closing_quote + 1;
+	remove_quote(expansion_info->cur_pos + index_closing_quote);
+	expansion_info->cur_pos = expansion_info->cur_pos + index_closing_quote;
 	expansion_info->cur_pos_index = expansion_info->cur_pos_index
-		+ index_closing_quote + 1;
+		+ index_closing_quote;
 	return (0);
 }
 
