@@ -13,9 +13,25 @@ int	expand(t_main_data *main_data)
 		{
 			if (check_expansion(cur_token, main_data))
 				return (1);
-			// remove_quotes(&next, cur_token);
 		}
+		if (remove_empty_token(&next))
+			continue ;
 		next = next->next;
+	}
+	return (0);
+}
+
+int	remove_empty_token(t_list_d **next)
+{
+	t_token		*cur_token;
+	t_list_d	*empty;
+
+	cur_token = (*next)->content;
+	if (str_is_empty(cur_token->value))
+	{
+		empty = d_lst_pop_current(next);
+		d_lst_del_one(empty, free_token);
+		return (1);
 	}
 	return (0);
 }

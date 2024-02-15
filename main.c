@@ -7,7 +7,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_main_data	main_data;
 	char		*test_str;
 
-	int			exit_code;
+	// int			exit_code;
 	if (argc > 1)
 	{
 		printf("Error: program '%s' doesn't take any arguments!", argv[0]);
@@ -18,10 +18,10 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	test_str = get_test_case(11);
 	printf("TESTCASE: %s\n", test_str);
-	// env_set_var(&main_data, "EMPTY=");
-	// env_set_var(&main_data, "FIVE_ONE=11111");
-	// env_set_var(&main_data, "ONE_TWO=2");
-	// env_set_var(&main_data, "SOME_LETTERS=asdfsdf");
+	env_set_var(&main_data, "EMPTY=");
+	env_set_var(&main_data, "FIVE_ONE=11111");
+	env_set_var(&main_data, "ONE_TWO=2");
+	env_set_var(&main_data, "SOME_LETTERS=asdfsdf");
 	// env_print(&main_data);
 	while (1)
 	{
@@ -38,12 +38,12 @@ int	main(int argc, char *argv[], char *envp[])
 			free_main_exit(&main_data, 3);
 		printf("main: before parse\n");
 		print_token_list(main_data.token_list);
-		exit_code = parse(&main_data);
-		printf("\n\nEXIT CODE = $%d$\n\n", exit_code);
-		if (exit_code)
-		{
-			free_main_exit(&main_data, 4);
-		}
+		// exit_code = parse(&main_data);
+		// printf("\n\nEXIT CODE = $%d$\n\n", exit_code);
+		// if (exit_code)
+		// {
+		// 	free_main_exit(&main_data, 4);
+		// }
 		// if (executor(&main_data) == -1)
 		// 	return (3);
 		free_main_exit(&main_data, 0);

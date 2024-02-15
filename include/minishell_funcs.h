@@ -113,6 +113,7 @@ int	check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
 										char *spec_var_symbol,
 										char *spec_var_name);
 int					remove_quote(char *cur_pos);
+int					remove_empty_token(t_list_d **next);
 
 /* parser */
 

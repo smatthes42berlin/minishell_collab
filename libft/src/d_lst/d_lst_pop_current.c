@@ -11,12 +11,11 @@ t_list_d	*d_lst_pop_current(t_list_d **lst)
 	has_prev = (*lst)->prev != NULL;
 	has_next = (*lst)->next != NULL;
 	to_pop = *lst;
-	if (!has_prev && !has_next)
-		*lst = NULL;
+	*lst = NULL;
 	if (has_prev)
 	{
 		to_pop->prev->next = to_pop->next;
-		*lst = to_pop->prev;
+		// *lst = to_pop->prev;
 	}
 	if (has_next)
 	{
