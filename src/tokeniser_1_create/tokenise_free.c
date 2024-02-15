@@ -4,6 +4,8 @@ void	free_token(void *token)
 {
 	t_token	*token_cast;
 
+	if (!token)
+		return ;
 	token_cast = token;
 	free(token_cast->value);
 	free(token);

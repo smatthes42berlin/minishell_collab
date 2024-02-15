@@ -26,7 +26,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_main_data	main_data;
 	char		*test_str;
 
-	int			exit_code;
+	// int			exit_code;
 	if (argc > 1)
 	{
 		printf("Error: program '%s' doesn't take any arguments!", argv[0]);
@@ -47,10 +47,10 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	test_str = get_test_case(11);
 	printf("TESTCASE: %s\n", test_str);
-	// env_set_var(&main_data, "EMPTY=");
-	// env_set_var(&main_data, "FIVE_ONE=11111");
-	// env_set_var(&main_data, "ONE_TWO=2");
-	// env_set_var(&main_data, "SOME_LETTERS=asdfsdf");
+	env_set_var(&main_data, "EMPTY=");
+	env_set_var(&main_data, "FIVE_ONE=11111");
+	env_set_var(&main_data, "ONE_TWO=2");
+	env_set_var(&main_data, "SOME_LETTERS=asdfsdf");
 	// env_print(&main_data);
 	while (1)
 	{
