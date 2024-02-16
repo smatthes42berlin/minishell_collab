@@ -12,7 +12,7 @@ int	tokenise(t_main_data *main_data)
 	while (*cur_pos)
 	{
 		if (get_token(main_data, &cur_pos))
-			return (printf("ERROR\n"));
+			return (1);
 		skip_ws(&cur_pos);
 	}
 	if (check_syntax_n_heredoc(main_data))

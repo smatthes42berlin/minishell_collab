@@ -1,6 +1,11 @@
 #include "minishell.h"
 
-char	*get_failed_func_str_1(enum e_failed_func failed_func)
+static char	*get_failed_func_str_2(enum e_failed_func failed_func);
+static char	*get_failed_func_str_3(enum e_failed_func failed_func);
+static char	*get_failed_func_str_4(enum e_failed_func failed_func);
+static char	*get_failed_func_str_5(enum e_failed_func failed_func);
+
+char	*get_failed_func_str(enum e_failed_func failed_func)
 {
 	if (failed_func == EFUNC_RL_CLEAR_HISTORY)
 		return ("RL_CLEAR_HISTORY");
@@ -28,7 +33,7 @@ char	*get_failed_func_str_1(enum e_failed_func failed_func)
 		return ("READ");
 	return (get_failed_func_str_2(failed_func));
 }
-char	*get_failed_func_str_2(enum e_failed_func failed_func)
+static char	*get_failed_func_str_2(enum e_failed_func failed_func)
 {
 	if (failed_func == EFUNC_CLOSE)
 		return ("CLOSE");
@@ -57,7 +62,7 @@ char	*get_failed_func_str_2(enum e_failed_func failed_func)
 	return (get_failed_func_str_3(failed_func));
 }
 
-char	*get_failed_func_str_3(enum e_failed_func failed_func)
+static char	*get_failed_func_str_3(enum e_failed_func failed_func)
 {
 	if (failed_func == EFUNC_GETCWD)
 		return ("GETCWD");
@@ -86,7 +91,7 @@ char	*get_failed_func_str_3(enum e_failed_func failed_func)
 	return (get_failed_func_str_4(failed_func));
 }
 
-char	*get_failed_func_str_4(enum e_failed_func failed_func)
+static char	*get_failed_func_str_4(enum e_failed_func failed_func)
 {
 	if (failed_func == EFUNC_CLOSEDIR)
 		return ("CLOSEDIR");
@@ -115,7 +120,7 @@ char	*get_failed_func_str_4(enum e_failed_func failed_func)
 	return (get_failed_func_str_5(failed_func));
 }
 
-char	*get_failed_func_str_5(enum e_failed_func failed_func)
+static char	*get_failed_func_str_5(enum e_failed_func failed_func)
 {
 	if (failed_func == EFUNC_TGETNUM)
 		return ("TGETNUM");
@@ -125,5 +130,9 @@ char	*get_failed_func_str_5(enum e_failed_func failed_func)
 		return ("TGOTO");
 	if (failed_func == EFUNC_TPUTS)
 		return ("TPUTS");
+	if (failed_func == EFUNC_DEV_ISSUE)
+		return ("case should never happen, exeception not handled");
+	if (failed_func == EFUNC_INPUT_ERROR)
+		return ("bad user input");
 	return (NULL);
 }

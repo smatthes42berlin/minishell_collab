@@ -26,18 +26,18 @@ int	check_heredoc_delim(t_here_doc_info *hdoc_info)
 	return (0);
 }
 
-
-
 int	handle_quotes(t_here_doc_info *hdoc_info, int *i)
 {
 	hdoc_info->index_close_quote = has_closing_quote(&(hdoc_info->delim_raw[*i
 				+ 1]), hdoc_info->delim_raw[*i]);
 	if (hdoc_info->index_close_quote == -1)
-		return (printf("Error: No closing quote found in heredoc!"));
+		return (throw_error_custom((t_error_ms){127, EPART_TOKENISER,
+				EFUNC_INPUT_ERROR, "hdoc No closing quote"}));
 	hdoc_info->quoted = true;
 	if (ft_str_n_join_int(hdoc_info->delim, &(hdoc_info->delim_raw[*i + 1]),
 			hdoc_info->index_close_quote + 1, &hdoc_info->tmp) == -1)
-		return (printf("Error: Malloc when joining delim string!"));
+		return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+				EFUNC_INPUT_ERROR, "hdoc joining delim string"}));
 	free(hdoc_info->delim);
 	hdoc_info->delim = hdoc_info->tmp;
 	hdoc_info->tmp = NULL;
@@ -52,7 +52,8 @@ int	copy_unquoted_chars(t_here_doc_info *hdoc_info, int i)
 	if (ft_str_n_join_int(hdoc_info->delim, &(hdoc_info->delim_raw[i
 				- hdoc_info->num_char_no_quote]), hdoc_info->num_char_no_quote
 			+ 1, &hdoc_info->tmp) == -1)
-		return (printf("Error: Malloc when joining delim string!"));
+		return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+				EFUNC_MALLOC, "hdoc joining delim string"}));
 	hdoc_info->delim = hdoc_info->tmp;
 	hdoc_info->tmp = NULL;
 	hdoc_info->num_char_no_quote = 0;

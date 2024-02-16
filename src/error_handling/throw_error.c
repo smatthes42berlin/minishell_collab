@@ -1,11 +1,43 @@
 #include "minishell.h"
 
-int	throw_error(int errno, char *program_part, char *failed_func,
-		char *passed_args, char *add_info)
+static bool	is_system_call_error(t_error_ms error_info);
+
+int	throw_error_custom(t_error_ms error_info)
 {
-	printf("Error: %s\n", strerror(errno));
-	printf("Program Part: %s\n", program_part);
-	printf("Failed Func: %s\n", failed_func);
-	printf("Func Args: %s\n", passed_args);
-	printf("Add Info: %s\n", add_info);
+	char		*res;
+	t_main_data	*main_data;
+
+	main_data = get_main_data();
+	res = NULL;
+	ft_printf_to_str(&res, "MINISHELL_LAST_EXIT=%d", error_info.err_code);
+	env_set_var(main_data, res);
+	printf("ERROR\n");
+	if (is_system_call_error(error_info))
+		printf("errno msg: %s\n", strerror(error_info.err_code));
+	printf("Program Part: %s\n", get_program_part_str(error_info.program_part));
+	printf("Failed Func: %s\n", get_failed_func_str(error_info.failed_func));
+	if (error_info.add_info)
+		printf("Add Info: %s\n", error_info.add_info);
+	free(res);
+	return (error_info.err_code);
+}
+
+int	throw_error_mimic_bash(char *msg, int code)
+{
+	char		*res;
+	t_main_data	*main_data;
+
+	main_data = get_main_data();
+	res = NULL;
+	ft_printf_to_str(&res, "MINISHELL_LAST_EXIT=%d", code);
+	env_set_var(main_data, res);
+	printf("%s\n", msg);
+	free(res);
+	return (code);
+}
+
+static bool	is_system_call_error(t_error_ms error_info)
+{
+	return (error_info.failed_func != EFUNC_DEV_ISSUE
+		&& error_info.failed_func != EFUNC_INPUT_ERROR);
 }

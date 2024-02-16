@@ -131,6 +131,14 @@ typedef struct s_parse_info
 
 }						t_parse_info;
 
+typedef struct s_ident_token_info
+{
+	enum e_token_type	token_type;
+	char				*token_value;
+	char				**cur_pos;
+	t_token				*token;
+}						t_ident_token_info;
+
 /**
  * generic for an identified token
  * @param type
@@ -261,14 +269,17 @@ typedef struct s_node_exec
 enum					e_program_part
 {
 	EPART_MAIN,
+	EPART_ENV,
 	EPART_TOKENISER,
 	EPART_EXPANDER,
 	EPART_PARSER,
 	EPART_EXECUTOR,
 };
 
-enum	e_failed_func
+enum					e_failed_func
 {
+	EFUNC_DEV_ISSUE,
+	EFUNC_INPUT_ERROR,
 	EFUNC_RL_CLEAR_HISTORY,
 	EFUNC_RL_ON_NEW_LINE,
 	EFUNC_RL_REPLACE_LINE,
@@ -323,5 +334,12 @@ enum	e_failed_func
 	EFUNC_TPUTS
 };
 
+typedef struct s_error_ms
+{
+	int					err_code;
+	enum e_program_part	program_part;
+	enum e_failed_func	failed_func;
+	char				*add_info;
+}						t_error_ms;
 
 #endif

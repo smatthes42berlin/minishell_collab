@@ -23,7 +23,7 @@ void signal_handler(int sig) {
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_main_data	main_data;
+	t_main_data	*main_data;
 	char		*test_str;
 	int			exit_code;
 
@@ -45,12 +45,12 @@ int	main(int argc, char *argv[], char *envp[])
 	init_main_data(&main_data);
 	if (init_env_vars(&main_data, envp))
 		return (1);
-	test_str = get_test_case(12);
+	test_str = get_test_case(1);
 	printf("TESTCASE: %s\n", test_str);
-	env_set_var(&main_data, "EMPTY=");
-	env_set_var(&main_data, "FIVE_ONE=11111");
-	env_set_var(&main_data, "ONE_TWO=2");
-	env_set_var(&main_data, "SOME_LETTERS=asdfsdf");
+	env_set_var(main_data, "EMPTY=");
+	env_set_var(main_data, "FIVE_ONE=11111");
+	env_set_var(main_data, "ONE_TWO=2");
+	env_set_var(main_data, "SOME_LETTERS=asdfsdf");
 	// env_print(&main_data);
 	while (1)
 	{
@@ -64,11 +64,11 @@ int	main(int argc, char *argv[], char *envp[])
 		if (ft_strlen(main_data.cli_input) == 0)
 			continue;
 		printf("main: before tokenise\n");
-		if (tokenise(&main_data))
-			free_main_exit(&main_data, 2);
+		if (tokenise(main_data))
+			free_main_exit(main_data, 2);
 		printf("main: before expand\n");
-		if (expand(&main_data))
-			free_main_exit(&main_data, 3);
+		if (expand(main_data))
+			free_main_exit(main_data, 3);
 		printf("main: before parse\n");
 		// //print_token_list(main_data.token_list);
 		// // write heredocs to pipe here
@@ -76,7 +76,8 @@ int	main(int argc, char *argv[], char *envp[])
 		printf("\n\nEXIT CODE = $%d$\n\n", exit_code);
 		if (exit_code)
 		{
-			free_main_exit(&main_data, 4);
+			free_main_exit(main_data, 4);
+			printf("aaaa\n");
 		}
 		if (executor(&main_data) == -1)
 			return (3);
@@ -85,20 +86,25 @@ int	main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
-int	init_main_data(t_main_data *main_data)
+int	reset_main_data(t_main_data *main_data)
 {
 	main_data->ast = NULL;
 	main_data->cli_input = NULL;
 	main_data->env_vars = NULL;
 	main_data->token_list = NULL;
-	main_data->env_vars = NULL;
 	return (0);
+}
+
+t_main_data	*get_main_data()
+{
+	static t_main_data	data = {NULL, NULL, NULL, NULL};
+	return (&data);
 }
 
 static char	*get_test_case(int test_case)
 {
 	if (test_case == 1)
-		return (ft_strdup("<< 1 cat <in_1 | echo <in_2 hi | <in_3 wc > 2"));
+		return (ft_strdup("<< 1 cat <in_1 hello | echo -e -s <in_2 hi | <in_3 wc -l > 2"));
 	if (test_case == 2)
 		return (ft_strdup("<< >> < | >"));
 	if (test_case == 3)

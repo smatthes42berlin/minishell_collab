@@ -2,7 +2,9 @@
 # define MINISHELL_FUNCS_H
 
 /* main */
-int					init_main_data(t_main_data *main_data);
+
+int					reset_main_data(t_main_data *main_data);
+t_main_data			*get_main_data(void);
 
 /* tokenisation/lexer main*/
 
@@ -21,7 +23,7 @@ int					has_closing_quote(char *cli_input, char quote_type);
 int					get_token(t_main_data *main_data, char **cur_pos);
 int					append_token_list(t_main_data *main_data, t_token *token);
 int					identify_token(char **cur_pos, t_token *token);
-t_token				*create_token(void);
+t_token				*create_token();
 int					count_operators(char *cur_pos);
 int					count_characters(char *cur_pos);
 int					identify_operator(char **cur_pos, t_token *token);
@@ -221,12 +223,12 @@ void				wait_for_all_processes(t_list *pid_list);
 /* error */
 void				error_code_handler(int error_code, const char *msg,
 						const char *subj, const char *mode);
+int					throw_error_custom(t_error_ms error_info);
+int	throw_error_mimic_bash(char *msg,
+							int code);
+
 char				*get_program_part_str(enum e_program_part program_part);
-char				*get_failed_func_str_1(enum e_failed_func failed_func);
-char				*get_failed_func_str_2(enum e_failed_func failed_func);
-char				*get_failed_func_str_3(enum e_failed_func failed_func);
-char				*get_failed_func_str_4(enum e_failed_func failed_func);
-char				*get_failed_func_str_5(enum e_failed_func failed_func);
+char				*get_failed_func_str(enum e_failed_func failed_func);
 
 /* test enviroment */
 // -> test cmd!

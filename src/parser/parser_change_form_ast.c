@@ -1,15 +1,4 @@
-
 #include "minishell.h"
-
-// do nothing, if root is no pipe
-// find lowest pipe node
-// is new root
-// if is only pipe, do nothing
-// else
-// left side stays the same
-// right side is previous pipe
-// left side is right side of other pipe
-// right side stays or points to next pipe
 
 static bool	is_not_last_pipe(t_node *node);
 static bool	first_node_no_pipe(t_parse_info *parse_info);
@@ -24,7 +13,8 @@ int	change_form_of_ast(t_parse_info *parse_info)
 	if (first_node_no_pipe(parse_info) || only_one_pipe(parse_info))
 		return (0);
 	parse_info->ast_rene->parent_node = parse_info->ast_rene->left_node;
-	parse_info->ast_rene->left_node = parse_info->ast_rene->parent_node->right_node;
+	parse_info->ast_rene->left_node = 
+		parse_info->ast_rene->parent_node->right_node;
 	cur_pipe = parse_info->ast_rene->parent_node;
 	while (cur_pipe)
 	{
