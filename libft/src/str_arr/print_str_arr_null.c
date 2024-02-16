@@ -2,7 +2,7 @@
 
 void	print_str_arr_null(char **arr)
 {
-	if(!arr)
+	if (!arr)
 		ft_printf("(null)\n");
 	while (arr && *arr)
 	{

@@ -72,8 +72,11 @@ SRC = 	main.c \
 		env_set_var.c \
 		env_get_var.c \
 		expander_main.c \
+		expander_check_expansion.c \
+		expander_remove_empty_token.c \
 		expander_util.c \
 		expander_expand_var.c \
+		expander_expand_var_fixed.c \
 		is_something_char.c \
 		is_something_token.c \
 		is_something_token_2.c \
@@ -86,6 +89,7 @@ SRC = 	main.c \
 		check_syntax_util.c \
 		parser_change_form_ast.c \
 		parser_create_node_exec.c \
+		parser_create_node_exec_2.c \
 		parser_create_node_exec_util.c \
 		parser_create_node_hdoc.c \
 		parser_create_node_pipe.c \
@@ -100,7 +104,8 @@ SRC = 	main.c \
 		test_command.c \
 		test_function.c \
 		get_program_part_str.c \
-		get_failed_func_str.c
+		get_failed_func_str.c \
+		throw_error.c \
 
 #parser_main.c
 	

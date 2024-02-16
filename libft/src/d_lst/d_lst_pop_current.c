@@ -15,7 +15,6 @@ t_list_d	*d_lst_pop_current(t_list_d **lst)
 	if (has_prev)
 	{
 		to_pop->prev->next = to_pop->next;
-		// *lst = to_pop->prev;
 	}
 	if (has_next)
 	{

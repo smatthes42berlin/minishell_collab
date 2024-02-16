@@ -39,7 +39,8 @@ static int	assign_token_type(enum e_token_type token_type,
 	token->type = token_type;
 	token->value = ft_str_n_dup(token_value, 0);
 	if (!token->value)
-		return (1);
+		return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+				EFUNC_MALLOC, "assign token type"}));
 	return (0);
 }
 

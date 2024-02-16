@@ -23,9 +23,11 @@ int	go_to_next_char(t_expansion_info *expansion_info)
 int	adjust_cur_pos_num(t_expansion_info *expansion_info, int num_add)
 {
 	expansion_info->cur_pos_index = expansion_info->cur_pos_index + num_add;
-	expansion_info->cur_pos = &((expansion_info->cur_token->value)[expansion_info->cur_pos_index]);
+	expansion_info->cur_pos = &((expansion_info->cur_token->value
+				)[expansion_info->cur_pos_index]);
 	return (0);
 }
+
 int	adjust_cur_pos_str_len(t_expansion_info *expansion_info, char *insert_str)
 {
 	int	str_len;

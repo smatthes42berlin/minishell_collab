@@ -1,13 +1,12 @@
-
 #include "minishell.h"
 
 static int	go_to_last_node(t_node **cur_node);
 static int	append_before_exec(t_parse_info *parse_info, t_node *cur_node,
 				t_node *new_node);
 static int	append_after_last_redir(t_node *cur_node,
-									t_node *new_node);
+				t_node *new_node);
 static bool	handle_cur_pipe_root(t_node **cur_node,
-									t_node *new_node);
+				t_node *new_node);
 
 int	append_to_last_redir(t_parse_info *parse_info, t_node *new_node)
 {

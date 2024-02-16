@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 int	check_heredoc(t_list_d **cur_token)
 {
 	t_list_d		*next_token;
@@ -15,9 +14,9 @@ int	check_heredoc(t_list_d **cur_token)
 	next_token_val = next_token->content;
 	init_hdoc_info(next_token_val->value, &hdoc_info);
 	if (check_heredoc_delim(&hdoc_info))
-		free_heredoc_info_code(&hdoc_info, 1);
+		return (free_heredoc_info_code(&hdoc_info, 1));
 	if (read_heredoc(&hdoc_info, cur_token))
-		free_heredoc_info_code(&hdoc_info, 2);
+		return (free_heredoc_info_code(&hdoc_info, 2));
 	return (free_heredoc_info_code(&hdoc_info, 0));
 }
 

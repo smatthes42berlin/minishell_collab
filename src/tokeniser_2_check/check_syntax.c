@@ -28,6 +28,10 @@ int	check_syntax(t_list_d *cur_token)
 
 int	token_syntax_error(char *token_val)
 {
-	(printf("minishell: syntax error near unexpected token `%s'\n", token_val));
-	return (1);
+	char *res;
+
+	(ft_printf_to_str(&res,
+				"minishell: syntax error near unexpected token `%s'\n",
+				token_val));
+	return (throw_error_mimic_bash(res, 127));
 }

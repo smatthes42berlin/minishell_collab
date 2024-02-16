@@ -15,9 +15,11 @@ int	create_word_token(char **cur_pos, t_token *token)
 
 	num_characters = count_characters(*cur_pos);
 	if (num_characters == -1)
-		return (printf("ERROR: no closing quote found"));
+		return (throw_error_custom((t_error_ms){127, EPART_TOKENISER,
+				EFUNC_INPUT_ERROR, "no closing quote found"}));
 	if (ft_str_n_dup_int(*cur_pos, num_characters + 1, &token_val) == -1)
-		return (printf("Error: duplicating string for token\n"));
+		return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+				EFUNC_MALLOC, "duplicating string for token"}));
 	token->type = T_WORD;
 	token->value = token_val;
 	*cur_pos = *cur_pos + num_characters;
@@ -27,8 +29,9 @@ int	create_word_token(char **cur_pos, t_token *token)
 int	create_operator_token(char **cur_pos, t_token *token)
 {
 	if (identify_operator(cur_pos, token))
-		return (printf("ERROR: Identifying Token Type!"));
+		return (1);
 	if (token->type == T_UNDEFINED)
-		return (printf("ERROR: Operator not handled!"));
+		return (throw_error_custom((t_error_ms){127, EPART_TOKENISER,
+				EFUNC_DEV_ISSUE, "identifying Token Type"}));
 	return (0);
 }

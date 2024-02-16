@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int	add_all_but_pipe_ast(t_parse_info *parse_info, t_node *new_node)

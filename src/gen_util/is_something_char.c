@@ -24,6 +24,3 @@ bool	is_valid_var_name_char(char c)
 {
 	return (ft_isalpha(c) || ft_isdigit(c) || c == '_');
 }
-
-
-

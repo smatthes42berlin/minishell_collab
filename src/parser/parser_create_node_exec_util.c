@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int	check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path)
@@ -12,7 +11,9 @@ int	check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path)
 	i = 0;
 	if (access(cmd_arg, X_OK) == 0)
 	{
-		ft_str_n_dup_int(cmd_arg, 0, exec_path);
+		if (ft_str_n_dup_int(cmd_arg, 0, exec_path) == -1)
+			return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+					EFUNC_MALLOC, "exec node copying path string"}));
 		return (0);
 	}
 	while (path[i])
@@ -31,7 +32,8 @@ int	check_path_combination(char *cur_path_val, char *cmd_arg, char **exec_path)
 
 	status = ft_join_n_str(&full_path, 3, cur_path_val, "/", cmd_arg);
 	if (status == -1)
-		return (printf("Error joining path string"));
+		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+				EFUNC_MALLOC, "exec node joining path string"}));
 	if (access(full_path, X_OK) == 0)
 	{
 		*exec_path = full_path;
@@ -58,7 +60,8 @@ int	get_path(char *envp[], char ***path)
 	if (!(*path))
 	{
 		free_str_arr_null(*path);
-		return (printf("Error splitting path variable"));
+		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+				EFUNC_MALLOC, "exec node splitting path variable"}));
 	}
 	return (0);
 }
