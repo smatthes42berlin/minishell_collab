@@ -16,7 +16,8 @@ typedef struct s_token	t_token;
 
 /**
  * main data structure, that can be passed around
- * @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
+
+	* @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
 	NULL when no env vars or uninitialised
  * @param token_list pointer to first element of token list or NULL,
 	when token list is uninitialised
@@ -71,9 +72,9 @@ enum					e_pid_satus
 
 typedef struct s_pipefd_main
 {
-	int		*pipefd;
-	bool	direction;
-}				t_pipefd;
+	int					*pipefd;
+	bool				direction;
+}						t_pipefd;
 
 /**
  * describing all the possible token types,
@@ -252,5 +253,73 @@ typedef struct s_node_exec
 	char				**env;
 	bool				is_inbuilt;
 }						t_node_exec;
+
+/* error handling */
+
+enum					e_program_part
+{
+	EPART_MAIN,
+	EPART_TOKENISER,
+	EPART_EXPANDER,
+	EPART_PARSER,
+	EPART_EXECUTOR,
+};
+
+enum	e_failed_func
+{
+	EFUNC_RL_CLEAR_HISTORY,
+	EFUNC_RL_ON_NEW_LINE,
+	EFUNC_RL_REPLACE_LINE,
+	EFUNC_RL_REDISPLAY,
+	EFUNC_ADD_HISTORY,
+	EFUNC_PRINTF,
+	EFUNC_MALLOC,
+	EFUNC_FREE,
+	EFUNC_WRITE,
+	EFUNC_ACCESS,
+	EFUNC_OPEN,
+	EFUNC_READ,
+	EFUNC_CLOSE,
+	EFUNC_FORK,
+	EFUNC_WAIT,
+	EFUNC_WAITPID,
+	EFUNC_WAIT3,
+	EFUNC_WAIT4,
+	EFUNC_SIGNAL,
+	EFUNC_SIGACTION,
+	EFUNC_SIGEMPTYSET,
+	EFUNC_SIGADDSET,
+	EFUNC_KILL,
+	EFUNC_EXIT,
+	EFUNC_GETCWD,
+	EFUNC_CHDIR,
+	EFUNC_STAT,
+	EFUNC_LSTAT,
+	EFUNC_FSTAT,
+	EFUNC_UNLINK,
+	EFUNC_EXECVE,
+	EFUNC_DUP,
+	EFUNC_DUP2,
+	EFUNC_PIPE,
+	EFUNC_OPENDIR,
+	EFUNC_READDIR,
+	EFUNC_CLOSEDIR,
+	EFUNC_STRERROR,
+	EFUNC_PERROR,
+	EFUNC_ISATTY,
+	EFUNC_TTYNAME,
+	EFUNC_TTYSLOT,
+	EFUNC_IOCTL,
+	EFUNC_GETENV,
+	EFUNC_TCSETATTR,
+	EFUNC_TCGETATTR,
+	EFUNC_TGETENT,
+	EFUNC_TGETFLAG,
+	EFUNC_TGETNUM,
+	EFUNC_TGETSTR,
+	EFUNC_TGOTO,
+	EFUNC_TPUTS
+};
+
 
 #endif

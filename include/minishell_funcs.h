@@ -221,6 +221,12 @@ void				wait_for_all_processes(t_list *pid_list);
 /* error */
 void				error_code_handler(int error_code, const char *msg,
 						const char *subj, const char *mode);
+char				*get_program_part_str(enum e_program_part program_part);
+char				*get_failed_func_str_1(enum e_failed_func failed_func);
+char				*get_failed_func_str_2(enum e_failed_func failed_func);
+char				*get_failed_func_str_3(enum e_failed_func failed_func);
+char				*get_failed_func_str_4(enum e_failed_func failed_func);
+char				*get_failed_func_str_5(enum e_failed_func failed_func);
 
 /* test enviroment */
 // -> test cmd!

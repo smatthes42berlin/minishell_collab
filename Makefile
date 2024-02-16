@@ -98,7 +98,9 @@ SRC = 	main.c \
 		print_exec_node.c \
 		print_pipe_node.c \
 		test_command.c \
-		test_function.c
+		test_function.c \
+		get_program_part_str.c \
+		get_failed_func_str.c
 
 #parser_main.c
 	
