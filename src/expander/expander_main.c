@@ -15,7 +15,9 @@ int	expand(t_main_data *main_data)
 				return (1);
 		}
 		if (remove_empty_token(&next))
+		{
 			continue ;
+		}
 		next = next->next;
 	}
 	return (0);
@@ -27,6 +29,8 @@ int	remove_empty_token(t_list_d **next)
 	t_list_d	*empty;
 
 	cur_token = (*next)->content;
+	if (!token_is_word(cur_token))
+		return (0);
 	if (str_is_empty(cur_token->value))
 	{
 		empty = d_lst_pop_current(next);

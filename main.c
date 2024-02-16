@@ -25,8 +25,8 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_main_data	main_data;
 	char		*test_str;
+	int			exit_code;
 
-	// int			exit_code;
 	if (argc > 1)
 	{
 		printf("Error: program '%s' doesn't take any arguments!", argv[0]);
@@ -45,7 +45,7 @@ int	main(int argc, char *argv[], char *envp[])
 	init_main_data(&main_data);
 	if (init_env_vars(&main_data, envp))
 		return (1);
-	test_str = get_test_case(11);
+	test_str = get_test_case(12);
 	printf("TESTCASE: %s\n", test_str);
 	env_set_var(&main_data, "EMPTY=");
 	env_set_var(&main_data, "FIVE_ONE=11111");
@@ -119,5 +119,7 @@ static char	*get_test_case(int test_case)
 		return (ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 |"));
 	if (test_case == 11)
 		return (ft_strdup("$HOME \"$HOME\" '$HOME' \"\" '' $HOME $HOME1"));
+	if (test_case == 12)
+		return (ft_strdup("<< 1 cat"));
 	return (NULL);
 }

@@ -11,7 +11,10 @@ int	check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path)
 	*exec_path = NULL;
 	i = 0;
 	if (access(cmd_arg, X_OK) == 0)
-		return (ft_str_n_dup_int(cmd_arg, 0, exec_path));
+	{
+		ft_str_n_dup_int(cmd_arg, 0, exec_path);
+		return (0);
+	}
 	while (path[i])
 	{
 		if (!check_path_combination(path[i], cmd_arg, exec_path))
