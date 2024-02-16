@@ -29,8 +29,10 @@ typedef struct s_main_data
 	t_list_d			*token_list;
 	t_node				*ast;
 	char				*cli_input;
-	//.....
+//...
 }						t_main_data;
+
+
 
 /**
  * using for the access mode 

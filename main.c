@@ -1,5 +1,26 @@
 #include "minishell.h"
 
+volatile enum e_systemstate systemstate = STATE_IDLE;
+
+void signal_handler(int sig) {
+    if (sig == SIGINT) 
+	{
+        systemstate = STATE_SIGINT;
+        printf("\nSIGINT empfangen, drücke nochmals Ctrl+C\n");
+		//signal(SIGINT, SIG_IGN);
+    }
+	if (sig == SIGQUIT) 
+	{
+        systemstate = STATE_SIGQUIT;
+         printf("\nSIGINT empfangen, drücke nochmals Ctrl+\\\n");
+    }
+	if (sig == 1000) 
+	{
+        systemstate = STATE_EOF;
+         printf("\nSIGINT empfangen, drücke nochmals Ctrl+D\n");
+    }
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_main_data	main_data;
@@ -12,6 +33,16 @@ int	main(int argc, char *argv[], char *envp[])
 		printf("Error: program '%s' doesn't take any arguments!", argv[0]);
 		return (1);
 	}
+
+	if (signal(SIGINT, signal_handler) == SIG_ERR) {
+        perror("signal");
+        exit(EXIT_FAILURE);
+    }
+	if (signal(SIGQUIT, signal_handler) == SIG_ERR) {
+        perror("signal");
+        exit(EXIT_FAILURE);
+    }
+
 	init_main_data(&main_data);
 	if (init_env_vars(&main_data, envp))
 		return (1);
@@ -51,8 +82,13 @@ int	main(int argc, char *argv[], char *envp[])
 		// watch out for eof and possbile return of null
 		main_data.cli_input = test_str;
 		main_data.cli_input = readline("cli>");
-		if (!main_data.cli_input || ft_strlen(main_data.cli_input) == 0)
+		if (!main_data.cli_input)
+		{
 			free_main_exit(&main_data, 2, 1);
+			signal_handler(1000);
+		}
+		if (ft_strlen(main_data.cli_input) == 0)
+			continue;
 		printf("main: before tokenise\n");
 		if (tokenise(&main_data))
 			free_main_exit(&main_data, 3, 2);
