@@ -18,13 +18,16 @@ int	access_handler(const char *path, enum e_access_mode mode)
 	result = -1;
 	if (FILE_EXISTS == mode || FILE_READABLE == mode || FILE_WRITABLE == mode
 		|| FILE_EXECUTABLE == mode)
-		result = access(path, mode);
+		{
+			result = access(path, mode);
+			if (result != 0)
+				error_code_handler(errno, "ERR-access", path, access_mode_to_str(mode));
+		}	
 	else
 	{
 		printf("ERROR 'access' - Wrong Mode given");
 		return (result);
 	}
-	error_code_handler(errno, "ERR-access", path, access_mode_to_str(mode));
 	return (result);
 }
 

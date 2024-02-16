@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+// problem, wihtout quotes gets not expanded
+// problem, what if env var has also quotes in it
+
 int	expand_variable(t_expansion_info *expansion_info)
 {
 	bool	found;
@@ -46,8 +49,9 @@ int	insert_env_var(t_expansion_info *expansion_info, char *env_var_name,
 	if (!key_with_dollar)
 		return (free_char_variadic_msg("Error: joining env var key with $", 1,
 				env_var));
-	replace_state = ins_replace_str(expansion_info->cur_token->value, &tmp,
-			key_with_dollar, env_var);
+	replace_state = ins_replace_str_after_index(&tmp,
+			(t_ins_repl_str){expansion_info->cur_token->value, key_with_dollar,
+			env_var, expansion_info->cur_pos_index - 1});
 	free(expansion_info->cur_token->value);
 	expansion_info->cur_token->value = tmp;
 	adjust_cur_pos_str_len(expansion_info, env_var);

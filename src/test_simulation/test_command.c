@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-bool	str_equal_test(const char *s1, const char *s2)
+static int	str_equal_test_cmd(const char *s1, const char *s2)
 {
 	while (*s1 && (*s1 == *s2))
 	{
@@ -19,8 +19,8 @@ t_node_exec	*test_cmd_exec(char *command, char *flag, bool is_inbuilt)
 	exec->type = EXEC;
 	exec->file_path = strdup(command);
 	args1 = malloc_handler(3 * sizeof(char *));
-	if ((str_equal_test(command, "cd") == false) &&
-		(str_equal_test(command, "echo") == false))
+	if ((str_equal_test_cmd(command, "cd") == false) &&
+		(str_equal_test_cmd(command, "echo") == false))
 	{
 		args1[0] = strdup(command);
 		if (flag == NULL)
@@ -52,10 +52,10 @@ t_node_pipe	*test_cmd_pipe(enum e_node_type type_left,
 	pipe = malloc_handler(sizeof(t_node_pipe));
 	pipe->type = PIPE;
 	pipe->left_node = malloc_handler(sizeof(t_node));
-	pipe->left_node->node_type = node_left;
+	pipe->left_node = (void *)node_left;
 	pipe->left_node->type = type_left;
 	pipe->right_node = malloc_handler(sizeof(t_node));
-	pipe->right_node->node_type = node_right;
+	pipe->right_node = (void *)node_right;
 	pipe->right_node->type = type_right;
 	return (pipe);
 }

@@ -50,6 +50,14 @@ typedef struct s_arr_char_key_info
 	char				**cpy;
 }						t_arr_char_key_info;
 
+typedef struct s_ins_repl_str
+{
+	char				*org_str;
+	char				*repl_str;
+	char				*ins_str;
+	int					search_start_index;
+}						t_ins_repl_str;
+
 /* ascci char checks n manip */
 
 int						ft_isprint(int c);
@@ -96,11 +104,12 @@ char					*ft_strtrim(char const *s1, char const *set);
 char					*ft_strmapi(char const *s, char (*f)(unsigned int,
 								char));
 void					ft_striteri(char *s, void (*f)(unsigned int, char *));
-int	split_str_str_first_occ(char const *s,
-							char const *split_at,
-							char ***res);
-int						ins_replace_str(char *org_str, char **res,
-							char *repl_str, char *ins_str);
+int	split_str_str_after_index(char const *s,
+								char const *split_at,
+								char ***res,
+								int index);
+int	ins_replace_str_after_index(char **res,
+								t_ins_repl_str replace_info);
 
 /* split */
 

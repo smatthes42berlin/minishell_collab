@@ -13,7 +13,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /test_simulation /builtins /gen_util /print
+SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /builtins /gen_util /print /test_simulation
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
@@ -28,12 +28,18 @@ SRC = 	main.c \
 		build_cd.c \
 		build_pwd.c \
 		build_echo.c \
+		build_export.c \
+		builld_unset.c \
+		build_env.c \
 		choose_builtin.c \
+		build_utiles.c \
 		access.c \
 		executor.c \
 		free_ast.c \
-		test_command.c \
-		utiles_tree_navigation.c \
+		exec_type_exec.c \
+		exec_type_pipe.c \
+		exec_type_redir.c \
+		exec_type_heredoc.c \
 		tree_navigation.c \
 		errno_print.c \
 		execve.c \
@@ -52,6 +58,7 @@ SRC = 	main.c \
 		token_get.c \
 		check_syntax_n_heredoc.c \
 		check_syntax.c \
+		check_last_node.c \
 		here_doc_main.c \
 		here_doc_handle_delimiter.c \
 		here_doc_read.c \
@@ -84,10 +91,14 @@ SRC = 	main.c \
 		parser_create_node_pipe.c \
 		parser_create_node_redir.c \
 		parser_create_node_util.c \
+		executer_debug_print.c \
+		print_type.c \
 		print_redir_node.c \
 		print_hdoc_node.c \
 		print_exec_node.c \
-		print_pipe_node.c
+		print_pipe_node.c \
+		test_command.c \
+		test_function.c
 
 #parser_main.c
 	
