@@ -2,7 +2,7 @@
 #include "minishell.h"
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-				t_node_exec *exec_node);
+								t_node_exec *exec_node);
 
 // typedef struct s_node_exec
 // {
@@ -81,9 +81,8 @@ int	check_if_inbuilt(t_node_exec *exec_node)
 }
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-		t_node_exec *exec_node)
+								t_node_exec *exec_node)
 {
-	
 	exec_node->argv = NULL;
 	exec_node->file_path = parse_info->cur_token->value;
 	exec_node->is_inbuilt = false;
@@ -120,8 +119,8 @@ int	get_cmd_arguments(t_parse_info *parse_info, t_node_exec *exec_node)
 	{
 		if (lst)
 			token = lst->content;
-		if(token_is_pipe(token))
-			break;
+		if (token_is_pipe(token))
+			break ;
 		if (token_is_redir(token))
 			got_to_nth_next_lst(&lst, 2);
 		else if (token_is_here_doc(token))
