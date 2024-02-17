@@ -1,23 +1,7 @@
-
 #include "minishell.h"
 
 static int	init_exec_node_param(t_parse_info *parse_info,
 				t_node_exec *exec_node);
-
-// typedef struct s_node_exec
-// {
-// 	char				*file_path;
-// 	char				**argv;
-// 	char				**env;
-// 	bool				is_inbuilt;
-// }						t_node_exec;
-
-// checken, ob command existiert
-// auch checken, dass command kein file ist
-// eventuell checken, ob man Zugriff auf Command hat
-// argument von den naechsten Token holen
-// use stat with filename to check permissions for file
-// check, whether command is inbuilt
 
 int	create_exec_node(t_parse_info *parse_info)
 {
@@ -25,7 +9,8 @@ int	create_exec_node(t_parse_info *parse_info)
 
 	exec_node = malloc(sizeof(t_node_exec));
 	if (!exec_node)
-		return (printf("Error: Allocating memory for exec node \n"));
+		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+				EFUNC_MALLOC, "exec node"}));
 	init_generic_node_param((t_node *)exec_node, EXEC);
 	if (init_exec_node_param(parse_info, exec_node))
 		return (1);
@@ -37,8 +22,7 @@ int	create_exec_node(t_parse_info *parse_info)
 		return (1);
 	if (check_if_cmd_is_folder(exec_node))
 		return (1);
-	if (add_all_but_pipe_ast(parse_info, (t_node *)exec_node))
-		return (1);
+	add_all_but_pipe_ast(parse_info, (t_node *)exec_node);
 	print_exec_node(exec_node, 1);
 	set_n_token_as_parsed(1, parse_info);
 	return (0);
@@ -51,7 +35,8 @@ int	check_if_cmd_is_folder(t_node_exec *exec_node)
 	if (!exec_node->file_path || exec_node->is_inbuilt)
 		return (0);
 	if (stat(exec_node->file_path, &statbuf))
-		return (1);
+		return (throw_error_custom((t_error_ms){errno, EPART_PARSER, EFUNC_STAT,
+				"exec node checking file info"}));
 	if (S_ISDIR(statbuf.st_mode))
 	{
 		free(exec_node->file_path);
@@ -73,7 +58,8 @@ int	check_if_inbuilt(t_node_exec *exec_node)
 		exec_node->is_inbuilt = true;
 		exec_node->file_path = ft_strdup(exec_node->file_path);
 		if (!exec_node->file_path)
-			return (printf("error copying exe name when inbuilt recognised\n"));
+			return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+					EFUNC_MALLOC, "copying exe name when inbuilt"}));
 	}
 	else
 		exec_node->is_inbuilt = false;
@@ -81,15 +67,15 @@ int	check_if_inbuilt(t_node_exec *exec_node)
 }
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-		t_node_exec *exec_node)
+								t_node_exec *exec_node)
 {
-	
 	exec_node->argv = NULL;
 	exec_node->file_path = parse_info->cur_token->value;
 	exec_node->is_inbuilt = false;
 	exec_node->env = ft_arr_cpy_char_null(parse_info->main_data->env_vars);
 	if (!exec_node->env && parse_info->main_data->env_vars)
-		return (printf("Error copying the envrionment from main process to exec node\n"));
+		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+				EFUNC_MALLOC, "copying environment  exec node"}));
 	return (0);
 }
 
@@ -105,64 +91,5 @@ int	check_if_cmd_exists(t_node_exec *exec_node)
 		exec_node->file_path = NULL;
 	else
 		exec_node->file_path = path;
-	return (0);
-}
-
-int	get_cmd_arguments(t_parse_info *parse_info, t_node_exec *exec_node)
-{
-	t_list_d	*lst;
-	t_token		*token;
-
-	lst = parse_info->next->next;
-	if (copy_cmd_name_to_args_arr(exec_node))
-		return (1);
-	while (lst)
-	{
-		if (lst)
-			token = lst->content;
-		if(token_is_pipe(token))
-			break;
-		if (token_is_redir(token))
-			got_to_nth_next_lst(&lst, 2);
-		else if (token_is_here_doc(token))
-			got_to_nth_next_lst(&lst, 1);
-		else
-		{
-			token->parsed = true;
-			if (copy_argument(exec_node, token->value))
-				return (1);
-			got_to_nth_next_lst(&lst, 1);
-		}
-	}
-	return (0);
-}
-
-int	copy_cmd_name_to_args_arr(t_node_exec *exec_node)
-{
-	if (exec_node->file_path)
-		if (copy_argument(exec_node, exec_node->file_path))
-			return (printf("Error adding an argument to exec node arg list"));
-	return (0);
-}
-
-int	copy_argument(t_node_exec *exec_node, char *new_arg)
-{
-	char	**tmp;
-
-	tmp = ft_arr_char_add(exec_node->argv, new_arg);
-	if (!tmp)
-		return (printf("Error adding an argument to exec node arg list"));
-	free_str_arr_null(exec_node->argv);
-	exec_node->argv = tmp;
-	return (0);
-}
-
-int	got_to_nth_next_lst(t_list_d **lst, int n)
-{
-	while (n > 0)
-	{
-		*lst = (*lst)->next;
-		n--;
-	}
 	return (0);
 }

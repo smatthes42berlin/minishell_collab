@@ -36,7 +36,6 @@ static void	swap_3(t_list_d *head)
 	t_list_d	*second;
 
 	second = head->next;
-	
 	head->next = second->next;
 	second->prev = NULL;
 	second->next->prev = head;

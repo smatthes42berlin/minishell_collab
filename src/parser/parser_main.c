@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static int	identify_token_in_parser(t_parse_info *parse_info,
@@ -19,10 +18,7 @@ int	parse(t_main_data *main_data)
 		token_recognised = identify_token_in_parser(&parse_info,
 				&token_create_success);
 		if (token_recognised || token_create_success)
-		{
-			// here function to free current ast needed
 			return (1);
-		}
 	}
 	print_ast(parse_info.root_node_ast, 0);
 	printf("\n\n\n");
@@ -33,7 +29,7 @@ int	parse(t_main_data *main_data)
 }
 
 static int	identify_token_in_parser(t_parse_info *parse_info,
-		int *token_create_success)
+									int *token_create_success)
 {
 	*token_create_success = 0;
 	if (parse_info->cur_token->parsed)
@@ -47,6 +43,7 @@ static int	identify_token_in_parser(t_parse_info *parse_info,
 	else if (token_is_word(parse_info->cur_token))
 		*token_create_success = create_exec_node(parse_info);
 	else
-		return (printf("Error: token type not recognised during parsing"));
+		return (throw_error_custom((t_error_ms){127, EPART_PARSER,
+				EFUNC_DEV_ISSUE, "token type not recognised"}));
 	return (0);
 }

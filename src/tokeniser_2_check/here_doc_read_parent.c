@@ -9,19 +9,22 @@ int	parent_get_str_child(t_list_d **hdoc_op_token, int fd[2], int pid,
 
 	res_wait = waitpid(pid, &status, 0);
 	if (res_wait == -1)
-		printf("Error: problem waiting for child process");
+		return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+				EFUNC_WAIT, "hdoc waiting for child process"}));
 	if (WIFEXITED(status))
 		res_wait = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 		res_wait = WTERMSIG(status);
 	if (res_wait)
-		return (printf("Error: problem in heredoc child writing to pipe"));
+		return (1);
 	if (read_whole_file(fd[0], &res))
-		return (printf("Error: reading from pipe"));
+		return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+				EFUNC_READ, "hdoc reading from pipe"}));
 	if (close(fd[0]) == -1)
-		return (printf("Error: closing pipe"));
+		return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+				EFUNC_PIPE, "hdoc closing pipe"}));
 	if (add_heredoc_str_token(hdoc_op_token, res, hdoc_info))
-		return (printf("Error: problem manipulating linked list heredoc"));
+		return (1);
 	return (0);
 }
 
@@ -39,7 +42,8 @@ int	add_heredoc_str_token(t_list_d **hdoc_op_token, char *res,
 		if (ft_join_n_str(&tmp, 3, "'", res, "'") == -1)
 		{
 			free(res);
-			return (printf("Error: adding single quotes to heredoc\n"));
+			return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+					EFUNC_MALLOC, "hdoc adding single quotes"}));
 		}
 		free(res);
 		res = tmp;

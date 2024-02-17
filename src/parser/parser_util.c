@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int	set_as_root(t_parse_info *parse_info, t_node *node)
@@ -47,5 +46,3 @@ int	got_to_nth_next_token(int num, t_parse_info *parse_info)
 	}
 	return (0);
 }
-
-

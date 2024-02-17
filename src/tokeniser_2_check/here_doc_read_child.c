@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-static int	free_compl_exit(char *compl_str, int code, char *msg);
+static int	free_compl_exit(char *compl_str, char *msg,
+				enum e_failed_func failed_func, bool success);
 static void	handle_end_reached(char **compl_str, int *str_len, bool *eof);
 static void	add_newline_to_compl_str(char **compl_str, char **new_line);
 
@@ -23,10 +24,12 @@ int	child_read_hdoc(t_here_doc_info *hdoc_info, int fd[2])
 		free(new_line);
 	}
 	if (write(fd[1], compl_str, str_len + 1) == -1)
-		return (free_compl_exit(compl_str, 2, "Error: writing to pipe"));
+		return (free_compl_exit(compl_str, "hdoc child writing to pipe",
+				EFUNC_WRITE, 0));
 	if (close(fd[1]) == -1)
-		return (free_compl_exit(compl_str, 3, "Error: closing pipe"));
-	return (free_compl_exit(compl_str, 0, NULL));
+		return (free_compl_exit(compl_str, "hdoc child closing pipe",
+				EFUNC_CLOSE, 0));
+	return (free_compl_exit(compl_str, NULL, EFUNC_FREE, 1));
 }
 
 static void	add_newline_to_compl_str(char **compl_str, char **new_line)
@@ -38,8 +41,8 @@ static void	add_newline_to_compl_str(char **compl_str, char **new_line)
 	{
 		free(*new_line);
 		free(tmp);
-		printf("Error: joining strings\n");
-		exit(1);
+		exit(throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+					EFUNC_MALLOC, "hdoc child joining strings"}));
 	}
 	free(tmp);
 }
@@ -49,6 +52,9 @@ static void	handle_end_reached(char **compl_str, int *str_len, bool *eof)
 	if (!*compl_str)
 	{
 		*compl_str = ft_strdup("");
+		if (!*compl_str)
+			exit(throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
+						EFUNC_MALLOC, "hdoc child adding newline"}));
 		*str_len = 0;
 	}
 	else
@@ -56,10 +62,13 @@ static void	handle_end_reached(char **compl_str, int *str_len, bool *eof)
 	*eof = true;
 }
 
-static int	free_compl_exit(char *compl_str, int code, char *msg)
+static int	free_compl_exit(char *compl_str, char *msg,
+		enum e_failed_func failed_func, bool success)
 {
 	free(compl_str);
-	if (msg)
-		printf("%s\n", msg);
-	exit(code);
+	if (success)
+		exit(0);
+	exit(throw_error_custom((t_error_ms){errno, EPART_TOKENISER, failed_func,
+				msg}));
+	return (0);
 }

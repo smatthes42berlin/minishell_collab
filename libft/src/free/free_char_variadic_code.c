@@ -2,9 +2,9 @@
 
 int	free_char_variadic_code(int code, int num, ...)
 {
-	va_list args;
-	char *next_str;
-	int i;
+	va_list	args;
+	char	*next_str;
+	int		i;
 
 	if (num <= 0)
 		return (0);

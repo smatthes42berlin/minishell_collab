@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static int	get_file_name(t_node_redir *redir_node, t_parse_info *parse_info);
@@ -13,7 +12,8 @@ int	create_redir_node(t_parse_info *parse_info)
 
 	redir_node = malloc(sizeof(*redir_node));
 	if (!redir_node)
-		return (printf("Error: Allocating memory for redir node\n"));
+		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+				EFUNC_MALLOC, "redir node"}));
 	node_generic = (t_node *)redir_node;
 	init_generic_node_param(node_generic, REDIR);
 	init_redir_node_param(redir_node);
@@ -21,8 +21,7 @@ int	create_redir_node(t_parse_info *parse_info)
 	decide_stdin_stdout(redir_node, parse_info->cur_token);
 	if (get_file_name(redir_node, parse_info))
 		return (1);
-	if (add_all_but_pipe_ast(parse_info, node_generic))
-		return (1);
+	add_all_but_pipe_ast(parse_info, node_generic);
 	set_n_token_as_parsed(2, parse_info);
 	print_redir_node(redir_node, true);
 	return (0);
@@ -34,7 +33,8 @@ static int	get_file_name(t_node_redir *redir_node, t_parse_info *parse_info)
 
 	next_token = parse_info->next->next->content;
 	if (ft_str_n_dup_int(next_token->value, 0, &(redir_node->filename)) == -1)
-		return printf("Problem duplicating str for redir node filename\n");
+		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+				EFUNC_MALLOC, "duplicating str for redir node filename"}));
 	return (0);
 }
 
