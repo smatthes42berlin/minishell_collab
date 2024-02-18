@@ -106,6 +106,8 @@ SRC = 	main.c \
 		get_program_part_str.c \
 		get_failed_func_str.c \
 		throw_error.c \
+		signals.c \
+		here_doc_read_child_util.c
 
 #parser_main.c
 	

@@ -2,7 +2,7 @@
 
 int	get_token(t_main_data *main_data, char **cur_pos)
 {
-	t_token *new_token;
+	t_token	*new_token;
 
 	new_token = create_token();
 	if (!new_token)

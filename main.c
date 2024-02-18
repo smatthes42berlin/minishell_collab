@@ -8,6 +8,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char		*test_str;
 	int			exit_code;
 
+	signal_main();
 	if (argc > 1)
 	{
 		printf("Error: program '%s' doesn't take any arguments!", argv[0]);
@@ -26,9 +27,13 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		main_data->cli_input = test_str;
-		// main_data->cli_input = readline("cli>");
-		if (!main_data->cli_input || ft_strlen(main_data->cli_input) == 0)
-			free_main_exit(main_data, -1);
+		main_data->cli_input = readline("cli>");
+		if (check_ctrl_d(main_data))
+			free_main_exit(main_data, 1);
+		main_data->num_lines++;
+		if (only_newline_entered(main_data))
+			continue ;
+		printf("line %s\n", main_data->cli_input);
 		add_history(main_data->cli_input);
 		printf("main: before tokenise\n");
 		if (tokenise(main_data))
@@ -61,9 +66,9 @@ int	reset_main_data(t_main_data *main_data)
 	return (0);
 }
 
-t_main_data	*get_main_data()
+t_main_data	*get_main_data(void)
 {
-	static t_main_data	data = {NULL, NULL, NULL, NULL};
+	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
 	return (&data);
 }
 
