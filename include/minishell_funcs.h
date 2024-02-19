@@ -6,6 +6,10 @@
 int					reset_main_data(t_main_data *main_data);
 t_main_data			*get_main_data(void);
 
+/* Signal */
+int					signal_check(void);
+void				signal_handler(int sig);
+
 /* tokenisation/lexer main*/
 
 int					tokenise(t_main_data *main_data);
