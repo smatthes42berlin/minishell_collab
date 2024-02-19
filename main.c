@@ -1,25 +1,6 @@
 #include "minishell.h"
 
-volatile enum e_systemstate systemstate = STATE_IDLE;
-
-void signal_handler(int sig) {
-    if (sig == SIGINT) 
-	{
-        systemstate = STATE_SIGINT;
-        printf("\nSIGINT empfangen, drücke nochmals Ctrl+C\n");
-		//signal(SIGINT, SIG_IGN);
-    }
-	if (sig == SIGQUIT) 
-	{
-        systemstate = STATE_SIGQUIT;
-         printf("\nSIGINT empfangen, drücke nochmals Ctrl+\\\n");
-    }
-	if (sig == 1000) 
-	{
-        systemstate = STATE_EOF;
-         printf("\nSIGINT empfangen, drücke nochmals Ctrl+D\n");
-    }
-}
+static char	*get_test_case(int test_case);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -32,18 +13,8 @@ int	main(int argc, char *argv[], char *envp[])
 		printf("Error: program '%s' doesn't take any arguments!", argv[0]);
 		return (1);
 	}
-
-	if (signal(SIGINT, signal_handler) == SIG_ERR) {
-        perror("signal");
-        exit(EXIT_FAILURE);
-    }
-	if (signal(SIGQUIT, signal_handler) == SIG_ERR) {
-        perror("signal");
-        exit(EXIT_FAILURE);
-    }
-
-	init_main_data(&main_data);
-	if (init_env_vars(&main_data, envp))
+	main_data = get_main_data();
+	if (init_env_vars(main_data, envp))
 		return (1);
 	test_str = get_test_case(1);
 	printf("TESTCASE: %s\n", test_str);
@@ -54,15 +25,11 @@ int	main(int argc, char *argv[], char *envp[])
 	// env_print(&main_data);
 	while (1)
 	{
-		main_data.cli_input = test_str;
-		main_data.cli_input = readline("cli>");
-		if (!main_data.cli_input)
-		{
-			free_main_exit(&main_data, 2, 1);
-			signal_handler(1000);
-		}
-		if (ft_strlen(main_data.cli_input) == 0)
-			continue;
+		//main_data->cli_input = test_str;
+		main_data->cli_input = readline("cli>");
+		if (!main_data->cli_input || ft_strlen(main_data->cli_input) == 0)
+			free_main_exit(main_data, -1);
+		add_history(main_data->cli_input);
 		printf("main: before tokenise\n");
 		if (tokenise(main_data))
 			free_main_exit(main_data, 2);
@@ -70,19 +37,17 @@ int	main(int argc, char *argv[], char *envp[])
 		if (expand(main_data))
 			free_main_exit(main_data, 3);
 		printf("main: before parse\n");
-		// //print_token_list(main_data.token_list);
-		// // write heredocs to pipe here
-		exit_code = parse(&main_data);
+		print_token_list(main_data->token_list);
+		exit_code = parse(main_data);
 		printf("\n\nEXIT CODE = $%d$\n\n", exit_code);
 		if (exit_code)
 		{
 			free_main_exit(main_data, 4);
 			printf("aaaa\n");
 		}
-		printf("main: before executor\n");
 		if (executor(main_data) == -1)
 			return (3);
-		//free_main_exit(&main_data, 3, 0);
+		// free_main_exit(main_data, 0);
 	}
 	return (0);
 }
