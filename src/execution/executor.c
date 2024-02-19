@@ -18,12 +18,12 @@ void manuel_test_mode(t_main_data *data)
 	data->ast =(void *)test;
 }
 
-void check_systamstate(void)
-{
-	if (systemstate == STATE_SIGINT)
-		printf("checked Systemstate \n\n");
+// void check_systamstate(void)
+// {
+// 	if (systemstate == STATE_SIGINT)
+// 		printf("checked Systemstate \n\n");
 
-}
+// }
 
 
 int	executor(t_main_data *data)

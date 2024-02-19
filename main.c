@@ -79,7 +79,8 @@ int	main(int argc, char *argv[], char *envp[])
 			free_main_exit(main_data, 4);
 			printf("aaaa\n");
 		}
-		if (executor(&main_data) == -1)
+		printf("main: before executor\n");
+		if (executor(main_data) == -1)
 			return (3);
 		//free_main_exit(&main_data, 3, 0);
 	}

@@ -5,6 +5,6 @@
 # include "minishell_experimental.h"
 # include "minishell_typedef.h"
 # include "minishell_funcs.h"
-# include "minishell_globals.h"
+// # include "minishell_globals.h"
 
 #endif
