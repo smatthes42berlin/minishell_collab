@@ -21,7 +21,10 @@ char	**build_echo(t_main_data *data, t_node_exec *node)
 	}
 	tmp_str_1 = copy_str_arr(node->argv, i_beginn_cp, false);
 	replace_env_in_str_arr(data, tmp_str_1);
-	ret = malloc_handler(sizeof(char *) * 2);
+	ret = malloc(sizeof(char *) * 2);
+	if (!ret)
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
+			"function \"build_echo\" for \'echo\' command!"});
 	ret[0] = str_arr_to_str(tmp_str_1, !newline);
 	ret[1] = NULL;
 	free_str_arr_null(tmp_str_1);
@@ -50,6 +53,19 @@ static void	replace_env_in_str_arr(t_main_data *data, char **arg)
 	}
 }
 
+static char *creat_str_leng(int total_length, int i)
+{
+	char	*tmp_str;
+
+	tmp_str = malloc(sizeof(char) * (total_length + i + 1));
+	if (!tmp_str)
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
+			"function \"absoult_or_relativ_path\" for \'cd\' command!"});
+	tmp_str[0] = '\0';
+
+	return (tmp_str);
+}
+
 static char	*str_arr_to_str(char **str, bool newline)
 {
 	size_t	total_length;
@@ -61,8 +77,7 @@ static char	*str_arr_to_str(char **str, bool newline)
 	i = 0;
 	while (str[i] != NULL)
 		total_length += ft_strlen(str[i++]);
-	tmp_str = malloc_handler(sizeof(char) * (total_length + i + 1));
-	tmp_str[0] = '\0';
+	tmp_str = creat_str_leng(total_length, i);
 	i = 0;
 	while (str[i] != NULL)
 	{

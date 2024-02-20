@@ -45,10 +45,8 @@ SRC = 	main.c \
 		tree_navigation.c \
 		errno_print.c \
 		execve.c \
-		fork.c \
-		malloc.c \
+		fork_process_state.c \
 		open_and_close.c \
-		pid_list_handler.c \
 		pipe.c \
 		tokenise_main.c \
 		append_token.c \

@@ -80,13 +80,19 @@ static char	*absoult_or_relativ_path(char *path)
 	ret = NULL;
 	if (path[0] == '/')
 	{
-		ret = malloc_handler(sizeof(char) * 2);
+		ret = malloc(sizeof(char) * 2);
+		if (!ret)
+			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
+				"function \"absoult_or_relativ_path\" for \'cd\' command!"});
 		ret[0] = '/';
 		ret[1] = '\0';
 	}
 	else
 	{
-		ret = malloc_handler(sizeof(char));
+		ret = malloc(sizeof(char));
+		if (!ret)
+			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
+				"function \"absoult_or_relativ_path\" for \'cd\' command!"});
 		ret[0] = '\0';
 	}
 	return (ret);

@@ -3,20 +3,20 @@
 static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 static void	env_add_clr(t_main_data *data, char *env_var);
 
-void manuel_test_mode(t_main_data *data)
-{
-	//free_ast(data->ast);
-	data->ast = NULL;
-	data->ast = malloc_handler(sizeof(t_node));
+// void manuel_test_mode(t_main_data *data)
+// {
+// 	//free_ast(data->ast);
+// 	data->ast = NULL;
+// 	data->ast = malloc(sizeof(t_node));
 
-		// t_node_exec *test = set_cmd_1();
-		// data->ast->type = EXEC;
+// 		// t_node_exec *test = set_cmd_1();
+// 		// data->ast->type = EXEC;
 
-		t_node_pipe *test = set_cmd_2();
-		data->ast->type = PIPE;
+// 		t_node_pipe *test = set_cmd_2();
+// 		data->ast->type = PIPE;
 
-	data->ast =(void *)test;
-}
+// 	data->ast =(void *)test;
+// }
 
 // void check_systamstate(void)
 // {
@@ -35,20 +35,19 @@ int	executor(t_main_data *data)
 	printf("##########################################################\n");
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
 	pipe_handler(pipefd);
-	pipe_struct = malloc_handler(sizeof(t_pipefd));
+	pipe_struct = malloc(sizeof(t_pipefd));
+	if (!pipe_struct)
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
+			"function \"executor\""});
 	pipe_struct->pipefd = pipefd;
 	pid = fork_handler();
-	
 	if (pid == 0)
 	{
-		//manuel_test_mode(data);
 		navigate_tree_forward(data, data->ast, pipe_struct);
-		//free(pipe_struct);
 		free_ast(data->ast);
 		free_main_exit(data, 0);
 		free_main_exit(data, 0);
 		free_main_exit(data, 0); // genauers Prüfen im Valgrind
-		exit(0);
 	}
 	else
 	{
@@ -58,8 +57,6 @@ int	executor(t_main_data *data)
 	free(pipe_struct); // double free child process
 	print_debugging_info_executer(INT_DEBUG, 2, NULL);
 	printf("##########################################################\n");
-	//printf("env_HOME |%s|\n", env_get_var(data, "HOME"));
-	//printf("env_PWD |%s|\n", env_get_var(data, "PWD"));
 	return (0);
 }
 
@@ -88,7 +85,7 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 {
 	if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
 	{
-		print_debugging_info_executer(1, 20, env_var);
+		print_debugging_info_executer(INT_DEBUG, 20, env_var);
 		env_set_var(data, env_var + ft_strlen(ADD_ENV));
 	}
 	else if (ft_strncmp(env_var, CLR_ENV, ft_strlen(CLR_ENV)) == 0)

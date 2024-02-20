@@ -12,5 +12,5 @@ char	*get_program_part_str(enum e_program_part program_part)
 		return ("PARSER");
 	if (program_part == EPART_EXECUTOR)
 		return ("EXECUTOR");
-	return NULL;
+	return (NULL);
 }
