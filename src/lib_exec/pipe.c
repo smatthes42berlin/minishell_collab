@@ -5,10 +5,11 @@
  *
  * @param pipefd
  */
-void	pipe_handler(int *pipefd)
+void	pipe_handler(int *pipefd, char *str)
 {
 	if (pipe(pipefd) < 0)
-		error_code_handler(errno, "ERR-pipe", " ", " ");
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_PIPE,
+			str});
 }
 
 /**

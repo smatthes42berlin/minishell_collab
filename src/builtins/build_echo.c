@@ -53,7 +53,7 @@ static void	replace_env_in_str_arr(t_main_data *data, char **arg)
 	}
 }
 
-static char *creat_str_leng(int total_length, int i)
+static char	*creat_str_leng(int total_length, int i)
 {
 	char	*tmp_str;
 
@@ -62,7 +62,6 @@ static char *creat_str_leng(int total_length, int i)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
 			"function \"absoult_or_relativ_path\" for \'cd\' command!"});
 	tmp_str[0] = '\0';
-
 	return (tmp_str);
 }
 

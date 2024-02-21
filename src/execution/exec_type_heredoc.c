@@ -8,11 +8,13 @@ void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 
 	print_debugging_info_executer(INT_DEBUG, 29, NULL);
 	heredoc_node = (t_node_heredoc *)node;
-	//read_file(heredoc_node->read_fd);
-	if (dup2(heredoc_node->read_fd, STDIN_FILENO) == -1)
+	if (dup2(heredoc_node->read_fd, STDIN_FILENO) < 0)
 	{
-		close_handler(heredoc_node->read_fd);
-		error_code_handler(errno, "ERR-dub_2 in \"type_redir\"", "", "");
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_DUP2,
+			"function \"type_heredoc\""});
+		if (close(heredoc_node->read_fd) < 0)
+			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CLOSE,
+				"function \"type_heredoc\""});
 		return ;
 	}
 	if (heredoc_node->left_node->type == NOTHING)
@@ -22,7 +24,9 @@ void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	}
 	else
 		navigate_tree_forward(data, heredoc_node->left_node, pipe_struct);
-	close_handler(heredoc_node->read_fd);
+	if (close(heredoc_node->read_fd) < 0)
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CLOSE,
+			"function \"type_heredoc\""});
 }
 
 int	read_file(int fd)

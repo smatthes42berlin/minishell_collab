@@ -12,7 +12,7 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 
 	pipe_node = (t_node_pipe *)node;
 	print_debugging_info_executer(INT_DEBUG, 6, NULL);
-	pipe_handler(pipefd);
+	pipe_handler(pipefd, "function \"type_pipe\"");
 	main_pid = fork_handler();
 	if (main_pid == 0)
 	{

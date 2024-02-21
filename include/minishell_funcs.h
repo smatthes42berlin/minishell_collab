@@ -209,15 +209,13 @@ char					*add_newline(char *str, bool newline);
 char					**copy_str_arr(char **arg, int i_beginn, bool newline);
 
 /* execute lib*/
-int						open_handler(const char *path, enum e_open_mode mode);
-int						close_handler(int fd);
 int						access_handler(const char *path,
-							enum e_access_mode mode);
+							enum e_access_mode mode, int debug_mode);
 void					execve_handler(const char *file_path, char **argv,
 							char **env);
 pid_t					fork_handler(void);
 enum e_process_status	evaluate_process_status(int status);
-void					pipe_handler(int *pipefd);
+void					pipe_handler(int *pipefd, char *str);
 void					pipe_setting(int *pipefd, bool open, char **str);
 // void					*malloc_handler(size_t bytes);
 /*
@@ -228,8 +226,6 @@ void					wait_for_all_processes(t_list *pid_list);
 */
 
 /* error */
-void					error_code_handler(int error_code, const char *msg,
-							const char *subj, const char *mode);
 int						throw_error_custom(t_error_ms error_info);
 int						throw_error_mimic_bash(char *msg, int code);
 

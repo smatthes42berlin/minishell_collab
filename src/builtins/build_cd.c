@@ -21,8 +21,8 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 		str_tmp = ft_clear_str(node->argv[1]);
 	i = chdir(str_tmp);
 	if (i == -1)
-		error_code_handler(errno, 
-		"ERR-chdir", "CD -Command cd-buid funktion --> ", str_tmp);
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CHDIR,
+			"function \"build_cd\" for \'cd\' command!"});
 	env_new[1] = creat_env_var("PWD=", ADD_ENV, false);
 	env_new[2] = creat_env_var("PWD=", ADD_CD, false);
 	env_new[3] = NULL;

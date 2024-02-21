@@ -43,10 +43,8 @@ SRC = 	main.c \
 		exec_type_redir.c \
 		exec_type_heredoc.c \
 		tree_navigation.c \
-		errno_print.c \
 		execve.c \
 		fork_process_state.c \
-		open_and_close.c \
 		pipe.c \
 		tokenise_main.c \
 		append_token.c \

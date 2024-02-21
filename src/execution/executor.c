@@ -34,7 +34,7 @@ int	executor(t_main_data *data)
 
 	printf("##########################################################\n");
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
-	pipe_handler(pipefd);
+	pipe_handler(pipefd, "function \"executor\"");
 	pipe_struct = malloc(sizeof(t_pipefd));
 	if (!pipe_struct)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
@@ -96,8 +96,9 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 	else if (ft_strncmp(env_var, ADD_CD, ft_strlen(ADD_CD)) == 0)
 	{
 		print_debugging_info_executer(INT_DEBUG, 22, env_var);
-		if (chdir(env_var + ft_strlen(ADD_CD) + 4) == -1)
-			error_code_handler(errno, "ERR-chdir", "CD -Command --> ", env_var + ft_strlen(ADD_CD) + 4);
+		if (chdir(env_var + ft_strlen(ADD_CD) + 4) < 0)
+			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CHDIR,
+				"function \"env_add_clr\""});
 	}
 }
 
