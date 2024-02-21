@@ -3,6 +3,7 @@
 static void	free_exec(t_node *node);
 static void	free_redim(t_node *node);
 static void	free_pipe(t_node *node);
+static void	free_heredoc(t_node *node);
 
 void	free_ast(t_node *node)
 {
@@ -12,10 +13,9 @@ void	free_ast(t_node *node)
 		free_redim(node);
 	else if (node->type == EXEC)
 		free_exec(node);
+	else if (node->type == HEREDOC)
+		free_heredoc(node);
 }
-
-
-
 
 static void	free_exec(t_node *node)
 {
@@ -37,13 +37,8 @@ static void	free_exec(t_node *node)
 		{
 			free(exec_node);
 			exec_node = NULL;
-		}		
+		}
 	}
-	// if (node != NULL)
-	// {
-	// 	free(node);
-	// 	node = NULL;
-	// }
 	return ;
 }
 
@@ -84,6 +79,23 @@ static void	free_pipe(t_node *node)
 		{
 			free(pipe_node);
 			pipe_node = NULL;
+		}
+	}
+}
+
+static void	free_heredoc(t_node *node)
+{
+	t_node_heredoc	*heredoc_node;
+
+	heredoc_node = (t_node_heredoc *)node;
+	if (heredoc_node != NULL)
+	{
+		if (heredoc_node->left_node != NULL)
+			free_ast(heredoc_node->left_node);
+		if (heredoc_node != NULL)
+		{
+			free(heredoc_node);
+			heredoc_node = NULL;
 		}
 	}
 }

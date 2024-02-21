@@ -49,6 +49,15 @@ static void	replace_env_in_str_arr(t_main_data *data, char **arg)
 			free(tmp_str);
 			tmp_str = NULL;
 		}
+		else if (arg[i_count][0] == '$' && arg[i_count][1] != '?'
+			&& arg[i_count] != NULL)
+		{
+			tmp_str = ft_strjoin(ft_itoa(data->exit_code), arg[i_count] + 2);
+			arg[i_count] = NULL;
+			arg[i_count] = ft_strdup(tmp_str);
+			free(tmp_str);
+			tmp_str = NULL;
+		}
 		i_count++;
 	}
 }

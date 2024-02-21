@@ -88,12 +88,13 @@ int	reset_main_data(t_main_data *main_data)
 	main_data->cli_input = NULL;
 	main_data->env_vars = NULL;
 	main_data->token_list = NULL;
+	main_data->exit_code = 0;
 	return (0);
 }
 
 t_main_data	*get_main_data(void)
 {
-	static t_main_data	data = {NULL, NULL, NULL, NULL};
+	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
 
 	return (&data);
 }

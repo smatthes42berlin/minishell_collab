@@ -213,8 +213,8 @@ int						access_handler(const char *path,
 							enum e_access_mode mode, int debug_mode);
 void					execve_handler(const char *file_path, char **argv,
 							char **env);
-pid_t					fork_handler(void);
-enum e_process_status	evaluate_process_status(int status);
+pid_t					fork_handler(char *str);
+int						get_process_exit_code(int status);
 void					pipe_handler(int *pipefd, char *str);
 void					pipe_setting(int *pipefd, bool open, char **str);
 // void					*malloc_handler(size_t bytes);

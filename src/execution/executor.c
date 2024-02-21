@@ -2,7 +2,9 @@
 
 static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 static void	env_add_clr(t_main_data *data, char *env_var);
+static void	free_main(t_main_data *data);
 
+/**
 // void manuel_test_mode(t_main_data *data)
 // {
 // 	//free_ast(data->ast);
@@ -24,13 +26,15 @@ static void	env_add_clr(t_main_data *data, char *env_var);
 // 		printf("checked Systemstate \n\n");
 
 // }
-
+*/
 
 int	executor(t_main_data *data)
 {
 	pid_t		pid;
 	int			pipefd[2];
+	int			status;
 	t_pipefd	*pipe_struct;
+	
 
 	printf("##########################################################\n");
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
@@ -40,21 +44,26 @@ int	executor(t_main_data *data)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
 			"function \"executor\""});
 	pipe_struct->pipefd = pipefd;
-	pid = fork_handler();
+	pid = fork_handler("function \"executor\"");
+	if (pid < 0)
+	{
+		printf("minishell: fork Error in fuction \"executor\"\n");
+		data->exit_code = 4;
+		free_main(data);
+		return (-1);
+	}
 	if (pid == 0)
 	{
 		navigate_tree_forward(data, data->ast, pipe_struct);
-		free_ast(data->ast);
-		free_main_exit(data, 0);
-		free_main_exit(data, 0);
-		free_main_exit(data, 0); // genauers Prüfen im Valgrind
+		free_main(data);
 	}
 	else
 	{
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
+		data->exit_code = get_process_exit_code(status);
 	}
 	read_pipe(data, pipe_struct);
-	free(pipe_struct); // double free child process
+	free(pipe_struct);
 	print_debugging_info_executer(INT_DEBUG, 2, NULL);
 	printf("##########################################################\n");
 	return (0);
@@ -102,3 +111,10 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 	}
 }
 
+static void	free_main(t_main_data *data)
+{
+	free_ast(data->ast);
+	free_main_exit(data, 0);
+	free_main_exit(data, 0);
+	free_main_exit(data, 0);
+}

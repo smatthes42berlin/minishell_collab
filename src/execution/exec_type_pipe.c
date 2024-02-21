@@ -13,7 +13,7 @@ void	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	pipe_node = (t_node_pipe *)node;
 	print_debugging_info_executer(INT_DEBUG, 6, NULL);
 	pipe_handler(pipefd, "function \"type_pipe\"");
-	main_pid = fork_handler();
+	main_pid = fork_handler("function \"type_pipe\"");
 	if (main_pid == 0)
 	{
 		pipe_setting(pipefd, true, NULL);
@@ -32,7 +32,7 @@ static void	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
 	pid_t nested_pid;
 
 	pipe_setting(pipefd, direction, NULL);
-	nested_pid = fork_handler();
+	nested_pid = fork_handler("function \"type_pipe_nested_pid\"");
 	if (nested_pid == 0)
 	{
 		navigate_tree_forward(data, pipe_node->right_node, pipe_struct_main);
