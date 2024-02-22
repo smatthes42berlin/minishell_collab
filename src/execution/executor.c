@@ -80,18 +80,20 @@ int	executor(t_main_data *data)
 	return (0);
 }
 
-
 static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
-    char buffer[BUFFER_SIZE + 1]; // +1 für Nullterminierung
-    ssize_t bytes_read;
-    int start = 0, i_count = 0;
+	ssize_t	bytes_read;
+	int		start;
+	int		i_count;
+	char	buffer[BUFFER_SIZE + 1];
 
+	start = 0;
+	i_count = 0;
 	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
 	while ((bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[bytes_read] = '\0';
-		i_count = 0;              
+		i_count = 0;
 		while (i_count < bytes_read)
 		{
 			if (buffer[i_count] == '\n' || buffer[i_count] == '\0')
@@ -113,7 +115,6 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 			start = 0;
 		}
 	}
-
 	if (start < bytes_read)
 	{
 		env_add_clr(data, &buffer[start]);
@@ -121,48 +122,38 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
 }
 
-
-/** Old function for reading the pipe; 
-// static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
-// {
-// 	char	buffer[BUFFER_SIZE];
-// 	ssize_t	bytes_read;
-// 	int		i_count;
-
-// 	i_count = 0;
-// 	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
-// 	while ((bytes_read = read(pipe_struct->pipefd[0], buffer,
-// 				sizeof(buffer))) > 0)
-// 	{
-// 		while (i_count < bytes_read)
-// 		{
-// 			//printf("PIPE READ |%s|\n", &buffer[i_count] );
-// 			env_add_clr(data, &buffer[i_count]);
-// 			i_count += strlen(&buffer[i_count]) + 1;
-// 		}
-// 	}
-// 	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
-// }
-*/ 
-
 static void	env_add_clr(t_main_data *data, char *env_var)
 {
-	if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
+	if (data->ast->type == PIPE)
 	{
-		print_debugging_info_executer(INT_DEBUG, 20, env_var);
-		env_set_var(data, env_var + ft_strlen(ADD_ENV));
+		if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
+		{
+			print_debugging_info_executer(INT_DEBUG, 20, env_var);
+			env_set_var(data, env_var + ft_strlen(ADD_ENV));
+		}
+		else if (ft_strncmp(env_var, CLR_ENV, ft_strlen(CLR_ENV)) == 0)
+		{
+			print_debugging_info_executer(INT_DEBUG, 21, env_var);
+			env_del_var(data, env_var + ft_strlen(CLR_ENV));
+		}
+		else if (ft_strncmp(env_var, ADD_CD, ft_strlen(ADD_CD)) == 0)
+		{
+			print_debugging_info_executer(INT_DEBUG, 22, env_var);
+			if (chdir(env_var + ft_strlen(ADD_CD) + 4) < 0)
+				throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
+					EFUNC_CHDIR, "function \"env_add_clr\""});
+		}
 	}
-	else if (ft_strncmp(env_var, CLR_ENV, ft_strlen(CLR_ENV)) == 0)
+	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
 	{
-		print_debugging_info_executer(INT_DEBUG, 21, env_var);
-		env_del_var(data, env_var + ft_strlen(CLR_ENV));
-	}
-	else if (ft_strncmp(env_var, ADD_CD, ft_strlen(ADD_CD)) == 0)
-	{
-		print_debugging_info_executer(INT_DEBUG, 22, env_var);
-		if (chdir(env_var + ft_strlen(ADD_CD) + 4) < 0)
-			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CHDIR,
-				"function \"env_add_clr\""});
+		print_debugging_info_executer(INT_DEBUG, 30, env_var);
+		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "cd=",
+				ft_strlen("cd=")) == 0)
+		{
+			if (is_last_node(data->ast, "cd"))
+				data->exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
+						+ ft_strlen("cd="));
+		}
 	}
 }
 

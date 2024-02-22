@@ -80,6 +80,11 @@ void print_debugging_info_executer(int on_off, int txt, void *param)
 		{
 			printf("-----type Heredoc--\n");
 		}
+		if (txt == 30)
+		{
+			char *str = (char *)param;
+			printf("--Executer - End Jump to EXIT-CODE given str : |%s|\n", str);
+		}
 	}
 	return ;
 }

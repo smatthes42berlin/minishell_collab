@@ -8,12 +8,12 @@ static char	*absoult_or_relativ_path(char *path);
 // return alltime NULL
 char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
-	char	*env_new[4];
+	char	*env_new[5];
 	char	*str_tmp;
 	int		i;
 
-	if (data->ast->type == PIPE)
-		return (NULL);
+	// if (data->ast->type == PIPE)
+	// 	return (NULL);
 	env_new[0] = creat_env_var("OLDPWD=", ADD_ENV, false);
 	if (node->argv[1] == NULL)
 		str_tmp = env_get_var(data, "HOME");
@@ -25,7 +25,11 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 			"function \"build_cd\" for \'cd\' command!"});
 	env_new[1] = creat_env_var("PWD=", ADD_ENV, false);
 	env_new[2] = creat_env_var("PWD=", ADD_CD, false);
-	env_new[3] = NULL;
+	if (i == -1)
+		env_new[3] = ft_strjoin(EXIT_CODE, "cd=1");
+	else
+		env_new[3] = ft_strjoin(EXIT_CODE, "cd=0");
+	env_new[4] = NULL;
 	pipe_setting(pipefd->pipefd, true, env_new, "function \"build_cd\"");
 	return (NULL);
 }
