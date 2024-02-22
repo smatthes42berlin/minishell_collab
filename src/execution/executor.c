@@ -80,25 +80,70 @@ int	executor(t_main_data *data)
 	return (0);
 }
 
+
 static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
-	char	buffer[BUFFER_SIZE];
-	ssize_t	bytes_read;
-	int		i_count;
+    char buffer[BUFFER_SIZE + 1]; // +1 für Nullterminierung
+    ssize_t bytes_read;
+    int start = 0, i_count = 0;
 
-	i_count = 0;
-	close(pipe_struct->pipefd[1]); // Schreibende schließen
-	while ((bytes_read = read(pipe_struct->pipefd[0], buffer,
-				sizeof(buffer))) > 0)
+	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
+	while ((bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE)) > 0)
 	{
+		buffer[bytes_read] = '\0';
+		i_count = 0;              
 		while (i_count < bytes_read)
 		{
-			env_add_clr(data, &buffer[i_count]);
-			i_count += strlen(&buffer[i_count]) + 1;
+			if (buffer[i_count] == '\n' || buffer[i_count] == '\0')
+			{
+				buffer[i_count] = '\0';
+				env_add_clr(data, &buffer[start]);
+				start = i_count + 1;
+			}
+			i_count++;
+		}
+		if (start < bytes_read)
+		{
+			ft_memmove(buffer, &buffer[start], bytes_read - start);
+			bytes_read = bytes_read - start;
+			start = 0;
+		}
+		else
+		{
+			start = 0;
 		}
 	}
-	close(pipe_struct->pipefd[0]);
+
+	if (start < bytes_read)
+	{
+		env_add_clr(data, &buffer[start]);
+	}
+	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
 }
+
+
+/** Old function for reading the pipe; 
+// static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
+// {
+// 	char	buffer[BUFFER_SIZE];
+// 	ssize_t	bytes_read;
+// 	int		i_count;
+
+// 	i_count = 0;
+// 	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
+// 	while ((bytes_read = read(pipe_struct->pipefd[0], buffer,
+// 				sizeof(buffer))) > 0)
+// 	{
+// 		while (i_count < bytes_read)
+// 		{
+// 			//printf("PIPE READ |%s|\n", &buffer[i_count] );
+// 			env_add_clr(data, &buffer[i_count]);
+// 			i_count += strlen(&buffer[i_count]) + 1;
+// 		}
+// 	}
+// 	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
+// }
+*/ 
 
 static void	env_add_clr(t_main_data *data, char *env_var)
 {

@@ -60,9 +60,12 @@ static void	write_pipe(int *pipefd, char **str, char *error_msg)
 	{
 		while (str[i_count] != NULL)
 		{
-			if (write(pipefd[1], str[i_count], ft_strlen(str[i_count]) + 1) < 0)
-				throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
-					EFUNC_WRITE, "function \"write_pipe\" for \'pipe_setting\'"});
+			//printf("NOW I AM WIRING |%s|\n", str[i_count]);
+			write(pipefd[1], str[i_count], strlen(str[i_count]));
+			write(pipefd[1], "\n", 1);
+			// if (write(pipefd[1], str[i_count], ft_strlen(str[i_count]) + 1) < 0)
+			// 	throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
+			// 		EFUNC_WRITE, "function \"write_pipe\" for \'pipe_setting\'"});
 			i_count++;
 		}
 	}

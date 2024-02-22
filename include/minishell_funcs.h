@@ -171,6 +171,8 @@ void		free_ast(t_node *node);
 // t_node_exec			*check_buildin(t_node *node);
 char		**chose_buildin(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipe_struct);
+bool		check_is_inbuilt(t_main_data *data, t_node *node,
+				t_pipefd *pipe_struct, int *pipefd);
 bool		is_last_node(t_node *node, char *compare);
 char		**build_pwd(bool newline);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);

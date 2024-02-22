@@ -18,8 +18,11 @@ int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	main_pid = fork_handler("function \"type_pipe\"");
 	if (main_pid == 0)
 	{
-		pipe_setting(pipefd, true, NULL, "function \"type pipe\" child");
-		navigate_tree_forward(data, pipe_node->left_node, pipe_struct);
+		if (!check_is_inbuilt(data, pipe_node->left_node, pipe_struct, pipefd))
+		{
+			pipe_setting(pipefd, true, NULL, "function \"type pipe\" child");
+			navigate_tree_forward(data, pipe_node->left_node, pipe_struct);
+		}
 	}
 	else
 	{
