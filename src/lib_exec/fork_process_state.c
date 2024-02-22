@@ -18,23 +18,28 @@ pid_t	fork_handler(char *str)
 
 int	get_process_exit_code(int status)
 {
-	int	temp_sig;
+	//int	temp_sig;
 	int	exit_code;
 
 	exit_code = 0;
 	if (WIFEXITED(status))
-		exit_code = 0;
-	else if (WIFSIGNALED(status))
 	{
-		temp_sig = WTERMSIG(status);
-		exit_code = 128 + temp_sig;
-		if (WCOREDUMP(status))
-			exit_code = 6;
-	}
-	else if (WIFSTOPPED(status))
-		exit_code = 21;
-	else if (WIFCONTINUED(status))
-		exit_code = 22;
+       exit_code = WEXITSTATUS(status);
+    }
+	printf("exitcode ist |%i|\n", exit_code);
+	// if (WIFEXITED(status))
+	// 	exit_code = 0;
+	// else if (WIFSIGNALED(status))
+	// {
+	// 	temp_sig = WTERMSIG(status);
+	// 	exit_code = 128 + temp_sig;
+	// 	if (WCOREDUMP(status))
+	// 		exit_code = 6;
+	// }
+	// else if (WIFSTOPPED(status))
+	// 	exit_code = 21;
+	// else if (WIFCONTINUED(status))
+	// 	exit_code = 22;
 	return (exit_code);
 }
 

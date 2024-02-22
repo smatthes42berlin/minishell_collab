@@ -52,6 +52,7 @@ static void	replace_env_in_str_arr(t_main_data *data, char **arg)
 		else if (arg[i_count][0] == '$' && arg[i_count][1] != '?'
 			&& arg[i_count] != NULL)
 		{
+			printf("exitcode ist echo command |%i|\n", data->exit_code);
 			tmp_str = ft_strjoin(ft_itoa(data->exit_code), arg[i_count] + 2);
 			arg[i_count] = NULL;
 			arg[i_count] = ft_strdup(tmp_str);

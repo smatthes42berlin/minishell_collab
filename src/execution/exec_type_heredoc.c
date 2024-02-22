@@ -8,13 +8,10 @@ void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 
 	print_debugging_info_executer(INT_DEBUG, 29, NULL);
 	heredoc_node = (t_node_heredoc *)node;
-	if (dup2(heredoc_node->read_fd, STDIN_FILENO) < 0)
+	if (use_dup2(heredoc_node->read_fd, STDIN_FILENO,
+			"function \"type herdoc\"") != 0)
 	{
-		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_DUP2,
-			"function \"type_heredoc\""});
-		if (close(heredoc_node->read_fd) < 0)
-			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CLOSE,
-				"function \"type_heredoc\""});
+		use_close(heredoc_node->read_fd, "function \"type herdoc\"");
 		return ;
 	}
 	if (heredoc_node->left_node->type == NOTHING)
@@ -24,9 +21,7 @@ void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	}
 	else
 		navigate_tree_forward(data, heredoc_node->left_node, pipe_struct);
-	if (close(heredoc_node->read_fd) < 0)
-		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CLOSE,
-			"function \"type_heredoc\""});
+	use_close(heredoc_node->read_fd, "function \"type herdoc\"");
 }
 
 int	read_file(int fd)

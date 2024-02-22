@@ -5,7 +5,9 @@
 # define CLR_ENV "CLR="
 # define ADD_CD "CD="
 # define PRINT_ENV "PRINT="
+# define EXIT_CODE "EXIT_CODE="
 # define INT_DEBUG 0
+
 
 /**
  * necessary so we can use t_node inside the t_node struct definition

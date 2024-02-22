@@ -26,7 +26,7 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	env_new[1] = creat_env_var("PWD=", ADD_ENV, false);
 	env_new[2] = creat_env_var("PWD=", ADD_CD, false);
 	env_new[3] = NULL;
-	pipe_setting(pipefd->pipefd, true, env_new);
+	pipe_setting(pipefd->pipefd, true, env_new, "function \"build_cd\"");
 	return (NULL);
 }
 

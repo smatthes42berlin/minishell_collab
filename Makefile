@@ -46,6 +46,7 @@ SRC = 	main.c \
 		execve.c \
 		fork_process_state.c \
 		pipe.c \
+		pipe_utiles.c \
 		tokenise_main.c \
 		append_token.c \
 		identify_token.c \

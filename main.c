@@ -88,7 +88,6 @@ int	reset_main_data(t_main_data *main_data)
 	main_data->cli_input = NULL;
 	main_data->env_vars = NULL;
 	main_data->token_list = NULL;
-	main_data->exit_code = 0;
 	return (0);
 }
 

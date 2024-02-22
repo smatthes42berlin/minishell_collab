@@ -1,7 +1,6 @@
 #include "minishell.h"
 
 static int	open_handler(const char *path, enum e_open_mode mode, int debug);
-static void	set_close(int fd);
 
 void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
@@ -15,26 +14,18 @@ void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	{
 		return ;
 	}
-	if (dup2(fd, redir_node->in_or_out) < 0)
+	if (use_dup2(fd, redir_node->in_or_out, "function \"type_redir\"") != 0)
 	{
-		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_DUP2,
-			"function \"type_redir\""});
-		set_close(fd);
+		use_close(fd, "function \"type_redir\"");
 		return ;
 	}
 	if (redir_node->left_node->type == NOTHING)
 		return ;
 	else
 		navigate_tree_forward(data, redir_node->left_node, pipe_struct);
-	set_close(fd);
+	use_close(fd, "function \"type_redir\"");
 }
 
-static void	set_close(int fd)
-{
-	if (close(fd) < 0)
-		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_DUP2,
-			"function \"type_redir\""});
-}
 
 static int	open_handler(const char *path, enum e_open_mode mode, int debug)
 {

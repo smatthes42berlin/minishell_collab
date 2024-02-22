@@ -32,13 +32,16 @@ int	executor(t_main_data *data)
 {
 	pid_t		pid;
 	int			pipefd[2];
+	int			exit_code_pipe[2];
+	int			exit_code;
 	int			status;
 	t_pipefd	*pipe_struct;
-	
 
 	printf("##########################################################\n");
+	printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
-	pipe_handler(pipefd, "function \"executor\"");
+	pipe_handler(pipefd, "function \"executor\" main pipe");
+	pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
 	pipe_struct = malloc(sizeof(t_pipefd));
 	if (!pipe_struct)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
@@ -47,20 +50,28 @@ int	executor(t_main_data *data)
 	pid = fork_handler("function \"executor\"");
 	if (pid < 0)
 	{
-		printf("minishell: fork Error in fuction \"executor\"\n");
-		data->exit_code = 4;
 		free_main(data);
 		return (-1);
 	}
 	if (pid == 0)
 	{
-		navigate_tree_forward(data, data->ast, pipe_struct);
+		exit_code = navigate_tree_forward(data, data->ast, pipe_struct);
+		printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
+		pipe_setting_exit_code(exit_code_pipe, true, &exit_code,
+			"function \"executor\" pipe");
 		free_main(data);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
-		data->exit_code = get_process_exit_code(status);
+		if (data->ast->type != PIPE)
+			exit_code = get_process_exit_code(status);
+		else
+			pipe_setting_exit_code(exit_code_pipe, false, &exit_code,
+				"function \"executor\" pipe");
+		data->exit_code = exit_code;
+		printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
+		printf("exitcode ist executer |%i|\n", data->exit_code);
 	}
 	read_pipe(data, pipe_struct);
 	free(pipe_struct);
@@ -86,9 +97,8 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 			i_count += strlen(&buffer[i_count]) + 1;
 		}
 	}
-	close(pipe_struct->pipefd[0]); 
+	close(pipe_struct->pipefd[0]);
 }
-
 
 static void	env_add_clr(t_main_data *data, char *env_var)
 {
