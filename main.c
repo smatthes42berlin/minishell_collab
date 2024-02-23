@@ -25,10 +25,15 @@ int	main(int argc, char *argv[], char *envp[])
 	// env_print(&main_data);
 	while (1)
 	{
+		start_signals_interactive();
 		main_data->cli_input = test_str;
-		// main_data->cli_input = readline("cli>");
-		if (!main_data->cli_input || ft_strlen(main_data->cli_input) == 0)
-			free_main_exit(main_data, -1);
+		main_data->cli_input = readline("cli>");
+		if (check_ctrl_d(main_data))
+			free_main_exit(main_data, 1);
+		main_data->num_lines++;
+		if (only_newline_entered(main_data))
+			continue ;
+		printf("line %s\n", main_data->cli_input);
 		add_history(main_data->cli_input);
 		printf("main: before tokenise\n");
 		if (tokenise(main_data))
@@ -61,16 +66,16 @@ int	reset_main_data(t_main_data *main_data)
 	return (0);
 }
 
-t_main_data	*get_main_data()
+t_main_data	*get_main_data(void)
 {
-	static t_main_data	data = {NULL, NULL, NULL, NULL};
+	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
 	return (&data);
 }
 
 static char	*get_test_case(int test_case)
 {
 	if (test_case == 1)
-		return (ft_strdup("<< 1 cat <in_1 hello | echo -e -s <in_2 hi | <in_3 wc -l > 2"));
+		return (ft_strdup("<< 1 cat <in_1 hello | echo -e -s <in_2 hi | <in_3 wc-l > 2"));
 	if (test_case == 2)
 		return (ft_strdup("<< >> < | >"));
 	if (test_case == 3)

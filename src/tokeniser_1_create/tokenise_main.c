@@ -1,8 +1,5 @@
 #include "minishell.h"
 
-// check operators directly for syntax errors
-// start heredoc driectly when recognised
-
 int	tokenise(t_main_data *main_data)
 {
 	char	*cur_pos;

@@ -11,11 +11,6 @@ void	print_ast(t_node *root, int depth)
 	sep = "-----------";
 	if (!root)
 		return ;
-	// if (depth == 10)
-	// {
-	// 	printf("Aborted printing\n");
-	// 	return ;
-	// }
 	print_ast(root->right_node, depth + 1);
 	printf("%s\n", sep);
 	while (i < depth)
@@ -24,7 +19,6 @@ void	print_ast(t_node *root, int depth)
 		i++;
 	}
 	print_according_node(root, depth);
-	// printf("%d:\"%d\"\n", depth, root->type);
 	print_ast(root->left_node, depth + 1);
 }
 

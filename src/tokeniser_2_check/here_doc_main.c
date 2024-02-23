@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	check_heredoc(t_list_d **cur_token)
+int	check_heredoc(t_main_data *main_data, t_list_d **cur_token)
 {
 	t_list_d		*next_token;
 	t_token			*cur_token_val;
@@ -8,6 +8,7 @@ int	check_heredoc(t_list_d **cur_token)
 	t_here_doc_info	hdoc_info;
 
 	cur_token_val = (*cur_token)->content;
+	hdoc_info.main_data = main_data;
 	if (cur_token_val->type != T_DLESS)
 		return (0);
 	next_token = (*cur_token)->next;

@@ -17,8 +17,10 @@ int	child_read_hdoc(t_here_doc_info *hdoc_info, int fd[2])
 	while (!eof)
 	{
 		new_line = readline(">");
-		if (ft_strcmp(new_line, hdoc_info->delim) == 0)
+		if (delimiter_entered(new_line, hdoc_info))
 			handle_end_reached(&compl_str, &str_len, &eof);
+		else if (pressed_ctrl_d(new_line))
+			handle_eof_signaled(hdoc_info, &eof, &compl_str, &str_len);
 		else
 			add_newline_to_compl_str(&compl_str, &new_line);
 		free(new_line);
@@ -30,6 +32,18 @@ int	child_read_hdoc(t_here_doc_info *hdoc_info, int fd[2])
 		return (free_compl_exit(compl_str, "hdoc child closing pipe",
 				EFUNC_CLOSE, 0));
 	return (free_compl_exit(compl_str, NULL, EFUNC_FREE, 1));
+}
+
+int	handle_eof_signaled(t_here_doc_info *hdoc_info, bool *eof, char **compl_str,
+		int *str_len)
+{
+	printf("minishell: warning: here-document at line ");
+	printf("%d", hdoc_info->main_data->num_lines);
+	printf("delimited by end-of-file (wanted ");
+	printf("`%s')\n", hdoc_info->delim);
+	set_compl_str_empty(compl_str, str_len);
+	*eof = true;
+	return (0);
 }
 
 static void	add_newline_to_compl_str(char **compl_str, char **new_line)
@@ -50,13 +64,7 @@ static void	add_newline_to_compl_str(char **compl_str, char **new_line)
 static void	handle_end_reached(char **compl_str, int *str_len, bool *eof)
 {
 	if (!*compl_str)
-	{
-		*compl_str = ft_strdup("");
-		if (!*compl_str)
-			exit(throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
-						EFUNC_MALLOC, "hdoc child adding newline"}));
-		*str_len = 0;
-	}
+		set_compl_str_empty(compl_str, str_len);
 	else
 		*str_len = ft_strlen(*compl_str);
 	*eof = true;

@@ -30,6 +30,7 @@ typedef struct s_main_data
 	t_list_d			*token_list;
 	t_node				*ast;
 	char				*cli_input;
+	int					num_lines;
 	//.....
 }						t_main_data;
 
@@ -99,6 +100,7 @@ enum					e_token_type
 
 typedef struct s_here_doc_info
 {
+	t_main_data			*main_data;
 	char				*delim;
 	char				*delim_raw;
 	char				*tmp;
@@ -272,6 +274,7 @@ enum					e_program_part
 	EPART_EXPANDER,
 	EPART_PARSER,
 	EPART_EXECUTOR,
+	EPART_SIGNAL,
 };
 
 enum					e_failed_func
