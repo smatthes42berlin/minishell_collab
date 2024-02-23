@@ -177,6 +177,9 @@ int			navigate_tree_forward(t_main_data *data, t_node *node,
 void		type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
 void		type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
 int			type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
+
+void		test_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
+
 void		type_heredoc(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
 int			executor(t_main_data *data);

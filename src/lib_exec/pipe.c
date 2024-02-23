@@ -24,10 +24,6 @@ void	pipe_handler(int *pipefd, char *str)
  */
 void	pipe_setting(int *pipefd, bool open, char **str, char *error_msg)
 {
-	//char	buffer[BUFFER_SIZE];
-	//ssize_t	bytes_read;
-	//int		i_count;
-
 	if (open)
 	{
 		write_pipe(pipefd, str, error_msg);
@@ -59,7 +55,9 @@ static void	write_pipe(int *pipefd, char **str, char *error_msg)
 	int	i_count;
 
 	i_count = 0;
+	printf("write Pipe -- pipe setting pipefd[0] |%d| pipefd[1] |%d|\n", pipefd[0], pipefd[1]);
 	use_close(pipefd[0], error_msg);
+	use_dup2(pipefd[1], STDOUT_FILENO, error_msg);
 	if (str != NULL)
 	{
 		while (str[i_count] != NULL)
@@ -73,8 +71,8 @@ static void	write_pipe(int *pipefd, char **str, char *error_msg)
 			i_count++;
 		}
 	}
-	use_dup2(pipefd[1], STDOUT_FILENO, error_msg);
-	use_close(pipefd[1], error_msg);
+	//use_close(pipefd[1], error_msg);
+
 }
 
 static void read_pipe(int *pipefd, char **str, char *error_msg)
@@ -84,6 +82,8 @@ static void read_pipe(int *pipefd, char **str, char *error_msg)
 	int		i_count;
 
 	i_count = 0;
+	printf("read Pipe -- pipe setting pipefd[0] |%d| pipefd[1] |%d|\n", pipefd[0], pipefd[1]);
+
 	use_close(pipefd[1], error_msg);
 	use_dup2(pipefd[0], STDIN_FILENO, error_msg);
 	if (str != NULL)
@@ -97,5 +97,5 @@ static void read_pipe(int *pipefd, char **str, char *error_msg)
 			}
 		}
 	}
-	use_close(pipefd[0], error_msg);
+//	use_close(pipefd[0], error_msg);
 }

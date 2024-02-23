@@ -52,7 +52,7 @@ int	get_process_exit_code(int status)
 // 	else if (WIFSIGNALED(status))
 // 	{
 // 		temp_sig = WTERMSIG(status);
-// 		if (SIGINT == temp_sig)
+		//if (SIGINT == temp_sig)
 // 			return (PROCESS_KILLED_BY_SIGINT);
 // 		else if (SIGSEGV == temp_sig)
 // 			return (PROCESS_KILLED_BY_SIGSEGV);
