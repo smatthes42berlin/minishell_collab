@@ -13,7 +13,7 @@ int	parent_get_str_child(t_list_d **hdoc_op_token, int fd[2], int pid,
 				EFUNC_WAIT, "hdoc waiting for child process"}));
 	if (WIFEXITED(status))
 		res_wait = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
+ 	if (WIFSIGNALED(status))
 		res_wait = WTERMSIG(status);
 	if (res_wait)
 		return (1);

@@ -3,7 +3,10 @@
 
 /* signals */
 
-void				signal_main(void);
+int					ignore_signals(int signals);
+void				handle_ctrl_c_sigint_interactive(int signum);
+int					start_signals_interactive(void);
+int					end_signals_interactive(void);
 
 /* main */
 
@@ -11,7 +14,6 @@ int					reset_main_data(t_main_data *main_data);
 t_main_data			*get_main_data(void);
 int					check_ctrl_d(t_main_data *main_data);
 bool				only_newline_entered(t_main_data *main_data);
-
 
 /* tokenisation/lexer main*/
 
@@ -103,6 +105,7 @@ int					env_del_var(t_main_data *main_data, char *val);
 int					env_set_var(t_main_data *main_data, char *val);
 void				env_print(t_main_data *main_data);
 char				*env_get_var(t_main_data *main_data, char *key);
+int					set_exit_code(int code);
 
 /* expander */
 

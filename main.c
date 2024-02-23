@@ -8,7 +8,6 @@ int	main(int argc, char *argv[], char *envp[])
 	char		*test_str;
 	int			exit_code;
 
-	signal_main();
 	if (argc > 1)
 	{
 		printf("Error: program '%s' doesn't take any arguments!", argv[0]);
@@ -26,6 +25,7 @@ int	main(int argc, char *argv[], char *envp[])
 	// env_print(&main_data);
 	while (1)
 	{
+		start_signals_interactive();
 		main_data->cli_input = test_str;
 		main_data->cli_input = readline("cli>");
 		if (check_ctrl_d(main_data))
@@ -75,7 +75,7 @@ t_main_data	*get_main_data(void)
 static char	*get_test_case(int test_case)
 {
 	if (test_case == 1)
-		return (ft_strdup("<< 1 cat <in_1 hello | echo -e -s <in_2 hi | <in_3 wc -l > 2"));
+		return (ft_strdup("<< 1 cat <in_1 hello | echo -e -s <in_2 hi | <in_3 wc-l > 2"));
 	if (test_case == 2)
 		return (ft_strdup("<< >> < | >"));
 	if (test_case == 3)

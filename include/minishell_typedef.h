@@ -274,6 +274,7 @@ enum					e_program_part
 	EPART_EXPANDER,
 	EPART_PARSER,
 	EPART_EXECUTOR,
+	EPART_SIGNAL,
 };
 
 enum					e_failed_func
