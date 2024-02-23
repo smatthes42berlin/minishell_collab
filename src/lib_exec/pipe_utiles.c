@@ -19,11 +19,12 @@ int	use_close(int pipefd, char *error_msg)
 	int	ret;
 
 	ret = 0;
+	printf("close fd |%d|\n", pipefd);
 	if (close(pipefd) < 0)
 	{
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_DUP2,
 			error_msg});
-		ret = 1;
+		ret = -1;
 	}
 	return (ret);
 }
