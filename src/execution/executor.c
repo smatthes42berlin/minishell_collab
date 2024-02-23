@@ -38,7 +38,7 @@ int	executor(t_main_data *data)
 	t_pipefd	*pipe_struct;
 
 	printf("##########################################################\n");
-	printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
+	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
 	pipe_handler(pipefd, "function \"executor\" main pipe");
 	pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
@@ -69,9 +69,9 @@ int	executor(t_main_data *data)
 		else
 			pipe_setting_exit_code(exit_code_pipe, false, &exit_code,
 				"function \"executor\" pipe");
-		data->exit_code = exit_code;
-		printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
-		printf("exitcode ist executer |%i|\n", data->exit_code);
+		//data->exit_code = exit_code;
+		//printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
+		//printf("exitcode ist executer |%i|\n", data->exit_code);
 	}
 	read_pipe(data, pipe_struct);
 	free(pipe_struct);
@@ -150,9 +150,10 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "cd=",
 				ft_strlen("cd=")) == 0)
 		{
-			if (is_last_node(data->ast, "cd"))
-				data->exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
-						+ ft_strlen("cd="));
+			;
+			//if (is_last_node(data->ast, "cd"))
+			//	data->exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
+				//		+ ft_strlen("cd="));
 		}
 	}
 }
