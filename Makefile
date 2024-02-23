@@ -133,10 +133,16 @@ clean:
 	make -C $(FOLDERLIBFT) clean
 	$(RM) $(OBJ)
 
-fclean: clean
+fcleanall: clean
 	make -C libft fclean
 	$(RM) $(NAME)
 
+fclean: clean
+	$(RM) $(NAME)
+
+reall: fcleanall all
+
 re: fclean all
+
 
 .PRECIOUS: $(PATHOBJ)%.o

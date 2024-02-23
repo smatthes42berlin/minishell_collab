@@ -13,6 +13,7 @@ int	create_pipe_node(t_parse_info *parse_info)
 	init_generic_node_param(node_generic, PIPE);
 	add_pipe_ast(parse_info, pipe_node);
 	set_n_token_as_parsed(1, parse_info);
-	print_pipe_node(pipe_node, true);
+	if (PRINT_DEBUG_1)
+		print_pipe_node(pipe_node, true);
 	return (0);
 }

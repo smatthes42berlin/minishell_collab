@@ -20,16 +20,22 @@ int	parse(t_main_data *main_data)
 		if (token_recognised || token_create_success)
 			return (1);
 	}
-	print_ast(parse_info.root_node_ast, 0);
-	printf("\n\n\n");
+	if (PRINT_DEBUG_1)
+	{
+		print_ast(parse_info.root_node_ast, 0);
+		printf("\n\n\n");
+	}
 	change_form_of_ast(&parse_info);
-	print_ast(parse_info.ast_rene, 0);
+	if (PRINT_DEBUG_1)
+	{
+		print_ast(parse_info.ast_rene, 0);
+	}
 	main_data->ast = parse_info.ast_rene;
 	return (0);
 }
 
 static int	identify_token_in_parser(t_parse_info *parse_info,
-									int *token_create_success)
+		int *token_create_success)
 {
 	*token_create_success = 0;
 	if (parse_info->cur_token->parsed)

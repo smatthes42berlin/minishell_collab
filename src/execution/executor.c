@@ -2,14 +2,13 @@
 
 static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 static void	env_add_clr(t_main_data *data, char *env_var);
-static void	free_main(t_main_data *data);
+// static void	free_main(t_main_data *data);
 
-/**
 // void manuel_test_mode(t_main_data *data)
 // {
 // 	//free_ast(data->ast);
 // 	data->ast = NULL;
-// 	data->ast = malloc(sizeof(t_node));
+// 	data->ast = malloc_handler(sizeof(t_node));
 
 // 		// t_node_exec *test = set_cmd_1();
 // 		// data->ast->type = EXEC;
@@ -20,14 +19,6 @@ static void	free_main(t_main_data *data);
 // 	data->ast =(void *)test;
 // }
 
-// void check_systamstate(void)
-// {
-// 	if (systemstate == STATE_SIGINT)
-// 		printf("checked Systemstate \n\n");
-
-// }
-*/
-
 int	executor(t_main_data *data)
 {
 	pid_t		pid;
@@ -37,8 +28,8 @@ int	executor(t_main_data *data)
 	int			status;
 	t_pipefd	*pipe_struct;
 
-	printf("##########################################################\n");
-	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
+	if (PRINT_DEBUG_1)
+		printf("##########################################################\n");
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
 	pipe_handler(pipefd, "function \"executor\" main pipe");
 	pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
@@ -47,19 +38,17 @@ int	executor(t_main_data *data)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
 			"function \"executor\""});
 	pipe_struct->pipefd = pipefd;
-	pid = fork_handler("function \"executor\"");
-	if (pid < 0)
-	{
-		free_main(data);
-		return (-1);
-	}
+	pid = fork_handler("function executor");
 	if (pid == 0)
 	{
-		exit_code = navigate_tree_forward(data, data->ast, pipe_struct);
-		printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
-		pipe_setting_exit_code(exit_code_pipe, true, &exit_code,
-			"function \"executor\" pipe");
-		free_main(data);
+		// manuel_test_mode(data);
+		navigate_tree_forward(data, data->ast, pipe_struct);
+		// free(pipe_struct);
+		free_ast(data->ast);
+		free_main_exit(data, 0);
+		free_main_exit(data, 0);
+		free_main_exit(data, 0); // genauers Prüfen im Valgrind
+		exit(0);
 	}
 	else
 	{
@@ -76,7 +65,10 @@ int	executor(t_main_data *data)
 	read_pipe(data, pipe_struct);
 	free(pipe_struct);
 	print_debugging_info_executer(INT_DEBUG, 2, NULL);
-	printf("##########################################################\n");
+	if (PRINT_DEBUG_1)
+		printf("##########################################################\n");
+	// printf("env_HOME |%s|\n", env_get_var(data, "HOME"));
+	// printf("env_PWD |%s|\n", env_get_var(data, "PWD"));
 	return (0);
 }
 
@@ -115,11 +107,7 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 			start = 0;
 		}
 	}
-	if (start < bytes_read)
-	{
-		env_add_clr(data, &buffer[start]);
-	}
-	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
+	close(pipe_struct->pipefd[0]);
 }
 
 static void	env_add_clr(t_main_data *data, char *env_var)
@@ -146,22 +134,9 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 	}
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
 	{
-		print_debugging_info_executer(INT_DEBUG, 30, env_var);
-		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "cd=",
-				ft_strlen("cd=")) == 0)
-		{
-			;
-			//if (is_last_node(data->ast, "cd"))
-			//	data->exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
-				//		+ ft_strlen("cd="));
-		}
+		print_debugging_info_executer(INT_DEBUG, 22, env_var);
+		// if (chdir(env_var + ft_strlen(ADD_CD) + 4) == -1)
+		// 	error_code_handler(errno, "ERR-chdir", "CD -Command --> ", env_var
+		// 		+ ft_strlen(ADD_CD) + 4);	
 	}
-}
-
-static void	free_main(t_main_data *data)
-{
-	free_ast(data->ast);
-	free_main_exit(data, 0);
-	free_main_exit(data, 0);
-	free_main_exit(data, 0);
 }

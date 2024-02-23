@@ -16,5 +16,6 @@
 *.out
 .vscode/
 .vscode
+minishell_tester/
 **/minishell
 **/*.log

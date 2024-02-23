@@ -26,7 +26,7 @@ int	get_process_exit_code(int status)
 	{
        exit_code = WEXITSTATUS(status);
     }
-	printf("exitcode ist |%i|\n", exit_code);
+	// printf("exitcode ist |%i|\n", exit_code);
 	// if (WIFEXITED(status))
 	// 	exit_code = 0;
 	// else if (WIFSIGNALED(status))
