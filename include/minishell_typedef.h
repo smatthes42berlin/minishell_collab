@@ -5,7 +5,9 @@
 # define CLR_ENV "CLR="
 # define ADD_CD "CD="
 # define PRINT_ENV "PRINT="
+# define EXIT_CODE "EXIT_CODE="
 # define INT_DEBUG 0
+
 
 /**
  * necessary so we can use t_node inside the t_node struct definition
@@ -60,15 +62,6 @@ enum					e_open_mode
 	FILE_ONLY_READING = O_RDONLY,
 	FILE_ONLY_WRITE = O_WRONLY | O_TRUNC,
 	FILE_ONLY_WRITE_APPEND = O_WRONLY | O_APPEND,
-};
-
-enum					e_pid_satus
-{
-	PID_STOP_REGULAR,
-	PID_STOP_SIGNAL,
-	PID_BREAK,
-	PID_RUNNING,
-	PID_ERROR
 };
 
 typedef struct s_pipefd_main
@@ -274,7 +267,42 @@ enum					e_program_part
 	EPART_EXPANDER,
 	EPART_PARSER,
 	EPART_EXECUTOR,
-	EPART_SIGNAL,
+	EPART_SIGNAL
+};
+
+
+
+/**
+ * @brief Show in which state a child process end! 
+ * 
+ * @PROCESS_EXITED 				--> Process exited normally (e.g., 
+ * 									via exit() or returning from main())
+ * @PROCESS_KILLED_BY_SIGINT	--> Process was terminated by the SIGINT
+ * 									signal (e.g., pressing Ctrl+C)
+ * @PROCESS_KILLED_BY_SIGSEGV	--> Process was terminated by the SIGSEGV
+ * 									signal (e.g., due to a segmentation fault)
+ * @PROCESS_KILLED_BY_SIGTERM	--> Process was terminated by the SIGTERM signal
+ * 									(e.g., a polite request to terminate)
+ * @PROCESS_KILLED_BY_SIGQUIT	--> Process was terminated by the SIGQUIT
+ * 									signal (e.g., pressing Ctrl+\)
+ * @PROCESS_KILLED_OTHER		--> Process was terminated by another 
+ * 									signal not specified here
+ * @PROCESS_STOPPED				--> Process was stopped (e.g., by the
+ * 									SIGSTOP signal)
+ * @PROCESS_CONTINUED			--> Process was continued (e.g., after
+ * 									being stopped by SIGSTOP, continued with SIGCONT)
+ */
+
+enum				e_process_status 
+{
+	PROCESS_EXITED,
+	PROCESS_KILLED_BY_SIGINT,
+	PROCESS_KILLED_BY_SIGSEGV,
+	PROCESS_KILLED_BY_SIGTERM,
+	PROCESS_KILLED_BY_SIGQUIT,
+	PROCESS_KILLED_OTHER,
+	PROCESS_STOPPED,
+	PROCESS_CONTINUED
 };
 
 enum					e_failed_func

@@ -7,12 +7,10 @@
  */
 void	execve_handler(const char *file_path, char **argv, char **env)
 {
-	if (execve(file_path, argv, env) == -1)
+	if (execve(file_path, argv, env) < 0)
 	{
-		error_code_handler(errno, "ERR-execve", file_path, " ");
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_EXECVE,
+			"function \"execve_handler\""});
 		exit(EXIT_FAILURE);
 	}
-	else
-		printf("ERR-execve: (access-Error) No executable file path"
-			"please check the path!");
 }

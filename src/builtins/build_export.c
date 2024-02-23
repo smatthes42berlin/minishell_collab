@@ -6,6 +6,10 @@ char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
 	char	**ret;
 
+	if (data->ast->type == PIPE)
+	{
+		return (NULL);
+	}
 	print_debugging_info_executer(INT_DEBUG, 26, NULL);
 	if (data->ast->type == PIPE)
 	{
@@ -13,7 +17,8 @@ char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	}
 	ret = copy_str_arr(node->argv, 1, false);
 	check_equal_sign_in_str_arr(ret);
-	pipe_setting(pipefd->pipefd, true ,ret);
+	print_str_arr_null(ret);
+	pipe_setting(pipefd->pipefd, true , ret, "function \"buid_export\"");
 	return (NULL);
 }
 

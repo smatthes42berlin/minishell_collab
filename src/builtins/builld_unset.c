@@ -14,7 +14,7 @@ char	**build_unset(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	ret = copy_str_arr(node->argv, 1, false);
 	add_clr_command_to_arr_str(ret);
 	print_str_arr_null(ret);
-	pipe_setting(pipefd->pipefd, true, ret);
+	pipe_setting(pipefd->pipefd, true, ret, "function \"build_unset\"");
 	return (NULL);
 }
 

@@ -9,9 +9,8 @@ char	**build_pwd(bool newline)
 	ret = malloc(sizeof(char *) * 2);
 	str_tmp = getcwd(NULL, 0);
 	if (str_tmp == NULL)
-	{
-		error_code_handler(errno, "ERR-getcwd", "", "");
-	}
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_GETCWD,
+			"function \"build_pwd\" for \'pwd\' command!"});
 	ret[0] = add_newline(str_tmp, newline);
 	ret[1] = NULL;
 	free(str_tmp);

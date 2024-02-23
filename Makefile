@@ -42,13 +42,10 @@ SRC = 	main.c \
 		exec_type_redir.c \
 		exec_type_heredoc.c \
 		tree_navigation.c \
-		errno_print.c \
 		execve.c \
-		fork.c \
-		malloc.c \
-		open_and_close.c \
-		pid_list_handler.c \
+		fork_process_state.c \
 		pipe.c \
+		pipe_utiles.c \
 		tokenise_main.c \
 		append_token.c \
 		identify_token.c \
