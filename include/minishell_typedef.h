@@ -32,10 +32,9 @@ typedef struct s_main_data
 	t_list_d			*token_list;
 	t_node				*ast;
 	char				*cli_input;
-	int					exit_code;
+	int					num_lines;
+	//.....
 }						t_main_data;
-
-
 
 /**
  * using for the access mode 
@@ -64,7 +63,6 @@ enum					e_open_mode
 	FILE_ONLY_WRITE = O_WRONLY | O_TRUNC,
 	FILE_ONLY_WRITE_APPEND = O_WRONLY | O_APPEND,
 };
-
 
 typedef struct s_pipefd_main
 {
@@ -95,6 +93,7 @@ enum					e_token_type
 
 typedef struct s_here_doc_info
 {
+	t_main_data			*main_data;
 	char				*delim;
 	char				*delim_raw;
 	char				*tmp;
@@ -268,7 +267,9 @@ enum					e_program_part
 	EPART_EXPANDER,
 	EPART_PARSER,
 	EPART_EXECUTOR,
+	EPART_SIGNAL
 };
+
 
 
 /**

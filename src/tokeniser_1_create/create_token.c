@@ -8,7 +8,7 @@ t_token	*create_token()
 	if (!token)
 	{
 		throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
-				EFUNC_MALLOC, "create token"});
+			EFUNC_MALLOC, "create token"});
 		return (NULL);
 	}
 	token->type = T_UNDEFINED;

@@ -1,10 +1,5 @@
 #include "minishell.h"
 
-// rules
-// no two pipes after each other
-// no operator without anything that follows
-// no two operators after each other except for any operator after pipe except for pipe
-
 int	check_syntax(t_list_d *cur_token)
 {
 	t_list_d	*next_token;
@@ -28,10 +23,10 @@ int	check_syntax(t_list_d *cur_token)
 
 int	token_syntax_error(char *token_val)
 {
-	char *res;
+	char	*res;
 
 	(ft_printf_to_str(&res,
-				"minishell: syntax error near unexpected token `%s'\n",
-				token_val));
+			"minishell: syntax error near unexpected token `%s'\n",
+			token_val));
 	return (throw_error_mimic_bash(res, 127));
 }

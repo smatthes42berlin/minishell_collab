@@ -50,7 +50,8 @@ int	copy_unquoted_chars(t_here_doc_info *hdoc_info, int i)
 	if (hdoc_info->num_char_no_quote == 0)
 		return (0);
 	if (ft_str_n_join_int(hdoc_info->delim, &(hdoc_info->delim_raw[i
-				- hdoc_info->num_char_no_quote]), hdoc_info->num_char_no_quote
+					- hdoc_info->num_char_no_quote]), 
+			hdoc_info->num_char_no_quote
 			+ 1, &hdoc_info->tmp) == -1)
 		return (throw_error_custom((t_error_ms){errno, EPART_TOKENISER,
 				EFUNC_MALLOC, "hdoc joining delim string"}));

@@ -1,14 +1,11 @@
 #include "minishell.h"
 
-// static char					*get_test_case(int test_case);
+static char	*get_test_case(int test_case);
 
-volatile enum e_systemstate	systemstate = STATE_IDLE;
-
-// signal H
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_main_data	*main_data;
-	//char		*test_str;
+	char		*test_str;
 	int			exit_code;
 
 
@@ -30,33 +27,15 @@ int	main(int argc, char *argv[], char *envp[])
 	signal_check();
 	while (1)
 	{
-		systemstate = STATE_IDLE;
-		// main_data->cli_input = test_str;
-		while (systemstate == STATE_IDLE)
-		{
-			main_data->cli_input = readline("cli>");
-			if (systemstate == STATE_SIGINT)
-			{
-				printf("Jump to the break!\n");
-				break;
-			}
-			systemstate = STATE_RUNNING;
-		}
-		// Abfrage Str + D --> ggf. mit fork () um im Elternprocess Str+D abzufragen
-		// mh bash muss ich es nicht so aufwendig machen ! 
-		if (!main_data->cli_input)
-		{
-			free_main_exit(main_data, 2);
-			signal_handler(1000);
-		}
-		if (systemstate == STATE_SIGINT)
-		{
-			printf("found Sigint \n");
+		start_signals_interactive();
+		main_data->cli_input = test_str;
+		main_data->cli_input = readline("cli>");
+		if (check_ctrl_d(main_data))
+			free_main_exit(main_data, 1);
+		main_data->num_lines++;
+		if (only_newline_entered(main_data))
 			continue ;
-		}
-
-		if (ft_strlen(main_data->cli_input) == 0)
-			continue ;
+		printf("line %s\n", main_data->cli_input);
 		add_history(main_data->cli_input);
 		printf("main: before tokenise\n");
 		if (tokenise(main_data))
@@ -73,14 +52,12 @@ int	main(int argc, char *argv[], char *envp[])
 			free_main_exit(main_data, 4);
 			printf("aaaa\n");
 		}
-		if (executor(main_data) == -1)
-			return (3);
-		// free_main_exit(main_data, 0);
+		// if (executor(&main_data) == -1)
+		// 	return (3);
+		free_main_exit(main_data, 0);
 	}
 	return (0);
 }
-
-
 
 int	reset_main_data(t_main_data *main_data)
 {
@@ -94,35 +71,34 @@ int	reset_main_data(t_main_data *main_data)
 t_main_data	*get_main_data(void)
 {
 	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
-
 	return (&data);
 }
 
-// static char	*get_test_case(int test_case)
-// {
-// 	if (test_case == 1)
-// 		return (ft_strdup("<< 1 cat <in_1 hello | echo -e -s <in_2 hi | <in_3 wc	-l > 2"));
-// 	if (test_case == 2)
-// 		return (ft_strdup("<< >> < | >"));
-// 	if (test_case == 3)
-// 		return (ft_strdup("cat << 1 > out | wc > out2"));
-// 	if (test_case == 4)
-// 		return (ft_strdup("sleep 2 | echo hello | sleep 3 | echo 123"));
-// 	if (test_case == 5)
-// 		return (ft_strdup("cat <<1<<2<<3"));
-// 	if (test_case == 6)
-// 		return (ft_strdup("xxx$HOME$FIVE_ONE xxx>xxx$ONE_TWO $SOME_LETTERS $? $. $$ $); ?$_?"));
-// 	if (test_case == 7)
-// 		return (ft_strdup("<< 1 << 2"));
-// 	if (test_case == 8)
-// 		return (ft_strdup("sleep arg1 arg2 arg3"));
-// 	if (test_case == 9)
-// 		return (ft_strdup("sleep 2 | sleep 2"));
-// 	if (test_case == 10)
-// 		return (ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 |"));
-// 	if (test_case == 11)
-// 		return (ft_strdup("$HOME \"$HOME\" '$HOME' \"\" '' $HOME $HOME1"));
-// 	if (test_case == 12)
-// 		return (ft_strdup("<< 1 cat"));
-// 	return (NULL);
-// }
+static char	*get_test_case(int test_case)
+{
+	if (test_case == 1)
+		return (ft_strdup("<< 1 cat <in_1 hello | echo -e -s <in_2 hi | <in_3 wc-l > 2"));
+	if (test_case == 2)
+		return (ft_strdup("<< >> < | >"));
+	if (test_case == 3)
+		return (ft_strdup("cat << 1 > out | wc > out2"));
+	if (test_case == 4)
+		return (ft_strdup("sleep 2 | echo hello | sleep 3 | echo 123"));
+	if (test_case == 5)
+		return (ft_strdup("cat <<1<<2<<3"));
+	if (test_case == 6)
+		return (ft_strdup("xxx$HOME$FIVE_ONE xxx>xxx$ONE_TWO $SOME_LETTERS $? $. $$ $); ?$_?"));
+	if (test_case == 7)
+		return (ft_strdup("<< 1 << 2"));
+	if (test_case == 8)
+		return (ft_strdup("sleep arg1 arg2 arg3"));
+	if (test_case == 9)
+		return (ft_strdup("sleep 2 | sleep 2"));
+	if (test_case == 10)
+		return (ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 |"));
+	if (test_case == 11)
+		return (ft_strdup("$HOME \"$HOME\" '$HOME' \"\" '' $HOME $HOME1"));
+	if (test_case == 12)
+		return (ft_strdup("<< 1 cat"));
+	return (NULL);
+}

@@ -5,12 +5,9 @@ static bool	is_system_call_error(t_error_ms error_info);
 int	throw_error_custom(t_error_ms error_info)
 {
 	char		*res;
-	t_main_data	*main_data;
 
-	main_data = get_main_data();
 	res = NULL;
-	ft_printf_to_str(&res, "MINISHELL_LAST_EXIT=%d", error_info.err_code);
-	env_set_var(main_data, res);
+	set_exit_code(error_info.err_code);
 	printf("ERROR\n");
 	if (is_system_call_error(error_info))
 		printf("errno msg: %s\n", strerror(error_info.err_code));
@@ -25,12 +22,9 @@ int	throw_error_custom(t_error_ms error_info)
 int	throw_error_mimic_bash(char *msg, int code)
 {
 	char		*res;
-	t_main_data	*main_data;
 
-	main_data = get_main_data();
 	res = NULL;
-	ft_printf_to_str(&res, "MINISHELL_LAST_EXIT=%d", code);
-	env_set_var(main_data, res);
+	set_exit_code(code);
 	printf("%s\n", msg);
 	free(res);
 	return (code);

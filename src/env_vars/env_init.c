@@ -2,10 +2,10 @@
 
 int	init_env_vars(t_main_data *main_data, char *envp[])
 {
-	main_data->env_vars = ft_arr_char_add_replace_n(envp,
-			"MINISHELL_LAST_EXIT=0");
+	main_data->env_vars = ft_arr_cpy_char_null(envp);
 	if (!main_data->env_vars)
 		return (throw_error_custom((t_error_ms){errno, EPART_ENV, EFUNC_MALLOC,
 				"init env vars"}));
+	set_exit_code(0);
 	return (0);
 }

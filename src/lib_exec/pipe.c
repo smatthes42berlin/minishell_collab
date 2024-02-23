@@ -24,6 +24,10 @@ void	pipe_handler(int *pipefd, char *str)
  */
 void	pipe_setting(int *pipefd, bool open, char **str, char *error_msg)
 {
+	char	buffer[BUFFER_SIZE];
+	ssize_t	bytes_read;
+	int		i_count;
+
 	if (open)
 	{
 		write_pipe(pipefd, str, error_msg);

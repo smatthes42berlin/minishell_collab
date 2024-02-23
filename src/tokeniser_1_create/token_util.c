@@ -11,7 +11,6 @@ int	has_closing_quote(char *cli_input, char quote_type)
 	return (ft_str_chr_index(cli_input, quote_type));
 }
 
-
 int	count_operators(char *cur_pos)
 {
 	int	num;

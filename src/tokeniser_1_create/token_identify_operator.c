@@ -1,17 +1,17 @@
 #include "minishell.h"
 
 static int	assign_token_type(enum e_token_type token_type,
-								char *token_value,
-								t_token *token);
+				char *token_value,
+				t_token *token);
 static int	ret_incre_one(enum e_token_type token_type,
-							char *token_value,
-							char **cur_pos,
-							t_token *token);
+				char *token_value,
+				char **cur_pos,
+				t_token *token);
 
 static int	ret_incre_two(enum e_token_type token_type,
-							char *token_value,
-							char **cur_pos,
-							t_token *token);
+				char *token_value,
+				char **cur_pos,
+				t_token *token);
 
 int	identify_operator(char **cur_pos, t_token *token)
 {

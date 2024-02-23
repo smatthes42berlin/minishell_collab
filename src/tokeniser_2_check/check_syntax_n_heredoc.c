@@ -7,9 +7,10 @@ int	check_syntax_n_heredoc(t_main_data *main_data)
 	cur_token = &main_data->token_list;
 	while ((*cur_token)->next)
 	{
+		
 		if (check_syntax((*cur_token)))
 			return (1);
-		if (check_heredoc(cur_token))
+		if (check_heredoc(main_data, cur_token))
 			return (2);
 		cur_token = &(*cur_token)->next;
 	}

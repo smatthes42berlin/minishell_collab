@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 int	remove_here_doc_token(t_main_data *main_data)
 {
 	t_list_d	*cur_token;
