@@ -20,7 +20,8 @@ int	create_hdoc_node(t_parse_info *parse_info)
 		return (1);
 	add_all_but_pipe_ast(parse_info, node_generic);
 	set_n_token_as_parsed(1, parse_info);
-	print_hdoc_node(hdoc_node, true);
+	if (PRINT_DEBUG_1)
+		print_hdoc_node(hdoc_node, true);
 	return (0);
 }
 
@@ -31,7 +32,7 @@ static int	init_hdoc_node_param(t_node_heredoc *hdoc_node)
 }
 
 static int	write_token_value_to_pipe(t_parse_info *parse_info,
-										t_node_heredoc *hdoc_node)
+		t_node_heredoc *hdoc_node)
 {
 	int	fd[2];
 	int	write_len;

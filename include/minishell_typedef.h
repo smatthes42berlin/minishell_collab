@@ -7,6 +7,7 @@
 # define PRINT_ENV "PRINT="
 # define EXIT_CODE "EXIT_CODE="
 # define INT_DEBUG 0
+# define PRINT_DEBUG_1 0
 
 
 /**
@@ -32,7 +33,7 @@ typedef struct s_main_data
 	t_list_d			*token_list;
 	t_node				*ast;
 	char				*cli_input;
-	int					num_lines;
+	int					num_lines;		
 	//.....
 }						t_main_data;
 

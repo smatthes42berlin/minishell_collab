@@ -21,12 +21,8 @@ int	throw_error_custom(t_error_ms error_info)
 
 int	throw_error_mimic_bash(char *msg, int code)
 {
-	char		*res;
-
-	res = NULL;
 	set_exit_code(code);
 	printf("%s\n", msg);
-	free(res);
 	return (code);
 }
 
