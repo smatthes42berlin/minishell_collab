@@ -1,3 +1,11 @@
+--> exit code Handling 
+--> builtins 
+
+
+
+
+
+
 - export HELLO=123
 - make sure the variable name fullfills all the requirements (only digits, lower/uppercase chars, underscores, dont start withdigit, check again!)
 https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables
