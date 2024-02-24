@@ -32,11 +32,11 @@ int	executor(t_main_data *data)
 {
 	pid_t		pid;
 	int			pipefd[2];
-	//int			exit_code_pipe[2];
-	//int			exit_code;
 	int			status;
 	t_pipefd	*pipe_struct;
 
+	//int			exit_code_pipe[2];
+	//int			exit_code;
 	if (PRINT_DEBUG_1)
 		printf("##########################################################\n");
 	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
@@ -46,7 +46,7 @@ int	executor(t_main_data *data)
 	pipe_struct = malloc(sizeof(t_pipefd));
 	if (!pipe_struct)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
-			"function \"executor\""});
+				"function \"executor\""});
 	pipe_struct->pipefd = pipefd;
 	pid = fork_handler("function \"executor\"");
 	if (pid < 0)
@@ -56,8 +56,10 @@ int	executor(t_main_data *data)
 	}
 	if (pid == 0)
 	{
+		if (restore_default_signals(SIGQUIT + SIGINT))
+			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
-	//	printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
+		//	printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
 		//pipe_setting_exit_code(exit_code_pipe, true, &exit_code,
 		//	"function \"executor\" pipe");
 		free_main(data);
@@ -81,7 +83,6 @@ int	executor(t_main_data *data)
 		printf("##########################################################\n");
 	return (0);
 }
-
 
 static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
@@ -144,7 +145,7 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 			print_debugging_info_executer(INT_DEBUG, 22, env_var);
 			if (chdir(env_var + ft_strlen(ADD_CD) + 4) < 0)
 				throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
-					EFUNC_CHDIR, "function \"env_add_clr\""});
+						EFUNC_CHDIR, "function \"env_add_clr\""});
 		}
 	}
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
@@ -156,12 +157,10 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 			;
 			//if (is_last_node(data->ast, "cd"))
 			//	data->exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
-				//		+ ft_strlen("cd="));
+			//		+ ft_strlen("cd="));
 		}
 	}
 }
-
-
 
 static void	free_main(t_main_data *data)
 {

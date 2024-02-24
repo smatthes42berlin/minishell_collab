@@ -1,10 +1,27 @@
 #include "minishell.h"
 
+static int	signal_helper(int signals, int ign_or_dfl);
+static __sighandler_t	get_correct_signal(int ign_or_dfl);
+
 int	ignore_signals(int signals)
+{
+	if (signal_helper(signals, My_SIG_IGNORE))
+		return (1);
+	return (0);
+}
+
+int	restore_default_signals(int signals)
+{
+	if (signal_helper(signals, My_SIG_DEFAULT))
+		return (1);
+	return (0);
+}
+
+static int	signal_helper(int signals, int ign_or_dfl)
 {
 	struct sigaction	sa;
 
-	sa.sa_handler = SIG_IGN;
+	sa.sa_handler = get_correct_signal(ign_or_dfl);
 	if (signals == SIGINT)
 	{
 		if (sigaction(SIGINT, &sa, NULL))
@@ -27,4 +44,12 @@ int	ignore_signals(int signals)
 					EFUNC_SIGACTION, "ignoring SIGQUIT"}));
 	}
 	return (0);
+}
+
+static __sighandler_t	get_correct_signal(int ign_or_dfl)
+{
+	if (ign_or_dfl == My_SIG_DEFAULT)
+		return (SIG_DFL);
+	else
+		return (SIG_IGN);
 }

@@ -110,6 +110,8 @@ int	split_str_str_after_index(char const *s,
 								int index);
 int	ins_replace_str_after_index(char **res,
 								t_ins_repl_str replace_info);
+int						rem_str_after_index(char **res,
+							t_ins_repl_str replace_info);
 
 /* split */
 

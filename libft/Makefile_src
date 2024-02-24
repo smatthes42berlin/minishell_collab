@@ -144,7 +144,8 @@ SRC =	ft_atoi.c \
 		get_file_size_filename.c \
 		read_whole_file.c \
 		free_char_variadic_msg.c \
-		free_char_variadic_code.c
+		free_char_variadic_code.c \
+		rem_str_after_index.c
 
 
  
