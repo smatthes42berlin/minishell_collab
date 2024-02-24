@@ -19,17 +19,17 @@ char	**chose_buildin(t_main_data *data, t_node_exec *node,
 	return (NULL);
 }
 
-bool	check_is_inbuilt(t_main_data *data, t_node *node,
-		t_pipefd *pipe_struct, int *pipefd)
-{
-	t_node_exec *exec_node;
+/// bool	check_is_inbuilt(t_main_data *data, t_node *node, 		t_pipefd *pipe_struct, int *pipefd)
+// {
+// 	t_node_exec *exec_node;
 
-	if (node->type != EXEC)
-		return (false);
-	exec_node = (t_node_exec *)node;
-	if (exec_node->is_inbuilt == false)
-		return (false);
-	pipe_setting(pipefd, true, chose_buildin(data, exec_node, pipe_struct),
-		"function \"type pipe\" child");
-	return (true);
-}
+// 	if (node->type != EXEC)
+// 		return (false);
+// 	exec_node = (t_node_exec *)node;
+// 	if (exec_node->is_inbuilt == false)
+// 		return (false);
+// 	// else 
+// 	// 	pipe_setting(pipefd, true, chose_buildin(data, exec_node, pipe_struct),
+// 	// 		"function \"type pipe\" child");
+// 	return (true);
+// }
