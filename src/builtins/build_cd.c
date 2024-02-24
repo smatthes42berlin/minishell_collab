@@ -8,13 +8,13 @@ static char	*absoult_or_relativ_path(char *path);
 // return alltime NULL
 char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
-	char	*env_new[5];
+	char	*ret[5];
 	char	*str_tmp;
 	int		i;
 
 	// if (data->ast->type == PIPE)
 	// 	return (NULL);
-	env_new[0] = creat_env_var("OLDPWD=", ADD_ENV, false);
+	ret[0] = creat_env_var("OLDPWD=", ADD_ENV, false);
 	if (node->argv[1] == NULL)
 		str_tmp = env_get_var(data, "HOME");
 	else
@@ -23,14 +23,15 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	if (i == -1)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CHDIR,
 			"function \"build_cd\" for \'cd\' command!"});
-	env_new[1] = creat_env_var("PWD=", ADD_ENV, false);
-	env_new[2] = creat_env_var("PWD=", ADD_CD, false);
+	ret[1] = creat_env_var("PWD=", ADD_ENV, false);
+	ret[2] = creat_env_var("PWD=", ADD_CD, false);
 	if (i == -1)
-		env_new[3] = ft_strjoin(EXIT_CODE, "cd=1");
+		ret[3] = ft_strjoin(EXIT_CODE, "cd=1");
 	else
-		env_new[3] = ft_strjoin(EXIT_CODE, "cd=0");
-	env_new[4] = NULL;
-	pipe_setting(pipefd->pipefd, true, env_new, "function \"build_cd\"");
+		ret[3] = ft_strjoin(EXIT_CODE, "cd=0");
+	ret[4] = NULL;
+	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_cd\"");
+	//pipe_setting(pipefd->pipefd, true, ret, "function \"build_cd\"");
 	return (NULL);
 }
 
