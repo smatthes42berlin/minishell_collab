@@ -1,7 +1,7 @@
 #include "minishell.h"
 
-// static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct);
-// static void	env_add_clr(t_main_data *data, char *env_var);
+static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct);
+static void	env_add_clr(t_main_data *data, char *env_var);
 static void	free_main(t_main_data *data);
 
 /**
@@ -37,10 +37,11 @@ int	executor(t_main_data *data)
 	int			status;
 	t_pipefd	*pipe_struct;
 
-	printf("##########################################################\n");
+	if (PRINT_DEBUG_1)
+		printf("##########################################################\n");
 	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
-	//pipe_handler(pipefd, "function \"executor\" main pipe");
+	pipe_handler(pipefd, "function \"executor\" main pipe");
 	//pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
 	pipe_struct = malloc(sizeof(t_pipefd));
 	if (!pipe_struct)
@@ -73,14 +74,15 @@ int	executor(t_main_data *data)
 		//printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
 		//printf("exitcode ist executer |%i|\n", data->exit_code);
 	}
-	//read_pipe(data, pipe_struct);
-	//free(pipe_struct);
+	read_pipe(data, pipe_struct);
+	free(pipe_struct);
 	print_debugging_info_executer(INT_DEBUG, 2, NULL);
-	printf("##########################################################\n");
+	if (PRINT_DEBUG_1)
+		printf("##########################################################\n");
 	return (0);
 }
 
-/*
+
 static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
 	ssize_t	bytes_read;
@@ -125,7 +127,7 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 
 static void	env_add_clr(t_main_data *data, char *env_var)
 {
-	if (data->ast->type == PIPE)
+	if (data->ast->type != PIPE)
 	{
 		if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
 		{
@@ -159,7 +161,7 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 	}
 }
 
-*/
+
 
 static void	free_main(t_main_data *data)
 {

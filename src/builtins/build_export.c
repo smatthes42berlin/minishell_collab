@@ -18,7 +18,8 @@ char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	ret = copy_str_arr(node->argv, 1, false);
 	check_equal_sign_in_str_arr(ret);
 	print_str_arr_null(ret);
-	pipe_setting(pipefd->pipefd, true , ret, "function \"buid_export\"");
+	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_export\"");
+	//pipe_setting(pipefd->pipefd, true , ret, "function \"buid_export\"");
 	return (NULL);
 }
 
