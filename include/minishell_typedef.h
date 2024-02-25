@@ -7,7 +7,7 @@
 # define PRINT_ENV "PRINT="
 # define EXIT_CODE "EXIT_CODE="
 # define INT_DEBUG 0
-# define PRINT_DEBUG_1 1
+# define PRINT_DEBUG_1 0
 # define My_SIG_IGNORE 1
 # define My_SIG_DEFAULT 2
 

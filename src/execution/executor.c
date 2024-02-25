@@ -34,19 +34,20 @@ int	executor(t_main_data *data)
 	int			pipefd[2];
 	int			status;
 	t_pipefd	*pipe_struct;
+	int			res_wait_2;
 
-	//int			exit_code_pipe[2];
-	//int			exit_code;
+	// int			exit_code_pipe[2];
+	// int			exit_code;
 	if (PRINT_DEBUG_1)
 		printf("##########################################################\n");
-	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
+	// printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
 	pipe_handler(pipefd, "function \"executor\" main pipe");
-	//pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
+	// pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
 	pipe_struct = malloc(sizeof(t_pipefd));
 	if (!pipe_struct)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
-				"function \"executor\""});
+			"function \"executor\""});
 	pipe_struct->pipefd = pipefd;
 	pid = fork_handler("function \"executor\"");
 	if (pid < 0)
@@ -60,21 +61,26 @@ int	executor(t_main_data *data)
 			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		//	printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
-		//pipe_setting_exit_code(exit_code_pipe, true, &exit_code,
+		// pipe_setting_exit_code(exit_code_pipe, true, &exit_code,
 		//	"function \"executor\" pipe");
 		free_main(data);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status))
+		{
+			res_wait_2 = WTERMSIG(status);
+			printf("%d\n", res_wait_2 + 128);
+		}
 		// if (data->ast->type != PIPE)
-		// 	exit_code = get_process_exit_code(status);
-		//else
-		//	pipe_setting_exit_code(exit_code_pipe, false, &exit_code,
+		// exit_code = get_process_exit_code(status);
+		// else
+		// pipe_setting_exit_code(exit_code_pipe, false, &exit_code,
 		//		"function \"executor\" pipe");
-		//data->exit_code = exit_code;
-		//printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
-		//printf("exitcode ist executer |%i|\n", data->exit_code);
+		// data->exit_code = exit_code;
+		// printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
+		// printf("exitcode ist executer |%i|\n", data->exit_code);
 	}
 	read_pipe(data, pipe_struct);
 	free(pipe_struct);
@@ -145,7 +151,7 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 			print_debugging_info_executer(INT_DEBUG, 22, env_var);
 			if (chdir(env_var + ft_strlen(ADD_CD) + 4) < 0)
 				throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
-						EFUNC_CHDIR, "function \"env_add_clr\""});
+					EFUNC_CHDIR, "function \"env_add_clr\""});
 		}
 	}
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
@@ -155,7 +161,7 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 				ft_strlen("cd=")) == 0)
 		{
 			;
-			//if (is_last_node(data->ast, "cd"))
+			// if (is_last_node(data->ast, "cd"))
 			//	data->exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
 			//		+ ft_strlen("cd="));
 		}
