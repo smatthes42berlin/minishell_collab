@@ -1,5 +1,7 @@
 #include "minishell.h"
 
+static bool	was_signaled(int status, t_here_doc_info *hdoc_info);
+
 int	parent_get_str_child(t_list_d **hdoc_op_token, int fd[2], int pid,
 		t_here_doc_info *hdoc_info)
 {
@@ -13,8 +15,8 @@ int	parent_get_str_child(t_list_d **hdoc_op_token, int fd[2], int pid,
 				EFUNC_WAIT, "hdoc waiting for child process"}));
 	if (WIFEXITED(status))
 		res_wait = WEXITSTATUS(status);
- 	if (WIFSIGNALED(status))
-		res_wait = WTERMSIG(status);
+	if (was_signaled(status, hdoc_info))
+		return (1);
 	if (res_wait)
 		return (1);
 	if (read_whole_file(fd[0], &res))
@@ -26,6 +28,16 @@ int	parent_get_str_child(t_list_d **hdoc_op_token, int fd[2], int pid,
 	if (add_heredoc_str_token(hdoc_op_token, res, hdoc_info))
 		return (1);
 	return (0);
+}
+
+static bool	was_signaled(int status, t_here_doc_info *hdoc_info)
+{
+	if (WIFSIGNALED(status))
+	{
+		hdoc_info->signal_exit = WTERMSIG(status) + 128;
+		return (true);
+	}
+	return (false);
 }
 
 int	add_heredoc_str_token(t_list_d **hdoc_op_token, char *res,

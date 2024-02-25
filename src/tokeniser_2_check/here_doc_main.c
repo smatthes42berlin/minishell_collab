@@ -17,7 +17,7 @@ int	check_heredoc(t_main_data *main_data, t_list_d **cur_token)
 	if (check_heredoc_delim(&hdoc_info))
 		return (free_heredoc_info_code(&hdoc_info, 1));
 	if (read_heredoc(&hdoc_info, cur_token))
-		return (free_heredoc_info_code(&hdoc_info, 2));
+		return (free_heredoc_info_code(&hdoc_info, hdoc_info.signal_exit));
 	return (free_heredoc_info_code(&hdoc_info, 0));
 }
 

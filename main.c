@@ -6,6 +6,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_main_data	*main_data;
 	int			exit_code;
+	int			ret_token;
 
 	// char		*test_str;
 	if (argc > 1)
@@ -39,14 +40,19 @@ int	main(int argc, char *argv[], char *envp[])
 		// printf("line %s\n", main_data->cli_input);
 		add_history(main_data->cli_input);
 		// printf("main: before tokenise\n");
-		if (tokenise(main_data))
+		ret_token = tokenise(main_data);
+		if (ret_token == SIGINT + 128)
+		{
+			handle_ctrl_c_sigint_interactive(128 + SIGINT);
+			continue ;
+		}
+		if (ret_token)
 			free_main_exit(main_data, 2);
 		// printf("main: before expand\n");
 		if (PRINT_DEBUG_1)
 		{
 			printf("Token list before expander\n\n");
 			print_token_list(main_data->token_list);
-
 		}
 		if (expand(main_data))
 			free_main_exit(main_data, 3);
@@ -79,6 +85,7 @@ int	reset_main_data(t_main_data *main_data)
 t_main_data	*get_main_data(void)
 {
 	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
+
 	return (&data);
 }
 
