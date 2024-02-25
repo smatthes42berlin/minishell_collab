@@ -25,9 +25,12 @@ int	main(int argc, char *argv[], char *envp[])
 	// env_print(&main_data);
 	while (1)
 	{
-		start_signals_interactive();
+		if (start_signals_interactive())
+			free_main_exit(main_data, 1);
 		// main_data->cli_input = test_str;
 		main_data->cli_input = readline("cli>");
+		if (end_signals_interactive())
+			free_main_exit(main_data, 1);
 		if (check_ctrl_d(main_data))
 			free_main_exit(main_data, 1);
 		main_data->num_lines++;
@@ -39,6 +42,12 @@ int	main(int argc, char *argv[], char *envp[])
 		if (tokenise(main_data))
 			free_main_exit(main_data, 2);
 		// printf("main: before expand\n");
+		if (PRINT_DEBUG_1)
+		{
+			printf("Token list before expander\n\n");
+			print_token_list(main_data->token_list);
+
+		}
 		if (expand(main_data))
 			free_main_exit(main_data, 3);
 		// printf("main: before parse\n");
@@ -70,7 +79,6 @@ int	reset_main_data(t_main_data *main_data)
 t_main_data	*get_main_data(void)
 {
 	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
-
 	return (&data);
 }
 
@@ -78,7 +86,7 @@ t_main_data	*get_main_data(void)
 // {
 // 	if (test_case == 1)
 // 		return (ft_strdup("<< 1 cat <in_1 hello | echo -e
-				// -s <in_2 hi | <in_3 wc-l > 2"));
+// -s <in_2 hi | <in_3 wc-l > 2"));
 // 	if (test_case == 2)
 // 		return (ft_strdup("<< >> < | >"));
 // 	if (test_case == 3)

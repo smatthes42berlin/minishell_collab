@@ -107,8 +107,10 @@ SRC = 	main.c \
 		throw_error.c \
 		here_doc_read_child_util.c \
 		set_exit_code.c \
-		ignore_signals.c \
-		signals_interactive.c
+		ign_or_def_signals.c \
+		signals_interactive.c \
+		set_signal.c \
+		set_program_name.c
 
 #parser_main.c
 	

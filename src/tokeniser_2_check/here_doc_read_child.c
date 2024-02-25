@@ -38,10 +38,10 @@ int	handle_eof_signaled(t_here_doc_info *hdoc_info, bool *eof, char **compl_str,
 		int *str_len)
 {
 	printf("minishell: warning: here-document at line ");
-	printf("%d", hdoc_info->main_data->num_lines);
+	printf("%d ", hdoc_info->main_data->num_lines);
 	printf("delimited by end-of-file (wanted ");
 	printf("`%s')\n", hdoc_info->delim);
-	set_compl_str_empty(compl_str, str_len);
+	check_compl_str_empty(compl_str, str_len);
 	*eof = true;
 	return (0);
 }
@@ -63,8 +63,8 @@ static void	add_newline_to_compl_str(char **compl_str, char **new_line)
 
 static void	handle_end_reached(char **compl_str, int *str_len, bool *eof)
 {
-	if (!*compl_str)
-		set_compl_str_empty(compl_str, str_len);
+	if (check_compl_str_empty(compl_str, str_len))
+		;
 	else
 		*str_len = ft_strlen(*compl_str);
 	*eof = true;
