@@ -39,8 +39,7 @@ int	executor(t_main_data *data)
 	int			status;
 	t_pipefd	*pipe_struct;
 	int			res_wait_2;
-
-	// int			exit_code_pipe[2];
+	int			exit_code_pipe[2];
 	// int			exit_code;
 	if (PRINT_DEBUG_1)
 		printf("##########################################################\n");
@@ -48,7 +47,7 @@ int	executor(t_main_data *data)
 	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
 	pipe_handler(pipefd, "function \"executor\" main pipe");
-	//pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
+	pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
 
 	pipe_struct = malloc(sizeof(t_pipefd));
 	if (!pipe_struct)
@@ -80,7 +79,14 @@ int	executor(t_main_data *data)
 		if (WIFSIGNALED(status))
 		{
 			res_wait_2 = WTERMSIG(status);
-			printf("%d\n", res_wait_2 + 128);
+			if (WIFSIGNALED(status))
+			{
+				res_wait_2 = WTERMSIG(status);
+				if (res_wait_2 == SIGINT)
+					printf("\n");
+				if (res_wait_2 == SIGQUIT)
+					printf("Quit (core dumped)\n");
+			}
 		}
 		// if (data->ast->type != PIPE)
 		// exit_code = get_process_exit_code(status);
@@ -145,6 +151,7 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 
 static void	env_add_clr(t_main_data *data, char *env_var)
 {
+	//printf("GIVENARG : %s\n", env_var );
 	if (data->ast->type != PIPE)
 	{
 		if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
@@ -167,16 +174,20 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 	}
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
 	{
+		int exit_code;
 		print_debugging_info_executer(INT_DEBUG, 30, env_var);
-		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "cd=",
-				ft_strlen("cd=")) == 0)
+		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "exit=",
+				ft_strlen("exit=")) == 0)
 		{
-			;
-
-			//if (is_last_node(data->ast, "cd"))
-			//	data->exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
-				//		+ ft_strlen("cd="));
+			exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE) + ft_strlen("exit="));
+			char *str_err_msg = ft_strchr(env_var, '_') + ft_strlen("_MSG=");
+			if (exit_code != 0)
+			{
+				throw_error_mimic_bash(str_err_msg, exit_code);
+			}
 		}
+		else
+			set_exit_code(0);
 	}
 }
 

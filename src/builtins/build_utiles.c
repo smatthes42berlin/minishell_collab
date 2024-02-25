@@ -15,10 +15,10 @@ char	*add_newline(char *str, bool newline)
 	return (ret);
 }
 
-static char **creat_str_arr(char **arg, int i_beginn)
+static char	**creat_str_arr(char **arg, int i_beginn)
 {
-	int i_count;
-	char **ret;
+	int		i_count;
+	char	**ret;
 
 	i_count = i_beginn;
 	while (arg[i_count] != NULL)
@@ -33,9 +33,9 @@ static char **creat_str_arr(char **arg, int i_beginn)
 
 char	**copy_str_arr(char **arg, int i_beginn, bool newline)
 {
-	int i_count;
-	char **ret;
-	char *str_tmp;
+	int		i_count;
+	char	**ret;
+	char	*str_tmp;
 
 	ret = creat_str_arr(arg, i_beginn);
 	i_count = i_beginn;
@@ -57,4 +57,29 @@ char	**copy_str_arr(char **arg, int i_beginn, bool newline)
 		i_count++;
 	}
 	return (ret);
+}
+
+bool	check_bash_variable(char *str)
+{
+	int i_count;
+	int len_var_name;
+	//char	*tmp_str;
+
+	//tmp_str = ft_strdup(ft_strtrim(str, ft_strchr(str, '=') + 1));
+	//printf("----%s\n", tmp_str);
+	i_count = 0;
+	if (ft_isdigit(str[i_count]) || (str[i_count] == '='))
+		return (false);
+	if (ft_strchr(str, '=') == NULL)
+		len_var_name = ft_strlen(str);
+	else
+		len_var_name = ft_strlen(str) - ft_strlen(ft_strchr(str, '='));
+	while (str[i_count] != '\0' && i_count < len_var_name)
+	{
+		if (!ft_isalnum(str[i_count]) && (str[i_count]) != '_'
+			&& (str[i_count] != '='))
+			return (false);
+		i_count++;
+	}
+	return (true);
 }

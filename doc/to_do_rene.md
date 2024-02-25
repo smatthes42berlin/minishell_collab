@@ -24,6 +24,8 @@ expander echo raus
 
 set_exit_code()
 
+--> free in the main! 
+
 set_pwd function
 
 built_in exit

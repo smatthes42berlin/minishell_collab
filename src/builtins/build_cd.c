@@ -12,26 +12,33 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	char	*str_tmp;
 	int		i;
 
-	// if (data->ast->type == PIPE)
-	// 	return (NULL);
 	ret[0] = creat_env_var("OLDPWD=", ADD_ENV, false);
 	if (node->argv[1] == NULL)
 		str_tmp = env_get_var(data, "HOME");
 	else
 		str_tmp = ft_clear_str(node->argv[1]);
 	i = chdir(str_tmp);
-	if (i == -1)
-		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_CHDIR,
-			"function \"build_cd\" for \'cd\' command!"});
-	ret[1] = creat_env_var("PWD=", ADD_ENV, false);
-	ret[2] = creat_env_var("PWD=", ADD_CD, false);
-	if (i == -1)
-		ret[3] = ft_strjoin(EXIT_CODE, "cd=1");
+	if (i == -1 || node->argv[2] != NULL)
+	{
+		free(ret[0]);
+		if (i == -1)
+			ret[0] = ft_strjoin(EXIT_CODE, "exit=1_MSG=minishell: No such file or directory");
+		else if (node->argv[2] != NULL)
+			ret[0] = ft_strjoin(EXIT_CODE, "exit=1_MSG=minishell: cd: too many arguments");
+		ret[1] = NULL;
+	}
 	else
-		ret[3] = ft_strjoin(EXIT_CODE, "cd=0");
-	ret[4] = NULL;
+	{
+		ret[1] = creat_env_var("PWD=", ADD_ENV, false);
+		ret[2] = creat_env_var("PWD=", ADD_CD, false);
+		if (i == -1)
+			ret[3] = ft_strjoin(EXIT_CODE, "exit=1");
+		else
+			ret[3] = ft_strjoin(EXIT_CODE, "exit=0");
+		ret[4] = NULL;
+	}
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_cd\"");
-	//pipe_setting(pipefd->pipefd, true, ret, "function \"build_cd\"");
+	// pipe_setting(pipefd->pipefd, true, ret, "function \"build_cd\"");
 	return (NULL);
 }
 
@@ -80,7 +87,7 @@ static char	*ft_clear_str(char *path)
 
 static char	*absoult_or_relativ_path(char *path)
 {
-	char	*ret;
+	char *ret;
 
 	ret = NULL;
 	if (path[0] == '/')
