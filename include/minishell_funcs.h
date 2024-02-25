@@ -187,16 +187,17 @@ void		type_heredoc(t_main_data *data, t_node *node,
 int			executor(t_main_data *data);
 void		free_ast(t_node *node);
 int			write_str_arr_pipe(int *pipefd, char **str, char *err_msg);
-int			read_str_arr_pipe(int *pipefd);
-int			write_pipe_to_executor_pipe(int *pipefd, char **str_arr,
-				char *err_msg);
+int 		read_str_arr_pipe(int *pipefd);
+int 		write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg);
+
 
 /* builtins */
 // t_node_exec			*check_buildin(t_node *node);
 char		**chose_buildin(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipe_struct);
-// bool		check_is_inbuilt(t_main_data *data, t_node *node,
-// t_pipefd *pipe_struct, int *pipefd);
+
+// bool		check_is_inbuilt(t_main_data *data, t_node *node, t_pipefd *pipe_struct, int *pipefd);
+
 bool		is_last_node(t_node *node, char *compare);
 char		**build_pwd(bool newline);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
@@ -216,12 +217,10 @@ void		execve_handler(const char *file_path, char **argv, char **env);
 pid_t		fork_handler(char *str);
 int			get_process_exit_code(int status);
 void		pipe_handler(int *pipefd, char *str);
-// void		pipe_setting(int *pipefd, bool open, char **str, char *error_msg);
-// void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
-// 				char *error_msg);
+
+
 //void		pipe_setting(int *pipefd, bool open, char **str, char *error_msg);
-void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
-				char *error_msg);
+void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code, char *error_msg);
 int			use_dup2(int pipefd, int fd, char *error_msg);
 int			use_close(int pipefd, char *error_msg);
 

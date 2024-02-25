@@ -32,6 +32,10 @@ int	executor(t_main_data *data)
 {
 	pid_t		pid;
 	int			pipefd[2];
+
+	//int			exit_code_pipe[2];
+	//int			exit_code;
+
 	int			status;
 	t_pipefd	*pipe_struct;
 	int			res_wait_2;
@@ -40,10 +44,12 @@ int	executor(t_main_data *data)
 	// int			exit_code;
 	if (PRINT_DEBUG_1)
 		printf("##########################################################\n");
-	// printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
+
+	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
 	pipe_handler(pipefd, "function \"executor\" main pipe");
-	// pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
+	//pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
+
 	pipe_struct = malloc(sizeof(t_pipefd));
 	if (!pipe_struct)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
@@ -57,17 +63,20 @@ int	executor(t_main_data *data)
 	}
 	if (pid == 0)
 	{
+
 		if (restore_default_signals(SIGQUIT + SIGINT))
 			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		//	printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
 		// pipe_setting_exit_code(exit_code_pipe, true, &exit_code,
+
 		//	"function \"executor\" pipe");
 		free_main(data);
 	}
 	else
 	{
 		waitpid(pid, &status, 0);
+
 		if (WIFSIGNALED(status))
 		{
 			res_wait_2 = WTERMSIG(status);
@@ -81,6 +90,7 @@ int	executor(t_main_data *data)
 		// data->exit_code = exit_code;
 		// printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
 		// printf("exitcode ist executer |%i|\n", data->exit_code);
+
 	}
 	read_pipe(data, pipe_struct);
 	free(pipe_struct);
@@ -89,6 +99,7 @@ int	executor(t_main_data *data)
 		printf("##########################################################\n");
 	return (0);
 }
+
 
 static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
@@ -161,12 +172,16 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 				ft_strlen("cd=")) == 0)
 		{
 			;
-			// if (is_last_node(data->ast, "cd"))
+
+			//if (is_last_node(data->ast, "cd"))
 			//	data->exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
-			//		+ ft_strlen("cd="));
+				//		+ ft_strlen("cd="));
 		}
 	}
 }
+
+
+
 
 static void	free_main(t_main_data *data)
 {
