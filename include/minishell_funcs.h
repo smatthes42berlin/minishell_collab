@@ -5,6 +5,7 @@
 
 int			ignore_signals(int signals);
 void		handle_ctrl_c_sigint_interactive(int signum);
+void		handle_heredoc_was_ctrl_c(int signum);
 int			start_signals_interactive(void);
 int			end_signals_interactive(void);
 int			set_signal(int signal, void (*func)(int));
@@ -12,7 +13,7 @@ int			restore_default_signals(int signals);
 
 /* main */
 
-int			reset_main_data(t_main_data *main_data);
+int			reset_main_data(t_main_data *main_data, bool reset_env);
 t_main_data	*get_main_data(void);
 int			check_ctrl_d(t_main_data *main_data);
 bool		only_newline_entered(t_main_data *main_data);
@@ -22,6 +23,7 @@ bool		only_newline_entered(t_main_data *main_data);
 int			tokenise(t_main_data *main_data);
 void		free_token(void *token);
 void		free_main_exit(t_main_data *main_data, int exit_code);
+void		free_main_exit_end_of_loop(t_main_data *main_data);
 
 /* gen util */
 
@@ -193,7 +195,6 @@ int			write_pipe_to_executor_pipe(int *pipefd, char **str_arr,
 // t_node_exec			*check_buildin(t_node *node);
 char		**chose_buildin(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipe_struct);
-
 
 bool		is_last_node(t_node *node, char *compare);
 char		**build_pwd(bool newline);

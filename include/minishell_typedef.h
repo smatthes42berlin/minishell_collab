@@ -11,6 +11,9 @@
 # define My_SIG_IGNORE 1
 # define My_SIG_DEFAULT 2
 
+
+# define FREE_ 2
+
 /**
  * necessary so we can use t_node inside the t_node struct definition
  */

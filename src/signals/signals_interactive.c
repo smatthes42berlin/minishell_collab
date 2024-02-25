@@ -1,12 +1,23 @@
 #include "minishell.h"
 
-void	handle_ctrl_c_sigint_interactive(int signum)
+void	handle_heredoc_was_ctrl_c(int signum)
 {
+	signum++;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	if (signum != (128 + SIGINT))
-		rl_redisplay();
+	if (set_exit_code(130))
+		throw_error_custom((t_error_ms){errno, EPART_SIGNAL, EFUNC_MALLOC,
+			"set exit code on sigint"});
+}
+
+void	handle_ctrl_c_sigint_interactive(int signum)
+{
+	signum++;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 	if (set_exit_code(130))
 		throw_error_custom((t_error_ms){errno, EPART_SIGNAL, EFUNC_MALLOC,
 			"set exit code on sigint"});

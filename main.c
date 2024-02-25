@@ -43,7 +43,8 @@ int	main(int argc, char *argv[], char *envp[])
 		ret_token = tokenise(main_data);
 		if (ret_token == SIGINT + 128)
 		{
-			handle_ctrl_c_sigint_interactive(128 + SIGINT);
+			handle_heredoc_was_ctrl_c(128 + SIGINT);
+			free_main_exit_end_of_loop(main_data);
 			continue ;
 		}
 		if (ret_token)
@@ -73,12 +74,13 @@ int	main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
-int	reset_main_data(t_main_data *main_data)
+int	reset_main_data(t_main_data *main_data, bool reset_env)
 {
 	main_data->ast = NULL;
 	main_data->cli_input = NULL;
-	main_data->env_vars = NULL;
 	main_data->token_list = NULL;
+	if (reset_env)
+		main_data->env_vars = NULL;
 	return (0);
 }
 
