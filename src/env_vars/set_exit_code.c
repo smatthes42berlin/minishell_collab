@@ -7,17 +7,17 @@ int	set_exit_code(int code)
 
 	main_data = get_main_data();
 	res = NULL;
-
-	if (ft_printf_to_str(&res, "MINISHELL_LAST_EXIT=%d", code) ==
-		-1)
+	if (ft_printf_to_str(&res, "MINISHELL_LAST_EXIT=%d", code) == -1)
 	{
 		return (throw_error_custom((t_error_ms){errno, EPART_ENV, EFUNC_MALLOC,
 				"env set exit code"}));
 	}
 	if (env_set_var(main_data, res))
 	{
+		free(res);
 		return (throw_error_custom((t_error_ms){errno, EPART_ENV, EFUNC_MALLOC,
 				"env set exit code"}));
 	}
+	free(res);
 	return (0);
 }

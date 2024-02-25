@@ -25,6 +25,8 @@ void	free_main_exit(t_main_data *main_data, int exit_code)
 	d_lst_clear(&main_data->token_list, free_token);
 	reset_main_data(main_data, true);
 	rl_clear_history();
+	free_ast(main_data->ast);
+	reset_main_data(main_data);
 	if (exit_code >= 0)
 		exit(exit_code);
 }

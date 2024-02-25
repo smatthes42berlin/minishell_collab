@@ -27,6 +27,8 @@ int	start_signals_interactive(void)
 {
 	struct sigaction	sa;
 
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
 	sa.sa_handler = &handle_ctrl_c_sigint_interactive;
 	if (sigaction(SIGINT, &sa, NULL))
 		return (throw_error_custom((t_error_ms){errno, EPART_SIGNAL,

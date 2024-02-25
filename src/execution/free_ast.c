@@ -7,6 +7,8 @@ static void	free_heredoc(t_node *node);
 
 void	free_ast(t_node *node)
 {
+	if (!node)
+		return ;
 	if (node->type == PIPE)
 		free_pipe(node);
 	else if (node->type == REDIR)
@@ -85,7 +87,7 @@ static void	free_pipe(t_node *node)
 
 static void	free_heredoc(t_node *node)
 {
-	t_node_heredoc	*heredoc_node;
+	t_node_heredoc *heredoc_node;
 
 	heredoc_node = (t_node_heredoc *)node;
 	if (heredoc_node != NULL)

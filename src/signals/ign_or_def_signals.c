@@ -21,6 +21,8 @@ static int	signal_helper(int signals, int ign_or_dfl)
 {
 	struct sigaction	sa;
 
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
 	sa.sa_handler = get_correct_signal(ign_or_dfl);
 	if (signals == SIGINT)
 	{
