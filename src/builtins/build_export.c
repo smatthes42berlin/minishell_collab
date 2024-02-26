@@ -6,10 +6,6 @@ char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
 	char	**ret;
 
-	if (data->ast->type == PIPE)
-	{
-		return (NULL);
-	}
 	print_debugging_info_executer(INT_DEBUG, 26, NULL);
 	if (data->ast->type == PIPE)
 	{

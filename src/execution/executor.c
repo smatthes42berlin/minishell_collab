@@ -1,7 +1,7 @@
 #include "minishell.h"
 
-static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct);
-static void	env_add_clr(t_main_data *data, char *env_var);
+static int	read_pipe(t_main_data *data, t_pipefd *pipe_struct);
+static int	env_add_clr(t_main_data *data, char *env_var);
 static void	free_main(t_main_data *data);
 
 /**
@@ -42,7 +42,7 @@ int	executor(t_main_data *data)
 	int			exit_code_pipe[2];
 	// int			exit_code;
 	if (PRINT_DEBUG_1)
-		printf("##########################################################\n");
+		printf("\n\n##########################################################\n");
 
 	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
@@ -98,7 +98,12 @@ int	executor(t_main_data *data)
 		// printf("exitcode ist executer |%i|\n", data->exit_code);
 
 	}
-	read_pipe(data, pipe_struct);
+	if (read_pipe(data, pipe_struct) == -1)
+	{
+		//printf(" iam exiting the progamm");
+		free(pipe_struct);
+		return (-1);
+	}
 	free(pipe_struct);
 	print_debugging_info_executer(INT_DEBUG, 2, NULL);
 	if (PRINT_DEBUG_1)
@@ -107,7 +112,7 @@ int	executor(t_main_data *data)
 }
 
 
-static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
+static int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
 	ssize_t	bytes_read;
 	int		start;
@@ -126,7 +131,8 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 			if (buffer[i_count] == '\n' || buffer[i_count] == '\0')
 			{
 				buffer[i_count] = '\0';
-				env_add_clr(data, &buffer[start]);
+				if (env_add_clr(data, &buffer[start]) == -1)
+					return (-1); 
 				start = i_count + 1;
 			}
 			i_count++;
@@ -144,12 +150,14 @@ static void	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 	}
 	if (start < bytes_read)
 	{
-		env_add_clr(data, &buffer[start]);
+		if (env_add_clr(data, &buffer[start]) == -1)
+			return (-1); 
 	}
 	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
+	return (0);
 }
 
-static void	env_add_clr(t_main_data *data, char *env_var)
+static int	env_add_clr(t_main_data *data, char *env_var)
 {
 	//printf("GIVENARG : %s\n", env_var );
 	if (data->ast->type != PIPE)
@@ -174,6 +182,7 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 	}
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
 	{
+	//	printf ("Given for exit code %s\n", env_var);
 		int exit_code;
 		print_debugging_info_executer(INT_DEBUG, 30, env_var);
 		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "exit=",
@@ -183,12 +192,19 @@ static void	env_add_clr(t_main_data *data, char *env_var)
 			char *str_err_msg = ft_strchr(env_var, '_') + ft_strlen("_MSG=");
 			if (exit_code != 0)
 			{
+		//		printf("found exist code number %i\n", exit_code);
 				throw_error_mimic_bash(str_err_msg, exit_code);
 			}
 		}
 		else
 			set_exit_code(0);
 	}
+	if (ft_strncmp(env_var, EXIT, ft_strlen(EXIT)) == 0)
+	{
+		//free_main(data);
+		return (-1);
+	}
+	return (0);
 }
 
 

@@ -207,6 +207,7 @@ char		**build_export(t_main_data *data, t_node_exec *node,
 char		**build_unset(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		**build_env(t_main_data *data);
+char		**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*add_newline(char *str, bool newline);
 char		**copy_str_arr(char **arg, int i_beginn, bool newline);
 bool		check_bash_variable(char *str);

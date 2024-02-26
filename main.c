@@ -60,9 +60,22 @@ int	main(int argc, char *argv[], char *envp[])
 			free_main_exit(main_data, 4);
 			// printf("aaaa\n");
 		}
-		if (executor(main_data) == -1)
-			return (3);
-		// free_main_exit(main_data, 0);
+		int i_exec = executor(main_data);
+	//	printf("iam in exit retvalue %i\n", i_exec);
+		if (i_exec == -1)
+		{
+			char *ret_exit = env_get_var(main_data, "MINISHELL_LAST_EXIT");
+		//	printf("%s\n", ret_exit);
+			int i_exit = ft_atoi(ret_exit);
+			int i_ret_exit_code = i_exit;
+			//free (ret_exit);
+
+			//printf("Programm endet mit %i\n", i_exit);
+			//free_main_exit(main_data, i_exec);
+			//break ;
+			//printf("Programm endet mit %i\n", i_ret_exit_code);
+			return (i_ret_exit_code);
+		}
 	}
 	return (0);
 }

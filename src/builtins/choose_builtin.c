@@ -16,6 +16,8 @@ char	**chose_buildin(t_main_data *data, t_node_exec *node,
 		return (build_unset(data, node, pipe_struct));
 	if (str_are_equal(node->file_path, "env"))
 		return (build_env(data));
+	if (str_are_equal(node->file_path, "exit"))
+		return (build_exit(data, node, pipe_struct));
 	return (NULL);
 }
 

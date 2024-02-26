@@ -85,6 +85,10 @@ void print_debugging_info_executer(int on_off, int txt, void *param)
 			char *str = (char *)param;
 			printf("--Executer - End Jump to EXIT-CODE given str : |%s|\n", str);
 		}
+		if (txt == 31)
+		{
+			printf("--Buildin -- exit\n");
+		}
 	}
 	return ;
 }
