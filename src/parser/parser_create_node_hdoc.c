@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static int	write_token_value_to_pipe(t_parse_info *parse_info,
-				t_node_heredoc *hdoc_node);
+										t_node_heredoc *hdoc_node);
 static int	init_hdoc_node_param(t_node_heredoc *hdoc_node);
 
 int	create_hdoc_node(t_parse_info *parse_info)
@@ -17,7 +17,7 @@ int	create_hdoc_node(t_parse_info *parse_info)
 	init_hdoc_node_param(hdoc_node);
 	init_generic_node_param(node_generic, HEREDOC);
 	if (write_token_value_to_pipe(parse_info, hdoc_node))
-		return (1);
+		free_node_creation_code(node_generic, 1);
 	add_all_but_pipe_ast(parse_info, node_generic);
 	set_n_token_as_parsed(1, parse_info);
 	if (PRINT_DEBUG_1)
@@ -32,7 +32,7 @@ static int	init_hdoc_node_param(t_node_heredoc *hdoc_node)
 }
 
 static int	write_token_value_to_pipe(t_parse_info *parse_info,
-		t_node_heredoc *hdoc_node)
+										t_node_heredoc *hdoc_node)
 {
 	int	fd[2];
 	int	write_len;

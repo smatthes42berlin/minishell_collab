@@ -20,7 +20,7 @@ int	create_redir_node(t_parse_info *parse_info)
 	decide_open_mode(redir_node, parse_info->cur_token);
 	decide_stdin_stdout(redir_node, parse_info->cur_token);
 	if (get_file_name(redir_node, parse_info))
-		return (1);
+		free_node_creation_code(node_generic, 1);
 	add_all_but_pipe_ast(parse_info, node_generic);
 	set_n_token_as_parsed(2, parse_info);
 	if (PRINT_DEBUG_1)

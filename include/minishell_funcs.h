@@ -5,6 +5,7 @@
 
 int			ignore_signals(int signals);
 void		handle_ctrl_c_sigint_interactive(int signum);
+void		handle_heredoc_was_ctrl_c(int signum);
 int			start_signals_interactive(void);
 int			end_signals_interactive(void);
 int			set_signal(int signal, void (*func)(int));
@@ -12,7 +13,7 @@ int			restore_default_signals(int signals);
 
 /* main */
 
-int			reset_main_data(t_main_data *main_data);
+int			reset_main_data(t_main_data *main_data, bool reset_env);
 t_main_data	*get_main_data(void);
 int			check_ctrl_d(t_main_data *main_data);
 bool		only_newline_entered(t_main_data *main_data);
@@ -22,6 +23,7 @@ bool		only_newline_entered(t_main_data *main_data);
 int			tokenise(t_main_data *main_data);
 void		free_token(void *token);
 void		free_main_exit(t_main_data *main_data, int exit_code);
+void		free_main_exit_end_of_loop(t_main_data *main_data);
 
 /* gen util */
 
@@ -86,13 +88,12 @@ int			child_read_hdoc(t_here_doc_info *hdoc_info, int fd[2]);
 
 bool		delimiter_entered(char *new_line, t_here_doc_info *hdoc_info);
 bool		pressed_ctrl_d(char *new_line);
-int			handle_eof_signaled(t_here_doc_info *hdoc_info, bool *eof,
-				char **compl_str, int *str_len);
+int			handle_eof_signaled(t_here_doc_info *hdoc_info, bool *eof);
 int			add_heredoc_str_token(t_list_d **hdoc_op_token, char *res,
 				t_here_doc_info *hdoc_info);
 int			remove_here_doc_token(t_main_data *main_data);
 int			free_heredoc_info_code(t_here_doc_info *hdoc_info, int code);
-bool		check_compl_str_empty(char **compl_str, int *str_len);
+bool		check_compl_str_empty(t_here_doc_info *hdoc_info);
 
 /* environment */
 
@@ -161,6 +162,8 @@ int			check_if_cmd_exists(t_node_exec *exec_node);
 int			check_if_inbuilt(t_node_exec *exec_node);
 int			copy_cmd_name_to_args_arr(t_node_exec *exec_node);
 int			check_if_cmd_is_folder(t_node_exec *exec_node);
+int			free_exec_code_during_creation(t_node_exec *exec_node, int code);
+int			free_node_creation_code(t_node *node, int code);
 
 /* printing for debugging */
 
@@ -187,16 +190,14 @@ void		type_heredoc(t_main_data *data, t_node *node,
 int			executor(t_main_data *data);
 void		free_ast(t_node *node);
 int			write_str_arr_pipe(int *pipefd, char **str, char *err_msg);
-int 		read_str_arr_pipe(int *pipefd);
-int 		write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg);
-
+int			read_str_arr_pipe(int *pipefd);
+int			write_pipe_to_executor_pipe(int *pipefd, char **str_arr,
+				char *err_msg);
 
 /* builtins */
 // t_node_exec			*check_buildin(t_node *node);
 char		**chose_buildin(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipe_struct);
-
-// bool		check_is_inbuilt(t_main_data *data, t_node *node, t_pipefd *pipe_struct, int *pipefd);
 
 bool		is_last_node(t_node *node, char *compare);
 char		**build_pwd(bool newline);
@@ -218,9 +219,9 @@ pid_t		fork_handler(char *str);
 int			get_process_exit_code(int status);
 void		pipe_handler(int *pipefd, char *str);
 
-
-//void		pipe_setting(int *pipefd, bool open, char **str, char *error_msg);
-void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code, char *error_msg);
+// void		pipe_setting(int *pipefd, bool open, char **str, char *error_msg);
+void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
+				char *error_msg);
 int			use_dup2(int pipefd, int fd, char *error_msg);
 int			use_close(int pipefd, char *error_msg);
 
