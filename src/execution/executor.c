@@ -38,7 +38,7 @@ int	executor(t_main_data *data)
 
 	int			status;
 	t_pipefd	*pipe_struct;
-	int			res_wait_2;
+	//int			res_wait_2;
 	int			exit_code_pipe[2];
 	// int			exit_code;
 	if (PRINT_DEBUG_1)
@@ -63,8 +63,8 @@ int	executor(t_main_data *data)
 	if (pid == 0)
 	{
 
-		if (restore_default_signals(SIGQUIT + SIGINT))
-			exit(errno);
+		// if (restore_default_signals(SIGQUIT + SIGINT))
+		// 	exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		//	printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
 		// pipe_setting_exit_code(exit_code_pipe, true, &exit_code,
@@ -74,20 +74,20 @@ int	executor(t_main_data *data)
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		 waitpid(pid, &status, 0);
 
-		if (WIFSIGNALED(status))
-		{
-			res_wait_2 = WTERMSIG(status);
-			if (WIFSIGNALED(status))
-			{
-				res_wait_2 = WTERMSIG(status);
-				if (res_wait_2 == SIGINT)
-					printf("\n");
-				if (res_wait_2 == SIGQUIT)
-					printf("Quit (core dumped)\n");
-			}
-		}
+		// if (WIFSIGNALED(status))
+		// {
+		// 	res_wait_2 = WTERMSIG(status);
+		// 	if (WIFSIGNALED(status))
+		// 	{
+		// 		res_wait_2 = WTERMSIG(status);
+		// 		if (res_wait_2 == SIGINT)
+		// 			printf("\n");
+		// 		if (res_wait_2 == SIGQUIT)
+		// 			printf("Quit (core dumped)\n");
+		// 	}
+		// }
 		// if (data->ast->type != PIPE)
 		// exit_code = get_process_exit_code(status);
 		// else
@@ -189,11 +189,15 @@ static int	env_add_clr(t_main_data *data, char *env_var)
 				ft_strlen("exit=")) == 0)
 		{
 			exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE) + ft_strlen("exit="));
-			char *str_err_msg = ft_strchr(env_var, '_') + ft_strlen("_MSG=");
 			if (exit_code != 0)
 			{
-		//		printf("found exist code number %i\n", exit_code);
-				throw_error_mimic_bash(str_err_msg, exit_code);
+				if (ft_strchr(env_var, '_') == NULL)
+					set_exit_code(exit_code);
+				else
+				{
+					char *str_err_msg = (ft_strchr(env_var, '_') + ft_strlen("_MSG="));
+					throw_error_mimic_bash(str_err_msg, exit_code);
+				}
 			}
 		}
 		else

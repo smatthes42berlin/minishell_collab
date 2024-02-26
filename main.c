@@ -65,7 +65,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (i_exec == -1)
 		{
 			char *ret_exit = env_get_var(main_data, "MINISHELL_LAST_EXIT");
-		//	printf("%s\n", ret_exit);
+			//printf("found exit code %s\n", ret_exit);
 			int i_exit = ft_atoi(ret_exit);
 			int i_ret_exit_code = i_exit;
 			//free (ret_exit);
