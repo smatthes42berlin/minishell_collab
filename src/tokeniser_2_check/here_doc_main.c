@@ -29,4 +29,6 @@ void	init_hdoc_info(char *delim_raw, t_here_doc_info *hdoc_info)
 	hdoc_info->num_char_no_quote = 0;
 	hdoc_info->index_close_quote = 0;
 	hdoc_info->tmp = NULL;
+	hdoc_info->str_len = 0;
+	hdoc_info->compl_str = NULL;
 }

@@ -5,9 +5,9 @@ static char	*get_test_case(int test_case);
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_main_data	*main_data;
-	int			exit_code;
 	int			ret_token;
 
+	// int			exit_code;
 	// int			exit_code;
 	// char		*test_str;
 	if (argc > 1)
@@ -27,7 +27,7 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		if (start_signals_interactive())
 			free_main_exit(main_data, 1);
-		main_data->cli_input = get_test_case(13);
+		main_data->cli_input = get_test_case(4);
 		// main_data->cli_input = readline("cli>");
 		if (end_signals_interactive())
 			free_main_exit(main_data, 1);
@@ -83,7 +83,6 @@ int	reset_main_data(t_main_data *main_data, bool reset_env)
 t_main_data	*get_main_data(void)
 {
 	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
-
 	return (&data);
 }
 
@@ -96,7 +95,7 @@ static char	*get_test_case(int test_case)
 	if (test_case == 3)
 		return (ft_strdup("cat << 1 > out | wc > out2"));
 	if (test_case == 4)
-		return (ft_strdup("sleep 2 < in > out| echo hello << in > out | sleep 3 | echo 123"));
+		return (ft_strdup("sleep 2 < in > out| echo hello << 1 > out | sleep 3 | echo 123"));
 	if (test_case == 5)
 		return (ft_strdup("cat <<1<<2<<3"));
 	if (test_case == 6)
@@ -114,6 +113,8 @@ static char	*get_test_case(int test_case)
 	if (test_case == 12)
 		return (ft_strdup("<< 1 cat"));
 	if (test_case == 13)
-		return (ft_strdup("cat << 1"));
+		return (ft_strdup("echo hello"));
+	// return (ft_strdup("cat << 1 << 2  | echo << 3 hello | ls"));
+	// return (ft_strdup("echo hello"));
 	return (NULL);
 }

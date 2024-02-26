@@ -30,16 +30,10 @@ static void	free_exec(t_node *node)
 		exec_node->argv = NULL;
 		free_str_arr_null(exec_node->env);
 		exec_node->env = NULL;
-		if (exec_node->file_path != NULL)
-		{
-			free(exec_node->file_path);
-			exec_node->file_path = NULL;
-		}
-		if (exec_node != NULL)
-		{
-			free(exec_node);
-			exec_node = NULL;
-		}
+		free(exec_node->file_path);
+		exec_node->file_path = NULL;
+		free(exec_node);
+		exec_node = NULL;
 	}
 	return ;
 }
@@ -58,11 +52,8 @@ static void	free_redim(t_node *node)
 		}
 		if (redir_node->left_node != NULL)
 			free_ast(redir_node->left_node);
-		if (redir_node != NULL)
-		{
-			free(redir_node);
-			redir_node = NULL;
-		}
+		free(redir_node);
+		redir_node = NULL;
 	}
 }
 
@@ -77,11 +68,8 @@ static void	free_pipe(t_node *node)
 			free_ast(pipe_node->left_node);
 		if (pipe_node->right_node != NULL)
 			free_ast(pipe_node->right_node);
-		if (pipe_node != NULL)
-		{
-			free(pipe_node);
-			pipe_node = NULL;
-		}
+		free(pipe_node);
+		pipe_node = NULL;
 	}
 }
 
@@ -94,10 +82,7 @@ static void	free_heredoc(t_node *node)
 	{
 		if (heredoc_node->left_node != NULL)
 			free_ast(heredoc_node->left_node);
-		if (heredoc_node != NULL)
-		{
-			free(heredoc_node);
-			heredoc_node = NULL;
-		}
+		free(heredoc_node);
+		heredoc_node = NULL;
 	}
 }

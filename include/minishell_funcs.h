@@ -67,11 +67,11 @@ bool		node_is_redir(t_node *node);
 
 /* tokenisation/lexer 2 check syntax and get heredoc */
 int			pipe_as_first_token(t_list_d *cur_token, t_token *cur_token_val);
-int			operator_as_last_token(t_list_d *next_token,
-				t_token *cur_token_val);
+int	operator_as_last_token(t_list_d *next_token,
+							t_token *cur_token_val);
 int			two_pipes_in_a_row(t_token *cur_token_val, t_token *next_token_val);
-int			operator_after_operator_execpt_pipe(t_token *cur_token_val,
-				t_token *next_token_val);
+int	operator_after_operator_execpt_pipe(t_token *cur_token_val,
+										t_token *next_token_val);
 int			check_syntax_n_heredoc(t_main_data *main_data);
 int			token_is_operator(t_token *token);
 int			check_syntax(t_list_d *cur_token);
@@ -88,13 +88,12 @@ int			child_read_hdoc(t_here_doc_info *hdoc_info, int fd[2]);
 
 bool		delimiter_entered(char *new_line, t_here_doc_info *hdoc_info);
 bool		pressed_ctrl_d(char *new_line);
-int			handle_eof_signaled(t_here_doc_info *hdoc_info, bool *eof,
-				char **compl_str, int *str_len);
+int			handle_eof_signaled(t_here_doc_info *hdoc_info, bool *eof);
 int			add_heredoc_str_token(t_list_d **hdoc_op_token, char *res,
 				t_here_doc_info *hdoc_info);
 int			remove_here_doc_token(t_main_data *main_data);
 int			free_heredoc_info_code(t_here_doc_info *hdoc_info, int code);
-bool		check_compl_str_empty(char **compl_str, int *str_len);
+bool		check_compl_str_empty(t_here_doc_info *hdoc_info);
 
 /* environment */
 
@@ -114,18 +113,20 @@ int			expand_token_val(t_expansion_info *expansion_info);
 int			expand_variable(t_expansion_info *expansion_info);
 char		*get_key_env_var(t_expansion_info *expansion_info);
 int			go_to_next_char(t_expansion_info *expansion_info);
-int			check_for_fixed_expansions(t_expansion_info *expansion_info,
-				bool *found);
+int	check_for_fixed_expansions(t_expansion_info *expansion_info,
+								bool *found);
 int			skip_to_closing_quote(t_expansion_info *expansion_info);
 int			check_dquote_start_end(t_expansion_info *expansion_info);
 int			adjust_cur_pos_num(t_expansion_info *expansion_info, int num_add);
-int			adjust_cur_pos_str_len(t_expansion_info *expansion_info,
-				char *insert_str);
+int	adjust_cur_pos_str_len(t_expansion_info *expansion_info,
+							char *insert_str);
 int			check_for_variable_expansions(t_expansion_info *expansion_info);
 int			insert_env_var(t_expansion_info *expansion_info, char *env_var_name,
 				char *key);
-int			check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
-				bool *found, char *spec_var_symbol, char *spec_var_name);
+int	check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
+										bool *found,
+										char *spec_var_symbol,
+										char *spec_var_name);
 int			remove_quote(char *cur_pos);
 int			remove_empty_token(t_list_d **next);
 
@@ -161,6 +162,8 @@ int			check_if_cmd_exists(t_node_exec *exec_node);
 int			check_if_inbuilt(t_node_exec *exec_node);
 int			copy_cmd_name_to_args_arr(t_node_exec *exec_node);
 int			check_if_cmd_is_folder(t_node_exec *exec_node);
+int			free_exec_code_during_creation(t_node_exec *exec_node, int code);
+int			free_node_creation_code(t_node *node, int code);
 
 /* printing for debugging */
 

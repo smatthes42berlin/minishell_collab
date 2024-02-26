@@ -11,7 +11,6 @@
 # define My_SIG_IGNORE 1
 # define My_SIG_DEFAULT 2
 
-
 # define FREE_ 2
 
 /**
@@ -102,6 +101,8 @@ typedef struct s_here_doc_info
 	char				*delim;
 	char				*delim_raw;
 	char				*tmp;
+	char				*compl_str;
+	int					str_len;
 	bool				quoted;
 	int					num_char_no_quote;
 	int					index_close_quote;
