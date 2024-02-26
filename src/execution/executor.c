@@ -38,9 +38,9 @@ int	executor(t_main_data *data)
 
 	int			status;
 	t_pipefd	*pipe_struct;
-	//int			res_wait_2;
+	int			res_wait_2;
 	int			exit_code_pipe[2];
-	// int			exit_code;
+	int			exit_code;
 	if (PRINT_DEBUG_1)
 		printf("\n\n##########################################################\n");
 
@@ -63,36 +63,35 @@ int	executor(t_main_data *data)
 	if (pid == 0)
 	{
 
-		// if (restore_default_signals(SIGQUIT + SIGINT))
-		// 	exit(errno);
-		navigate_tree_forward(data, data->ast, pipe_struct);
+		if (restore_default_signals(SIGQUIT + SIGINT))
+			exit(errno);
+		exit_code = navigate_tree_forward(data, data->ast, pipe_struct);
 		//	printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
-		// pipe_setting_exit_code(exit_code_pipe, true, &exit_code,
-
-		//	"function \"executor\" pipe");
+		pipe_setting_exit_code(exit_code_pipe, true, &exit_code, "function \"executor\" pipe");
 		free_main(data);
 	}
 	else
 	{
-		 waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0);
 
-		// if (WIFSIGNALED(status))
-		// {
-		// 	res_wait_2 = WTERMSIG(status);
-		// 	if (WIFSIGNALED(status))
-		// 	{
-		// 		res_wait_2 = WTERMSIG(status);
-		// 		if (res_wait_2 == SIGINT)
-		// 			printf("\n");
-		// 		if (res_wait_2 == SIGQUIT)
-		// 			printf("Quit (core dumped)\n");
-		// 	}
-		// }
-		// if (data->ast->type != PIPE)
-		// exit_code = get_process_exit_code(status);
-		// else
-		// pipe_setting_exit_code(exit_code_pipe, false, &exit_code,
-		//		"function \"executor\" pipe");
+		if (WIFSIGNALED(status))
+		{
+			res_wait_2 = WTERMSIG(status);
+			if (WIFSIGNALED(status))
+			{
+				res_wait_2 = WTERMSIG(status);
+				if (res_wait_2 == SIGINT)
+					printf("\n");
+				if (res_wait_2 == SIGQUIT)
+					printf("Quit (core dumped)\n");
+			}
+		}
+		if (data->ast->type != PIPE)
+			exit_code = get_process_exit_code(status);
+		else
+			pipe_setting_exit_code(exit_code_pipe, false, &exit_code,
+					"function \"executor\" pipe");
+		set_exit_code(exit_code);
 		// data->exit_code = exit_code;
 		// printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
 		// printf("exitcode ist executer |%i|\n", data->exit_code);

@@ -18,28 +18,6 @@ int write_str_arr_pipe(int *pipefd, char **str, char *err_msg) {
     return ret;
 }
 
-
-// int	write_str_arr_pipe(int *pipefd, char **str, char *err_msg)
-// {
-// 	int	i_count;
-// 	int	ret;
-
-// 	i_count = 0;
-// 	while (str[i_count] != NULL)
-// 	{
-// 		ret = write(pipefd[1], str[i_count], strlen(str[i_count]));
-// 		ret = write(pipefd[1], "\n", 1);
-// 		if (ret < 0)
-// 		{
-// 			ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
-// 					EFUNC_WRITE, err_msg});
-// 			break ;
-// 		}
-// 		i_count++;
-// 	}
-// 	return (ret);
-// }
-
 int read_str_arr_pipe(int *pipefd)
 {
 	char	buffer[BUFFER_SIZE];

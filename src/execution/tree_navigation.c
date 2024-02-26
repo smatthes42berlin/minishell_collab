@@ -11,7 +11,7 @@ int	navigate_tree_forward(t_main_data *data, t_node *node,
 	if (node == NULL)
 		printf("In function \"navigate_tree_forward\" (node == NULL) \n");
 	if (node->type == PIPE)
-		type_pipe(data, node, pipe_struct);
+		ret = type_pipe(data, node, pipe_struct);
 	else if (node->type == REDIR)
 		type_redir(data, node, pipe_struct);
 	else if (node->type == EXEC)

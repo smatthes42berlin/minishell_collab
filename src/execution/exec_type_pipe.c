@@ -18,7 +18,9 @@ int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	pid_t		cpid;
 	t_node_pipe	*pipe_node;
 	char		*err_msg;
+	int			ret;
 
+	ret	= 0;
 	err_msg = "function \"type_pipe\"";
 	pipe_node = (t_node_pipe *)node;
 	pipe_handler(pipefd, err_msg);
@@ -27,10 +29,11 @@ int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 		left_pipe_node(pipefd, data, pipe_node, pipe_struct);
 	else
 	{
-		nested_fork_right_pipe(pipefd, data, pipe_node, pipe_struct);
+		ret = nested_fork_right_pipe(pipefd, data, pipe_node, pipe_struct);
 		waitpid(cpid, NULL, 0);
 	}
-	return (0);
+
+	return (ret);
 }
 
 static int	nested_fork_right_pipe(int *pipefd, t_main_data *data,
@@ -38,7 +41,10 @@ static int	nested_fork_right_pipe(int *pipefd, t_main_data *data,
 {
 	pid_t	pid2;
 	char	*err_msg;
+	int 	ret;
+	int		status;
 
+	ret = 0;
 	err_msg = "function \"type_pipe\"";
 	pid2 = fork_handler(err_msg);
 	if (pid2 == 0)
@@ -47,9 +53,10 @@ static int	nested_fork_right_pipe(int *pipefd, t_main_data *data,
 	{
 		use_close(pipefd[0], err_msg);
 		use_close(pipefd[1], err_msg);
-		waitpid(pid2, NULL, 0);
+		waitpid(pid2, &status, 0);
+		ret = get_process_exit_code(status);
 	}
-	return (0);
+	return (ret);
 }
 
 bool	check_is_inbuilt(t_node *node)

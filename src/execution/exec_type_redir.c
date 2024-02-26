@@ -29,7 +29,9 @@ void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 
 static int	open_handler(const char *path, enum e_open_mode mode, int debug)
 {
-	int result;
+	int 	result;
+	char 	*err_msg;
+	char 	*tmp_str;
 
 	result = -1;
 	if (mode == FILE_ONLY_READING)
@@ -37,7 +39,15 @@ static int	open_handler(const char *path, enum e_open_mode mode, int debug)
 		if (access_handler(path, FILE_EXISTS, INT_DEBUG) == 0)
 			result = open(path, mode);
 		else
-			printf("minishell: %s: %s\n", path, strerror(errno));
+		{
+			err_msg = ft_strjoin("minishell: ", path);
+			tmp_str = ft_strjoin(err_msg, ": ");
+			free(err_msg);
+			err_msg = ft_strjoin(tmp_str, strerror(errno));
+			throw_error_mimic_bash(err_msg, 1);
+			free(tmp_str);
+			free(err_msg);
+		}
 	}
 	else
 		result = open(path, mode | O_CREAT, 0644);
