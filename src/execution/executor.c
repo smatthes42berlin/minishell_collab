@@ -122,7 +122,8 @@ static int read_pipe(t_main_data *data, t_pipefd *pipe_struct) {
         buffer[line_length] = '\0';
 
         char *newline;
-        while ((newline = strchr(line_start, '\n')) != NULL) {
+        while ((newline = strchr(line_start, '\n')) != NULL)
+		{
             *newline = '\0';
             if (env_add_clr(data, line_start) == -1)
                 return -1;

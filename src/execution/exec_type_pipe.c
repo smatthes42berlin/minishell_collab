@@ -19,6 +19,7 @@ int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	t_node_pipe	*pipe_node;
 	char		*err_msg;
 	int			ret;
+	int			status;
 
 	ret	= 0;
 	err_msg = "function \"type_pipe\"";
@@ -30,7 +31,8 @@ int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	else
 	{
 		ret = nested_fork_right_pipe(pipefd, data, pipe_node, pipe_struct);
-		waitpid(cpid, NULL, 0);
+		waitpid(cpid, &status, 0);
+		//printf("pid MAIN state : %i\n", get_process_exit_code(status));
 	}
 
 	return (ret);
@@ -55,6 +57,7 @@ static int	nested_fork_right_pipe(int *pipefd, t_main_data *data,
 		use_close(pipefd[1], err_msg);
 		waitpid(pid2, &status, 0);
 		ret = get_process_exit_code(status);
+		//printf("pid nestet state : %i\n", ret);
 	}
 	return (ret);
 }
@@ -92,7 +95,7 @@ static int	left_pipe_node(int *pipefd, t_main_data *data,
 		exec_node = (t_node_exec *)pipe_node->left_node;
 		str_arr = chose_buildin(data, exec_node, pipe_struct);
 		ret = use_close(pipefd[0], err_msg);
-		ret = write_str_arr_pipe(pipefd, str_arr, err_msg);
+		ret = write_str_arr_pipe(pipefd, str_arr, err_msg, true);
 		ret = use_close(pipefd[1], err_msg);
 	}
 	return (ret);

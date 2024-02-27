@@ -1,6 +1,7 @@
 #include "minishell.h"
 
-int write_str_arr_pipe(int *pipefd, char **str, char *err_msg) {
+int write_str_arr_pipe(int *pipefd, char **str, char *err_msg, bool is_pipe) 
+{
     int i_count;
     int ret;
 	size_t len;
@@ -10,8 +11,12 @@ int write_str_arr_pipe(int *pipefd, char **str, char *err_msg) {
 	{
         len = strlen(str[i_count]);
 		//printf("WRITE PUFFER %s\n", str[i_count]);
-        ret = write(pipefd[1], str[i_count], len +  1 );
-        if (ret < 0) {
+		if (is_pipe)
+			ret = write(pipefd[1], str[i_count], len);
+		else
+        	ret = write(pipefd[1], str[i_count], len + 1);
+        if (ret < 0) 
+		{
             ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE, err_msg});
             break;
         }
@@ -51,7 +56,7 @@ int write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg)
 	int ret;
 
 	ret = use_close(pipefd[0], err_msg);
-	ret = write_str_arr_pipe(pipefd, str_arr, err_msg);
+	ret = write_str_arr_pipe(pipefd, str_arr, err_msg, false);
 	ret = use_close(pipefd[1], err_msg);
 	return (ret);
 }

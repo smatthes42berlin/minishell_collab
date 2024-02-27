@@ -186,7 +186,7 @@ void		type_heredoc(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
 int			executor(t_main_data *data);
 void		free_ast(t_node *node);
-int			write_str_arr_pipe(int *pipefd, char **str, char *err_msg);
+int 		write_str_arr_pipe(int *pipefd, char **str, char *err_msg, bool is_pipe);
 int 		read_str_arr_pipe(int *pipefd);
 int 		write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg);
 
