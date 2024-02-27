@@ -6,9 +6,11 @@ int write_str_arr_pipe(int *pipefd, char **str, char *err_msg) {
 	size_t len;
 
     i_count = 0;
-    while (str[i_count] != NULL) {
+    while (str[i_count] != NULL) 
+	{
         len = strlen(str[i_count]);
-        ret = write(pipefd[1], str[i_count], len);
+		//printf("WRITE PUFFER %s\n", str[i_count]);
+        ret = write(pipefd[1], str[i_count], len +  1 );
         if (ret < 0) {
             ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE, err_msg});
             break;

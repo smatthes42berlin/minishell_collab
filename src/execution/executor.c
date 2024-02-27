@@ -110,55 +110,79 @@ int	executor(t_main_data *data)
 	return (0);
 }
 
+static int read_pipe(t_main_data *data, t_pipefd *pipe_struct) {
+    ssize_t bytes_read;
+    char buffer[BUFFER_SIZE + 1];
+    char *line_start = buffer;
+    int line_length = 0;
 
-static int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
-{
-	ssize_t	bytes_read;
-	int		start;
-	int		i_count;
-	char	buffer[BUFFER_SIZE + 1];
+    use_close(pipe_struct->pipefd[1], "function \"read pipe\" for executor");
+    while ((bytes_read = read(pipe_struct->pipefd[0], buffer + line_length, BUFFER_SIZE - line_length)) > 0) {
+        line_length += bytes_read;
+        buffer[line_length] = '\0';
 
-	start = 0;
-	i_count = 0;
-	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
-	while ((bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE)) > 0)
-	{
-		buffer[bytes_read] = '\0';
-		i_count = 0;
-		while (i_count < bytes_read)
-		{
-			if (buffer[i_count] == '\n' || buffer[i_count] == '\0')
-			{
-				buffer[i_count] = '\0';
-				if (env_add_clr(data, &buffer[start]) == -1)
-					return (-1); 
-				start = i_count + 1;
-			}
-			i_count++;
-		}
-		if (start < bytes_read)
-		{
-			ft_memmove(buffer, &buffer[start], bytes_read - start);
-			bytes_read = bytes_read - start;
-			start = 0;
-		}
-		else
-		{
-			start = 0;
-		}
-	}
-	if (start < bytes_read)
-	{
-		if (env_add_clr(data, &buffer[start]) == -1)
-			return (-1); 
-	}
-	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
-	return (0);
+        char *newline;
+        while ((newline = strchr(line_start, '\n')) != NULL) {
+            *newline = '\0';
+            if (env_add_clr(data, line_start) == -1)
+                return -1;
+         //   printf("READ BUFFER : %s\n", line_start);
+            line_start = newline + 1;
+        }
+        int remaining_data = buffer + line_length - line_start;
+        ft_memmove(buffer, line_start, remaining_data);
+        line_length = remaining_data;
+    }
+    if (line_length > 0) {
+        if (env_add_clr(data, line_start) == -1)
+            return -1;
+     //   printf("READ BUFFER : %s\n", line_start);
+    }
+
+    use_close(pipe_struct->pipefd[0], "function \"read pipe\" for executor");
+    return 0;
 }
+
+
+/**
+static int read_pipe(t_main_data *data, t_pipefd *pipe_struct) {
+    ssize_t bytes_read;
+    int i_count;
+    char buffer[BUFFER_SIZE + 1];
+
+    i_count = 0;
+	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
+    while ((bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE)) > 0) 
+	{
+        buffer[bytes_read] = '\0';
+        i_count = 0;
+        while (i_count < bytes_read) {
+            if (buffer[i_count] == '\n' || buffer[i_count] == '\0') 
+			{
+                buffer[i_count] = '\0';
+                if (env_add_clr(data, buffer) == -1)
+                    return (-1);
+				printf("READ BUFFER : %s\n", buffer);
+                buffer[0] = '\0';
+            }
+            i_count++;
+        }
+    }
+    if (i_count > 0) 
+	{
+        if (env_add_clr(data, buffer) == -1)
+            return -1;
+		printf("READ BUFFER : %s\n", buffer);
+    }
+	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
+    return 0;
+}
+*/
+
 
 static int	env_add_clr(t_main_data *data, char *env_var)
 {
-	//printf("GIVENARG : %s\n", env_var );
+//	printf("GIVENARG : %s\n", env_var );
 	if (data->ast->type != PIPE)
 	{
 		if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
@@ -181,7 +205,7 @@ static int	env_add_clr(t_main_data *data, char *env_var)
 	}
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
 	{
-	//	printf ("Given for exit code %s\n", env_var);
+		//printf ("Given for exit code %s\n", env_var);
 		int exit_code;
 		print_debugging_info_executer(INT_DEBUG, 30, env_var);
 		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "exit=",
@@ -209,8 +233,6 @@ static int	env_add_clr(t_main_data *data, char *env_var)
 	}
 	return (0);
 }
-
-
 
 
 static void	free_main(t_main_data *data)
