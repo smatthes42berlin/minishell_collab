@@ -7,31 +7,42 @@ void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	t_node_redir	*redir_node;
 	int				fd;
 	int				exit_code;
+	pid_t			cpid;
+	char			*err_msg;
+
+	err_msg = "function \"type_redir\"";
 
 	print_debugging_info_executer(INT_DEBUG, 5, NULL);
 	redir_node = (t_node_redir *)node;
 	fd = open_handler(redir_node->filename, redir_node->mode , INT_DEBUG);
 	if (fd < 0)
 	{
-	//	printf("exit staus %s ", env_get_var(data,"MINISHELL_LAST_EXIT"));
-		// if (data->ast->type != PIPE)
-		// {
-			exit_code = 1;
-			pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true, &exit_code, "function \"type_redir\"");
-		// }
+		exit_code = 1;
+		pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true, &exit_code, err_msg);
 		return ;
 	}
-	if (use_dup2(fd, redir_node->in_or_out, "function \"type_redir\"") != 0)
+	if (use_dup2(fd, redir_node->in_or_out, err_msg) != 0)
 	{
-		use_close(fd, "function \"type_redir\"");
+		use_close(fd, err_msg);
 		return ;
 	}
 	if (redir_node->left_node->type == NOTHING)
 		return ;
 	else
-		navigate_tree_forward(data, redir_node->left_node, pipe_struct);
+	{
+		cpid = fork_handler(err_msg);
+		if (cpid == 0)
+			navigate_tree_forward(data, redir_node->left_node, pipe_struct);
+		else
+		{
+			waitpid(cpid, NULL, 0);
+			//printf("pid MAIN state redir : %i\n", get_process_exit_code(status));
+		}
+	}
 	use_close(fd, "function \"type_redir\"");
-	
+	exit_code = 0;
+	//printf("write exit code!\n");
+	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true, &exit_code, "function \"type_redir\"");
 }
 
 

@@ -83,12 +83,12 @@ int	executor(t_main_data *data)
 		if (data->ast->type != PIPE && data->ast->type != REDIR)
 		{
 			get_exit_code = get_process_exit_code(status);
-		//	printf("EXITCODE %i staus %d\n", get_exit_code, status);
+			//printf("EXITCODE %i staus %d\n", get_exit_code, status);
 		}
 		else
 		{
 			pipe_setting_exit_code(exit_code_pipe, false, &get_exit_code, "function \"executor\" pipe");
-		//	printf("EXITCODE PIPE  %i\n", get_exit_code);
+			//printf("EXITCODE PIPE  %i\n", get_exit_code);
 		}
 		set_exit_code(get_exit_code);
 		
