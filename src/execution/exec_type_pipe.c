@@ -32,7 +32,7 @@ int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	{
 		ret = nested_fork_right_pipe(pipefd, data, pipe_node, pipe_struct);
 		waitpid(cpid, &status, 0);
-		//printf("pid MAIN state : %i\n", get_process_exit_code(status));
+		printf("pid MAIN state : %i\n", get_process_exit_code(status));
 	}
 
 	return (ret);
@@ -45,19 +45,45 @@ static int	nested_fork_right_pipe(int *pipefd, t_main_data *data,
 	char	*err_msg;
 	int 	ret;
 	int		status;
+	int		err_pipe[2];
 
 	ret = 0;
 	err_msg = "function \"type_pipe\"";
 	pid2 = fork_handler(err_msg);
+	pipe_handler(err_pipe, err_msg);
 	if (pid2 == 0)
-		right_pipe_node(pipefd, data, pipe_node, pipe_struct);
+	{
+		ret = right_pipe_node(pipefd, data, pipe_node, pipe_struct);
+		if (pipe_node->right_node->type == PIPE)
+		{
+			printf(" I will write itttttttttt : %i\n", ret);
+			use_close(err_pipe[0], err_msg);
+			if (write(err_pipe[1], ret, sizeof(ret)) < 0)
+				throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE, err_msg});
+			//use_close(pipefd[1], err_msg);
+			//pipe_setting_exit_code(err_pipe, true, &ret, err_msg);
+		}
+	}
 	else
 	{
 		use_close(pipefd[0], err_msg);
 		use_close(pipefd[1], err_msg);
-		waitpid(pid2, &status, 0);
-		ret = get_process_exit_code(status);
-		//printf("pid nestet state : %i\n", ret);
+		if (pipe_node->right_node->type == PIPE)
+		{
+			waitpid(pid2, NULL, 0);
+			use_close(err_pipe[1], err_msg);
+			if (read(err_pipe[0], ret, sizeof(ret)) < 0)
+				throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_READ, err_msg});
+			//use_close(err_pipe[0], err_msg);
+			//pipe_setting_exit_code(err_pipe, false, &ret, err_msg);
+			printf("IGETTTTTTT IT  : %i\n", ret);
+		}
+		else
+		{
+			waitpid(pid2, &status, 0);
+			ret = get_process_exit_code(status);
+		}
+		printf("pid nestet state : %i\n", ret);
 	}
 	return (ret);
 }

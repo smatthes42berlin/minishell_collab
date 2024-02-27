@@ -17,18 +17,24 @@ void	pipe_handler(int *pipefd, char *str)
 
 void	pipe_setting_exit_code(int *pipefd, bool open, int *exit_code, char *error_msg)
 {
+	
 	if (open)
 	{
 		use_close(pipefd[0], error_msg);
-		write(pipefd[1], exit_code, sizeof(*exit_code)); 
+		if (write(pipefd[1], exit_code, sizeof(*exit_code)) < 0)
+			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE, error_msg});
 		use_close(pipefd[1], error_msg);
+		printf("I SET exit code for pipehandling %i \n\n" , *exit_code);
 	}
 	else
 	{
 		use_close(pipefd[1], error_msg);
-		read(pipefd[0], exit_code, sizeof(*exit_code));
+		if (read(pipefd[0], exit_code, sizeof(*exit_code)) < 0)
+			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_READ, error_msg});
 		use_close(pipefd[0], error_msg);
+		printf("I GET exit code for pipehandling %i\n\n" , *exit_code);
 	}
+	
 }
 
 

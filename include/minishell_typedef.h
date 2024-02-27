@@ -8,7 +8,7 @@
 # define EXIT_CODE "EXCODE="
 # define EXIT "EXITEXIT"
 # define INT_DEBUG 0
-# define PRINT_DEBUG_1 0
+# define PRINT_DEBUG_1 1
 # define My_SIG_IGNORE 1
 # define My_SIG_DEFAULT 2
 
@@ -72,6 +72,7 @@ typedef struct s_pipefd_main
 {
 	int					*pipefd;
 	bool				direction;
+	int					exit_code;
 }						t_pipefd;
 
 /**

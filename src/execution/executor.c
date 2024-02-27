@@ -40,7 +40,8 @@ int	executor(t_main_data *data)
 	t_pipefd	*pipe_struct;
 	int			res_wait_2;
 	int			exit_code_pipe[2];
-	int			exit_code;
+	int			send_exit_code;
+	int			get_exit_code;
 	if (PRINT_DEBUG_1)
 		printf("\n\n##########################################################\n");
 
@@ -65,15 +66,24 @@ int	executor(t_main_data *data)
 
 		if (restore_default_signals(SIGQUIT + SIGINT))
 			exit(errno);
-		exit_code = navigate_tree_forward(data, data->ast, pipe_struct);
-		//	printf("EXIT CODE BEVORE PIPE  |%d|\n", exit_code);
-		pipe_setting_exit_code(exit_code_pipe, true, &exit_code, "function \"executor\" pipe");
+		send_exit_code = navigate_tree_forward(data, data->ast, pipe_struct);
+		printf("EXIT CODE BEVORE PIPE  |%d|\n", send_exit_code);
+		pipe_setting_exit_code(exit_code_pipe, true, &send_exit_code, "function \"executor\" pipe");
 		free_main(data);
+
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
+		// use_close(exit_code_pipe[1], "function \"executor\" exitcode pipe");
+		// if (read(exit_code_pipe[0], &get_exit_code, sizeof(get_exit_code)))
+		// 	throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE,
+		// 		"function \"executor\" exitcode pipe"});
+		// use_close(exit_code_pipe[0], "function \"executor\" exitcode pipe");	
 
+		
+
+		waitpid(pid, &status, 0);
+		pipe_setting_exit_code(exit_code_pipe, false, &get_exit_code, "function \"executor\" pipe");
 		if (WIFSIGNALED(status))
 		{
 			res_wait_2 = WTERMSIG(status);
@@ -87,13 +97,11 @@ int	executor(t_main_data *data)
 			}
 		}
 		if (data->ast->type != PIPE)
-			exit_code = get_process_exit_code(status);
-		else
-			pipe_setting_exit_code(exit_code_pipe, false, &exit_code,
-					"function \"executor\" pipe");
-		set_exit_code(exit_code);
+			get_exit_code = get_process_exit_code(status);
+		//	
+		set_exit_code(get_exit_code);
 		// data->exit_code = exit_code;
-		// printf("Iam in child an the error_pipecode are |%d|\n", exit_code);
+		printf("Iam in child an the error_pipecode are |%d|\n", get_exit_code);
 		// printf("exitcode ist executer |%i|\n", data->exit_code);
 
 	}

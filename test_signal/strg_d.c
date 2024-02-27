@@ -5,6 +5,23 @@
 #include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <string.h>
+
+int main() {
+    const char *str = "/snap/bin/gimp";
+    char ch = 'l';
+
+    // Suche das letzte Vorkommen von 'e' im String
+    char *ptr = strrchr(str, ch);
+
+    if (ptr) {
+        printf("Im String \n|%s|\nKommt das letzte Vorkommen von '%c' ist an Position: %ld\n", ptr + 1,  ch, ptr - str);
+    } if(ptr == NULL) {
+        printf("Zeichen '%c' nicht gefunden.\n", ch);
+    }
+
+    return 0;
+}
 
 // void handle_sigusr1(int sig) {
 //     printf("SIGUSR1 empfangen, beende Kindprozess.\n");
@@ -122,24 +139,24 @@
 // }
 
 
-// ---------------------------------------------------------------------------------
+// // ---------------------------------------------------------------------------------
 
-int main(void) {
-    FILE *input_stream = fopen("input.txt", "r");
+// int main(void) {
+//     FILE *input_stream = fopen("input.txt", "r");
 
-    if (input_stream == NULL) {
-        perror("Fehler beim Öffnen der Eingabedatei");
-        return 1;
-    }
+//     if (input_stream == NULL) {
+//         perror("Fehler beim Öffnen der Eingabedatei");
+//         return 1;
+//     }
 
-    rl_instream = input_stream; // Setze den Eingabestream von readline auf input_stream
+//     rl_instream = input_stream; // Setze den Eingabestream von readline auf input_stream
 
-    char *input;
-    while ((input = readline("cli> ")) != NULL) {
-        printf("Gelesene Zeile: %s\n", input);
-        free(input);
-    }
+//     char *input;
+//     while ((input = readline("cli> ")) != NULL) {
+//         printf("Gelesene Zeile: %s\n", input);
+//         free(input);
+//     }
 
-    fclose(input_stream); // Vergiss nicht, den Stream zu schließen
-    return 0;
-}
+//     fclose(input_stream); // Vergiss nicht, den Stream zu schließen
+//     return 0;
+// }
