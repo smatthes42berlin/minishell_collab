@@ -32,29 +32,23 @@ int	executor(t_main_data *data)
 {
 	pid_t		pid;
 	int			pipefd[2];
-
-	//int			exit_code_pipe[2];
-	//int			exit_code;
-
 	int			status;
 	t_pipefd	*pipe_struct;
 	int			res_wait_2;
 	int			exit_code_pipe[2];
-	int			send_exit_code;
 	int			get_exit_code;
+
 	if (PRINT_DEBUG_1)
 		printf("\n\n##########################################################\n");
-
-	//printf("exitcode ist executer  beginn |%i|\n", data->exit_code);
 	print_debugging_info_executer(INT_DEBUG, 1, NULL);
 	pipe_handler(pipefd, "function \"executor\" main pipe");
 	pipe_handler(exit_code_pipe, "function \"executor\" exit_code_pipe");
-
 	pipe_struct = malloc(sizeof(t_pipefd));
 	if (!pipe_struct)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
 			"function \"executor\""});
 	pipe_struct->pipefd = pipefd;
+	pipe_struct->pipefd_exit_code = exit_code_pipe;
 	pid = fork_handler("function \"executor\"");
 	if (pid < 0)
 	{
@@ -66,24 +60,13 @@ int	executor(t_main_data *data)
 
 		if (restore_default_signals(SIGQUIT + SIGINT))
 			exit(errno);
-		send_exit_code = navigate_tree_forward(data, data->ast, pipe_struct);
-		printf("EXIT CODE BEVORE PIPE  |%d|\n", send_exit_code);
-		pipe_setting_exit_code(exit_code_pipe, true, &send_exit_code, "function \"executor\" pipe");
+		navigate_tree_forward(data, data->ast, pipe_struct);
 		free_main(data);
-
 	}
 	else
 	{
-		// use_close(exit_code_pipe[1], "function \"executor\" exitcode pipe");
-		// if (read(exit_code_pipe[0], &get_exit_code, sizeof(get_exit_code)))
-		// 	throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE,
-		// 		"function \"executor\" exitcode pipe"});
-		// use_close(exit_code_pipe[0], "function \"executor\" exitcode pipe");	
-
-		
-
 		waitpid(pid, &status, 0);
-		pipe_setting_exit_code(exit_code_pipe, false, &get_exit_code, "function \"executor\" pipe");
+		
 		if (WIFSIGNALED(status))
 		{
 			res_wait_2 = WTERMSIG(status);
@@ -98,16 +81,12 @@ int	executor(t_main_data *data)
 		}
 		if (data->ast->type != PIPE)
 			get_exit_code = get_process_exit_code(status);
-		//	
+		else
+			pipe_setting_exit_code(exit_code_pipe, false, &get_exit_code, "function \"executor\" pipe");
 		set_exit_code(get_exit_code);
-		// data->exit_code = exit_code;
-		printf("Iam in child an the error_pipecode are |%d|\n", get_exit_code);
-		// printf("exitcode ist executer |%i|\n", data->exit_code);
-
 	}
 	if (read_pipe(data, pipe_struct) == -1)
 	{
-		//printf(" iam exiting the progamm");
 		free(pipe_struct);
 		return (-1);
 	}

@@ -6,7 +6,6 @@ int	navigate_tree_forward(t_main_data *data, t_node *node,
 	int ret;
 
 	ret = 0;
-	printf("start navigation TREEEEEEE\n");
 	print_debugging_info_executer(INT_DEBUG, 3, NULL);
 	print_debugging_info_executer(INT_DEBUG, 11, node);
 	if (node == NULL)
