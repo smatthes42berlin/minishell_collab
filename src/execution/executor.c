@@ -281,6 +281,7 @@ static int	env_add_clr(t_main_data *data, char *env_var)
 	}
 	if (ft_strncmp(env_var, EXIT, ft_strlen(EXIT)) == 0)
 	{
+		printf("exit\n");
 		// free_main(data);
 		return (-1);
 	}

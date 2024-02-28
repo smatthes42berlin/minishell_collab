@@ -34,6 +34,5 @@ void	pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
 				error_msg});
 		use_close(pipefd[0], error_msg);
 	}
-	
 }
 
