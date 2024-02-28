@@ -1,8 +1,8 @@
 #include "minishell.h"
 
 // clear the string from "./" an dubbel /
-static char	*ft_clear_str(char *path);
-static char	*creat_env_var(char *keyword, char *type, bool newline);
+static	char	*ft_clear_str(char *path);
+static	char	*creat_env_var(char *keyword, char *type, bool newline);
 static	char	**wrong_path(int err, t_node_exec *node);
 static	char	**path_exist(char *oldpwd, int err);
 
@@ -79,30 +79,36 @@ static char	*ft_clear_str(char *path)
 static	char	**wrong_path(int err, t_node_exec *node)
 {
 	char	**ret;
+	char	*err_msg;
 
-	ret = malloc(sizeof(char *) * 2);
+	err_msg = "function wrong_path";
+	ret = use_malloc(sizeof(char *) * 2, err_msg);
 	if (err == -1)
-		ret[0] = ft_strjoin(EXIT_CODE,
-			"exit=1_MSG=minishell: No such file or directory");
+		ret[0] = use_strjoin(EXIT_CODE,
+				"exit=1_MSG=minishell: No such file or directory",
+				err_msg);
 	else if (node->argv[2] != NULL)
-		ret[0] = ft_strjoin(EXIT_CODE,
-			"exit=1_MSG=minishell: cd: too many arguments");
+		ret[0] = use_strjoin(EXIT_CODE,
+				"exit=1_MSG=minishell: cd: too many arguments",
+				err_msg);
 	ret[1] = NULL;
-	return(ret);
+	return (ret);
 }
 
 static	char	**path_exist(char *oldpwd, int err)
 {
 	char	**ret;
+	char	*err_msg;
 
-	ret = use_malloc(sizeof(char *) * 5, "function path_exit");
+	err_msg = "function path_exit";
+	ret = use_malloc(sizeof(char *) * 5, err_msg);
 	ret[0] = ft_strdup(oldpwd);
 	ret[1] = creat_env_var("PWD=", ADD_ENV, false);
 	ret[2] = creat_env_var("PWD=", ADD_CD, false);
 	if (err == -1)
-		ret[3] = ft_strjoin(EXIT_CODE, "exit=1");
+		ret[3] = use_strjoin(EXIT_CODE, "exit=1", err_msg);
 	else
-		ret[3] = ft_strjoin(EXIT_CODE, "exit=0");
+		ret[3] = use_strjoin(EXIT_CODE, "exit=0", err_msg);
 	ret[4] = NULL;
-	return(ret);
+	return (ret);
 }
