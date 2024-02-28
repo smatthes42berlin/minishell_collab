@@ -31,25 +31,3 @@ int	access_handler(const char *path, enum e_access_mode mode, int debug_mode)
 	}
 	return (result);
 }
-
-// /**
-//  * @brief return the given enum t_access_mode to a String
-//  * 
-//  * @param mode mode for [FILE_EXISTS]; [FILE_READABLE];
-//  * 				[FILE_WRITABLE]; [FILE_EXECUTABLE]
-//  * @return (const char* "FILE_EXISTS"); "FILE_READABLE"; 
-//  * 			"FILE_WRITABLE"; "FILE_EXECUTABLE"
-//  */
-// static const char	*access_mode_to_str(enum e_access_mode mode)
-// {
-// 	if (mode == FILE_EXISTS)
-// 		return ("MODE-FILE_EXISTS");
-// 	else if (mode == FILE_READABLE)
-// 		return ("MODE-FILE_READABLE");
-// 	else if (mode == FILE_WRITABLE)
-// 		return ("MODE-FILE_WRITABLE");
-// 	else if (mode == FILE_EXECUTABLE)
-// 		return ("MODE-FILE_EXECUTABLE");
-// 	else
-// 		return ("MODE-UNKNOWN_MODE");
-// }

@@ -15,22 +15,23 @@ void	pipe_handler(int *pipefd, char *str)
 			str});
 }
 
-void	pipe_setting_exit_code(int *pipefd, bool open, int *exit_code, char *error_msg)
+void	pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
+	char *error_msg)
 {
-	
-	//printf("pipesetting!\n");
 	if (open == true)
 	{
 		use_close(pipefd[0], error_msg);
 		if (write(pipefd[1], exit_code, sizeof(*exit_code)) < 0)
-			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE, error_msg});
+			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE,
+				error_msg});
 		use_close(pipefd[1], error_msg);
 	}
 	else
 	{
 		use_close(pipefd[1], error_msg);
 		if (read(pipefd[0], exit_code, sizeof(*exit_code)) < 0)
-			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_READ, error_msg});
+			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_READ,
+				error_msg});
 		use_close(pipefd[0], error_msg);
 	}
 	
