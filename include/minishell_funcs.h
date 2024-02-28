@@ -202,6 +202,7 @@ bool		is_last_node_exec(t_node *node, char *path);
 bool		is_last_node_redir(t_node *node, char *filename);
 char		**build_pwd(bool newline);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
+char		*absoult_or_relativ_path(char *path);
 char		**build_echo(t_main_data *data, t_node_exec *node);
 char		**build_export(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
@@ -220,6 +221,8 @@ void		execve_handler(const char *file_path, char **argv, char **env);
 pid_t		fork_handler(char *str);
 int			get_process_exit_code(int status);
 void		pipe_handler(int *pipefd, char *str);
+void    	*use_malloc(size_t bytes, char *err_msg);
+char		*use_strjoin(char const *s1, char const *s2, char *err_msg);
 
 
 //void		pipe_setting(int *pipefd, bool open, char **str, char *error_msg);

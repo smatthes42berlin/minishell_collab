@@ -27,6 +27,7 @@ VPATH = $(PATHSRC) $(INCLUDEPATH)
 SRC = 	main.c \
 		main_util.c \
 		build_cd.c \
+		build_cd_utiles.c \
 		build_pwd.c \
 		build_echo.c \
 		build_export.c \
@@ -45,6 +46,8 @@ SRC = 	main.c \
 		exec_type_heredoc.c \
 		tree_navigation.c \
 		execve.c \
+		malloc_handler.c \
+		utiles_libft.c \
 		fork_process_state.c \
 		pipe.c \
 		pipe_utiles.c \
