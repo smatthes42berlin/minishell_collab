@@ -22,6 +22,9 @@ char	**build_echo(t_main_data *data, t_node_exec *node)
 		i_beginn_cp = 2;
 		newline = true;
 	}
+	// printf("-------------ARRY----------\n");
+	// print_str_arr_null(node->argv);
+	// printf("----------------------------\n");
 	tmp_str_1 = copy_str_arr(node->argv, i_beginn_cp, false);
 	//replace_env_in_str_arr(data, tmp_str_1);
 	ret = malloc(sizeof(char *) * 2);

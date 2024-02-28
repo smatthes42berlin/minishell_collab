@@ -38,7 +38,7 @@ int read_str_arr_pipe(int *pipefd)
 	{
 		while (i_count < bytes_read)
 		{
-			printf("%s", &buffer[i_count]);
+			//printf("%s", &buffer[i_count]);
 			i_count += strlen(&buffer[i_count]) + 1;
 		}
 		if (bytes_read < 0)

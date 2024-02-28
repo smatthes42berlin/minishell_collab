@@ -198,7 +198,8 @@ char		**chose_buildin(t_main_data *data, t_node_exec *node,
 
 // bool		check_is_inbuilt(t_main_data *data, t_node *node, t_pipefd *pipe_struct, int *pipefd);
 
-bool		is_last_node(t_node *node, char *compare);
+bool		is_last_node_exec(t_node *node, char *path);
+bool		is_last_node_redir(t_node *node, char *filename);
 char		**build_pwd(bool newline);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		**build_echo(t_main_data *data, t_node_exec *node);
