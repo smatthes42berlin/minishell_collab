@@ -1,60 +1,66 @@
 #include "minishell.h"
 
 static void	check_equal_sign_in_str_arr(char **arg);
+static void clr_str(char **str);
 
 char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
 	char	**ret;
+	char	*err_msg;
 
+	err_msg = "function build_export";
 	print_debugging_info_executer(INT_DEBUG, 26, NULL);
 	if (data->ast->type == PIPE)
-	{
 		return (NULL);
-	}
 	ret = copy_str_arr(node->argv, 1, false);
 	check_equal_sign_in_str_arr(ret);
-	//print_str_arr_null(ret);
-	write_pipe_to_executor_pipe(pipefd->pipefd, ret,
-		"function \"build_export\"");
-	// pipe_setting(pipefd->pipefd, true , ret, "function \"buid_export\"");
+	write_pipe_to_executor_pipe(pipefd->pipefd, ret, err_msg);
 	return (NULL);
 }
 
 static void	check_equal_sign_in_str_arr(char **arg)
 {
 	int		i_count;
-	char	*tmp_str;
+	char	*err_msg;
 
+	err_msg = "function check_equal_sign_in_str_arr -> build export";
 	i_count = 0;
 	while (arg[i_count] != NULL)
 	{
-		//printf("Given export %s,\n",arg[i_count]);
-		//tmp_str = ft_strtrim(arg[i_count], ft_strchr(arg[i_count], '=') + 1);
 		if (!check_bash_variable(arg[i_count]))
 		{
 			free(arg[i_count]);
 			arg[i_count] = NULL;
-			arg[i_count] = ft_strjoin(EXIT_CODE,
-					"exit=1_MSG=minishell: export: not a valid identifier");
+			arg[i_count] = use_strjoin(EXIT_CODE,
+					"exit=1_MSG=minishell: export: not a valid identifier",
+					err_msg);
 			return ;
 		}
-		if (ft_strchr(arg[i_count], '=') == NULL)
-		{
-			free(arg[i_count]);
-			arg[i_count] = NULL;
-			arg[i_count] = "";
-			return ;
-		}
-		else
-		{	free(tmp_str);
-			tmp_str = NULL;
-			tmp_str = ft_strdup(arg[i_count]);
-			free(arg[i_count]);
-			arg[i_count] = NULL;
-			arg[i_count] = ft_strjoin(ADD_ENV, tmp_str);
-			free(tmp_str);
-			tmp_str = NULL;
-		}
+		clr_str(&arg[i_count]);
 		i_count++;
+	}
+}
+
+static void clr_str(char **str)
+{
+	char	*tmp_str;
+	char	*err_msg;
+
+	err_msg = "function clr_str -> build export";
+	if (ft_strchr(*str, '=') == NULL)
+	{
+		free(*str);
+		*str = NULL;
+		*str = "";
+		return ;
+	}
+	else
+	{
+		tmp_str = use_strdup(*str, err_msg);
+		free(*str);
+		*str = NULL;
+		*str = use_strjoin(ADD_ENV, tmp_str, err_msg);
+		free(tmp_str);
+		tmp_str = NULL;
 	}
 }

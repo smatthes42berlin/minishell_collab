@@ -10,3 +10,14 @@ char *use_strjoin(char const *s1, char const *s2, char *err_msg)
             err_msg});
     return (ret);
 }
+
+char *use_strdup(char const *s1, char *err_msg)
+{
+    char    *ret;
+
+    ret = ft_strdup(s1);
+    if (ret == NULL)
+        throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
+            err_msg});
+    return (ret);
+}

@@ -203,7 +203,7 @@ bool		is_last_node_redir(t_node *node, char *filename);
 char		**build_pwd(bool newline);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*absoult_or_relativ_path(char *path);
-char		**build_echo(t_main_data *data, t_node_exec *node);
+char		**build_echo(t_node_exec *node);
 char		**build_export(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		**build_unset(t_main_data *data, t_node_exec *node,
@@ -214,6 +214,7 @@ char		*add_newline(char *str, bool newline);
 char		**copy_str_arr(char **arg, int i_beginn, bool newline);
 bool		check_bash_variable(char *str);
 
+
 /* execute lib*/
 int			access_handler(const char *path, enum e_access_mode mode,
 				int debug_mode);
@@ -223,6 +224,7 @@ int			get_process_exit_code(int status);
 void		pipe_handler(int *pipefd, char *str);
 void    	*use_malloc(size_t bytes, char *err_msg);
 char		*use_strjoin(char const *s1, char const *s2, char *err_msg);
+char 		*use_strdup(char const *s1, char *err_msg);
 
 
 //void		pipe_setting(int *pipefd, bool open, char **str, char *error_msg);

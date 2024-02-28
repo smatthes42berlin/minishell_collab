@@ -7,8 +7,6 @@ static char	*check_pipe(t_node *node);
 
 bool	is_last_node_redir(t_node *node, char *filename)
 {
-	// char *compare_last = last_node(node);
-	// printf("i check the is redir last \n|%s|\n|%s|\n", filename, compare_last);
 	if (str_are_equal(last_node(node), filename))
 	{
 		return (true);

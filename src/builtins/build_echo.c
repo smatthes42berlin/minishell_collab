@@ -3,15 +3,17 @@
 //static void	replace_env_in_str_arr(t_main_data *data, char **arg);
 static char	*str_arr_to_str(char **str, bool newline);
 
-char	**build_echo(t_main_data *data, t_node_exec *node)
+/**
+ * - check the for flag
+ * - copy given arr from arr[1] if no flag; arr[2] if flag -n 
+ * 
+*/
+char	**build_echo(t_node_exec *node)
 {
 	char	**ret;
 	char	**tmp_str_1;
 	bool	newline;
 	int		i_beginn_cp;
-
-	if (!data->ast)
-		printf("noting\n");
 
 	tmp_str_1 = NULL;
 	i_beginn_cp = 1;
@@ -22,15 +24,8 @@ char	**build_echo(t_main_data *data, t_node_exec *node)
 		i_beginn_cp = 2;
 		newline = true;
 	}
-	// printf("-------------ARRY----------\n");
-	// print_str_arr_null(node->argv);
-	// printf("----------------------------\n");
 	tmp_str_1 = copy_str_arr(node->argv, i_beginn_cp, false);
-	//replace_env_in_str_arr(data, tmp_str_1);
-	ret = malloc(sizeof(char *) * 2);
-	if (!ret)
-		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
-			"function \"build_echo\" for \'echo\' command!"});
+	ret = use_malloc(sizeof(char *) * 2, "function build_echo");
 	ret[0] = str_arr_to_str(tmp_str_1, !newline);
 	ret[1] = NULL;
 	free_str_arr_null(tmp_str_1);
