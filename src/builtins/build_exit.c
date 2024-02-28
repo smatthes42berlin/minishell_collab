@@ -41,7 +41,7 @@ static char	**check_arg(char **str_arr)
 	else
 		nbr = ft_atoi_byte(str_arr[1]);
 //	printf("return value%i\n", nbr);
-	ret = malloc(sizeof(char *) * 3);
+	ret = malloc(sizeof(char *) * 4);
 	if (nbr == -2)
 		ret[0] = ft_strjoin(EXIT_CODE,
 				"exit=2_MSG=minishell: exit: numeric argument required");
@@ -55,7 +55,8 @@ static char	**check_arg(char **str_arr)
 		free(str_tmp);
 	}
 	ret[1] = ft_strdup(EXIT);
-	ret[2] = NULL;
+	ret[2] = ft_strdup("BULLSHITT NOTHG");
+	ret[3] = NULL;
 	return (ret);
 }
 

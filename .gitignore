@@ -17,5 +17,6 @@
 .vscode/
 .vscode
 minishell_tester/
+minishellsecond/
 **/minishell
 **/*.log

@@ -57,7 +57,6 @@ int	executor(t_main_data *data)
 	}
 	if (pid == 0)
 	{
-
 		if (restore_default_signals(SIGQUIT + SIGINT))
 			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
@@ -66,7 +65,6 @@ int	executor(t_main_data *data)
 	else
 	{
 		waitpid(pid, &status, 0);
-		
 		if (WIFSIGNALED(status))
 		{
 			res_wait_2 = WTERMSIG(status);
@@ -79,19 +77,18 @@ int	executor(t_main_data *data)
 					printf("Quit (core dumped)\n");
 			}
 		}
-
 		if (data->ast->type != PIPE && data->ast->type != REDIR)
 		{
 			get_exit_code = get_process_exit_code(status);
-			//printf("EXITCODE %i staus %d\n", get_exit_code, status);
+			// printf("EXITCODE %i staus %d\n", get_exit_code, status);
 		}
 		else
 		{
-			pipe_setting_exit_code(exit_code_pipe, false, &get_exit_code, "function \"executor\" pipe");
-			//printf("EXITCODE PIPE  %i\n", get_exit_code);
+			pipe_setting_exit_code(exit_code_pipe, false, &get_exit_code,
+				"function \"executor\" pipe");
+			// printf("EXITCODE PIPE  %i\n", get_exit_code);
 		}
 		set_exit_code(get_exit_code);
-		
 	}
 	if (read_pipe(data, pipe_struct) == -1)
 	{
@@ -104,81 +101,140 @@ int	executor(t_main_data *data)
 		printf("##########################################################\n");
 	return (0);
 }
-
-static int read_pipe(t_main_data *data, t_pipefd *pipe_struct) {
-    ssize_t bytes_read;
-    char buffer[BUFFER_SIZE + 1];
-    char *line_start = buffer;
-    int line_length = 0;
-
-    use_close(pipe_struct->pipefd[1], "function \"read pipe\" for executor");
-    while ((bytes_read = read(pipe_struct->pipefd[0], buffer + line_length, BUFFER_SIZE - line_length)) > 0) {
-        line_length += bytes_read;
-        buffer[line_length] = '\0';
-
-        char *newline;
-        while ((newline = strchr(line_start, '\n')) != NULL)
-		{
-            *newline = '\0';
-            if (env_add_clr(data, line_start) == -1)
-                return -1;
-         //   printf("READ BUFFER : %s\n", line_start);
-            line_start = newline + 1;
-        }
-        int remaining_data = buffer + line_length - line_start;
-        ft_memmove(buffer, line_start, remaining_data);
-        line_length = remaining_data;
-    }
-    if (line_length > 0) {
-        if (env_add_clr(data, line_start) == -1)
-            return -1;
-     //   printf("READ BUFFER : %s\n", line_start);
-    }
-
-    use_close(pipe_struct->pipefd[0], "function \"read pipe\" for executor");
-    return 0;
-}
-
-
 /**
-static int read_pipe(t_main_data *data, t_pipefd *pipe_struct) {
-    ssize_t bytes_read;
-    int i_count;
-    char buffer[BUFFER_SIZE + 1];
+static int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
+{
+	ssize_t	bytes_read;
+	char	buffer[BUFFER_SIZE + 1];
+	char	*line_start;
+	int		line_length;
+	char	*newline;
+	int		remaining_data;
 
-    i_count = 0;
-	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
-    while ((bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE)) > 0) 
+	line_start = buffer;
+	line_length = 0;
+	use_close(pipe_struct->pipefd[1], "function \"read pipe\" for executor");
+	while ((bytes_read = read(pipe_struct->pipefd[0], buffer + line_length,
+				BUFFER_SIZE - line_length)) > 0)
 	{
-        buffer[bytes_read] = '\0';
-        i_count = 0;
-        while (i_count < bytes_read) {
-            if (buffer[i_count] == '\n' || buffer[i_count] == '\0') 
-			{
-                buffer[i_count] = '\0';
-                if (env_add_clr(data, buffer) == -1)
-                    return (-1);
-				printf("READ BUFFER : %s\n", buffer);
-                buffer[0] = '\0';
-            }
-            i_count++;
-        }
-    }
-    if (i_count > 0) 
+		line_length += bytes_read;
+		buffer[line_length] = '\0';
+		while ((newline = strchr(line_start, '\n')) != NULL)
+		{
+			*newline = '\0';
+			if (env_add_clr(data, line_start) == -1)
+				return (-1);
+			//   printf("READ BUFFER : %s\n", line_start);
+			line_start = newline + 1;
+		}
+		remaining_data = buffer + line_length - line_start;
+		ft_memmove(buffer, line_start, remaining_data);
+		line_length = remaining_data;
+	}
+	if (line_length > 0)
 	{
-        if (env_add_clr(data, buffer) == -1)
-            return -1;
-		printf("READ BUFFER : %s\n", buffer);
-    }
-	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
-    return 0;
+		if (env_add_clr(data, line_start) == -1)
+			return (-1);
+		//   printf("READ BUFFER : %s\n", line_start);
+	}
+	use_close(pipe_struct->pipefd[0], "function \"read pipe\" for executor");
+	return (0);
 }
 */
 
 
+/*
+static int	read_pipe(t_main_data *data, t_pipefd *pipe_struct) {
+	ssize_t bytes_read;
+	int 	i_count;
+	int 	i_start;
+	char buffer[BUFFER_SIZE];
+
+	i_count = 0;
+	i_start = 0;
+	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
+	while ((bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE)) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		//i_count = 0;
+		while (i_count < bytes_read) 
+		{
+			if (buffer[i_count] == '\n' || buffer[i_count] == '\0')
+			{
+				buffer[i_count] = '\0';
+				printf("READ BUFFER : %s\n", buffer);
+				if (env_add_clr(data, buffer) == -1)
+					return (-1);
+				
+				buffer[0] = '\0';
+			}
+			i_count++;
+		}
+	}
+	if (i_count > 0)
+	{
+		if (env_add_clr(data, buffer) == -1)
+			return (-1);
+		printf("READ BUFFER : %s\n", buffer);
+	}
+	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
+	return (0);
+}
+*/
+
+
+static int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
+{
+	ssize_t	bytes_read;
+	int		start;
+	int		i_count;
+	char	buffer[BUFFER_SIZE + 1];
+
+	start = 0;
+	i_count = 0;
+	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
+	while ((bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE)) > 0)
+	{
+		buffer[bytes_read] = '\0';
+		i_count = 0;
+		while (i_count < bytes_read)
+		{
+			if (buffer[i_count] == '\n' || buffer[i_count] == '\0')
+			{
+				buffer[i_count] = '\0';
+				if (env_add_clr(data, &buffer[start]) == -1)
+					return (-1); 
+				start = i_count + 1;
+			}
+			i_count++;
+		}
+		if (start < bytes_read)
+		{
+			ft_memmove(buffer, &buffer[start], bytes_read - start);
+			bytes_read = bytes_read - start;
+			start = 0;
+		}
+		else
+		{
+			start = 0;
+		}
+	}
+	if (start < bytes_read)
+	{
+		if (env_add_clr(data, &buffer[start]) == -1)
+			return (-1); 
+	}
+	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
+	return (0);
+}
+
+
 static int	env_add_clr(t_main_data *data, char *env_var)
 {
-//	printf("GIVENARG : %s\n", env_var );
+	int		exit_code;
+	char	*str_err_msg;
+
+	//printf("GIVENARG : %s\n", env_var);
 	if (data->ast->type != PIPE)
 	{
 		if (ft_strncmp(env_var, ADD_ENV, ft_strlen(ADD_ENV)) == 0)
@@ -201,20 +257,21 @@ static int	env_add_clr(t_main_data *data, char *env_var)
 	}
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
 	{
-		//printf ("Given for exit code %s\n", env_var);
-		int exit_code;
+		// printf ("Given for exit code %s\n", env_var);
 		print_debugging_info_executer(INT_DEBUG, 30, env_var);
 		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "exit=",
 				ft_strlen("exit=")) == 0)
 		{
-			exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE) + ft_strlen("exit="));
+			exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
+					+ ft_strlen("exit="));
 			if (exit_code != 0)
 			{
 				if (ft_strchr(env_var, '_') == NULL)
 					set_exit_code(exit_code);
 				else
 				{
-					char *str_err_msg = (ft_strchr(env_var, '_') + ft_strlen("_MSG="));
+					str_err_msg = (ft_strchr(env_var, '_')
+							+ ft_strlen("_MSG="));
 					throw_error_mimic_bash(str_err_msg, exit_code);
 				}
 			}
@@ -224,12 +281,11 @@ static int	env_add_clr(t_main_data *data, char *env_var)
 	}
 	if (ft_strncmp(env_var, EXIT, ft_strlen(EXIT)) == 0)
 	{
-		//free_main(data);
+		// free_main(data);
 		return (-1);
 	}
 	return (0);
 }
-
 
 static void	free_main(t_main_data *data)
 {
