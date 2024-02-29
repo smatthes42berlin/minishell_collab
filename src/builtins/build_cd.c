@@ -46,7 +46,7 @@ static char	*creat_env_var(char *keyword, char *type, bool newline)
 	return (char_ret);
 }
 
-// clear the string from "./" an dubbel /
+// clear the string from "./" an double /
 static char	*ft_clear_str(char *path)
 {
 	int		i;
