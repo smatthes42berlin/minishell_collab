@@ -74,8 +74,12 @@ int	main(int argc, char *argv[], char *envp[])
 			//free_main_exit(main_data, i_exec);
 			//break ;
 			//printf("Programm endet mit %i\n", i_ret_exit_code);
+			free_ast(main_data->ast);
+			free_main_exit(main_data, i_ret_exit_code);
 			return (i_ret_exit_code);
 		}
+		free_ast(main_data->ast);
+		//free_main_exit(main_data, -1);
 	}
 	return (0);
 }

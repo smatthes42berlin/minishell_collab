@@ -5,13 +5,14 @@ int		read_file(int fd);
 void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_heredoc	*heredoc_node;
+	char			*err_msg;
 
+	err_msg = "function type_herdoc";
 	print_debugging_info_executer(INT_DEBUG, 29, NULL);
 	heredoc_node = (t_node_heredoc *)node;
-	if (use_dup2(heredoc_node->read_fd, STDIN_FILENO,
-			"function \"type herdoc\"") != 0)
+	if (use_dup2(heredoc_node->read_fd, STDIN_FILENO, err_msg) != 0)
 	{
-		use_close(heredoc_node->read_fd, "function \"type herdoc\"");
+		use_close(heredoc_node->read_fd, err_msg);
 		return ;
 	}
 	if (heredoc_node->left_node->type == NOTHING)
@@ -21,20 +22,21 @@ void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	}
 	else
 		navigate_tree_forward(data, heredoc_node->left_node, pipe_struct);
-	use_close(heredoc_node->read_fd, "function \"type herdoc\"");
+	use_close(heredoc_node->read_fd, err_msg);
 }
 
 int	read_file(int fd)
 {
-	char buffer[1024];
+	char	buffer[BUFFER_SIZE];
+	ssize_t	bytes_read;
 
-	ssize_t bytesRead = read(fd, buffer, sizeof(buffer) - 1);
-	if (bytesRead < 0)
+	bytes_read = read(fd, buffer, sizeof(buffer) - 1);
+	if (bytes_read < 0)
 	{
 		perror("Fehler beim Lesen vom File Descriptor");
 		exit(EXIT_FAILURE);
 	}
-	buffer[bytesRead] = '\0';
+	buffer[bytes_read] = '\0';
 	printf("Gelesener Text: %s\n", buffer);
 	return (0);
 }

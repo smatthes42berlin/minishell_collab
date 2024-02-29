@@ -1,10 +1,5 @@
 #include "minishell.h"
 
-// static int	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
-// 				pid_t main_pid, int *pipefd, bool direction,
-// 				t_pipefd *pipe_struct_main);
-// void		check_open_fd(void);
-//--------------------------------------------
 static int	left_pipe_node(int *pipefd, t_main_data *data,
 				t_node_pipe *pipe_node, t_pipefd *pipe_struct);
 static int	right_pipe_node(int *pipefd, t_main_data *data,
@@ -19,9 +14,8 @@ int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	t_node_pipe	*pipe_node;
 	char		*err_msg;
 	int			ret;
-	//int			status;
 
-	ret	= 0;
+	ret = 0;
 	err_msg = "function \"type_pipe\"";
 	pipe_node = (t_node_pipe *)node;
 	pipe_handler(pipefd, err_msg);
@@ -32,9 +26,7 @@ int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	{
 		ret = nested_fork_right_pipe(pipefd, data, pipe_node, pipe_struct);
 		waitpid(cpid, NULL, 0);
-		//printf("pid MAIN state : %i\n", get_process_exit_code(status));
 	}
-
 	return (ret);
 }
 
@@ -43,33 +35,27 @@ static int	nested_fork_right_pipe(int *pipefd, t_main_data *data,
 {
 	pid_t	pid2;
 	char	*err_msg;
-	int 	ret;
+	int		ret;
 	int		status;
-	//int		err_pipe[2];
 
 	ret = 0;
 	err_msg = "function \"type_pipe\" nested pipe";
 	pid2 = fork_handler(err_msg);
-	//pipe_handler(err_pipe, err_msg);
 	if (pid2 == 0)
-	{
 		ret = right_pipe_node(pipefd, data, pipe_node, pipe_struct);
-	}
 	else
 	{
 		use_close(pipefd[0], err_msg);
 		use_close(pipefd[1], err_msg);
 		if (pipe_node->right_node->type == PIPE)
-		{
 			waitpid(pid2, NULL, 0);
-		}
 		else
 		{
 			waitpid(pid2, &status, 0);
 			ret = get_process_exit_code(status);
-			pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true, &ret, err_msg);
+			pipe_setting_exit_code(pipe_struct->pipefd_exit_code,
+				true, &ret, err_msg);
 		}
-		
 	}
 	return (ret);
 }
@@ -112,6 +98,7 @@ static int	left_pipe_node(int *pipefd, t_main_data *data,
 	}
 	return (ret);
 }
+
 static int	right_pipe_node(int *pipefd, t_main_data *data,
 		t_node_pipe *pipe_node, t_pipefd *pipe_struct)
 {
@@ -123,7 +110,6 @@ static int	right_pipe_node(int *pipefd, t_main_data *data,
 	{
 		ret = use_close(pipefd[1], err_msg);
 		ret = use_dup2(pipefd[0], STDIN_FILENO, err_msg);
-		//ret = read_str_arr_pipe(pipefd);
 		ret = use_close(pipefd[0], err_msg);
 		ret = navigate_tree_forward(data, pipe_node->right_node, pipe_struct);
 	}
@@ -136,101 +122,3 @@ static int	right_pipe_node(int *pipefd, t_main_data *data,
 	}
 	return (ret);
 }
-
-// int	type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
-// {
-// 	t_node_pipe	*pipe_node;
-// 	int			pipefd[2];
-// 	pid_t		main_pid;
-// 	int			ret;
-
-// 	ret = 0;
-// 	pipe_node = (t_node_pipe *)node;
-// 	print_debugging_info_executer(INT_DEBUG, 6, NULL);
-// 	pipe_handler(pipefd, "function \"type_pipe\"");
-// 	main_pid = fork_handler("function \"type_pipe\"");
-// 	if (main_pid == 0)
-// 	{
-// 		if (!check_is_inbuilt(data, pipe_node->left_node, pipe_struct, pipefd))
-// 		{
-// 			// close(pipefd[1]);
-// 			// dup2(pipefd[0], STDOUT_FILENO);
-// 			pipe_setting(pipefd, true, NULL, "function \"type pipe\" child");
-// 			navigate_tree_forward(data, pipe_node->left_node, pipe_struct);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		ret = type_pipe_nested_pid(data, pipe_node, main_pid, pipefd, false,
-// 				pipe_struct);
-// 	}
-// 	return (ret);
-// }
-
-// static int	type_pipe_nested_pid(t_main_data *data, t_node_pipe *pipe_node,
-// 		pid_t main_pid, int *pipefd, bool direction, t_pipefd *pipe_struct_main)
-// {
-// 	pid_t	nested_pid;
-// 	int		status;
-// 	int		ret;
-
-// 	ret = 0;
-// 	if (direction)
-// 		printf("NOTING");
-// 	// close(pipefd[0]);
-// 	// dup2(pipefd[1], STDIN_FILENO);
-// 	pipe_setting(pipefd, direction, NULL, "function \"type pipe\" parent");
-// 	// check_open_fd();
-// 	// printf("\n\n\n-----------------------------------------------\n\n\n");
-// 	// check_open_fd();
-// 	nested_pid = fork_handler("function \"type_pipe_nested_pid\"");
-// 	if (nested_pid == 0)
-// 	{
-// 		navigate_tree_forward(data, pipe_node->right_node, pipe_struct_main);
-// 	}
-// 	else
-// 	{
-// 		close(pipefd[0]);
-// 		close(pipefd[1]);
-// 		waitpid(nested_pid, &status, 0);
-// 		waitpid(main_pid, NULL, 0);
-// 		ret = get_process_exit_code(status);
-// 	}
-// 	return (ret);
-// }
-
-// void	check_open_fd(void)
-// {
-// 	DIR *dir;
-// 	struct dirent *dp;
-// 	char *endptr;
-// 	long fd;
-
-// 	// Öffne das Verzeichnis /proc/self/fd,
-// 	// um die offenen Dateideskriptoren zu finden
-// 	dir = opendir("/proc/self/fd");
-// 	if (dir == NULL)
-// 	{
-// 		perror("opendir");
-// 		// return (EXIT_FAILURE);
-// 	}
-
-// 	// Iteriere durch die Einträge im Verzeichnis
-// 	while ((dp = readdir(dir)) != NULL)
-// 	{
-// 		// Konvertiere den Namen (der ein Dateideskriptor ist) in eine lange Zahl
-// 		fd = strtol(dp->d_name, &endptr, 10);
-// 		// Überspringe ungültige Einträge (z.B. ".", "..", oder keine Zahlen)
-// 		if (*endptr != '\0')
-// 			continue ;
-
-// 		printf("Offener Dateideskriptor: %ld\n", fd);
-// 		// if (fd > 1)
-// 		// 	close(fd);
-// 	}
-
-// 	// Schließe das Verzeichnis
-// 	// closedir(dir);
-
-// 	// return (EXIT_SUCCESS);
-// }

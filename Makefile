@@ -38,6 +38,8 @@ SRC = 	main.c \
 		build_utiles.c \
 		access.c \
 		executor.c \
+		executor_env_set.c \
+		executer_read_pipe.c \
 		utiles_execute.c \
 		free_ast.c \
 		exec_type_exec.c \

@@ -3,7 +3,7 @@
 int	navigate_tree_forward(t_main_data *data, t_node *node,
 		t_pipefd *pipe_struct)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	print_debugging_info_executer(INT_DEBUG, 3, NULL);
