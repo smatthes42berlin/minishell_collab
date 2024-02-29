@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static void	check_equal_sign_in_str_arr(char **arg);
-static void clr_str(char **str);
+static void	clr_str(char **str);
 
 char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
@@ -41,7 +41,7 @@ static void	check_equal_sign_in_str_arr(char **arg)
 	}
 }
 
-static void clr_str(char **str)
+static void	clr_str(char **str)
 {
 	char	*tmp_str;
 	char	*err_msg;

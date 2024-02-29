@@ -3,7 +3,7 @@
 static int	ft_atoi_byte(const char *nptr);
 static char	**check_arg(char **str_arr);
 static char	**bigger_two_arg(void);
-static char *ret_exit_code_line(int nbr);
+static char	*ret_exit_code_line(int nbr);
 
 char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
@@ -45,14 +45,13 @@ static char	**check_arg(char **str_arr)
 	return (ret);
 }
 
-
-static char *ret_exit_code_line(int nbr)
+static char	*ret_exit_code_line(int nbr)
 {
-	char 			*ret;
 	unsigned char	exit_number;
 	char			*str_e_number;
 	char			*str_tmp;
 	char			*err_msg;
+	char			*ret;
 
 	err_msg = "function ret_exit_code_line -> build exit";
 	if (nbr == -2)

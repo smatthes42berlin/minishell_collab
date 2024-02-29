@@ -58,8 +58,8 @@ char	**copy_str_arr(char **arg, int i_beginn, bool newline)
 
 bool	check_bash_variable(char *str)
 {
-	int i_count;
-	int len_var_name;
+	int	i_count;
+	int	len_var_name;
 
 	i_count = 0;
 	if (ft_isdigit(str[i_count]) || (str[i_count] == '='))

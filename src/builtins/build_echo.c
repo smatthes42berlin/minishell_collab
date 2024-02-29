@@ -32,7 +32,6 @@ char	**build_echo(t_node_exec *node)
 	return (ret);
 }
 
-
 static char	*creat_str_leng(int total_length, int i)
 {
 	char	*tmp_str;

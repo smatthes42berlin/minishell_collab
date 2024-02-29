@@ -34,7 +34,7 @@ static char	*creat_env_var(char *keyword, char *type, bool newline)
 	char	*str_tmp;
 	char	**ret;
 	char	*char_ret;
-	char 	*err_msg;
+	char	*err_msg;
 
 	err_msg = "function \"creat_env_var\" for build cd";
 	ret = build_pwd(newline);
@@ -53,7 +53,7 @@ static char	*ft_clear_str(char *path)
 	char	**str;
 	char	*ret;
 	char	*str_tmp;
-	char 	*err_msg;
+	char	*err_msg;
 
 	err_msg = "function \"ft_clear_str\" for build cd";
 	print_debugging_info_executer(INT_DEBUG, 25, NULL);
