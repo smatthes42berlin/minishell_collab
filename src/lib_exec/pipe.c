@@ -1,13 +1,5 @@
 #include "minishell.h"
 
-// static void	write_pipe(int *pipefd, char **str, char *error_msg);
-// static void read_pipe(int *pipefd, char **str, char *error_msg);
-
-/**
- * @brief creat a pipe and check for errors
- *
- * @param pipefd
- */
 void	pipe_handler(int *pipefd, char *str)
 {
 	if (pipe(pipefd) < 0)
@@ -35,4 +27,3 @@ void	pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
 		use_close(pipefd[0], error_msg);
 	}
 }
-

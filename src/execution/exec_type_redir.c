@@ -110,11 +110,13 @@ static void	creat_and_throw_error(const char *path, int errnum)
 {
 	char	*err_msg;
 	char	*tmp_str;
+	char	*err_msg_strjoin;
 
-	err_msg = ft_strjoin("minishell: ", path);
-	tmp_str = ft_strjoin(err_msg, ": ");
+	err_msg_strjoin = "function creat_and_throw_error -> executor";
+	err_msg = use_strjoin("minishell: ", path, err_msg_strjoin);
+	tmp_str = use_strjoin(err_msg, ": ", err_msg_strjoin);
 	free(err_msg);
-	err_msg = ft_strjoin(tmp_str, strerror(errnum));
+	err_msg = use_strjoin(tmp_str, strerror(errnum), err_msg_strjoin);
 	throw_error_mimic_bash(err_msg, 1);
 	free(tmp_str);
 	free(err_msg);

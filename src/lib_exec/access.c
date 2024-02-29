@@ -1,16 +1,5 @@
 #include "minishell.h"
 
-// static const char	*access_mode_to_str(enum e_access_mode mode);
-
-/**
- * @brief using for checking the right of the given path
- * 
- * @param path
- * @param mode checking mode for [FILE_EXISTS]; [FILE_READABLE]; 
- * 								[FILE_WRITABLE]; [FILE_EXECUTABLE]
- * @return (int [0] 	- File was exapted with this mode);
- * 				[-1]	- error return ;
- */
 int	access_handler(const char *path, enum e_access_mode mode, int debug_mode)
 {
 	int	result;

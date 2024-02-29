@@ -1,10 +1,5 @@
 #include "minishell.h"
 
-/**
- * @brief fork a Process and check for Error if fork failed
- *
- * @return pid_t
- */
 pid_t	fork_handler(char *str)
 {
 	pid_t	pid;

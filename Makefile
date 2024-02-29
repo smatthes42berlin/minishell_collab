@@ -13,7 +13,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /builtins /gen_util /print /test_simulation /signals
+SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /builtins /gen_util /print /signals
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
@@ -107,8 +107,6 @@ SRC = 	main.c \
 		print_hdoc_node.c \
 		print_exec_node.c \
 		print_pipe_node.c \
-		test_command.c \
-		test_function.c \
 		get_program_part_str.c \
 		get_failed_func_str.c \
 		throw_error.c \
