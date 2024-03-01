@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static int	read_line(t_main_data *data, ssize_t bytes_read, char *buffer);
+static int	read_line_pipe(t_main_data *data, ssize_t bytes_read, char *buffer);
 
 int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
@@ -16,7 +16,7 @@ int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 	while (bytes_read > 0)
 	{
 		buffer[bytes_read] = '\0';
-		if (read_line(data, bytes_read, buffer) < 0)
+		if (read_line_pipe(data, bytes_read, buffer) < 0)
 			return (-1);
 		bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE);
 	}
@@ -29,7 +29,7 @@ int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 	return (0);
 }
 
-static int	read_line(t_main_data *data, ssize_t bytes_read, char *buffer)
+static int	read_line_pipe(t_main_data *data, ssize_t bytes_read, char *buffer)
 {
 	int		i_count;
 	int		start;

@@ -90,7 +90,9 @@ int	reset_main_data(t_main_data *main_data)
 	return (0);
 }
 
-t_main_data	*get_main_data(void)
+
+
+t_main_data	*get_main_data()
 {
 	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
 

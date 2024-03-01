@@ -10,8 +10,8 @@ void	free_str_arr_null(char **str_arr)
 	while (str_arr[i])
 	{
 		free(str_arr[i]);
-		i++;
 		str_arr[i] = NULL;
+		i++;
 	}
 	free(str_arr);
 }

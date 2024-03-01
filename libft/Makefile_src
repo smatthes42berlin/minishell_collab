@@ -145,7 +145,12 @@ SRC =	ft_atoi.c \
 		read_whole_file.c \
 		free_char_variadic_msg.c \
 		free_char_variadic_code.c \
-		rem_str_after_index.c
+		rem_str_after_index.c \
+		remove_spaces_inplace.c \
+		str_only_spaces.c \
+		d_lst_is_first.c \
+		d_lst_is_last.c
+
 
 
  
