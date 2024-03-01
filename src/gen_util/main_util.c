@@ -40,7 +40,7 @@ t_main_data	*get_main_data(void)
 int	read_line(t_main_data *main_data)
 {
 	main_data->num_lines++;
-	// main_data->cli_input = readline("cli>");
-	main_data->cli_input = ft_strdup("cat << 1 | cat | echo hi > 2");
+	main_data->cli_input = readline("cli>");
+	//main_data->cli_input = ft_strdup("cat << 1 | cat | echo hi > 2");
 	return (0);
 }

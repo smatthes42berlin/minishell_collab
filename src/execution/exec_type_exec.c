@@ -8,6 +8,11 @@ static void	use_buildin(t_main_data *data, t_node_exec *exec_node,
 void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_exec	*exec_node;
+	pid_t 	pid;
+	int 	status;
+	int 	ret;
+	char	*tmp_str;
+
 
 	if (node != NULL)
 	{
@@ -16,10 +21,46 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 		{
 			print_debugging_info_executer(INT_DEBUG, 4, NULL);
 			print_debugging_info_executer(INT_DEBUG, 10, node);
-			use_execve(data, exec_node, pipe_struct);
+			pid = fork_handler("functtion type_exec -> filepath NULL");
+			if (pid == 0)
+			{
+				use_execve(data, exec_node, pipe_struct);
+			}
+			else
+			{
+				waitpid(pid, &status, 0);
+				ret = get_process_exit_code(status);
+				//printf("I found error %d %d\n", ret, status);
+				pipe_setting_exit_code(pipe_struct->pipefd_exit_code, 
+					true, &ret, "err");
+			}
 		}
 		else
-			printf(": command not found\n");
+		{
+			pid = fork_handler("functtion type_exec -> filepath NULL");
+			if (pid == 0)
+			{
+				if (access_handler(exec_node->argv[0], FILE_EXISTS, 0) < 0)
+				{
+					tmp_str = use_strjoin(exec_node->argv[0], ": command not found", "use_strjoin");
+					exit(throw_error_mimic_bash(tmp_str, 127));
+				}
+				else if (access_handler(exec_node->argv[0],
+						FILE_EXECUTABLE, 0) < 0)
+				{
+					tmp_str = use_strjoin(exec_node->argv[0], ": Permission denied", "use_strjoin");
+					exit(throw_error_mimic_bash(tmp_str, 126));
+				}
+			}
+			else
+			{
+				waitpid(pid, &status, 0);
+				ret = get_process_exit_code(status);
+				//printf("I found error %d %d\n", ret, status);
+				pipe_setting_exit_code(pipe_struct->pipefd_exit_code, 
+					true, &ret, "err");
+			}
+		}
 	}
 	else
 		printf("💀 Given node to EXEC is NULL! 💀\n");

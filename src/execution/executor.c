@@ -61,6 +61,7 @@ static int	executor_parent(t_main_data *data, pid_t pid,
 	int	status;
 	int	res_wait_2;
 	int	get_exit_code;
+	
 
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
@@ -75,11 +76,15 @@ static int	executor_parent(t_main_data *data, pid_t pid,
 				printf("Quit (core dumped)\n");
 		}
 	}
-	if (data->ast->type != PIPE && data->ast->type != REDIR)
-		get_exit_code = get_process_exit_code(status);
-	else
-		pipe_setting_exit_code(pipe_struct->pipefd_exit_code,
-			false, &get_exit_code, "function \"executor\" pipe");
+	if (data->ast->type == EXEC)
+	{
+
+	}
+	// if (data->ast->type != PIPE && data->ast->type != REDIR)
+	// 	get_exit_code = get_process_exit_code(status);
+	// else
+	pipe_setting_exit_code(pipe_struct->pipefd_exit_code,
+		false, &get_exit_code, "function \"executor\" pipe");
 	set_exit_code(get_exit_code);
 	return (0);
 }

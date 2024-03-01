@@ -10,8 +10,10 @@ int	access_handler(const char *path, enum e_access_mode mode, int debug_mode)
 	{
 		result = access(path, mode);
 		if (result < 0 && debug_mode)
+		{
 			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_ACCESS,
 				"function \"access_handler\""});
+		}
 	}
 	else
 	{
