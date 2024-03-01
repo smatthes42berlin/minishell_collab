@@ -221,7 +221,7 @@ bool		check_bash_variable(char *str);
 /* execute lib*/
 int			access_handler(const char *path, enum e_access_mode mode,
 				int debug_mode);
-void		execve_handler(const char *file_path, char **argv, char **env);
+int		execve_handler(const char *file_path, char **argv, char **env);
 pid_t		fork_handler(char *str);
 int			get_process_exit_code(int status);
 void		pipe_handler(int *pipefd, char *str);

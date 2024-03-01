@@ -40,16 +40,50 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 			pid = fork_handler("functtion type_exec -> filepath NULL");
 			if (pid == 0)
 			{
+				if (ft_strchr(exec_node->argv[0],'/') != NULL)
+				{
+					if (chdir(exec_node->argv[0]) < 0)
+					{
+						tmp_str = use_strjoin(exec_node->argv[0], ": No such file or directory", "use_strjoin");
+						exit(throw_error_mimic_bash(tmp_str, 127));
+					}
+					else 
+					{
+						if (exec_node->argv[0][0] == '.')
+						{
+							if(execve_handler(exec_node->argv[0], exec_node->argv, exec_node->env) < 0)
+							{
+								tmp_str = use_strjoin(exec_node->argv[0], ": Permission denied", "use_strjoin");
+								exit(throw_error_mimic_bash(tmp_str, 126));
+							}
+						}
+						else
+						{
+							tmp_str = use_strjoin(exec_node->argv[0], ": Is a directory", "use_strjoin");
+							exit(throw_error_mimic_bash(tmp_str, 126));
+						}
+					}
+				}
+				else if (exec_node->argv[0][0] == '.')
+				{
+					if(execve_handler(exec_node->argv[0], exec_node->argv, exec_node->env) < 0)
+					{
+						tmp_str = use_strjoin(exec_node->argv[0], ": Permission denied", "use_strjoin");
+						exit(throw_error_mimic_bash(tmp_str, 126));
+					}
+				}
+				//printf("ARGV[0] %s\n" , exec_node->argv[0]);
+				if ((access_handler(exec_node->argv[0],
+						FILE_EXECUTABLE, 0) < 0) || exec_node->is_folder == true)
+				{
+				///	printf("NOOOOO00000000\n");
+					tmp_str = use_strjoin(exec_node->argv[0], ": command not found", "use_strjoin");
+					exit(throw_error_mimic_bash(tmp_str, 127));
+				}
 				if (access_handler(exec_node->argv[0], FILE_EXISTS, 0) < 0)
 				{
 					tmp_str = use_strjoin(exec_node->argv[0], ": command not found", "use_strjoin");
 					exit(throw_error_mimic_bash(tmp_str, 127));
-				}
-				else if (access_handler(exec_node->argv[0],
-						FILE_EXECUTABLE, 0) < 0)
-				{
-					tmp_str = use_strjoin(exec_node->argv[0], ": Permission denied", "use_strjoin");
-					exit(throw_error_mimic_bash(tmp_str, 126));
 				}
 			}
 			else

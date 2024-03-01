@@ -265,6 +265,7 @@ typedef struct s_node_exec
 	t_node				*right_node;
 	char				*file_path;
 	char				*file_path_org;
+	bool				is_folder;
 	char				**argv;
 	char				**env;
 	bool				is_inbuilt;
