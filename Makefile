@@ -48,6 +48,7 @@ SRC = 	main.c \
 		exec_type_heredoc.c \
 		tree_navigation.c \
 		execve.c \
+		exec_type_exec_null.c \
 		malloc_handler.c \
 		utiles_libft.c \
 		fork_process_state.c \
