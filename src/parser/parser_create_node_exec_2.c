@@ -32,10 +32,19 @@ int	get_cmd_arguments(t_parse_info *parse_info, t_node_exec *exec_node)
 int	copy_cmd_name_to_args_arr(t_node_exec *exec_node)
 {
 	if (exec_node->file_path)
+	{
 		if (copy_argument(exec_node, exec_node->file_path))
 			return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
 					EFUNC_MALLOC,
 					"exec node adding an argument to exec node arg list"}));
+	}
+	else
+	{
+		if (copy_argument(exec_node, exec_node->file_path_org))
+			return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+					EFUNC_MALLOC,
+					"exec node adding an argument to exec node arg list"}));
+	}
 	return (0);
 }
 

@@ -11,6 +11,7 @@ void	free_str_arr_null(char **str_arr)
 	{
 		free(str_arr[i]);
 		i++;
+		str_arr[i] = NULL;
 	}
 	free(str_arr);
 }

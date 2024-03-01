@@ -115,7 +115,10 @@ SRC = 	main.c \
 		ign_or_def_signals.c \
 		signals_interactive.c \
 		set_signal.c \
-		set_program_name.c
+		set_program_name.c \
+		print_debug.c \
+		print_node_ast.c \
+		get_exit_code.c
 
 #parser_main.c
 	

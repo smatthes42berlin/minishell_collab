@@ -18,5 +18,6 @@ int	tokenise(t_main_data *main_data)
 		return (SIGINT + 128);
 	if (ret_check_synt)
 		return (1);
+	debug_tokenise(main_data);
 	return (0);
 }

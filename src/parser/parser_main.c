@@ -20,17 +20,9 @@ int	parse(t_main_data *main_data)
 		if (token_recognised || token_create_success)
 			return (1);
 	}
-	if (PRINT_DEBUG_1)
-	{
-		print_ast(parse_info.root_node_ast, 0);
-		printf("\n\n\n");
-	}
 	change_form_of_ast(&parse_info);
-	if (PRINT_DEBUG_1)
-	{
-		print_ast(parse_info.ast_rene, 0);
-	}
 	main_data->ast = parse_info.ast_rene;
+	debug_parse(main_data);
 	return (0);
 }
 

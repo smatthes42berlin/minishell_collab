@@ -23,8 +23,6 @@ int	create_exec_node(t_parse_info *parse_info)
 	if (check_if_cmd_is_folder(exec_node))
 		return (free_exec_code_during_creation(exec_node, 1));
 	add_all_but_pipe_ast(parse_info, (t_node *)exec_node);
-	if (PRINT_DEBUG_1)
-		print_exec_node(exec_node, 1);
 	set_n_token_as_parsed(1, parse_info);
 	return (0);
 }
@@ -74,7 +72,8 @@ static int	init_exec_node_param(t_parse_info *parse_info,
 {
 	exec_node->argv = NULL;
 	exec_node->file_path = ft_strdup(parse_info->cur_token->value);
-	if (!exec_node->file_path)
+	exec_node->file_path_org = ft_strdup(parse_info->cur_token->value);
+	if (!exec_node->file_path || !exec_node->file_path_org)
 		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
 				EFUNC_MALLOC, "copying token val exec node"}));
 	exec_node->is_inbuilt = false;
