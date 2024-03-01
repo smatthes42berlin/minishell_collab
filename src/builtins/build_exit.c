@@ -17,6 +17,7 @@ char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	ret = check_arg(node->argv);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret,
 		"function \"build_export\"");
+	free_str_arr_null(ret);
 	return (NULL);
 }
 

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static char	*get_test_case(int test_case);
+// static char	*get_test_case(int test_case);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -27,8 +27,8 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		if (start_signals_interactive())
 			free_main_exit(main_data, 1);
-		main_data->cli_input = get_test_case(4);
-		// main_data->cli_input = readline("cli>");
+		//main_data->cli_input = get_test_case(4);
+		main_data->cli_input = readline("cli>");
 		if (end_signals_interactive())
 			free_main_exit(main_data, 1);
 		if (check_ctrl_d(main_data))
@@ -61,10 +61,27 @@ int	main(int argc, char *argv[], char *envp[])
 		// 	print_token_list(main_data->token_list);
 		if (parse(main_data))
 			free_main_exit(main_data, 3);
-		free_main_exit(main_data, 3);
+		//free_main_exit(main_data, 3);
 		// free_main_exit(main_data, 5);
-		// if (executor(main_data) == -1)
-		// 	return (3);
+		int i_exec = executor(main_data);
+	//	printf("iam in exit retvalue %i\n", i_exec);
+		if (i_exec == -1)
+		{
+			char *ret_exit = env_get_var(main_data, "MINISHELL_LAST_EXIT");
+			//printf("found exit code %s\n", ret_exit);
+			int i_exit = ft_atoi(ret_exit);
+			int i_ret_exit_code = i_exit;
+			//free (ret_exit);
+
+			//printf("Programm endet mit %i\n", i_exit);
+			//free_main_exit(main_data, i_exec);
+			//break ;
+			//printf("Programm endet mit %i\n", i_ret_exit_code);
+			//free_ast(main_data->ast);
+			//free_main_exit(main_data, i_ret_exit_code);
+			return (i_ret_exit_code);
+		}
+		//free_ast(main_data->ast);
 		// free_main_exit(main_data, 0);
 	}
 	return (0);
@@ -86,35 +103,35 @@ t_main_data	*get_main_data(void)
 	return (&data);
 }
 
-static char	*get_test_case(int test_case)
-{
-	if (test_case == 1)
-		return (ft_strdup("<< 1 cat <in_1 hello | echo"));
-	if (test_case == 2)
-		return (ft_strdup("<< >> < | >"));
-	if (test_case == 3)
-		return (ft_strdup("cat << 1 > out | wc > out2"));
-	if (test_case == 4)
-		return (ft_strdup("sleep 2 < in > out| echo hello << 1 > out | sleep 3 | echo 123"));
-	if (test_case == 5)
-		return (ft_strdup("cat <<1<<2<<3"));
-	if (test_case == 6)
-		return (ft_strdup("xxx$HOME$FIVE_ONE xxx>xxx$ONE_TWO $SOME_LETTERS $? $. $$ $); ?$_?"));
-	if (test_case == 7)
-		return (ft_strdup("<< 1 << 2"));
-	if (test_case == 8)
-		return (ft_strdup("sleep arg1 arg2 arg3"));
-	if (test_case == 9)
-		return (ft_strdup("sleep 2 | sleep 2"));
-	if (test_case == 10)
-		return (ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 |"));
-	if (test_case == 11)
-		return (ft_strdup("$HOME \"$HOME\" '$HOME' \"\" '' $HOME $HOME1"));
-	if (test_case == 12)
-		return (ft_strdup("<< 1 cat"));
-	if (test_case == 13)
-		return (ft_strdup("echo hello"));
-	// return (ft_strdup("cat << 1 << 2  | echo << 3 hello | ls"));
-	// return (ft_strdup("echo hello"));
-	return (NULL);
-}
+// static char	*get_test_case(int test_case)
+// {
+// 	if (test_case == 1)
+// 		return (ft_strdup("<< 1 cat <in_1 hello | echo"));
+// 	if (test_case == 2)
+// 		return (ft_strdup("<< >> < | >"));
+// 	if (test_case == 3)
+// 		return (ft_strdup("cat << 1 > out | wc > out2"));
+// 	if (test_case == 4)
+// 		return (ft_strdup("sleep 2 < in > out| echo hello << 1 > out | sleep 3 | echo 123"));
+// 	if (test_case == 5)
+// 		return (ft_strdup("cat <<1<<2<<3"));
+// 	if (test_case == 6)
+// 		return (ft_strdup("xxx$HOME$FIVE_ONE xxx>xxx$ONE_TWO $SOME_LETTERS $? $. $$ $); ?$_?"));
+// 	if (test_case == 7)
+// 		return (ft_strdup("<< 1 << 2"));
+// 	if (test_case == 8)
+// 		return (ft_strdup("sleep arg1 arg2 arg3"));
+// 	if (test_case == 9)
+// 		return (ft_strdup("sleep 2 | sleep 2"));
+// 	if (test_case == 10)
+// 		return (ft_strdup("< in_1 cat << 1 < in_2 | ls < in_3 |"));
+// 	if (test_case == 11)
+// 		return (ft_strdup("$HOME \"$HOME\" '$HOME' \"\" '' $HOME $HOME1"));
+// 	if (test_case == 12)
+// 		return (ft_strdup("<< 1 cat"));
+// 	if (test_case == 13)
+// 		return (ft_strdup("echo hello"));
+// 	// return (ft_strdup("cat << 1 << 2  | echo << 3 hello | ls"));
+// 	// return (ft_strdup("echo hello"));
+// 	return (NULL);
+// }

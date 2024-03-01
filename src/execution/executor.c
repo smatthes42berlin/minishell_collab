@@ -23,6 +23,7 @@ int	executor(t_main_data *data)
 	if (read_pipe(data, pipe_struct) == -1)
 	{
 		free(pipe_struct);
+		//free_main_exit(data, 0);
 		return (-1);
 	}
 	free(pipe_struct);
@@ -36,14 +37,17 @@ static	int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	pid = fork_handler("function \"executor\"");
 	if (pid < 0)
 	{
+		free(pipe_struct);
 		free_main(data);
 		return (-1);
 	}
 	if (pid == 0)
 	{
+
 		if (restore_default_signals(SIGQUIT + SIGINT))
 			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
+		free(pipe_struct);
 		free_main(data);
 	}
 	else
@@ -82,6 +86,9 @@ static int	executor_parent(t_main_data *data, pid_t pid,
 
 static void	free_main(t_main_data *data)
 {
-	free_ast(data->ast);
-	free_main_exit(data, 0);
+	;
+	if (data)
+	;
+	//free_ast(data->ast);
+	 free_main_exit(data, 0);
 }
