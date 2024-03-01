@@ -32,6 +32,8 @@ static void	free_exec(t_node *node)
 		exec_node->env = NULL;
 		free(exec_node->file_path);
 		exec_node->file_path = NULL;
+		free(exec_node->file_path_org);
+		exec_node->file_path_org = NULL;
 		free(exec_node);
 		exec_node = NULL;
 	}
