@@ -12,10 +12,11 @@
 # define My_SIG_IGNORE 1
 # define My_SIG_DEFAULT 2
 
+# define FREE_ 2
 
 /**
  * necessary so we can use t_node inside the t_node struct definition
-*/
+ */
 
 typedef struct s_node	t_node;
 typedef struct s_token	t_token;
@@ -36,17 +37,17 @@ typedef struct s_main_data
 	t_list_d			*token_list;
 	t_node				*ast;
 	char				*cli_input;
-	int					num_lines;		
+	int					num_lines;
 	//.....
 }						t_main_data;
 
 /**
- * using for the access mode 
+ * using for the access mode
  * @param FILE_EXISTS
  * @param FILE_READABLE
  * @param FILE_WRITABLE
  * @param FILE_EXECUTABLE
-*/
+ */
 enum					e_access_mode
 {
 	FILE_EXISTS = F_OK,
@@ -60,7 +61,7 @@ enum					e_access_mode
  * @param FILE_ONLY_READING
  * @param FILE_ONLY_WRITE
  * @param FILE_ONLY_WRITE_APPEND
-*/
+ */
 enum					e_open_mode
 {
 	FILE_ONLY_READING = O_RDONLY,
@@ -103,9 +104,14 @@ typedef struct s_here_doc_info
 	char				*delim;
 	char				*delim_raw;
 	char				*tmp;
+	char				*compl_str;
+	int					str_len;
 	bool				quoted;
 	int					num_char_no_quote;
 	int					index_close_quote;
+	int					fd[2];
+	int					pid;
+	int					signal_exit;
 }						t_here_doc_info;
 
 typedef struct s_expansion_info
@@ -164,7 +170,7 @@ enum					e_std_fd
 
 /**
  * describing all the possible node types within the ast
- * @param NOTHING    for redim e.g. > out 
+ * @param NOTHING    for redim e.g. > out
  * @param PIPE
  * @param EXEC
  * @param REDIR
@@ -276,12 +282,10 @@ enum					e_program_part
 	EPART_SIGNAL
 };
 
-
-
 /**
- * @brief Show in which state a child process end! 
- * 
- * @PROCESS_EXITED 				--> Process exited normally (e.g., 
+ * @brief Show in which state a child process end!
+ *
+ * @PROCESS_EXITED 				--> Process exited normally (e.g.,
  * 									via exit() or returning from main())
  * @PROCESS_KILLED_BY_SIGINT	--> Process was terminated by the SIGINT
  * 									signal (e.g., pressing Ctrl+C)
@@ -291,15 +295,16 @@ enum					e_program_part
  * 									(e.g., a polite request to terminate)
  * @PROCESS_KILLED_BY_SIGQUIT	--> Process was terminated by the SIGQUIT
  * 									signal (e.g., pressing Ctrl+\)
- * @PROCESS_KILLED_OTHER		--> Process was terminated by another 
+ * @PROCESS_KILLED_OTHER		--> Process was terminated by another
  * 									signal not specified here
  * @PROCESS_STOPPED				--> Process was stopped (e.g., by the
  * 									SIGSTOP signal)
  * @PROCESS_CONTINUED			--> Process was continued (e.g., after
- * 									being stopped by SIGSTOP, continued with SIGCONT)
+ * 									being stopped by SIGSTOP,
+										continued with SIGCONT)
  */
 
-enum				e_process_status 
+enum					e_process_status
 {
 	PROCESS_EXITED,
 	PROCESS_KILLED_BY_SIGINT,

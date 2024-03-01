@@ -4,6 +4,7 @@ int	check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path)
 {
 	int		i;
 	char	**path;
+	int		comb_check;
 
 	if (get_path(env_vars, &path))
 		return (1);
@@ -12,16 +13,26 @@ int	check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path)
 	if (access(cmd_arg, X_OK) == 0)
 	{
 		if (ft_str_n_dup_int(cmd_arg, 0, exec_path) == -1)
+		{
+			free_str_arr_null(path);
 			return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
 					EFUNC_MALLOC, "exec node copying path string"}));
+		}
 		return (0);
 	}
 	while (path[i])
 	{
-		if (!check_path_combination(path[i], cmd_arg, exec_path))
+		comb_check = check_path_combination(path[i], cmd_arg, exec_path);
+		if (!comb_check)
 			break ;
+		if (comb_check > 0)
+		{
+			free_str_arr_null(path);
+			return (1);
+		}
 		i++;
 	}
+	free_str_arr_null(path);
 	return (0);
 }
 

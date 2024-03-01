@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-				t_node_exec *exec_node);
+								t_node_exec *exec_node);
 
 int	create_exec_node(t_parse_info *parse_info)
 {
@@ -13,20 +13,28 @@ int	create_exec_node(t_parse_info *parse_info)
 				EFUNC_MALLOC, "exec node"}));
 	init_generic_node_param((t_node *)exec_node, EXEC);
 	if (init_exec_node_param(parse_info, exec_node))
-		return (1);
+		return (free_exec_code_during_creation(exec_node, 1));
 	if (check_if_inbuilt(exec_node))
-		return (1);
+		return (free_exec_code_during_creation(exec_node, 1));
 	if (check_if_cmd_exists(exec_node))
-		return (1);
+		return (free_exec_code_during_creation(exec_node, 1));
 	if (get_cmd_arguments(parse_info, exec_node))
-		return (1);
+		return (free_exec_code_during_creation(exec_node, 1));
 	if (check_if_cmd_is_folder(exec_node))
-		return (1);
+		return (free_exec_code_during_creation(exec_node, 1));
 	add_all_but_pipe_ast(parse_info, (t_node *)exec_node);
 	if (PRINT_DEBUG_1)
 		print_exec_node(exec_node, 1);
 	set_n_token_as_parsed(1, parse_info);
 	return (0);
+}
+
+int	free_exec_code_during_creation(t_node_exec *exec_node, int code)
+{
+	free(exec_node->file_path);
+	free_str_arr_null(exec_node->env);
+	free_str_arr_null(exec_node->argv);
+	return (code);
 }
 
 int	check_if_cmd_is_folder(t_node_exec *exec_node)
@@ -55,23 +63,20 @@ int	check_if_inbuilt(t_node_exec *exec_node)
 		|| !ft_strcmp(exec_node->file_path, "unset")
 		|| !ft_strcmp(exec_node->file_path, "env")
 		|| !ft_strcmp(exec_node->file_path, "exit"))
-	{
 		exec_node->is_inbuilt = true;
-		exec_node->file_path = ft_strdup(exec_node->file_path);
-		if (!exec_node->file_path)
-			return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
-					EFUNC_MALLOC, "copying exe name when inbuilt"}));
-	}
 	else
 		exec_node->is_inbuilt = false;
 	return (0);
 }
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-		t_node_exec *exec_node)
+								t_node_exec *exec_node)
 {
 	exec_node->argv = NULL;
-	exec_node->file_path = parse_info->cur_token->value;
+	exec_node->file_path = ft_strdup(parse_info->cur_token->value);
+	if (!exec_node->file_path)
+		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
+				EFUNC_MALLOC, "copying token val exec node"}));
 	exec_node->is_inbuilt = false;
 	exec_node->env = ft_arr_cpy_char_null(parse_info->main_data->env_vars);
 	if (!exec_node->env && parse_info->main_data->env_vars)
@@ -83,14 +88,14 @@ static int	init_exec_node_param(t_parse_info *parse_info,
 int	check_if_cmd_exists(t_node_exec *exec_node)
 {
 	char	*path;
+	char	*tmp;
 
 	if (exec_node->is_inbuilt)
 		return (0);
 	if (check_cmd_access(exec_node->env, exec_node->file_path, &path))
 		return (1);
-	if (!path)
-		exec_node->file_path = NULL;
-	else
-		exec_node->file_path = path;
+	tmp = exec_node->file_path;
+	exec_node->file_path = path;
+	free(tmp);
 	return (0);
 }

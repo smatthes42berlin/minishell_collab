@@ -46,3 +46,9 @@ int	got_to_nth_next_token(int num, t_parse_info *parse_info)
 	}
 	return (0);
 }
+
+int	free_node_creation_code(t_node *node, int code)
+{
+	free(node);
+	return (code);
+}
