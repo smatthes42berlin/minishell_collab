@@ -30,6 +30,6 @@ else
 fi
 
 # Starte das Programm mit Valgrind und lege die Logs im spezifizierten Ordner ab.
-valgrind --leak-check=full --show-leak-kinds=all --log-file="$LOG_DIR/valgrind-%p.log" $PROGRAM
+valgrind --leak-check=full --show-leak-kinds=all --log-file="$LOG_DIR/valgrind-%p.log" --suppressions=readline.supp $PROGRAM
 
 echo "Valgrind-Logs wurden in $LOG_DIR gespeichert."

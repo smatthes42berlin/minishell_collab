@@ -36,7 +36,7 @@ static int	start_minishell(t_main_data *main_data, int ret_tokenise)
 			free_main_exit(main_data, 1);
 		if (executor(main_data) == -1)
 			free_main_exit(main_data, 1);
-		free_main_exit(main_data, 1);
+		//free_main_exit(main_data, 1);
 		free_main_exit_end_of_loop(main_data);
 	}
 	return (0);

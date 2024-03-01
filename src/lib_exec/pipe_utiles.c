@@ -22,7 +22,8 @@ int	use_close(int pipefd, char *error_msg)
 	if (close(pipefd) < 0)
 	{
 		ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_DUP2,
-			error_msg});
+				error_msg});
+		ret = 1;
 	}
 	return (ret);
 }

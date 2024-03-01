@@ -167,7 +167,6 @@ int			free_exec_code_during_creation(t_node_exec *exec_node, int code);
 int			free_node_creation_code(t_node *node, int code);
 
 /* printing for debugging */
-
 void		print_token_list(t_list_d *token_list);
 void		print_token(t_token *token);
 void		print_ast(t_node *root, int depth);
@@ -193,27 +192,31 @@ void		type_heredoc(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
 int			executor(t_main_data *data);
 void		free_ast(t_node *node);
-int			write_str_arr_pipe(int *pipefd, char **str, char *err_msg);
-int			read_str_arr_pipe(int *pipefd);
-int			write_pipe_to_executor_pipe(int *pipefd, char **str_arr,
-				char *err_msg);
+int 		write_str_arr_pipe(int *pipefd, char **str, char *err_msg, bool is_pipe);
+int 		read_str_arr_pipe(int *pipefd);
+int 		write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg);
+int			env_add_clr(t_main_data *data, char *env_var);
+int			read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 
 /* builtins */
-// t_node_exec			*check_buildin(t_node *node);
 char		**chose_buildin(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipe_struct);
-
-bool		is_last_node(t_node *node, char *compare);
+bool		is_last_node_exec(t_node *node, char *path);
+bool		is_last_node_redir(t_node *node, char *filename);
 char		**build_pwd(bool newline);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
-char		**build_echo(t_main_data *data, t_node_exec *node);
+char		*absoult_or_relativ_path(char *path);
+char		**build_echo(t_node_exec *node);
 char		**build_export(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		**build_unset(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		**build_env(t_main_data *data);
+char		**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*add_newline(char *str, bool newline);
 char		**copy_str_arr(char **arg, int i_beginn, bool newline);
+bool		check_bash_variable(char *str);
+
 
 /* execute lib*/
 int			access_handler(const char *path, enum e_access_mode mode,
@@ -222,20 +225,18 @@ void		execve_handler(const char *file_path, char **argv, char **env);
 pid_t		fork_handler(char *str);
 int			get_process_exit_code(int status);
 void		pipe_handler(int *pipefd, char *str);
-
-// void		pipe_setting(int *pipefd, bool open, char **str, char *error_msg);
-void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
-				char *error_msg);
+void    	*use_malloc(size_t bytes, char *err_msg);
+char		*use_strjoin(char const *s1, char const *s2, char *err_msg);
+char 		*use_strdup(char const *s1, char *err_msg);
+void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code, char *error_msg);
 int			use_dup2(int pipefd, int fd, char *error_msg);
 int			use_close(int pipefd, char *error_msg);
 
 /* error */
 int			throw_error_custom(t_error_ms error_info);
 int			throw_error_mimic_bash(char *msg, int code);
-
 char		*get_program_part_str(enum e_program_part program_part);
 char		*get_failed_func_str(enum e_failed_func failed_func);
-
 void		print_type(t_node *node);
 
 #endif

@@ -5,7 +5,8 @@
 # define CLR_ENV "CLR="
 # define ADD_CD "CD="
 # define PRINT_ENV "PRINT="
-# define EXIT_CODE "EXIT_CODE="
+# define EXIT_CODE "EXCODE="
+# define EXIT "EXITPROGRAMM"
 # define INT_DEBUG 0
 # define PRINT_DEBUG_1 0
 # define My_SIG_IGNORE 1
@@ -23,7 +24,7 @@ typedef struct s_token	t_token;
 /**
  * main data structure, that can be passed around
 
-	* @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
+ * @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
 	NULL when no env vars or uninitialised
  * @param token_list pointer to first element of token list or NULL,
 	when token list is uninitialised
@@ -72,6 +73,8 @@ typedef struct s_pipefd_main
 {
 	int					*pipefd;
 	bool				direction;
+	int 				*pipefd_exit_code;
+	bool				direction_exit_code;
 }						t_pipefd;
 
 /**

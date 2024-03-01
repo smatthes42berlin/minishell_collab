@@ -13,7 +13,7 @@ PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 INCLUDEPATH = ./include/ ./libft/include/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
-SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /builtins /gen_util /print /test_simulation /signals
+SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /builtins /gen_util /print /signals
 BASEPATHSRC = ./src/
 PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
@@ -27,15 +27,19 @@ VPATH = $(PATHSRC) $(INCLUDEPATH)
 SRC = 	main.c \
 		main_util.c \
 		build_cd.c \
+		build_cd_utiles.c \
 		build_pwd.c \
 		build_echo.c \
 		build_export.c \
+		build_exit.c \
 		builld_unset.c \
 		build_env.c \
 		choose_builtin.c \
 		build_utiles.c \
 		access.c \
 		executor.c \
+		executor_env_set.c \
+		executer_read_pipe.c \
 		utiles_execute.c \
 		free_ast.c \
 		exec_type_exec.c \
@@ -44,6 +48,8 @@ SRC = 	main.c \
 		exec_type_heredoc.c \
 		tree_navigation.c \
 		execve.c \
+		malloc_handler.c \
+		utiles_libft.c \
 		fork_process_state.c \
 		pipe.c \
 		pipe_utiles.c \
@@ -57,7 +63,8 @@ SRC = 	main.c \
 		token_get.c \
 		check_syntax_n_heredoc.c \
 		check_syntax.c \
-		check_last_node.c \
+		check_last_node_exec.c \
+		check_last_node_redir.c \
 		here_doc_main.c \
 		here_doc_handle_delimiter.c \
 		here_doc_read.c \
@@ -100,8 +107,6 @@ SRC = 	main.c \
 		print_hdoc_node.c \
 		print_exec_node.c \
 		print_pipe_node.c \
-		test_command.c \
-		test_function.c \
 		get_program_part_str.c \
 		get_failed_func_str.c \
 		throw_error.c \

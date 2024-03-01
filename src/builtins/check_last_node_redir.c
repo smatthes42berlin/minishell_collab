@@ -5,9 +5,9 @@ static char	*check_exec(t_node *node);
 static char	*check_redir(t_node *node);
 static char	*check_pipe(t_node *node);
 
-bool	is_last_node(t_node *node, char *compare)
+bool	is_last_node_redir(t_node *node, char *filename)
 {
-	if (str_are_equal(last_node(node), compare))
+	if (str_are_equal(last_node(node), filename))
 	{
 		return (true);
 	}
@@ -41,7 +41,7 @@ static char	*check_redir(t_node *node)
 	t_node_redir	*redir_node;
 
 	redir_node = (t_node_redir *)node;
-	return (last_node(redir_node->left_node));
+	return (redir_node->filename);
 }
 
 static char	*check_pipe(t_node *node)

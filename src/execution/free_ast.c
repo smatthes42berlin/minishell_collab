@@ -17,6 +17,7 @@ void	free_ast(t_node *node)
 		free_exec(node);
 	else if (node->type == HEREDOC)
 		free_heredoc(node);
+	node = NULL;
 }
 
 static void	free_exec(t_node *node)
