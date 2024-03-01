@@ -7,6 +7,8 @@
 # define PRINT_ENV "PRINT="
 # define EXIT_CODE "EXCODE="
 # define EXIT "EXITPROGRAMM"
+# define CONTINUE 1
+# define QUIT 2
 # define INT_DEBUG 0
 # define PRINT_DEBUG_1 0
 # define My_SIG_IGNORE 1
@@ -24,7 +26,8 @@ typedef struct s_token	t_token;
 /**
  * main data structure, that can be passed around
 
- * @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
+
+	* @param env_vars pointer to first element of list containing all the avaailable environment variables of the shell,
 	NULL when no env vars or uninitialised
  * @param token_list pointer to first element of token list or NULL,
 	when token list is uninitialised
@@ -73,7 +76,7 @@ typedef struct s_pipefd_main
 {
 	int					*pipefd;
 	bool				direction;
-	int 				*pipefd_exit_code;
+	int					*pipefd_exit_code;
 	bool				direction_exit_code;
 }						t_pipefd;
 
@@ -265,6 +268,7 @@ typedef struct s_node_exec
 	t_node				*right_node;
 	char				*file_path;
 	char				*file_path_org;
+	bool				is_folder;
 	char				**argv;
 	char				**env;
 	bool				is_inbuilt;

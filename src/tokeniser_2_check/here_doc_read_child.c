@@ -72,7 +72,7 @@ static int	free_compl_exit(t_here_doc_info *hdoc_info, char *msg,
 		enum e_failed_func failed_func, bool success)
 {
 	free_heredoc_info_code(hdoc_info, 0);
-	free_main_exit(hdoc_info->main_data, -1);
+	free_main_exit(hdoc_info->main_data, 0);
 	if (success)
 		exit(0);
 	exit(throw_error_custom((t_error_ms){errno, EPART_TOKENISER, failed_func,
