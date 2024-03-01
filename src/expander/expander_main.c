@@ -18,5 +18,6 @@ int	expand(t_main_data *main_data)
 			continue ;
 		next = next->next;
 	}
+	debug_expand(main_data);
 	return (0);
 }
