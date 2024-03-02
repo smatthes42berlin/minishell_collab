@@ -60,9 +60,12 @@ static void	use_buildin(t_main_data *data, t_node_exec *exec_node,
 	int		i_count;
 
 	temp_str = chose_buildin(data, exec_node, pipe_struct);
+	//print_str_arr_null(temp_str);
 	if (is_last_node_exec(data->ast, exec_node->file_path)
 		&& (temp_str != NULL))
-	{
+		// oder vor dem ein redim ? 
+	{	
+		//print_str_arr_null(temp_str);
 		i_count = 0;
 		while (temp_str[i_count] != NULL)
 		{

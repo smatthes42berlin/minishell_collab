@@ -12,6 +12,8 @@ char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	print_debugging_info_executer(INT_DEBUG, 31, NULL);
 	if (data->ast->type == PIPE)
 	{
+		// check exit last node ? 
+		// read from pipe ? 
 		return (NULL);
 	}
 	ret = check_arg(node->argv);
