@@ -2,9 +2,9 @@
 
 int	get_exit_code(void)
 {
-	char *res;
-	int code;
-	t_main_data *main_data;
+	char		*res;
+	int			code;
+	t_main_data	*main_data;
 
 	main_data = get_main_data();
 	if (!main_data->env_vars)

@@ -1,18 +1,20 @@
 #include "minishell.h"
 
-static int	signal_helper(int signals, int ign_or_dfl);
+static int				signal_helper(int signals, int ign_or_dfl);
 static __sighandler_t	get_correct_signal(int ign_or_dfl);
+static int				init_struct_sigaction(struct sigaction *sa,
+							int ign_or_dfl);
 
 int	ignore_signals(int signals)
 {
-	if (signal_helper(signals, My_SIG_IGNORE))
+	if (signal_helper(signals, MY_SIG_IGNORE))
 		return (1);
 	return (0);
 }
 
 int	restore_default_signals(int signals)
 {
-	if (signal_helper(signals, My_SIG_DEFAULT))
+	if (signal_helper(signals, MY_SIG_DEFAULT))
 		return (1);
 	return (0);
 }
@@ -21,9 +23,7 @@ static int	signal_helper(int signals, int ign_or_dfl)
 {
 	struct sigaction	sa;
 
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sa.sa_handler = get_correct_signal(ign_or_dfl);
+	init_struct_sigaction(&sa, ign_or_dfl);
 	if (signals == SIGINT)
 	{
 		if (sigaction(SIGINT, &sa, NULL))
@@ -50,8 +50,16 @@ static int	signal_helper(int signals, int ign_or_dfl)
 
 static __sighandler_t	get_correct_signal(int ign_or_dfl)
 {
-	if (ign_or_dfl == My_SIG_DEFAULT)
+	if (ign_or_dfl == MY_SIG_DEFAULT)
 		return (SIG_DFL);
 	else
 		return (SIG_IGN);
+}
+
+static int	init_struct_sigaction(struct sigaction *sa, int ign_or_dfl)
+{
+	sigemptyset(&(sa->sa_mask));
+	sa->sa_flags = 0;
+	sa->sa_handler = get_correct_signal(ign_or_dfl);
+	return (0);
 }

@@ -26,6 +26,7 @@ VPATH = $(PATHSRC) $(INCLUDEPATH)
 # list all filenames (without path) here
 SRC = 	main.c \
 		main_util.c \
+		main_util_2.c \
 		build_cd.c \
 		build_cd_utiles.c \
 		build_pwd.c \

@@ -2,7 +2,7 @@
 
 int	set_program_name(void)
 {
-	t_main_data *main_data;
+	t_main_data	*main_data;
 
 	main_data = get_main_data();
 	if (env_set_var(main_data, "PROGRAM_NAME=minishell"))

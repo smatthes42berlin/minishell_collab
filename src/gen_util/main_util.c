@@ -33,6 +33,7 @@ int	reset_main_data(t_main_data *main_data, bool reset_env)
 t_main_data	*get_main_data(void)
 {
 	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
+
 	return (&data);
 }
 
@@ -40,17 +41,5 @@ int	read_line(t_main_data *main_data)
 {
 	main_data->num_lines++;
 	main_data->cli_input = readline("cli>");
-	// main_data->cli_input = ft_strdup("$empty $empty $empty 123");
-	return (0);
-}
-
-int	token_lst_is_empty(t_main_data *main_data)
-{
-	if (!main_data->token_list)
-	{
-		if (set_exit_code(0))
-			return (-1);
-		return (1);
-	}
 	return (0);
 }

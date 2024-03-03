@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-								t_node_exec *exec_node);
+				t_node_exec *exec_node);
 
 int	create_exec_node(t_parse_info *parse_info)
 {
@@ -84,20 +84,5 @@ static int	init_exec_node_param(t_parse_info *parse_info,
 	if (!exec_node->env && parse_info->main_data->env_vars)
 		return (throw_error_custom((t_error_ms){errno, EPART_PARSER,
 				EFUNC_MALLOC, "copying environment  exec node"}));
-	return (0);
-}
-
-int	check_if_cmd_exists(t_node_exec *exec_node)
-{
-	char	*path;
-	char	*tmp;
-
-	if (exec_node->is_inbuilt)
-		return (0);
-	if (check_cmd_access(exec_node->env, exec_node->file_path, &path))
-		return (1);
-	tmp = exec_node->file_path;
-	exec_node->file_path = path;
-	free(tmp);
 	return (0);
 }
