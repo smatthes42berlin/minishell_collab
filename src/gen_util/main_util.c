@@ -33,7 +33,6 @@ int	reset_main_data(t_main_data *main_data, bool reset_env)
 t_main_data	*get_main_data(void)
 {
 	static t_main_data	data = {NULL, NULL, NULL, NULL, 0};
-
 	return (&data);
 }
 
@@ -45,7 +44,13 @@ int	read_line(t_main_data *main_data)
 	return (0);
 }
 
-bool	token_lst_is_empty(t_main_data *main_data)
+int	token_lst_is_empty(t_main_data *main_data)
 {
-	return (!main_data->token_list);
+	if (!main_data->token_list)
+	{
+		if (set_exit_code(0))
+			return (-1);
+		return (1);
+	}
+	return (0);
 }

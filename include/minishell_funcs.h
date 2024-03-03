@@ -19,7 +19,7 @@ int			check_ctrl_d(t_main_data *main_data);
 bool		no_input(t_main_data *main_data);
 int			check_num_args(int argc, char *argv[]);
 int			read_line(t_main_data *main_data);
-bool		token_lst_is_empty(t_main_data *main_data);
+int		token_lst_is_empty(t_main_data *main_data);
 
 /* tokenisation/lexer main*/
 

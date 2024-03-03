@@ -40,6 +40,8 @@ static int	start_minishell(t_main_data *main_data)
 
 static int	handle_one_prompt(t_main_data *main_data, int ret_tokenise)
 {
+	int	tmp;
+
 	ret_tokenise++;
 	if (read_line_handle_signals(main_data))
 		return (QUIT);
@@ -53,7 +55,10 @@ static int	handle_one_prompt(t_main_data *main_data, int ret_tokenise)
 		return (QUIT);
 	if (expand(main_data))
 		return (QUIT);
-	if (token_lst_is_empty(main_data))
+	tmp = token_lst_is_empty(main_data);
+	if (tmp == -1)
+		return (QUIT);
+	if (tmp == 1)
 		return (CONTINUE);
 	if (parse(main_data))
 		return (QUIT);

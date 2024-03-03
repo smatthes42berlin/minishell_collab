@@ -86,9 +86,9 @@ static int	executor_parent(t_main_data *data, pid_t pid,
 
 static void	free_main(t_main_data *data)
 {
-	;
-	if (data)
-	;
+	// ;
+	// if (data)
+	// ;
 	//free_ast(data->ast);
 	 free_main_exit(data, 0);
 }

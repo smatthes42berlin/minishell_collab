@@ -20,6 +20,8 @@ int	check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path)
 		}
 		return (0);
 	}
+	if (!path)
+		return (0);
 	while (path[i])
 	{
 		comb_check = check_path_combination(path[i], cmd_arg, exec_path);
@@ -59,6 +61,7 @@ int	get_path(char *envp[], char ***path)
 	int	i;
 
 	i = 0;
+	*path = NULL;
 	while (envp[i] != NULL)
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
@@ -66,7 +69,7 @@ int	get_path(char *envp[], char ***path)
 		i++;
 	}
 	if (!envp[i])
-		return (-1);
+		return (0);
 	*path = ft_split((envp[i] + 5), ':');
 	if (!(*path))
 	{

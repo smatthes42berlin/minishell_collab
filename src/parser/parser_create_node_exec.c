@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-				t_node_exec *exec_node);
+								t_node_exec *exec_node);
 
 int	create_exec_node(t_parse_info *parse_info)
 {
@@ -70,7 +70,7 @@ int	check_if_inbuilt(t_node_exec *exec_node)
 }
 
 static int	init_exec_node_param(t_parse_info *parse_info,
-		t_node_exec *exec_node)
+								t_node_exec *exec_node)
 {
 	exec_node->argv = NULL;
 	exec_node->is_folder = false;
