@@ -12,10 +12,22 @@ char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	print_debugging_info_executer(INT_DEBUG, 31, NULL);
 	if (data->ast->type == PIPE)
 	{
+		;
 		// check exit last node ? 
 		// read from pipe ? 
-		return (NULL);
+		//return (NULL);
 	}
+
+
+
+
+    // Lese Daten aus STDIN_FILENO, der jetzt auf die Pipe umgeleitet ist
+    // while ((bytes_read = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0) {
+    //     printf("READING FROM PIPE: \n");
+    //     write(STDOUT_FILENO, buffer, bytes_read);
+    // }
+
+
 	ret = check_arg(node->argv);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret,
 		"function \"build_export\"");
