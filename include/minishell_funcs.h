@@ -184,7 +184,7 @@ int			print_all_nodes_ast(t_node *node);
 /* executor */
 int			navigate_tree_forward(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
-void		type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
+void		type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct, bool from_redir);
 void    	exec_null_error(t_node_exec *exec_node, t_pipefd *pipe_struct);
 void		type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
 int			type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct);

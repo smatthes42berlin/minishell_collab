@@ -108,7 +108,6 @@ static int	right_pipe_node(int *pipefd, t_main_data *data,
 		&& check_is_inbuilt(pipe_node->right_node))
 	{
 		ret = use_close(pipefd[1], err_msg);
-		//ret = use_dup2(pipefd[0], STDIN_FILENO, err_msg);
 		ret = read_str_arr_pipe(pipefd);
 		ret = use_close(pipefd[0], err_msg);
 		ret = navigate_tree_forward(data, pipe_node->right_node, pipe_struct);
