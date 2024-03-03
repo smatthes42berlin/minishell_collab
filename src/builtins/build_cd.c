@@ -14,6 +14,8 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	char	*str_tmp;
 	int		i;
 
+	if (node->argv[1][0] == '.' && node->argv[1][1] == '\0')
+		return (NULL);
 	oldpwd = creat_env_var("OLDPWD=", ADD_ENV, false);
 	if (node->argv[1] == NULL)
 		str_tmp = env_get_var(data, "HOME");
