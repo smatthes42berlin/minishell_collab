@@ -15,6 +15,17 @@ char	*absoult_or_relativ_path(char *path)
 	return (ret);
 }
 
+char	**cd_give_no_err_do_noting(void)
+{
+	char	**ret;
+
+	ret = use_malloc(sizeof(char *) * 2, "build_cd");
+	ret[0] = use_strjoin(EXIT_CODE, "exit=0", "build_cd");
+	ret[1] = NULL;
+	return (ret);
+}
+
+
 static char	*ret_absoult(void)
 {
 	char	*ret;

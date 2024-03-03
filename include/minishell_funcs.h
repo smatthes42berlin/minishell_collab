@@ -207,6 +207,7 @@ bool		is_last_node_redir(t_node *node, char *filename);
 char		**build_pwd(bool newline);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*absoult_or_relativ_path(char *path);
+char 		**cd_give_no_err_do_noting(void);
 char		**build_echo(t_node_exec *node);
 char		**build_export(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);

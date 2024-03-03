@@ -14,8 +14,6 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	char	*str_tmp;
 	int		i;
 
-	if (node->argv[1][0] == '.' && node->argv[1][1] == '\0')
-		return (NULL);
 	oldpwd = creat_env_var("OLDPWD=", ADD_ENV, false);
 	if (node->argv[1] == NULL)
 		str_tmp = env_get_var(data, "HOME");
@@ -26,6 +24,7 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 		ret = wrong_path(i, node);
 	else
 		ret = path_exist(oldpwd, i);
+	//print_str_arr_null(ret);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_cd\"");
 	free_str_arr_null(ret);
 	return (NULL);
@@ -83,15 +82,19 @@ static	char	**wrong_path(int err, t_node_exec *node)
 	char	**ret;
 	char	*err_msg;
 
-	err_msg = "function wrong_path";
+	err_msg = "function wrong_path -> build_cd";
 	ret = use_malloc(sizeof(char *) * 2, err_msg);
-	if (err == -1)
-		ret[0] = use_strjoin(EXIT_CODE,
-				"exit=1_MSG=minishell: No such file or directory",
-				err_msg);
-	else if (node->argv[2] != NULL)
+	if (node->argv[2] != NULL)
 		ret[0] = use_strjoin(EXIT_CODE,
 				"exit=1_MSG=minishell: cd: too many arguments",
+				err_msg);
+	else if (node->argv[1][0] == '.' && node->argv[1][1] == '\0')
+	{
+		ret[0] = use_strjoin(EXIT_CODE, "exit=0", err_msg);
+	}
+	else if (err == -1)
+		ret[0] = use_strjoin(EXIT_CODE,
+				"exit=1_MSG=minishell: No such file or directory",
 				err_msg);
 	ret[1] = NULL;
 	return (ret);
