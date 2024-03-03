@@ -89,7 +89,7 @@ static int	left_pipe_node(int *pipefd, t_main_data *data,
 	else
 	{
 		exec_node = (t_node_exec *)pipe_node->left_node;
-		str_arr = chose_buildin(data, exec_node, pipe_struct);
+		str_arr = chose_buildin(data, exec_node, pipe_struct, true);
 		ret = use_close(pipefd[0], err_msg);
 		ret = write_str_arr_pipe(pipefd, str_arr, err_msg, true);
 		ret = use_close(pipefd[1], err_msg);

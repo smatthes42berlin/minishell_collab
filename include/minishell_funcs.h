@@ -201,23 +201,27 @@ int			read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 
 /* builtins */
 char		**chose_buildin(t_main_data *data, t_node_exec *node,
-				t_pipefd *pipe_struct);
+			t_pipefd *pipe_struct, bool from_redir);
 bool		is_last_node_exec(t_node *node, char *path);
 bool		is_last_node_redir(t_node *node, char *filename);
-char		**build_pwd(bool newline);
+char		**build_pwd(t_main_data *data, t_node_exec *node,
+			t_pipefd *pipefd, bool from_redir);
+char		*use_getcwd(char *err_msg);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*absoult_or_relativ_path(char *path);
-char 		**cd_give_no_err_do_noting(void);
-char		**build_echo(t_node_exec *node);
+char		**build_echo(t_main_data *data, t_node_exec *node,
+			t_pipefd *pipefd, bool from_redir);
 char		**build_export(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		**build_unset(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
-char		**build_env(t_main_data *data);
-char		**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
+char		**build_env(t_main_data *data, t_node_exec *node, t_pipefd *pipefd, bool from_redir);
+char		**build_exit(t_main_data *data, t_node_exec *node,
+			t_pipefd *pipefd);
 char		*add_newline(char *str, bool newline);
 char		**copy_str_arr(char **arg, int i_beginn, bool newline);
 bool		check_bash_variable(char *str);
+void 		write_exit_code_0(t_pipefd *pipefd, char *err_msg);
 
 
 /* execute lib*/

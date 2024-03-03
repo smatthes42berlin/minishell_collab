@@ -2,7 +2,7 @@
 
 // clear the string from "./" an dubbel /
 static	char	*ft_clear_str(char *path);
-static	char	*creat_env_var(char *keyword, char *type, bool newline);
+static	char	*creat_env_var(char *keyword, char *type);
 static	char	**wrong_path(int err, t_node_exec *node);
 static	char	**path_exist(char *oldpwd, int err);
 
@@ -14,7 +14,7 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	char	*str_tmp;
 	int		i;
 
-	oldpwd = creat_env_var("OLDPWD=", ADD_ENV, false);
+	oldpwd = creat_env_var("OLDPWD=", ADD_ENV);
 	if (node->argv[1] == NULL)
 		str_tmp = env_get_var(data, "HOME");
 	else
@@ -30,21 +30,19 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	return (NULL);
 }
 
-static char	*creat_env_var(char *keyword, char *type, bool newline)
+static char	*creat_env_var(char *keyword, char *type)
 {
 	char	*str_tmp;
-	char	**ret;
-	char	*char_ret;
+	char	*ret;
 	char	*err_msg;
 
 	err_msg = "function \"creat_env_var\" for build cd";
-	ret = build_pwd(newline);
-	str_tmp = use_strjoin(keyword, ret[0], err_msg);
-	free(ret[0]);
-	free(ret[1]);
-	char_ret = use_strjoin(type, str_tmp, err_msg);
+	ret = use_getcwd(err_msg);
+	str_tmp = use_strjoin(keyword, ret, err_msg);
+	free(ret);
+	ret = use_strjoin(type, str_tmp, err_msg);
 	free(str_tmp);
-	return (char_ret);
+	return (ret);
 }
 
 // clear the string from "./" an double /
@@ -108,8 +106,8 @@ static	char	**path_exist(char *oldpwd, int err)
 	err_msg = "function path_exit";
 	ret = use_malloc(sizeof(char *) * 5, err_msg);
 	ret[0] = ft_strdup(oldpwd);
-	ret[1] = creat_env_var("PWD=", ADD_ENV, false);
-	ret[2] = creat_env_var("PWD=", ADD_CD, false);
+	ret[1] = creat_env_var("PWD=", ADD_ENV);
+	ret[2] = creat_env_var("PWD=", ADD_CD);
 	if (err == -1)
 		ret[3] = use_strjoin(EXIT_CODE, "exit=1", err_msg);
 	else

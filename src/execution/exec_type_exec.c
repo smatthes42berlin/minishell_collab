@@ -63,7 +63,7 @@ static void	use_buildin(t_main_data *data, t_node_exec *exec_node,
 	char	**temp_str;
 	int		i_count;
 
-	temp_str = chose_buildin(data, exec_node, pipe_struct);
+	temp_str = chose_buildin(data, exec_node, pipe_struct, from_redir);
 	if (((is_last_node_exec(data->ast, exec_node->file_path) || from_redir)
 			&& (temp_str != NULL)))
 	{
