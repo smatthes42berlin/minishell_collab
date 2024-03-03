@@ -104,10 +104,12 @@ static int	right_pipe_node(int *pipefd, t_main_data *data,
 	int		ret;
 
 	err_msg = "function \"type_pipe\" --> right node";
-	if (!check_is_inbuilt(pipe_node->right_node))
+	if (check_is_inbuilt(pipe_node->left_node) 
+		&& check_is_inbuilt(pipe_node->right_node))
 	{
 		ret = use_close(pipefd[1], err_msg);
-		ret = use_dup2(pipefd[0], STDIN_FILENO, err_msg);
+		//ret = use_dup2(pipefd[0], STDIN_FILENO, err_msg);
+		ret = read_str_arr_pipe(pipefd);
 		ret = use_close(pipefd[0], err_msg);
 		ret = navigate_tree_forward(data, pipe_node->right_node, pipe_struct);
 	}
@@ -115,19 +117,6 @@ static int	right_pipe_node(int *pipefd, t_main_data *data,
 	{
 		ret = use_close(pipefd[1], err_msg);
 		ret = use_dup2(pipefd[0], STDIN_FILENO, err_msg);
-		    char buffer[BUFFER_SIZE];
-    ssize_t bytes_read;
-
-bytes_read = read(pipefd[0], buffer, sizeof(buffer));
-if (strlen(buffer) <= 0 || bytes_read <= 0)
-	printf("noting read:\n");
-else{
-printf("I am read someting %ld \n" , bytes_read);
-    printf("\033[0;31m"); // ANSI Escape-Code für rote Farbe
-    printf("Dies ist roter Text |%s|\n", buffer);
- printf("\033[0m"); 
-}
-		//ret = read_str_arr_pipe(pipefd);
 		ret = use_close(pipefd[0], err_msg);
 		ret = navigate_tree_forward(data, pipe_node->right_node, pipe_struct);
 	}
