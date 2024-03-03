@@ -3,13 +3,11 @@
 int	expand(t_main_data *main_data)
 {
 	t_list_d	*next;
-	t_list_d	*prev;
 	t_token		*cur_token;
 
 	next = main_data->token_list;
 	while (next)
 	{
-		prev = next;
 		cur_token = next->content;
 		if (!token_is_operator_token(cur_token))
 		{

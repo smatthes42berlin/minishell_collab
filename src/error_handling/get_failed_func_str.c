@@ -33,6 +33,7 @@ char	*get_failed_func_str(enum e_failed_func failed_func)
 		return ("READ");
 	return (get_failed_func_str_2(failed_func));
 }
+
 static char	*get_failed_func_str_2(enum e_failed_func failed_func)
 {
 	if (failed_func == EFUNC_CLOSE)

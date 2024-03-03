@@ -19,7 +19,7 @@ int			check_ctrl_d(t_main_data *main_data);
 bool		no_input(t_main_data *main_data);
 int			check_num_args(int argc, char *argv[]);
 int			read_line(t_main_data *main_data);
-bool		token_lst_is_empty(t_main_data *main_data);
+int			token_lst_is_empty(t_main_data *main_data);
 
 /* tokenisation/lexer main*/
 
@@ -160,6 +160,7 @@ int			check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path);
 int			check_path_combination(char *cur_path_val, char *cmd_arg,
 				char **exec_path);
 int			get_path(char *envp[], char ***path);
+int			check_all_comb(char *cmd_arg, char **exec_path, char **path);
 int			check_if_cmd_exists(t_node_exec *exec_node);
 int			check_if_inbuilt(t_node_exec *exec_node);
 int			copy_cmd_name_to_args_arr(t_node_exec *exec_node);

@@ -8,7 +8,7 @@ int	check_for_fixed_expansions(t_expansion_info *expansion_info, bool *found)
 			"MINISHELL_LAST_EXIT"))
 		return (1);
 	else if (check_for_specific_fixed_expansion(expansion_info, found, "0",
-				"PROGRAM_NAME"))
+			"PROGRAM_NAME"))
 		return (1);
 	else if (ft_isdigit(*(expansion_info->cur_pos)))
 	{

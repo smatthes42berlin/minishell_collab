@@ -41,11 +41,5 @@ int	read_line(t_main_data *main_data)
 {
 	main_data->num_lines++;
 	main_data->cli_input = readline("cli>");
-	// main_data->cli_input = ft_strdup("$empty $empty $empty 123");
 	return (0);
-}
-
-bool	token_lst_is_empty(t_main_data *main_data)
-{
-	return (!main_data->token_list);
 }
