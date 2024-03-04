@@ -29,16 +29,18 @@ int	read_str_arr_pipe(int *pipefd)
 {
 	char	buffer[BUFFER_SIZE];
 	ssize_t	bytes_read;
-	int		i_count;
+	ssize_t	i_count;
 	int		ret;
 
-	i_count = 0;
 	ret = 0;
 	bytes_read = read(pipefd[0], buffer, sizeof(buffer));
 	while (bytes_read > 0)
 	{
+		i_count = 0;
 		while (i_count < bytes_read)
-			i_count += strlen(&buffer[i_count]) + 1;
+		{
+			i_count += bytes_read  + 1;
+		}
 		if (bytes_read < 0)
 		{
 			ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,

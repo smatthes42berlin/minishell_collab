@@ -28,6 +28,8 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 		ret = wrong_path(i, node);
 	else
 		ret = path_exist(oldpwd, i);
+	free(oldpwd);
+	free(str_tmp);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_cd\"");
 	free_str_arr_null(ret);
 	return (NULL);

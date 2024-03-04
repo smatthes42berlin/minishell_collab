@@ -38,7 +38,6 @@ typedef struct s_main_data
 	t_node				*ast;
 	char				*cli_input;
 	int					num_lines;
-	//.....
 }						t_main_data;
 
 /**

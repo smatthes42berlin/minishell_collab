@@ -14,8 +14,8 @@ char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 		return (NULL);
 	ret = copy_str_arr(node->argv, 0, false);
 	check_equal_sign_in_str_arr(ret);
-	//print_str_arr_null(ret);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, err_msg);
+	free_str_arr_null(ret);
 	return (NULL);
 }
 
@@ -57,7 +57,6 @@ static void	clr_str(char **str)
 	{
 		free(*str);
 		*str = NULL;
-		*str = "";
 		return ;
 	}
 	else

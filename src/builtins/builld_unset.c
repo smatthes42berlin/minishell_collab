@@ -13,8 +13,8 @@ char	**build_unset(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	}
 	ret = copy_str_arr(node->argv, 0, false);
 	add_clr_command_to_arr_str(ret);
-	//print_str_arr_null(ret);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_cd\"");
+	free_str_arr_null(ret);
 	return (NULL);
 }
 
