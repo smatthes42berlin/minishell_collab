@@ -16,16 +16,17 @@ int			restore_default_signals(int signals);
 int			reset_main_data(t_main_data *main_data, bool reset_env);
 t_main_data	*get_main_data(void);
 int			check_ctrl_d(t_main_data *main_data);
-bool		only_newline_entered(t_main_data *main_data);
+bool		no_input(t_main_data *main_data);
 int			check_num_args(int argc, char *argv[]);
 int			read_line(t_main_data *main_data);
+int			token_lst_is_empty(t_main_data *main_data);
 
 /* tokenisation/lexer main*/
 
 int			tokenise(t_main_data *main_data);
 void		free_token(void *token);
 void		free_main_exit(t_main_data *main_data, int exit_code);
-void		free_main_exit_end_of_loop(t_main_data *main_data);
+int			free_main_exit_end_of_loop(t_main_data *main_data);
 
 /* gen util */
 
@@ -129,7 +130,7 @@ int			insert_env_var(t_expansion_info *expansion_info, char *env_var_name,
 int			check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
 				bool *found, char *spec_var_symbol, char *spec_var_name);
 int			remove_quote(char *cur_pos);
-int			remove_empty_token(t_list_d **next);
+int			remove_empty_token(t_list_d **next, t_main_data *main_data);
 
 /* parser */
 
@@ -159,6 +160,7 @@ int			check_cmd_access(char **env_vars, char *cmd_arg, char **exec_path);
 int			check_path_combination(char *cur_path_val, char *cmd_arg,
 				char **exec_path);
 int			get_path(char *envp[], char ***path);
+int			check_all_comb(char *cmd_arg, char **exec_path, char **path);
 int			check_if_cmd_exists(t_node_exec *exec_node);
 int			check_if_inbuilt(t_node_exec *exec_node);
 int			copy_cmd_name_to_args_arr(t_node_exec *exec_node);
@@ -192,10 +194,12 @@ void		type_heredoc(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
 int			executor(t_main_data *data);
 void		free_ast(t_node *node);
+
 int 		write_str_arr_pipe(int *pipefd, char **str, char *err_msg, bool is_pipe);
 int 		read_str_arr_pipe(int *pipefd);
 int 		write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg);
 int 		write_exit_status_to_pipe(int status, t_pipefd *pipe_struct, char *err_msg);
+
 int			env_add_clr(t_main_data *data, char *env_var);
 int			read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 
@@ -215,14 +219,15 @@ char		**build_export(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		**build_unset(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
+
 char		**build_env(t_main_data *data, t_node_exec *node, t_pipefd *pipefd, bool from_redir);
 char		**build_exit(t_main_data *data, t_node_exec *node,
 			t_pipefd *pipefd);
+
 char		*add_newline(char *str, bool newline);
 char		**copy_str_arr(char **arg, int i_beginn, bool newline);
 bool		check_bash_variable(char *str);
 void 		write_exit_code_0(t_pipefd *pipefd, char *err_msg);
-
 
 /* execute lib*/
 int			access_handler(const char *path, enum e_access_mode mode,
@@ -231,10 +236,11 @@ int		execve_handler(const char *file_path, char **argv, char **env);
 pid_t		fork_handler(char *str);
 int			get_process_exit_code(int status);
 void		pipe_handler(int *pipefd, char *str);
-void    	*use_malloc(size_t bytes, char *err_msg);
+void		*use_malloc(size_t bytes, char *err_msg);
 char		*use_strjoin(char const *s1, char const *s2, char *err_msg);
-char 		*use_strdup(char const *s1, char *err_msg);
-void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code, char *error_msg);
+char		*use_strdup(char const *s1, char *err_msg);
+void		pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
+				char *error_msg);
 int			use_dup2(int pipefd, int fd, char *error_msg);
 int			use_close(int pipefd, char *error_msg);
 

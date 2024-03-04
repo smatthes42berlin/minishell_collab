@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static int	write_token_value_to_pipe(t_parse_info *parse_info,
-										t_node_heredoc *hdoc_node);
+				t_node_heredoc *hdoc_node);
 static int	init_hdoc_node_param(t_node_heredoc *hdoc_node);
 
 int	create_hdoc_node(t_parse_info *parse_info)
