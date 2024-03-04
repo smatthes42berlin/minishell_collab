@@ -71,3 +71,18 @@ int	got_to_nth_next_lst(t_list_d **lst, int n)
 	}
 	return (0);
 }
+
+int	check_if_cmd_exists(t_node_exec *exec_node)
+{
+	char	*path;
+	char	*tmp;
+
+	if (exec_node->is_inbuilt)
+		return (0);
+	if (check_cmd_access(exec_node->env, exec_node->file_path, &path))
+		return (1);
+	tmp = exec_node->file_path;
+	exec_node->file_path = path;
+	free(tmp);
+	return (0);
+}

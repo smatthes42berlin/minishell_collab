@@ -14,10 +14,11 @@ int	expand(t_main_data *main_data)
 			if (check_expansion(cur_token, main_data))
 				return (1);
 		}
-		if (remove_empty_token(&next))
+		if (remove_empty_token((&next), main_data))
 			continue ;
 		next = next->next;
 	}
-	debug_expand(main_data);
+	if (main_data->token_list)
+		debug_expand(main_data);
 	return (0);
 }

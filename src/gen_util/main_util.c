@@ -1,10 +1,10 @@
 #include "minishell.h"
 
-bool	only_newline_entered(t_main_data *main_data)
+bool	no_input(t_main_data *main_data)
 {
-	if (ft_strlen(main_data->cli_input) == 0)
+	if (ft_strlen(main_data->cli_input) == 0
+		|| str_only_spaces(main_data->cli_input))
 	{
-		free(main_data->cli_input);
 		return (true);
 	}
 	return (false);
@@ -41,6 +41,5 @@ int	read_line(t_main_data *main_data)
 {
 	main_data->num_lines++;
 	main_data->cli_input = readline("cli>");
-	//main_data->cli_input = ft_strdup("cat << 1 | cat | echo hi > 2");
 	return (0);
 }

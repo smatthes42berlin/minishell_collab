@@ -2,8 +2,8 @@
 
 int	set_exit_code(int code)
 {
-	char *res;
-	t_main_data *main_data;
+	char		*res;
+	t_main_data	*main_data;
 
 	main_data = get_main_data();
 	res = NULL;
