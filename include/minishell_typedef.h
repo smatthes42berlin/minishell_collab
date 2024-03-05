@@ -11,7 +11,7 @@
 # define QUIT 2
 # define INT_DEBUG 0
 # define PRINT_DEBUG_1 0
-# define TEST_MODE 1
+# define TEST_MODE 0
 # define MY_SIG_IGNORE 1
 # define MY_SIG_DEFAULT 2
 
