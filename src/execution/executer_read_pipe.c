@@ -7,10 +7,11 @@ int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 	ssize_t	bytes_read;
 	ssize_t start;
 
-	char	buffer[BUFFER_SIZE + 1];
+	char	buffer[BUFFER_SIZE];
 
 	start = 0;
 
+	ft_memset(buffer, 0, sizeof(buffer));
 	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
 	bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE);
 	while (bytes_read > 0)

@@ -73,25 +73,28 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 {
 	pid_t	pid;
 
+	if (restore_default_signals(SIGQUIT + SIGINT))
+		exit(errno);
 	pid = fork_handler("function \"executor\"");
 	if (pid < 0)
 	{
 		free(pipe_struct);
-		free_main_exit(data, 0);
+		pipe_struct = NULL;
+		free_ast(data->ast);
+		data->ast = NULL;
 		return (-1);
 	}
 	if (pid == 0)
 	{
-		if (restore_default_signals(SIGQUIT + SIGINT))
-			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct);
+		pipe_struct = NULL;
 		free_main_exit(data, 0);
-	//	printf("END OF MINI (CHILD) %d\n",  getpid());
+		data = NULL;
+		exit(EXIT_SUCCESS);
 	}
 	else
 		executor_parent(pid, pipe_struct);
-//	printf("END OF MINI (END) %d\n",  getpid());
 	return (0);
 }
 

@@ -19,12 +19,10 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
 		exec_node = (t_node_exec *)node;
 		if (exec_node->file_path != NULL)
 		{
-			//printf("Exec exist\n");
 			exec_exist(data, exec_node, pipe_struct, from_redir);
 		}
 		else
 		{
-			printf("End of Exec DO NOT  exist\n");
 			exec_null_error(exec_node, pipe_struct);
 		}
 	}
