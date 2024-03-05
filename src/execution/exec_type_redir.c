@@ -40,22 +40,22 @@ static void	handle_exec(t_main_data *data, t_node_redir *redir_node,
 {
 	pid_t	cpid;
 	int		status;
-	int		exit_code;
 	char	*err_msg;
 
 	err_msg = "function handle_exec -> type_redir";
 	cpid = fork_handler(err_msg);
 	if (cpid == 0)
-		navigate_tree_forward(data, redir_node->left_node, pipe_struct);
+	{
+		if (redir_node->left_node->type == EXEC)
+			type_exec(data, redir_node->left_node, pipe_struct, true);
+		else
+			navigate_tree_forward(data, redir_node->left_node, pipe_struct);
+	}
 	else
 	{
 		waitpid(cpid, &status, 0);
 		if (data->ast->type == REDIR)
-		{
-			exit_code = get_process_exit_code(status);
-			pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true,
-				&exit_code, err_msg);
-		}
+			write_exit_status_to_pipe(status, pipe_struct, err_msg);
 	}
 	return ;
 }

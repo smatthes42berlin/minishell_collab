@@ -5,12 +5,11 @@ static int	read_line_pipe(t_main_data *data, ssize_t bytes_read, char *buffer);
 int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
 	ssize_t	bytes_read;
-	int		start;
-	// int		i_count;
+
 	char	buffer[BUFFER_SIZE + 1];
 
 	start = 0;
-	// i_count = 0;
+
 	use_close(pipe_struct->pipefd[1], "fuction \"read pipe\" for executor");
 	bytes_read = read(pipe_struct->pipefd[0], buffer, BUFFER_SIZE);
 	while (bytes_read > 0)

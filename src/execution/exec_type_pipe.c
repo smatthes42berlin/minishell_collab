@@ -52,9 +52,7 @@ static int	nested_fork_right_pipe(int *pipefd, t_main_data *data,
 		else
 		{
 			waitpid(pid2, &status, 0);
-			ret = get_process_exit_code(status);
-			pipe_setting_exit_code(pipe_struct->pipefd_exit_code,
-				true, &ret, err_msg);
+			write_exit_status_to_pipe(status, pipe_struct, err_msg);
 		}
 	}
 	return (ret);
@@ -91,11 +89,13 @@ static int	left_pipe_node(int *pipefd, t_main_data *data,
 	else
 	{
 		exec_node = (t_node_exec *)pipe_node->left_node;
-		str_arr = chose_buildin(data, exec_node, pipe_struct);
+		str_arr = chose_buildin(data, exec_node, pipe_struct, true);
 		ret = use_close(pipefd[0], err_msg);
 		ret = write_str_arr_pipe(pipefd, str_arr, err_msg, true);
 		ret = use_close(pipefd[1], err_msg);
+		free_str_arr_null(str_arr);
 	}
+	
 	return (ret);
 }
 
@@ -106,17 +106,18 @@ static int	right_pipe_node(int *pipefd, t_main_data *data,
 	int		ret;
 
 	err_msg = "function \"type_pipe\" --> right node";
-	if (!check_is_inbuilt(pipe_node->right_node))
+	if (check_is_inbuilt(pipe_node->left_node) 
+		&& check_is_inbuilt(pipe_node->right_node))
 	{
 		ret = use_close(pipefd[1], err_msg);
-		ret = use_dup2(pipefd[0], STDIN_FILENO, err_msg);
+		ret = read_str_arr_pipe(pipefd);
 		ret = use_close(pipefd[0], err_msg);
 		ret = navigate_tree_forward(data, pipe_node->right_node, pipe_struct);
 	}
 	else
 	{
 		ret = use_close(pipefd[1], err_msg);
-		ret = read_str_arr_pipe(pipefd);
+		ret = use_dup2(pipefd[0], STDIN_FILENO, err_msg);
 		ret = use_close(pipefd[0], err_msg);
 		ret = navigate_tree_forward(data, pipe_node->right_node, pipe_struct);
 	}

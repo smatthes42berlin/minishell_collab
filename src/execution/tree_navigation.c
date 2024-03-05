@@ -15,7 +15,7 @@ int	navigate_tree_forward(t_main_data *data, t_node *node,
 	else if (node->type == REDIR)
 		type_redir(data, node, pipe_struct);
 	else if (node->type == EXEC)
-		type_exec(data, node, pipe_struct);
+		type_exec(data, node, pipe_struct, false);
 	else if (node->type == HEREDOC)
 		type_heredoc(data, node, pipe_struct);
 	else

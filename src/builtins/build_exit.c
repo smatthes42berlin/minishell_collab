@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 static int	ft_atoi_byte(const char *nptr);
-static char	**check_arg(char **str_arr);
+static char	**check_arg(char **str_arr, bool exit);
 static char	**bigger_two_arg(void);
 static char	*ret_exit_code_line(int nbr);
 
@@ -10,18 +10,18 @@ char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	char	**ret;
 
 	print_debugging_info_executer(INT_DEBUG, 31, NULL);
-	if (data->ast->type == PIPE)
-	{
-		return (NULL);
-	}
-	ret = check_arg(node->argv);
+	if (is_last_node_exec(data->ast, node->file_path) 
+		&& data->ast->type == PIPE)
+		ret = check_arg(node->argv, false);
+	else
+		ret = check_arg(node->argv, true);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret,
 		"function \"build_export\"");
 	free_str_arr_null(ret);
 	return (NULL);
 }
 
-static char	**check_arg(char **str_arr)
+static char	**check_arg(char **str_arr, bool exit)
 {
 	char			**ret;
 	int				nbr;
@@ -41,7 +41,10 @@ static char	**check_arg(char **str_arr)
 		nbr = ft_atoi_byte(str_arr[1]);
 	ret = use_malloc(sizeof(char *) * 3, err_msg);
 	ret[0] = ret_exit_code_line(nbr);
-	ret[1] = use_strdup(EXIT, err_msg);
+	if (exit)
+		ret[1] = use_strdup(EXIT, err_msg);
+	else
+		ret[1] = NULL;
 	ret[2] = NULL;
 	return (ret);
 }

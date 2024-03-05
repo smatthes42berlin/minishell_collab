@@ -3,18 +3,16 @@
 //static void	replace_env_in_str_arr(t_main_data *data, char **arg);
 static char	*str_arr_to_str(char **str, bool newline);
 
-/**
- * - check the for flag
- * - copy given arr from arr[1] if no flag; arr[2] if flag -n 
- * 
-*/
-char	**build_echo(t_node_exec *node)
+char	**build_echo(t_main_data *data, t_node_exec *node,
+	t_pipefd *pipefd, bool from_redir)
 {
 	char	**ret;
 	char	**tmp_str_1;
 	bool	newline;
 	int		i_beginn_cp;
+	char 	*err_msg;
 
+	err_msg = "function build_echo";
 	tmp_str_1 = NULL;
 	i_beginn_cp = 1;
 	newline = false;
@@ -25,10 +23,12 @@ char	**build_echo(t_node_exec *node)
 		newline = true;
 	}
 	tmp_str_1 = copy_str_arr(node->argv, i_beginn_cp, false);
-	ret = use_malloc(sizeof(char *) * 2, "function build_echo");
+	ret = use_malloc(sizeof(char *) * 2, err_msg);
 	ret[0] = str_arr_to_str(tmp_str_1, !newline);
 	ret[1] = NULL;
 	free_str_arr_null(tmp_str_1);
+	if (is_last_node_exec(data->ast, node->file_path) && !from_redir)
+		write_exit_code_0(pipefd, err_msg);
 	return (ret);
 }
 

@@ -12,9 +12,10 @@ char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	print_debugging_info_executer(INT_DEBUG, 26, NULL);
 	if (data->ast->type == PIPE)
 		return (NULL);
-	ret = copy_str_arr(node->argv, 1, false);
+	ret = copy_str_arr(node->argv, 0, false);
 	check_equal_sign_in_str_arr(ret);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, err_msg);
+	free_str_arr_null(ret);
 	return (NULL);
 }
 
@@ -22,7 +23,9 @@ static void	check_equal_sign_in_str_arr(char **arg)
 {
 	int		i_count;
 	char	*err_msg;
+	bool	exit_0;
 
+	exit_0 = true;
 	err_msg = "function check_equal_sign_in_str_arr -> build export";
 	i_count = 0;
 	while (arg[i_count] != NULL)
@@ -34,11 +37,14 @@ static void	check_equal_sign_in_str_arr(char **arg)
 			arg[i_count] = use_strjoin(EXIT_CODE,
 					"exit=1_MSG=minishell: export: not a valid identifier",
 					err_msg);
-			return ;
+			exit_0 = false;
+			break ;
 		}
 		clr_str(&arg[i_count]);
 		i_count++;
 	}
+	if (exit_0)
+		arg[0] = use_strjoin(EXIT_CODE, "exit=0", err_msg);
 }
 
 static void	clr_str(char **str)
@@ -51,7 +57,6 @@ static void	clr_str(char **str)
 	{
 		free(*str);
 		*str = NULL;
-		*str = "";
 		return ;
 	}
 	else
