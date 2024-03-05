@@ -3,7 +3,7 @@
 char	**chose_buildin(t_main_data *data, t_node_exec *node,
 		t_pipefd *pipe_struct, bool from_redir)
 {
-	printf(" IN chosen \n");
+	//printf(" IN chosen \n");
 	print_debugging_info_executer(INT_DEBUG, 9, NULL);
 	if (str_are_equal(node->file_path, "pwd"))
 		return (build_pwd(data, node, pipe_struct, from_redir));

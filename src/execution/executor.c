@@ -56,7 +56,7 @@ int	executor(t_main_data *data)
 	pipe_struct->pipefd_exit_code = exit_code_pipe;
 	//printAllPIDs();
 
-	printf("PID Main Process %d\n", getpid());
+//	printf("PID Main Process %d\n", getpid());
 	executor_fork(data, pipe_struct);
 	if (read_pipe(data, pipe_struct) == -1)
 	{
@@ -87,11 +87,11 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct);
 		free_main_exit(data, 0);
-		printf("END OF MINI (CHILD) %d\n",  getpid());
+	//	printf("END OF MINI (CHILD) %d\n",  getpid());
 	}
 	else
 		executor_parent(pid, pipe_struct);
-	printf("END OF MINI (END) %d\n",  getpid());
+//	printf("END OF MINI (END) %d\n",  getpid());
 	return (0);
 }
 
