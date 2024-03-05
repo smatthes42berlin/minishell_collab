@@ -32,14 +32,20 @@ int	reset_main_data(t_main_data *main_data, bool reset_env)
 
 t_main_data	*get_main_data(void)
 {
-	static t_main_data	data = {NULL, NULL, NULL, NULL, 0,};
-
+	static t_main_data data = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		0,
+	};
 	return (&data);
 }
 
 int	read_line(t_main_data *main_data)
 {
 	main_data->num_lines++;
-	main_data->cli_input = readline("cli>");
+	if (!TEST_MODE)
+		main_data->cli_input = readline("cli>");
 	return (0);
 }
