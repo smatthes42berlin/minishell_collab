@@ -12,7 +12,6 @@ int	main(int argc, char *argv[], char *envp[])
 	if (check_num_args(argc, argv))
 		return (1);
 	main_data = get_main_data();
-	envp++;
 	if (init_env_vars(main_data, envp))
 		free_main_exit(main_data, 1);
 	return (start_minishell(main_data));
@@ -65,6 +64,7 @@ static int	handle_one_prompt(t_main_data *main_data, int ret_tokenise)
 	if (executor(main_data) == -1)
 		return (QUIT);
 	return (CONTINUE);
+	// return (QUIT);
 }
 
 static int	read_line_handle_signals(t_main_data *main_data)

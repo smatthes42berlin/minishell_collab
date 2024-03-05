@@ -10,7 +10,7 @@ NAMELIBFT = libft.a
 FOLDERLIBFT = ./libft/
 PATHLIBFT = $(FOLDERLIBFT)$(NAMELIBFT)
 
-INCLUDEPATH = ./include/ ./libft/include/
+INCLUDEPATH = ./include/ ./libft/include/ ./libft/
 INCLUDEFLAGS = $(patsubst %,-I% ,$(INCLUDEPATH))
 # if you created a new subfolder in the source dir, you gotta list it here as well, so c-files are found
 SUBFOLDERSRC = . /tokeniser_1_create /tokeniser_2_check /env_vars /expander /parser /execution /lib_exec /error_handling /builtins /gen_util /print /signals
