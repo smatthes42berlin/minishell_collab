@@ -20,5 +20,6 @@ int	navigate_tree_forward(t_main_data *data, t_node *node,
 		type_heredoc(data, node, pipe_struct);
 	else
 		printf("No Nodetype found\n");
+	printf("End of navigataion %d\n",  getpid());
 	return (ret);
 }

@@ -1,9 +1,44 @@
 #include "minishell.h"
 
-static	int	executor_fork(t_main_data *data, t_pipefd *pipe_struct);
-static int	executor_parent(t_main_data *data,
-				pid_t pid, t_pipefd	*pipe_struct);
-//static	void	free_main(t_main_data *data);
+static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct);
+static int	executor_parent(pid_t pid, t_pipefd *pipe_struct);
+// static	void	free_main(t_main_data *data);
+
+// void	printAllPIDs(void)
+// {
+// 	DIR				*dir;
+// 	struct dirent	*ent;
+// 			char *p;
+
+// 	// Versuche, das /proc Verzeichnis zu öffnen
+// 	dir = opendir("/proc");
+// 	if (dir != NULL)
+// 	{
+// 		// Lese Einträge im Verzeichnis
+// 		while ((ent = readdir(dir)) != NULL)
+// 		{
+// 			// Überprüfe, ob der Verzeichnisname nur aus Zahlen besteht
+// 			for (p = ent->d_name; *p; p++)
+// 			{
+// 				if (!isdigit(*p))
+// 				{
+// 					break ;
+// 				}
+// 			}
+// 			if (!*p)
+// 			{
+// 				printf("%s\n", ent->d_name);
+// 			}
+// 		}
+// 		// Schließe das Verzeichnis
+// 		closedir(dir);
+// 	}
+// 	else
+// 	{
+// 		// Verzeichnis konnte nicht geöffnet werden
+// 		perror("Fehler beim Öffnen von /proc");
+// 	}
+// }
 
 int	executor(t_main_data *data)
 {
@@ -19,12 +54,14 @@ int	executor(t_main_data *data)
 			"function \"executor\""});
 	pipe_struct->pipefd = pipefd;
 	pipe_struct->pipefd_exit_code = exit_code_pipe;
+	//printAllPIDs();
+
+	printf("PID Main Process %d\n", getpid());
 	executor_fork(data, pipe_struct);
 	if (read_pipe(data, pipe_struct) == -1)
 	{
 		free_ast(data->ast);
 		free(pipe_struct);
-		//free_main_exit(data, 0);
 		return (-1);
 	}
 	free_ast(data->ast);
@@ -32,7 +69,7 @@ int	executor(t_main_data *data)
 	return (0);
 }
 
-static	int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
+static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 {
 	pid_t	pid;
 
@@ -45,25 +82,24 @@ static	int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	}
 	if (pid == 0)
 	{
-
 		if (restore_default_signals(SIGQUIT + SIGINT))
 			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct);
 		free_main_exit(data, 0);
+		printf("END OF MINI (CHILD) %d\n",  getpid());
 	}
 	else
-		executor_parent(data, pid, pipe_struct);
+		executor_parent(pid, pipe_struct);
+	printf("END OF MINI (END) %d\n",  getpid());
 	return (0);
 }
 
-static int	executor_parent(t_main_data *data, pid_t pid,
-		t_pipefd	*pipe_struct)
+static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
 {
 	int	status;
 	int	res_wait_2;
 	int	get_exit_code;
-	
 
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
@@ -78,15 +114,8 @@ static int	executor_parent(t_main_data *data, pid_t pid,
 				printf("Quit (core dumped)\n");
 		}
 	}
-	if (data->ast->type == EXEC)
-	{
-
-	}
-	// if (data->ast->type != PIPE && data->ast->type != REDIR)
-	// 	get_exit_code = get_process_exit_code(status);
-	// else
-	pipe_setting_exit_code(pipe_struct->pipefd_exit_code,
-		false, &get_exit_code, "function \"executor\" pipe");
+	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, false, &get_exit_code,
+		"function \"executor\" pipe");
 	set_exit_code(get_exit_code);
 	return (0);
 }
