@@ -1,14 +1,14 @@
 #include "minishell.h"
 
-static 	void exec_exist(t_main_data *data, t_node_exec *exec_node,
+static void	exec_exist(t_main_data *data, t_node_exec *exec_node,
 				t_pipefd *pipe_struct, bool from_redir);
 static void	use_execve(t_main_data *data, t_node_exec *exec_node,
 				t_pipefd *pipe_struct, bool from_redir);
 static void	use_buildin(t_main_data *data, t_node_exec *exec_node,
 				t_pipefd *pipe_struct, bool from_redir);
 
-void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct, 
-	bool from_redir)
+void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
+		bool from_redir)
 {
 	t_node_exec	*exec_node;
 
@@ -25,10 +25,10 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
 }
 
 static void	exec_exist(t_main_data *data, t_node_exec *exec_node,
-			t_pipefd *pipe_struct, bool from_redir)
+		t_pipefd *pipe_struct, bool from_redir)
 {
-	pid_t 	pid;
-	int 	status;
+	pid_t	pid;
+	int		status;
 	char	*err_msg;
 
 	err_msg = "function exec_exist -> type_exec";
@@ -73,6 +73,5 @@ static void	use_buildin(t_main_data *data, t_node_exec *exec_node,
 			printf("%s", temp_str[i_count++]);
 		}
 	}
-
 	free_str_arr_null(temp_str);
 }

@@ -3,7 +3,6 @@
 static	int	executor_fork(t_main_data *data, t_pipefd *pipe_struct);
 static int	executor_parent(t_main_data *data,
 				pid_t pid, t_pipefd	*pipe_struct);
-//static	void	free_main(t_main_data *data);
 
 int	executor(t_main_data *data)
 {
@@ -24,7 +23,6 @@ int	executor(t_main_data *data)
 	{
 		free_ast(data->ast);
 		free(pipe_struct);
-		//free_main_exit(data, 0);
 		return (-1);
 	}
 	free_ast(data->ast);
@@ -45,7 +43,6 @@ static	int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	}
 	if (pid == 0)
 	{
-
 		if (restore_default_signals(SIGQUIT + SIGINT))
 			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
@@ -63,7 +60,6 @@ static int	executor_parent(t_main_data *data, pid_t pid,
 	int	status;
 	int	res_wait_2;
 	int	get_exit_code;
-	
 
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
@@ -78,13 +74,6 @@ static int	executor_parent(t_main_data *data, pid_t pid,
 				printf("Quit (core dumped)\n");
 		}
 	}
-	if (data->ast->type == EXEC)
-	{
-
-	}
-	// if (data->ast->type != PIPE && data->ast->type != REDIR)
-	// 	get_exit_code = get_process_exit_code(status);
-	// else
 	pipe_setting_exit_code(pipe_struct->pipefd_exit_code,
 		false, &get_exit_code, "function \"executor\" pipe");
 	set_exit_code(get_exit_code);

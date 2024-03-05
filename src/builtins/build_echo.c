@@ -1,16 +1,16 @@
 #include "minishell.h"
 
-//static void	replace_env_in_str_arr(t_main_data *data, char **arg);
+// static void	replace_env_in_str_arr(t_main_data *data, char **arg);
 static char	*str_arr_to_str(char **str, bool newline);
 
-char	**build_echo(t_main_data *data, t_node_exec *node,
-	t_pipefd *pipefd, bool from_redir)
+char	**build_echo(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
+		bool from_redir)
 {
 	char	**ret;
 	char	**tmp_str_1;
 	bool	newline;
 	int		i_beginn_cp;
-	char 	*err_msg;
+	char	*err_msg;
 
 	err_msg = "function build_echo";
 	tmp_str_1 = NULL;
