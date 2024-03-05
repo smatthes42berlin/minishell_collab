@@ -12,7 +12,7 @@ char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	print_debugging_info_executer(INT_DEBUG, 26, NULL);
 	if (data->ast->type == PIPE)
 		return (NULL);
-	ret = copy_str_arr(node->argv, 0, false);
+	ret = copy_str_arr(node->argv, 1, false);
 	check_equal_sign_in_str_arr(ret);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, err_msg);
 	free_str_arr_null(ret);
