@@ -5,6 +5,7 @@ static int	read_line_pipe(t_main_data *data, ssize_t bytes_read, char *buffer);
 int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 {
 	ssize_t	bytes_read;
+	ssize_t start;
 
 	char	buffer[BUFFER_SIZE + 1];
 

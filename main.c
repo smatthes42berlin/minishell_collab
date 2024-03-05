@@ -63,7 +63,8 @@ static int	handle_one_prompt(t_main_data *main_data, int ret_tokenise)
 		return (QUIT);
 	if (executor(main_data) == -1)
 		return (QUIT);
-	return (QUIT);
+	return (CONTINUE);
+	// return (QUIT);
 }
 
 static int	read_line_handle_signals(t_main_data *main_data)
