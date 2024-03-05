@@ -5,6 +5,7 @@ static	void	read_set_exitcode(char *env_var);
 
 int	env_add_clr(t_main_data *data, char *env_var)
 {
+	//printf("GIVEN FROM PIPE %s\n", env_var);
 	set_env(data, env_var);
 	read_set_exitcode(env_var);
 	if (ft_strncmp(env_var, EXIT, ft_strlen(EXIT)) == 0)
@@ -38,6 +39,7 @@ static	void	read_set_exitcode(char *env_var)
 	int		exit_code;
 	char	*str_err_msg;
 
+	//printf("READ THE EXIT CODE: %s\n" , env_var);
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
 	{
 		if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "exit=",
@@ -45,16 +47,13 @@ static	void	read_set_exitcode(char *env_var)
 		{
 			exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
 					+ ft_strlen("exit="));
-			if (exit_code != 0)
+			//printf("exit code %d\n", exit_code); 
+			set_exit_code(exit_code);
+			if (ft_strchr(env_var, '_') != NULL)
 			{
-				if (ft_strchr(env_var, '_') == NULL)
-					set_exit_code(exit_code);
-				else
-				{
-					str_err_msg = (ft_strchr(env_var, '_')
-							+ ft_strlen("_MSG="));
-					throw_error_mimic_bash(str_err_msg, exit_code);
-				}
+				str_err_msg = (ft_strchr(env_var, '_')
+						+ ft_strlen("_MSG="));
+				throw_error_mimic_bash(str_err_msg, exit_code);
 			}
 		}
 		else

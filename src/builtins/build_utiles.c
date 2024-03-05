@@ -77,3 +77,15 @@ bool	check_bash_variable(char *str)
 	}
 	return (true);
 }
+
+void write_exit_code_0(t_pipefd *pipefd, char *err_msg)
+{
+	char **ret;
+
+	ret = use_malloc(sizeof(char *) * 2, err_msg);
+	ret[0] = use_strjoin(EXIT_CODE, "exit=0", err_msg);
+	ret[1] = NULL;
+	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_cd\"");
+	free_str_arr_null(ret);
+
+}

@@ -29,16 +29,18 @@ int	read_str_arr_pipe(int *pipefd)
 {
 	char	buffer[BUFFER_SIZE];
 	ssize_t	bytes_read;
-	int		i_count;
+	ssize_t	i_count;
 	int		ret;
 
-	i_count = 0;
 	ret = 0;
 	bytes_read = read(pipefd[0], buffer, sizeof(buffer));
 	while (bytes_read > 0)
 	{
+		i_count = 0;
 		while (i_count < bytes_read)
-			i_count += strlen(&buffer[i_count]) + 1;
+		{
+			i_count += bytes_read  + 1;
+		}
 		if (bytes_read < 0)
 		{
 			ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
@@ -58,4 +60,13 @@ int	write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg)
 	ret = write_str_arr_pipe(pipefd, str_arr, err_msg, false);
 	ret = use_close(pipefd[1], err_msg);
 	return (ret);
+}
+
+int write_exit_status_to_pipe(int status, t_pipefd *pipe_struct, char *err_msg)
+{
+	int ret;
+
+	ret = get_process_exit_code(status);
+	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true, &ret, err_msg);
+	return(ret) ;
 }
