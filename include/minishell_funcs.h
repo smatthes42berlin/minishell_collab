@@ -215,6 +215,7 @@ char		**build_pwd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
 				bool from_redir);
 char		*use_getcwd(char *err_msg);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
+char		*check_cd_argument(t_main_data *data, t_node_exec *node);
 char		*absoult_or_relativ_path(char *path);
 char		**build_echo(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
 				bool from_redir);

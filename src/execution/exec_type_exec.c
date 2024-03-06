@@ -54,7 +54,13 @@ static void	use_execve(t_main_data *data, t_node_exec *exec_node,
 	if (false == exec_node->is_inbuilt)
 	{
 		print_debugging_info_executer(INT_DEBUG, 7, NULL);
-		execve_handler(exec_node->file_path, exec_node->argv, exec_node->env);
+		if (execve_handler(exec_node->file_path, 
+				exec_node->argv, exec_node->env) < 0)
+		{
+			free_main_exit(pipe_struct->main_data, 0);
+			free(pipe_struct);
+			exit(errno);
+		}
 	}
 	else
 	{
