@@ -33,8 +33,6 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 {
 	pid_t	pid;
 
-	if (restore_default_signals(SIGQUIT + SIGINT))
-		exit(errno);
 	pid = fork_handler("function \"executor\"");
 	if (pid < 0)
 	{
@@ -44,6 +42,8 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	}
 	if (pid == 0)
 	{
+		if (restore_default_signals(SIGQUIT + SIGINT))
+			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct);
 		pipe_struct = NULL;
