@@ -78,7 +78,7 @@ static void	free_pipe(t_node *node)
 
 static void	free_heredoc(t_node *node)
 {
-	t_node_heredoc *heredoc_node;
+	t_node_heredoc	*heredoc_node;
 
 	heredoc_node = (t_node_heredoc *)node;
 	if (heredoc_node != NULL)

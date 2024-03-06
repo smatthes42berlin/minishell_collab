@@ -28,7 +28,7 @@ static char	*checking_exit(t_node_exec *exec_node, int *exit_code)
 {
 	char	*ret;
 
-    ret = NULL;
+	ret = NULL;
 	if (ft_strchr(exec_node->argv[0], '/') != NULL)
 	{
 		return (checking_path(exec_node, exit_code));
@@ -57,7 +57,7 @@ static char	*checking_path(t_node_exec *exec_node, int *exit_code)
 {
 	char	*ret;
 
-    ret = NULL;
+	ret = NULL;
 	if (chdir(exec_node->argv[0]) >= 0)
 	{
 		ret = use_strjoin(exec_node->argv[0], ": Is a directory",
