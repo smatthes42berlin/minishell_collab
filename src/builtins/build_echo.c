@@ -17,9 +17,9 @@ char	**build_echo(t_main_data *data, t_node_exec *node,
 	i_beginn_cp = 1;
 	newline = false;
 	print_debugging_info_executer(INT_DEBUG, 23, NULL);
-	if (!ft_strcmp(node->argv[1], "-n"))
+	while (!ft_strcmp(node->argv[i_beginn_cp], "-n"))
 	{
-		i_beginn_cp = 2;
+		i_beginn_cp++;
 		newline = true;
 	}
 	tmp_str_1 = copy_str_arr(node->argv, i_beginn_cp, false);
