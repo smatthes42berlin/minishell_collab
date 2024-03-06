@@ -10,7 +10,7 @@ char	**build_echo(t_main_data *data, t_node_exec *node,
 	char	**tmp_str_1;
 	bool	newline;
 	int		i_beginn_cp;
-	char 	*err_msg;
+	char	*err_msg;
 
 	err_msg = "function build_echo";
 	tmp_str_1 = NULL;

@@ -95,7 +95,6 @@ static int	left_pipe_node(int *pipefd, t_main_data *data,
 		ret = use_close(pipefd[1], err_msg);
 		free_str_arr_null(str_arr);
 	}
-	
 	return (ret);
 }
 

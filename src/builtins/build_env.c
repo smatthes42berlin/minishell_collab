@@ -2,7 +2,8 @@
 
 static char	**set_error_env_cmd(t_pipefd *pipefd, char *err_msg);
 
-char	**build_env(t_main_data *data, t_node_exec *node, t_pipefd *pipefd, bool from_redir)
+char	**build_env(t_main_data *data, t_node_exec *node,
+	t_pipefd *pipefd, bool from_redir)
 {
 	char	**ret;
 	char	*err_msg;

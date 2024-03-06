@@ -13,7 +13,6 @@ void	pipe_setting_exit_code(int *pipefd, bool open, int *exit_code,
 	if (open == true)
 	{
 		use_close(pipefd[0], error_msg);
-		//printf ("write exit code %i\n", *exit_code);
 		if (write(pipefd[1], exit_code, sizeof(*exit_code)) < 0)
 			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE,
 				error_msg});

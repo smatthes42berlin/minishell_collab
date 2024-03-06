@@ -2,43 +2,6 @@
 
 static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct);
 static int	executor_parent(pid_t pid, t_pipefd *pipe_struct);
-// static	void	free_main(t_main_data *data);
-
-// void	printAllPIDs(void)
-// {
-// 	DIR				*dir;
-// 	struct dirent	*ent;
-// 			char *p;
-
-// 	// Versuche, das /proc Verzeichnis zu öffnen
-// 	dir = opendir("/proc");
-// 	if (dir != NULL)
-// 	{
-// 		// Lese Einträge im Verzeichnis
-// 		while ((ent = readdir(dir)) != NULL)
-// 		{
-// 			// Überprüfe, ob der Verzeichnisname nur aus Zahlen besteht
-// 			for (p = ent->d_name; *p; p++)
-// 			{
-// 				if (!isdigit(*p))
-// 				{
-// 					break ;
-// 				}
-// 			}
-// 			if (!*p)
-// 			{
-// 				printf("%s\n", ent->d_name);
-// 			}
-// 		}
-// 		// Schließe das Verzeichnis
-// 		closedir(dir);
-// 	}
-// 	else
-// 	{
-// 		// Verzeichnis konnte nicht geöffnet werden
-// 		perror("Fehler beim Öffnen von /proc");
-// 	}
-// }
 
 int	executor(t_main_data *data)
 {
@@ -54,18 +17,13 @@ int	executor(t_main_data *data)
 			"function \"executor\""});
 	pipe_struct->pipefd = pipefd;
 	pipe_struct->pipefd_exit_code = exit_code_pipe;
-	//printAllPIDs();
-
-//	printf("PID Main Process %d\n", getpid());
 	executor_fork(data, pipe_struct);
 	if (read_pipe(data, pipe_struct) == -1)
 	{
-		free_ast(data->ast);
 		free(pipe_struct);
+		pipe_struct = NULL;
 		return (-1);
 	}
-	free_ast(data->ast);
-	free(pipe_struct);
 	return (0);
 }
 
@@ -80,8 +38,6 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	{
 		free(pipe_struct);
 		pipe_struct = NULL;
-		free_ast(data->ast);
-		data->ast = NULL;
 		return (-1);
 	}
 	if (pid == 0)
