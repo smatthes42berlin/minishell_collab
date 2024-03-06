@@ -40,6 +40,7 @@ t_main_data	*get_main_data(void)
 int	read_line(t_main_data *main_data)
 {
 	main_data->num_lines++;
-	main_data->cli_input = readline("cli>");
+	if (!TEST_MODE)
+		main_data->cli_input = readline("cli>");
 	return (0);
 }
