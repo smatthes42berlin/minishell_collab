@@ -15,6 +15,7 @@ int	free_main_exit_end_of_loop(t_main_data *main_data)
 {
 	free(main_data->cli_input);
 	d_lst_clear(&main_data->token_list, free_token);
+	free_ast(main_data->ast);
 	reset_main_data(main_data, false);
 	return (0);
 }

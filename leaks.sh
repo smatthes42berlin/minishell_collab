@@ -20,7 +20,7 @@ run_leaks() {
     echo
     echo -e "${RED}$(grep -i "Invalid write" val_out.txt)${RESET}"
     echo
-    echo -e "${RED}all Invalid${RESET}"
+    echo -e "${RED}all Invalids${RESET}"
     echo
     echo -e "${RED}$(grep -i "Invalid" val_out.txt)${RESET}"
     echo
