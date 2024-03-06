@@ -16,16 +16,18 @@ int	check_for_fixed_expansions(t_expansion_info *expansion_info, bool *found)
 			return (throw_error_custom((t_error_ms){errno, EPART_EXPANDER,
 					EFUNC_MALLOC, "dup env var first digit"}));
 		if (insert_env_var(expansion_info, digit, digit))
+		{
+			free(digit);
 			return (1);
+		}
+		free(digit);
 		*found = true;
 	}
 	return (0);
 }
 
 int	check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
-										bool *found,
-										char *spec_var_symbol,
-										char *spec_var_name)
+		bool *found, char *spec_var_symbol, char *spec_var_name)
 {
 	int	var_symbol_len;
 
