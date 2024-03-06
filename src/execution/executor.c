@@ -92,5 +92,3 @@ static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
 	set_exit_code(get_exit_code);
 	return (0);
 }
-
-
