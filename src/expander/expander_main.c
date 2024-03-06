@@ -14,6 +14,8 @@ int	expand(t_main_data *main_data)
 			if (check_expansion(cur_token, main_data))
 				return (1);
 		}
+		if (expander_tilde(cur_token, main_data))
+			return (1);
 		if (remove_empty_token((&next), main_data))
 			continue ;
 		next = next->next;

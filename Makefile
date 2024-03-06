@@ -19,6 +19,11 @@ PATHSRC = $(patsubst %,$(BASEPATHSRC)%,$(SUBFOLDERSRC))
 PATHBUILD = build/
 PATHOBJ = build/
 
+# create build folder
+$(shell if [ ! -d $(PATHBUILD) ]; then \
+    mkdir -p $(PATHBUILD); \
+fi)
+
 # specifies the path, where the compiler will look for files (e.g. *.c, *.h files)
 # that way, you dont have to specify full filepath when listing source files below
 VPATH = $(PATHSRC) $(INCLUDEPATH)
@@ -85,6 +90,7 @@ SRC = 	main.c \
 		expander_util.c \
 		expander_expand_var.c \
 		expander_expand_var_fixed.c \
+		expander_tilde.c \
 		is_something_char.c \
 		is_something_token.c \
 		is_something_token_2.c \
@@ -129,11 +135,11 @@ SRC = 	main.c \
 OBJFNAME = $(SRC:.c=.o)
 OBJ = $(patsubst %,$(PATHOBJ)%,$(OBJFNAME))
 
-.PHONY: all clean fclean re  
+.PHONY: all clean fclean re fcleanall reall leaks
 
 all: $(NAME)
 
-$(NAME): $(PATHLIBFT) $(OBJ) 
+$(NAME): $(PATHLIBFT) $(OBJ)
 	$(LINK) $(CFLAGS) -o $(NAME) $(OBJ) $(PATHLIBFT) -lreadline
 
 $(PATHOBJ)%.o: %.c
@@ -153,9 +159,15 @@ fcleanall: clean
 fclean: clean
 	$(RM) $(NAME)
 
+leaks:
+	@echo -e "\n\n"
+	@echo "Please copy/create supression file first: 'readline.supp' "
+	@echo -e "\n\n"
+	@make
+	@valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp ./minishell
+
 reall: fcleanall all
 
 re: fclean all
-
 
 .PRECIOUS: $(PATHOBJ)%.o
