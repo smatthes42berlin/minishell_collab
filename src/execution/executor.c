@@ -56,27 +56,41 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	return (0);
 }
 
+static int	signal_exit_code(int status)
+{
+	int	res_wait_2;
+
+	res_wait_2 = WTERMSIG(status);
+	if (WIFSIGNALED(status))
+	{
+		res_wait_2 = WTERMSIG(status);
+		if (res_wait_2 == SIGINT)
+		{
+			printf("\n");
+			return (130);
+		}
+		if (res_wait_2 == SIGQUIT)
+		{
+			printf("Quit (core dumped)\n");
+			return (131);
+		}
+	}
+	return (0);
+}
+
 static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
 {
 	int	status;
-	int	res_wait_2;
 	int	get_exit_code;
 
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
-	{
-		res_wait_2 = WTERMSIG(status);
-		if (WIFSIGNALED(status))
-		{
-			res_wait_2 = WTERMSIG(status);
-			if (res_wait_2 == SIGINT)
-				printf("\n");
-			if (res_wait_2 == SIGQUIT)
-				printf("Quit (core dumped)\n");
-		}
-	}
-	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, false, &get_exit_code,
-		"function \"executor\" pipe");
+		get_exit_code = signal_exit_code(status);
+	else
+		pipe_setting_exit_code(pipe_struct->pipefd_exit_code, false,
+			&get_exit_code, "function \"executor\" pipe");
 	set_exit_code(get_exit_code);
 	return (0);
 }
+
+
