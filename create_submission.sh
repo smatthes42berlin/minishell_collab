@@ -16,7 +16,7 @@ chmod +777 submission/src
 find ./libft/src -name \*.c -exec cp {} submission/libft \;
 find ./libft/include -name \*.h -exec cp {} submission/libft \;
 
-cp ./libft/Makefile_submit ./submission/libft/Makefile
+cp ./libft/Makefile_submit.submit ./submission/libft/Makefile
 cp ./libft/Makefile_src ./submission/libft/Makefile_src
 
 cp ./Makefile ./submission/Makefile
