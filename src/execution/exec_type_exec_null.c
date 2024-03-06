@@ -15,6 +15,9 @@ void	exec_null_error(t_node_exec *exec_node, t_pipefd *pipe_struct)
 	{
 		tmp_str = checking_exit(exec_node, &exit_code);
 		throw_error_mimic_bash(tmp_str, exit_code);
+		free(tmp_str);
+		free_main_exit(pipe_struct->main_data, 0);
+		free(pipe_struct);
 		exit(exit_code);
 	}
 	else

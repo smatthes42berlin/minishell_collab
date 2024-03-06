@@ -9,7 +9,6 @@ int	access_handler(const char *path, enum e_access_mode mode, int debug_mode)
 		|| FILE_EXECUTABLE == mode)
 	{
 		result = access(path, mode);
-		//printf("ACCESS RESULT ------%s %d\n", path, result);
 		if (result < 0 && debug_mode)
 		{
 			throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_ACCESS,
