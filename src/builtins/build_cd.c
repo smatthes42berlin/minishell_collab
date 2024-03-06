@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 // clear the string from "./" an dubbel /
-static	char	*ft_clear_str(char *path);
+//static	char	*ft_clear_str(char *path);
 static	char	*creat_env_var(char *keyword, char *type);
 static	char	**wrong_path(int err, t_node_exec *node);
 static	char	**path_exist(char *oldpwd, int err);
@@ -15,10 +15,7 @@ char	**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	int		i;
 
 	oldpwd = creat_env_var("OLDPWD=", ADD_ENV);
-	if (node->argv[1] == NULL)
-		str_tmp = env_get_var(data, "HOME");
-	else
-		str_tmp = ft_clear_str(node->argv[1]);
+	str_tmp = check_cd_argument(data, node);
 	i = chdir(str_tmp);
 	if (i == -1)
 		ret = wrong_path(i, node);
@@ -50,36 +47,6 @@ static char	*creat_env_var(char *keyword, char *type)
 	return (ret);
 }
 
-// clear the string from "./" an double /
-static char	*ft_clear_str(char *path)
-{
-	int		i;
-	char	**str;
-	char	*ret;
-	char	*str_tmp;
-	char	*err_msg;
-
-	err_msg = "function \"ft_clear_str\" for build cd";
-	print_debugging_info_executer(INT_DEBUG, 25, NULL);
-	i = -1;
-	ret = absoult_or_relativ_path(path);
-	str = ft_split_str(path, "/");
-	while (str[++i] != NULL)
-	{
-		if (ft_strncmp(str[i], ".", ft_strlen(".")) == 0 && str[i][1] == '\0')
-			;
-		else
-		{
-			str_tmp = use_strjoin(ret, str[i], err_msg);
-			free(ret);
-			ret = use_strjoin(str_tmp, "/", err_msg);
-			free(str_tmp);
-		}
-	}
-	free_str_arr_null(str);
-	return (ret);
-}
-
 static	char	**wrong_path(int err, t_node_exec *node)
 {
 	char	**ret;
@@ -91,7 +58,7 @@ static	char	**wrong_path(int err, t_node_exec *node)
 	{
 		ret[0] = use_strjoin(EXIT_CODE, "exit=0", err_msg);
 	}
-	else if (err == -1)
+	else if (err == -1 && node->argv[2] == NULL)
 		ret[0] = use_strjoin(EXIT_CODE,
 				"exit=1_MSG=minishell: No such file or directory",
 				err_msg);
