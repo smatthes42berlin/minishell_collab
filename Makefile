@@ -38,6 +38,7 @@ SRC = 	main.c \
 		build_echo.c \
 		build_export.c \
 		build_exit.c \
+		build_exit_utiles.c \
 		builld_unset.c \
 		build_env.c \
 		choose_builtin.c \

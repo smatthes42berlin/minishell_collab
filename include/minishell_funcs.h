@@ -228,6 +228,7 @@ char		**build_env(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
 				bool from_redir);
 char		**build_exit(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
+char		*ret_exit_err(bool exit, char *err_msg);
 char		*add_newline(char *str, bool newline);
 char		**copy_str_arr(char **arg, int i_beginn, bool newline);
 bool		check_bash_variable(char *str);

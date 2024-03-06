@@ -3,7 +3,7 @@
 static int	ft_atoi_byte(const char *nptr);
 static char	**check_arg(char **str_arr, bool exit);
 static char	**bigger_two_arg(void);
-static char	*ret_exit_code_line(int nbr);
+static char	*ret_exit_code_line(int nbr, char **str_arr);
 
 char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
@@ -40,16 +40,13 @@ static char	**check_arg(char **str_arr, bool exit)
 	else
 		nbr = ft_atoi_byte(str_arr[1]);
 	ret = use_malloc(sizeof(char *) * 3, err_msg);
-	ret[0] = ret_exit_code_line(nbr);
-	if (exit)
-		ret[1] = use_strdup(EXIT, err_msg);
-	else
-		ret[1] = NULL;
+	ret[0] = ret_exit_code_line(nbr, str_arr);
+	ret[1] = ret_exit_err(exit, err_msg);
 	ret[2] = NULL;
 	return (ret);
 }
 
-static char	*ret_exit_code_line(int nbr)
+static char	*ret_exit_code_line(int nbr, char **str_arr)
 {
 	unsigned char	exit_number;
 	char			*str_e_number;
@@ -59,9 +56,13 @@ static char	*ret_exit_code_line(int nbr)
 
 	err_msg = "function ret_exit_code_line -> build exit";
 	if (nbr == -2)
+	{
 		ret = use_strjoin(EXIT_CODE,
-				"exit=2_MSG=minishell: exit: numeric argument required",
-				err_msg);
+				"exit=2_MSG=minishell: exit: ", err_msg);
+		str_tmp = use_strjoin(ret, str_arr[1], err_msg);
+		free(ret);
+		ret = use_strjoin(str_tmp, ": numeric argument required", err_msg);
+	}
 	else
 	{
 		exit_number = nbr;
