@@ -2,7 +2,7 @@
 
 bool	str_only_spaces(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)

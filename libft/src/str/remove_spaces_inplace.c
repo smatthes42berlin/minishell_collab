@@ -20,7 +20,7 @@ int	remove_spaces_inplace(char **str)
 
 static int	move_all_by_one(char **str, int i)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while ((*str)[i + j + 1])

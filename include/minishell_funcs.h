@@ -186,53 +186,55 @@ int			print_all_nodes_ast(t_node *node);
 /* executor */
 int			navigate_tree_forward(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
-void		type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct, bool from_redir);
-void    	exec_null_error(t_node_exec *exec_node, t_pipefd *pipe_struct);
+void		type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
+				bool from_redir);
+void		exec_null_error(t_node_exec *exec_node, t_pipefd *pipe_struct);
 void		type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
 int			type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
 void		type_heredoc(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
 int			executor(t_main_data *data);
 void		free_ast(t_node *node);
-
-int 		write_str_arr_pipe(int *pipefd, char **str, char *err_msg, bool is_pipe);
-int 		read_str_arr_pipe(int *pipefd);
-int 		write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg);
-int 		write_exit_status_to_pipe(int status, t_pipefd *pipe_struct, char *err_msg);
+int			write_str_arr_pipe(int *pipefd, char **str, char *err_msg,
+				bool is_pipe);
+int			read_str_arr_pipe(int *pipefd);
+int			write_pipe_to_executor_pipe(int *pipefd, char **str_arr,
+				char *err_msg);
+int			write_exit_status_to_pipe(int status, t_pipefd *pipe_struct,
+				char *err_msg);
 
 int			env_add_clr(t_main_data *data, char *env_var);
 int			read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 
 /* builtins */
 char		**chose_buildin(t_main_data *data, t_node_exec *node,
-			t_pipefd *pipe_struct, bool from_redir);
+				t_pipefd *pipe_struct, bool from_redir);
 bool		is_last_node_exec(t_node *node, char *path);
 bool		is_last_node_redir(t_node *node, char *filename);
-char		**build_pwd(t_main_data *data, t_node_exec *node,
-			t_pipefd *pipefd, bool from_redir);
+char		**build_pwd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
+				bool from_redir);
 char		*use_getcwd(char *err_msg);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*absoult_or_relativ_path(char *path);
-char		**build_echo(t_main_data *data, t_node_exec *node,
-			t_pipefd *pipefd, bool from_redir);
+char		**build_echo(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
+				bool from_redir);
 char		**build_export(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		**build_unset(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
-
-char		**build_env(t_main_data *data, t_node_exec *node, t_pipefd *pipefd, bool from_redir);
+char		**build_env(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
+				bool from_redir);
 char		**build_exit(t_main_data *data, t_node_exec *node,
-			t_pipefd *pipefd);
-
+				t_pipefd *pipefd);
 char		*add_newline(char *str, bool newline);
 char		**copy_str_arr(char **arg, int i_beginn, bool newline);
 bool		check_bash_variable(char *str);
-void 		write_exit_code_0(t_pipefd *pipefd, char *err_msg);
+void		write_exit_code_0(t_pipefd *pipefd, char *err_msg);
 
 /* execute lib*/
 int			access_handler(const char *path, enum e_access_mode mode,
 				int debug_mode);
-int		execve_handler(const char *file_path, char **argv, char **env);
+int			execve_handler(const char *file_path, char **argv, char **env);
 pid_t		fork_handler(char *str);
 int			get_process_exit_code(int status);
 void		pipe_handler(int *pipefd, char *str);

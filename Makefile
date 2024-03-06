@@ -1,5 +1,5 @@
 SHELL:=/bin/bash
-CFLAGS = -Wall -Wextra -Werror $(INCLUDEFLAGS) 
+CFLAGS = -Wall -Wextra -Werror $(INCLUDEFLAGS) -g3
 # CFLAGS = -Wall -Wextra -Werror -fsanitize=leak  $(INCLUDEFLAGS) 
 # CFLAGS = -Wall -Wextra -Werror fsanitize=addressmak  $(INCLUDEFLAGS) 
 NAME = minishell

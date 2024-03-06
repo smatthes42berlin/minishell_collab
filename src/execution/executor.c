@@ -15,6 +15,7 @@ int	executor(t_main_data *data)
 	if (!pipe_struct)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
 			"function \"executor\""});
+	pipe_struct->main_data = data;
 	pipe_struct->pipefd = pipefd;
 	pipe_struct->pipefd_exit_code = exit_code_pipe;
 	executor_fork(data, pipe_struct);
@@ -24,6 +25,7 @@ int	executor(t_main_data *data)
 		pipe_struct = NULL;
 		return (-1);
 	}
+	free(pipe_struct);
 	return (0);
 }
 
