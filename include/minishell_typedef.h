@@ -9,7 +9,6 @@
 # define EXIT "EXITPROGRAMM"
 # define CONTINUE 1
 # define QUIT 2
-# define INT_DEBUG 0
 # define PRINT_DEBUG_1 0
 # define TEST_MODE 0
 # define MY_SIG_IGNORE 1
@@ -196,18 +195,6 @@ enum					e_program_part
 	EPART_PARSER,
 	EPART_EXECUTOR,
 	EPART_SIGNAL
-};
-
-enum					e_process_status
-{
-	PROCESS_EXITED,
-	PROCESS_KILLED_BY_SIGINT,
-	PROCESS_KILLED_BY_SIGSEGV,
-	PROCESS_KILLED_BY_SIGTERM,
-	PROCESS_KILLED_BY_SIGQUIT,
-	PROCESS_KILLED_OTHER,
-	PROCESS_STOPPED,
-	PROCESS_CONTINUED
 };
 
 enum					e_failed_func

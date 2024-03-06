@@ -16,7 +16,6 @@ char	**build_echo(t_main_data *data, t_node_exec *node,
 	tmp_str_1 = NULL;
 	i_beginn_cp = 1;
 	newline = false;
-	print_debugging_info_executer(INT_DEBUG, 23, NULL);
 	while (!ft_strcmp(node->argv[i_beginn_cp], "-n"))
 	{
 		i_beginn_cp++;

@@ -8,7 +8,6 @@ void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	char			*err_msg;
 
 	err_msg = "function type_herdoc";
-	print_debugging_info_executer(INT_DEBUG, 29, NULL);
 	heredoc_node = (t_node_heredoc *)node;
 	if (use_dup2(heredoc_node->read_fd, STDIN_FILENO, err_msg) != 0)
 	{
