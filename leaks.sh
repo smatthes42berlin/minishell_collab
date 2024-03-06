@@ -20,6 +20,10 @@ run_leaks() {
     echo
     echo -e "${RED}$(grep -i "Invalid write" val_out.txt)${RESET}"
     echo
+    echo -e "${RED}all Invalid${RESET}"
+    echo
+    echo -e "${RED}$(grep -i "Invalid" val_out.txt)${RESET}"
+    echo
     echo -e "${RED}mem leaks${RESET}"
     echo
     echo -e "${RED}$(grep -i "lost" val_out.txt | grep -v "lost: 0")${RESET}"
@@ -38,17 +42,18 @@ run_leaks_frame() {
     clear
 }
 
+run_leaks_frame "echo -n hi | pwd | env"
 run_leaks_frame "echo hi"
-# run_leaks_frame "cd"
-# run_leaks_frame "env"
-# run_leaks_frame "export A=test"
-# run_leaks_frame "unset PATH"
-# run_leaks_frame "exit"
-# run_leaks_frame "pwd"
-# run_leaks_frame "pwd | echo hi | ls | echo 123213123 \$HOME"
-# run_leaks_frame "echo '213213213' | wc"
-# run_leaks_frame "unknown"
-# run_leaks_frame "$EMPTY $EMPTY"
-# run_leaks_frame "            "
+run_leaks_frame "cd"
+run_leaks_frame "env"
+run_leaks_frame "export A=test"
+run_leaks_frame "unset PATH"
+run_leaks_frame "exit"
+run_leaks_frame "pwd"
+run_leaks_frame "pwd | echo hi | ls | echo 123213123 \$HOME"
+run_leaks_frame "echo '213213213' | wc"
+run_leaks_frame "unknown"
+run_leaks_frame "$EMPTY $EMPTY"
+run_leaks_frame "            "
 
 # read

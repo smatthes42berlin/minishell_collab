@@ -32,13 +32,8 @@ int	reset_main_data(t_main_data *main_data, bool reset_env)
 
 t_main_data	*get_main_data(void)
 {
-	static t_main_data data = {
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		0,
-	};
+	static t_main_data	data = {NULL, NULL, NULL, NULL, 0,};
+
 	return (&data);
 }
 
