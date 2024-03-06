@@ -131,6 +131,7 @@ int			check_for_specific_fixed_expansion(t_expansion_info *expansion_info,
 				bool *found, char *spec_var_symbol, char *spec_var_name);
 int			remove_quote(char *cur_pos);
 int			remove_empty_token(t_list_d **next, t_main_data *main_data);
+int			expander_tilde(t_token *cur_token, t_main_data *main_data);
 
 /* parser */
 
