@@ -5,7 +5,6 @@ static	void	read_set_exitcode(char *env_var);
 
 int	env_add_clr(t_main_data *data, char *env_var)
 {
-	//printf("GIVEN FROM PIPE %s\n", env_var);
 	set_env(data, env_var);
 	read_set_exitcode(env_var);
 	if (ft_strncmp(env_var, EXIT, ft_strlen(EXIT)) == 0)

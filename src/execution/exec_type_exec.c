@@ -12,16 +12,23 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
 {
 	t_node_exec	*exec_node;
 
+	
+//	print_exec_node(exec_node, 1);
 	if (node != NULL)
 	{
 		exec_node = (t_node_exec *)node;
 		if (exec_node->file_path != NULL)
+		{
 			exec_exist(data, exec_node, pipe_struct, from_redir);
+		}
 		else
+		{
 			exec_null_error(exec_node, pipe_struct);
+		}
 	}
 	else
 		printf("💀 Given node to EXEC is NULL! 💀\n");
+	//printf("End of Exec\n");
 }
 
 static void	exec_exist(t_main_data *data, t_node_exec *exec_node,
@@ -34,9 +41,12 @@ static void	exec_exist(t_main_data *data, t_node_exec *exec_node,
 	err_msg = "function exec_exist -> type_exec";
 	pid = fork_handler("functtion type_exec -> filepath NULL");
 	if (pid == 0)
+	{
 		use_execve(data, exec_node, pipe_struct, from_redir);
+	}
 	else
 	{
+	//	printf("EXEC PID %d\n", getpid());
 		waitpid(pid, &status, 0);
 		write_exit_status_to_pipe(status, pipe_struct, err_msg);
 	}
