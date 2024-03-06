@@ -6,15 +6,15 @@ static char	*ft_clear_str(char *path);
 
 char	*check_cd_argument(t_main_data *data, t_node_exec *node)
 {
-	char	*str_tmp;
+	char	*ret;
 
 	if (node->argv[1] == NULL)
-		str_tmp = env_get_var(data, "HOME");
+		ret = env_get_var(data, "HOME");
 	else if (str_are_equal(node->argv[1], "-"))
-		str_tmp = ft_clear_str("..");
+		ret = env_get_var(data, "OLDPWD");
 	else 
-		str_tmp = ft_clear_str(node->argv[1]);
-	return (str_tmp);
+		ret = ft_clear_str(node->argv[1]);
+	return (ret);
 }
 
 char	*absoult_or_relativ_path(char *path)
