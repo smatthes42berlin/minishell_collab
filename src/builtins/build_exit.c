@@ -70,8 +70,8 @@ static char	*ret_exit_code_line(int nbr, char **str_arr)
 		str_tmp = use_strjoin("exit=", str_e_number, err_msg);
 		ret = use_strjoin(EXIT_CODE, str_tmp, err_msg);
 		free(str_e_number);
-		free(str_tmp);
 	}
+	free(str_tmp);
 	return (ret);
 }
 
