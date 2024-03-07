@@ -177,7 +177,7 @@ int			print_redir_node(t_node_redir *node, int mode);
 int			print_pipe_node(t_node_pipe *node, int mode);
 int			print_hdoc_node(t_node_heredoc *node, int mode);
 int			print_exec_node(t_node_exec *node, int mode);
-void		print_debugging_info_executer(int on_off, int txt, void *param);
+
 int			print_node_ast(t_node *node);
 int			debug_tokenise(t_main_data *main_data);
 int			debug_expand(t_main_data *main_data);

@@ -9,8 +9,7 @@ char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
 	char	**ret;
 
-	print_debugging_info_executer(INT_DEBUG, 31, NULL);
-	if (is_last_node_exec(data->ast, node->file_path) 
+	if (is_last_node_exec(data->ast, node->file_path)
 		&& data->ast->type == PIPE)
 		ret = check_arg(node->argv, false);
 	else

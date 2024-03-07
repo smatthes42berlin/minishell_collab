@@ -26,7 +26,7 @@ static char	**creat_str_arr(char **arg, int i_beginn)
 		i_count++;
 	ret = use_malloc(sizeof(char *) * (i_count - i_beginn + 1), err_msg);
 	if (!ret)
-		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC, 
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
 			err_msg});
 	ret[i_count - i_beginn] = NULL;
 	return (ret);

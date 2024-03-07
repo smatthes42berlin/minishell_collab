@@ -14,7 +14,6 @@ void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	char			*err_msg;
 
 	err_msg = "function \"type_redir\"";
-	print_debugging_info_executer(INT_DEBUG, 5, NULL);
 	redir_node = (t_node_redir *)node;
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	if (fd < 0)
@@ -38,25 +37,10 @@ void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 static void	handle_exec(t_main_data *data, t_node_redir *redir_node,
 		t_pipefd *pipe_struct)
 {
-	pid_t	cpid;
-	int		status;
-	char	*err_msg;
-
-	err_msg = "function handle_exec -> type_redir";
-	cpid = fork_handler(err_msg);
-	if (cpid == 0)
-	{
-		if (redir_node->left_node->type == EXEC)
-			type_exec(data, redir_node->left_node, pipe_struct, true);
-		else
-			navigate_tree_forward(data, redir_node->left_node, pipe_struct);
-	}
+	if (redir_node->left_node->type == EXEC)
+		type_exec(data, redir_node->left_node, pipe_struct, true);
 	else
-	{
-		waitpid(cpid, &status, 0);
-		if (data->ast->type == REDIR)
-			write_exit_status_to_pipe(status, pipe_struct, err_msg);
-	}
+		navigate_tree_forward(data, redir_node->left_node, pipe_struct);
 	return ;
 }
 
@@ -67,7 +51,7 @@ static int	open_handler(const char *path, enum e_open_mode mode)
 	result = -1;
 	if (mode == FILE_ONLY_READING)
 	{
-		result = access_handler(path, FILE_EXISTS, INT_DEBUG);
+		result = access_handler(path, FILE_EXISTS, 0);
 		if (result == 0)
 			result = open(path, mode);
 		else
@@ -78,7 +62,7 @@ static int	open_handler(const char *path, enum e_open_mode mode)
 	}
 	else
 	{
-		result = access_handler(path, FILE_EXISTS, INT_DEBUG);
+		result = access_handler(path, FILE_EXISTS, 0);
 		if (result == 0)
 			result = open(path, mode);
 		else
