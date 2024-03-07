@@ -12,7 +12,7 @@ char	*check_cd_argument(t_main_data *data, t_node_exec *node)
 		ret = env_get_var(data, "HOME");
 	else if (str_are_equal(node->argv[1], "-"))
 		ret = env_get_var(data, "OLDPWD");
-	else 
+	else
 		ret = ft_clear_str(node->argv[1]);
 	return (ret);
 }
@@ -74,7 +74,6 @@ static char	*ft_clear_str(char *path)
 	char	*err_msg;
 
 	err_msg = "function \"ft_clear_str\" for build cd";
-	print_debugging_info_executer(INT_DEBUG, 25, NULL);
 	i = -1;
 	ret = absoult_or_relativ_path(path);
 	str = ft_split_str(path, "/");

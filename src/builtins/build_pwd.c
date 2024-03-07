@@ -8,7 +8,6 @@ char	**build_pwd(t_main_data *data, t_node_exec *node,
 	char	*err_msg;
 
 	err_msg = "function build_pwd";
-	print_debugging_info_executer(INT_DEBUG, 24, NULL);
 	ret_string = use_malloc(sizeof(char *) * 2, err_msg);
 	str_tmp = use_getcwd(err_msg);
 	ret_string[0] = add_newline(str_tmp, true);
