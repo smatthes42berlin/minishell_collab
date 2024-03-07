@@ -3,13 +3,16 @@
 static char	*checking_exit(t_node_exec *exec_node, int *exit_code);
 static char	*checking_path(t_node_exec *exec_node, int *exit_code);
 
-void	exec_null_error(t_node_exec *exec_node, t_pipefd *pipe_struct)
+void	exec_null_error(t_main_data *data, t_node_exec *exec_node,
+	t_pipefd *pipe_struct)
 {
 	pid_t	pid;
 	char	*tmp_str;
 	int		status;
 	int		exit_code;
 
+	if (data->ast == NULL)
+		printf("NO AST FOUND!\n");
 	pid = fork_handler("functtion type_exec -> filepath NULL");
 	if (pid == 0)
 	{

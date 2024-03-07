@@ -19,10 +19,10 @@ int	get_process_exit_code(int status)
 	if (WIFEXITED(status))
 	{
 		exit_code = WEXITSTATUS(status);
+		return (exit_code);
 	}
-	if (WIFSIGNALED(status))
+	else if (WIFSIGNALED(status))
 	{
-		exit_code = WTERMSIG(status) + 128;
 		if (exit_code == 130)
 		{
 			ft_printf("\n");

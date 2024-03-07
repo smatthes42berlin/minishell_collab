@@ -21,7 +21,7 @@ void	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
 		}
 		else
 		{
-			exec_null_error(exec_node, pipe_struct);
+			exec_null_error(data, exec_node, pipe_struct);
 		}
 	}
 	else
@@ -46,7 +46,10 @@ static void	exec_exist(t_main_data *data, t_node_exec *exec_node,
 	else
 	{
 		waitpid(pid, &status, 0);
-		write_exit_status_to_pipe(status, pipe_struct, err_msg);
+		if (is_last_node_exec(data->ast, exec_node->file_path))
+		{
+			write_exit_status_to_pipe(status, pipe_struct, err_msg);
+		}
 	}
 }
 
