@@ -28,7 +28,7 @@ static char	**check_arg(char **str_arr, bool exit)
 
 	err_msg = "function check_arg -> build_exit";
 	nbr = 0;
-	while (str_arr[nbr] != NULL)
+	while (str_arr[nbr] != NULL && (ft_atoi_byte(str_arr[1]) != -2))
 	{
 		if (nbr > 1)
 			return (bigger_two_arg());
