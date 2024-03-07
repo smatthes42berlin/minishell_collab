@@ -54,7 +54,7 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	return (0);
 }
 
-static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
+static int	signal_exit_code(int status)
 {
 	if (status == 130)
 	{
