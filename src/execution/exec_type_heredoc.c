@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-int		read_file(int fd);
-
 void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_heredoc	*heredoc_node;
@@ -22,20 +20,4 @@ void	type_heredoc(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	else
 		navigate_tree_forward(data, heredoc_node->left_node, pipe_struct);
 	use_close(heredoc_node->read_fd, err_msg);
-}
-
-int	read_file(int fd)
-{
-	char	buffer[BUFFER_SIZE];
-	ssize_t	bytes_read;
-
-	bytes_read = read(fd, buffer, sizeof(buffer) - 1);
-	if (bytes_read < 0)
-	{
-		perror("Fehler beim Lesen vom File Descriptor");
-		exit(EXIT_FAILURE);
-	}
-	buffer[bytes_read] = '\0';
-	printf("Gelesener Text: %s\n", buffer);
-	return (0);
 }
