@@ -11,7 +11,10 @@ char	*check_cd_argument(t_main_data *data, t_node_exec *node)
 	if (node->argv[1] == NULL)
 		ret = env_get_var(data, "HOME");
 	else if (str_are_equal(node->argv[1], "-"))
+	{
 		ret = env_get_var(data, "OLDPWD");
+		printf("%s\n", ret);
+	}
 	else
 		ret = ft_clear_str(node->argv[1]);
 	return (ret);
