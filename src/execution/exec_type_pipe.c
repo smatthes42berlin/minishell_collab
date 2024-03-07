@@ -105,7 +105,7 @@ static int	right_pipe_node(int *pipefd, t_main_data *data,
 	int		ret;
 
 	err_msg = "function \"type_pipe\" --> right node";
-	if (check_is_inbuilt(pipe_node->left_node) 
+	if (check_is_inbuilt(pipe_node->left_node)
 		&& check_is_inbuilt(pipe_node->right_node))
 	{
 		ret = use_close(pipefd[1], err_msg);

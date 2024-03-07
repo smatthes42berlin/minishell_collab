@@ -22,7 +22,7 @@ int	read_pipe(t_main_data *data, t_pipefd *pipe_struct)
 	if (start < bytes_read)
 	{
 		if (env_add_clr(data, &buffer[start]) == -1)
-			return (-1); 
+			return (-1);
 	}
 	use_close(pipe_struct->pipefd[0], "fuction \"read pipe\" for executor");
 	return (0);
@@ -41,7 +41,7 @@ static int	read_line_pipe(t_main_data *data, ssize_t bytes_read, char *buffer)
 		{
 			buffer[i_count] = '\0';
 			if (env_add_clr(data, &buffer[start]) == -1)
-				return (-1); 
+				return (-1);
 			start = i_count + 1;
 		}
 		i_count++;

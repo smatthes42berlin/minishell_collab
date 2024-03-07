@@ -6,7 +6,6 @@ char	**build_unset(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
 	char	**ret;
 
-	print_debugging_info_executer(INT_DEBUG, 27, NULL);
 	if (data->ast->type == PIPE)
 	{
 		return (NULL);

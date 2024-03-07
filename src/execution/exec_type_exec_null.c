@@ -36,16 +36,6 @@ static char	*checking_exit(t_node_exec *exec_node, int *exit_code)
 	{
 		return (checking_path(exec_node, exit_code));
 	}
-	else if (exec_node->argv[0][0] == '.')
-	{
-		if (execve_handler(exec_node->argv[0], exec_node->argv,
-				exec_node->env) < 0)
-		{
-			ret = use_strjoin(exec_node->argv[0], ": Permission denied",
-					"use_strjoin");
-			*exit_code = 127;
-		}
-	}
 	else if ((access_handler(exec_node->argv[0], FILE_EXECUTABLE, 0) < 0)
 		|| exec_node->is_folder == true)
 	{
@@ -59,28 +49,25 @@ static char	*checking_exit(t_node_exec *exec_node, int *exit_code)
 static char	*checking_path(t_node_exec *exec_node, int *exit_code)
 {
 	char	*ret;
+	char	*str_tmp;
+	char	*err_msg;
 
 	ret = NULL;
+	err_msg = "type_exec -> filepath = NULL";
+	str_tmp = use_strjoin("minishell: ", exec_node->argv[0], err_msg);
+	*exit_code = 126;
 	if (chdir(exec_node->argv[0]) >= 0)
-	{
-		ret = use_strjoin(exec_node->argv[0], ": Is a directory",
-				"use_strjoin");
-		*exit_code = 126;
-	}
+		ret = use_strjoin(str_tmp, ": Is a directory", err_msg);
 	else
 	{
 		if (access_handler(exec_node->argv[0], FILE_EXISTS, 0) >= 0)
-		{
-			ret = use_strjoin(exec_node->argv[0], ": Permission denied",
-					"use_strjoin");
-			*exit_code = 126;
-		}
+			ret = use_strjoin(str_tmp, ": Permission denied", err_msg);
 		else
 		{
-			ret = use_strjoin(exec_node->argv[0], ": No such file or directory",
-					"use_strjoin");
+			ret = use_strjoin(str_tmp, ": No such file or directory", err_msg);
 			*exit_code = 127;
 		}
 	}
+	free(str_tmp);
 	return (ret);
 }
