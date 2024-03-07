@@ -21,6 +21,7 @@ int	print_redir_node(t_node_redir *node, int mode)
 		printf("mode: %d\n", node->mode);
 		printf("in_or_out: %d\n", node->in_or_out);
 		printf("filename: %s\n", node->filename);
+		printf("is_last_node: %d\n", node->is_last_node);
 	}
 	return (0);
 }

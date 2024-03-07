@@ -14,6 +14,7 @@ int	print_pipe_node(t_node_pipe *node, int mode)
 			printf("left_node: %p\n", node->left_node);
 			printf("right_node: %p\n", node->right_node);
 		}
+		printf("is_last_node: %d\n", node->is_last_node);
 	}
 	return (0);
 }

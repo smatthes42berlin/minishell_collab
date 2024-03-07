@@ -9,7 +9,7 @@
 # define EXIT "EXITPROGRAMM"
 # define CONTINUE 1
 # define QUIT 2
-# define PRINT_DEBUG_1 0
+# define PRINT_DEBUG_1 1
 # define TEST_MODE 0
 # define MY_SIG_IGNORE 1
 # define MY_SIG_DEFAULT 2
@@ -127,6 +127,7 @@ typedef struct s_node
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
+	bool				is_last_node;
 	void				*node_type;
 }						t_node;
 
@@ -136,6 +137,7 @@ typedef struct s_node_pipe
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
+	bool				is_last_node;
 }						t_node_pipe;
 
 typedef struct s_node_heredoc
@@ -144,6 +146,7 @@ typedef struct s_node_heredoc
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
+	bool				is_last_node;
 	int					read_fd;
 }						t_node_heredoc;
 
@@ -153,6 +156,7 @@ typedef struct s_node_redir
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
+	bool				is_last_node;
 	char				*filename;
 	enum e_open_mode	mode;
 	enum e_std_fd		in_or_out;
@@ -164,6 +168,7 @@ typedef struct s_node_exec
 	t_node				*parent_node;
 	t_node				*left_node;
 	t_node				*right_node;
+	bool				is_last_node;
 	char				*file_path;
 	char				*file_path_org;
 	bool				is_folder;

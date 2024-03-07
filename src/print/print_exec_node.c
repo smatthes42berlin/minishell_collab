@@ -17,6 +17,7 @@ int	print_exec_node(t_node_exec *node, int mode)
 		printf("filepath: %s\n", node->file_path);
 		printf("is_inbuilt: %d\n", node->is_inbuilt);
 		printf("is_folder: %d\n", node->is_folder);
+		printf("is_last_node: %d\n", node->is_last_node);
 		printf("args: \n");
 		print_str_arr_null(node->argv);
 	}
