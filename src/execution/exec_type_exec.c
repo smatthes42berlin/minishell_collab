@@ -45,8 +45,6 @@ static void	exec_exist(t_main_data *data, t_node_exec *exec_node,
 	}
 	else
 	{
-		if (ignore_signals(SIGQUIT + SIGINT))
-			exit(errno);
 		waitpid(pid, &status, 0);
 		if (is_last_node_exec(data->ast, exec_node->file_path))
 		{

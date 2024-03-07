@@ -23,6 +23,7 @@ int	get_process_exit_code(int status)
 	}
 	else if (WIFSIGNALED(status))
 	{
+		exit_code = WTERMSIG(status) + 128;
 		if (exit_code == 130)
 		{
 			ft_printf("\n");
@@ -31,6 +32,8 @@ int	get_process_exit_code(int status)
 		{
 			ft_printf("Quit\n");
 		}
+		if (exit_code == SIGPIPE + 128)
+			exit_code = 0;
 	}
 	return (exit_code);
 }
