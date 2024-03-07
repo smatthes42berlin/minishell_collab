@@ -9,7 +9,6 @@ char	**build_export(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 	char	*err_msg;
 
 	err_msg = "function build_export";
-	print_debugging_info_executer(INT_DEBUG, 26, NULL);
 	if (data->ast->type == PIPE)
 		return (NULL);
 	ret = copy_str_arr(node->argv, 0, false);
