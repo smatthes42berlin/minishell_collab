@@ -53,7 +53,7 @@ static void	handle_exec(t_main_data *data, t_node_redir *redir_node,
 	else
 	{
 		waitpid(cpid, &status, 0);
-		if (data->ast->type == REDIR)
+		if (is_last_node_redir(data->ast, redir_node->filename))
 			write_exit_status_to_pipe(status, pipe_struct, err_msg);
 	}
 	return ;
