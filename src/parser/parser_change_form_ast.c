@@ -13,8 +13,8 @@ int	change_form_of_ast(t_parse_info *parse_info)
 	if (first_node_no_pipe(parse_info) || only_one_pipe(parse_info))
 		return (0);
 	parse_info->ast_rene->parent_node = parse_info->ast_rene->left_node;
-	parse_info->ast_rene->left_node = 
-		parse_info->ast_rene->parent_node->right_node;
+	parse_info->ast_rene->left_node
+		= parse_info->ast_rene->parent_node->right_node;
 	cur_pipe = parse_info->ast_rene->parent_node;
 	while (cur_pipe)
 	{
