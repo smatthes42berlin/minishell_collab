@@ -110,6 +110,7 @@ SRC = 	main.c \
 		parser_create_node_pipe.c \
 		parser_create_node_redir.c \
 		parser_create_node_util.c \
+		parser_set_last_node.c \
 		print_type.c \
 		print_redir_node.c \
 		print_hdoc_node.c \

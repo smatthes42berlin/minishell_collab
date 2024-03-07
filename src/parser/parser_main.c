@@ -20,6 +20,7 @@ int	parse(t_main_data *main_data)
 		if (token_recognised || token_create_success)
 			return (1);
 	}
+	parser_set_last_node(parse_info.root_node_ast);
 	change_form_of_ast(&parse_info);
 	main_data->ast = parse_info.ast_rene;
 	debug_parse(main_data);

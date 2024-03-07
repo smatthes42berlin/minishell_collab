@@ -153,6 +153,8 @@ int			add_pipe_ast(t_parse_info *parse_info, t_node_pipe *new_node);
 int			set_exec_args_as_parsed(t_parse_info *parse_info);
 int			append_to_last_redir(t_parse_info *parse_info, t_node *new_node);
 int			change_form_of_ast(t_parse_info *parse_info);
+int			parser_set_last_node(t_node *ast);
+
 int			init_generic_node_param(t_node *node, enum e_node_type type);
 int			get_cmd_arguments(t_parse_info *parse_info, t_node_exec *exec_node);
 int			copy_argument(t_node_exec *exec_node, char *new_arg);

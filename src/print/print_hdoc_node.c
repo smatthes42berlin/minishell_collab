@@ -15,6 +15,8 @@ int	print_hdoc_node(t_node_heredoc *node, int mode)
 			printf("right_node: %p\n", node->right_node);
 		}
 		printf("read_fd: %d\n", node->read_fd);
+		printf("is_last_node: %d\n", node->is_last_node);
+
 	}
 	return (0);
 }
