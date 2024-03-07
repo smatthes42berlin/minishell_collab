@@ -13,6 +13,8 @@ void	exec_null_error(t_node_exec *exec_node, t_pipefd *pipe_struct)
 	pid = fork_handler("functtion type_exec -> filepath NULL");
 	if (pid == 0)
 	{
+		if (restore_default_signals(SIGQUIT + SIGINT))
+			exit(errno);
 		tmp_str = checking_exit(exec_node, &exit_code);
 		throw_error_mimic_bash(tmp_str, exit_code);
 		free(tmp_str);
