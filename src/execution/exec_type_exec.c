@@ -45,8 +45,6 @@ static void	exec_exist(t_main_data *data, t_node_exec *exec_node,
 	}
 	else
 	{
-		// if (ignore_signals(SIGQUIT + SIGINT))
-		// 	exit(errno);
 		waitpid(pid, &status, 0);
 		write_exit_status_to_pipe(status, pipe_struct, err_msg);
 	}
