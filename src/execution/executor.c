@@ -42,8 +42,6 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	}
 	if (pid == 0)
 	{
-		if (restore_default_signals(SIGQUIT + SIGINT))
-			exit(errno);
 		navigate_tree_forward(data, data->ast, pipe_struct);
 		free(pipe_struct);
 		pipe_struct = NULL;
@@ -58,25 +56,26 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 
 static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
 {
+	if (status == 130)
+	{
+		ft_printf("\n");
+	}
+	if (status == 131)
+	{
+		ft_printf("Quit\n");
+	}
+	return (0);
+}
+
+static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
+{
 	int	status;
-	int	res_wait_2;
 	int	get_exit_code;
 
 	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status))
-	{
-		res_wait_2 = WTERMSIG(status);
-		if (WIFSIGNALED(status))
-		{
-			res_wait_2 = WTERMSIG(status);
-			if (res_wait_2 == SIGINT)
-				printf("\n");
-			if (res_wait_2 == SIGQUIT)
-				printf("Quit (core dumped)\n");
-		}
-	}
 	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, false, &get_exit_code,
 		"function \"executor\" pipe");
+	signal_exit_code(get_exit_code);
 	set_exit_code(get_exit_code);
 	return (0);
 }

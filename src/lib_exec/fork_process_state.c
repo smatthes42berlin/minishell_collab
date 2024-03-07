@@ -18,5 +18,7 @@ int	get_process_exit_code(int status)
 	exit_code = 0;
 	if (WIFEXITED(status))
 		exit_code = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		exit_code = WTERMSIG(status) + 128;
 	return (exit_code);
 }
