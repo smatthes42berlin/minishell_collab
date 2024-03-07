@@ -20,5 +20,6 @@ handin/
 .vscode
 minishell_tester/
 minishellsecond/
+zzzzzzTester/
 **/minishell
 **/*.log
