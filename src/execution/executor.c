@@ -54,19 +54,6 @@ static int	executor_fork(t_main_data *data, t_pipefd *pipe_struct)
 	return (0);
 }
 
-static int	signal_exit_code(int status)
-{
-	if (status == 130)
-	{
-		ft_printf("\n");
-	}
-	if (status == 131)
-	{
-		ft_printf("Quit\n");
-	}
-	return (0);
-}
-
 static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
 {
 	int	status;
@@ -75,7 +62,6 @@ static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
 	waitpid(pid, &status, 0);
 	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, false, &get_exit_code,
 		"function \"executor\" pipe");
-	signal_exit_code(get_exit_code);
 	set_exit_code(get_exit_code);
 	return (0);
 }
