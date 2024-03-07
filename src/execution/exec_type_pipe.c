@@ -52,7 +52,6 @@ static int	nested_fork_right_pipe(int *pipefd, t_main_data *data,
 		else
 		{
 			waitpid(pid2, &status, 0);
-			write_exit_status_to_pipe(status, pipe_struct, err_msg);
 		}
 	}
 	return (ret);

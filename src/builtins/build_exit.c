@@ -74,7 +74,6 @@ static char	*ret_exit_code_line(int nbr, char **str_arr)
 	return (ret);
 }
 
-// special atoi 
 static int	ft_atoi_byte(const char *nptr)
 {
 	int				sign;
