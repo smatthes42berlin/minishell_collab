@@ -2,7 +2,7 @@
 
 int	parser_set_last_node(t_node *ast)
 {
-	t_node *last_node;
+	t_node	*last_node;
 
 	if (ast->right_node)
 		last_node = ast->right_node;
