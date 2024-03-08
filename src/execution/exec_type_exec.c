@@ -46,9 +46,10 @@ static void	exec_exist(t_main_data *data, t_node_exec *exec_node,
 	else
 	{
 		waitpid(pid, &status, 0);
-		if (exec_node->is_last_node)
+		if (exec_node->is_last_node && from_redir == false)
 		{
 			write_exit_status_to_pipe(status, pipe_struct, err_msg);
+			pipe_setting_exit_code
 		}
 	}
 }
