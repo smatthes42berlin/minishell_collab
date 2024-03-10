@@ -17,14 +17,13 @@ int	exec_null_error(t_main_data *data, t_node_exec *exec_node,
 	// pid = fork_handler("functtion type_exec -> filepath NULL");
 	// if (pid == 0)
 	// {
-		if (restore_default_signals(SIGQUIT + SIGINT))
-			exit(errno);
-		tmp_str = checking_exit(exec_node, &exit_code);
-		throw_error_mimic_bash(tmp_str, exit_code);
-		free(tmp_str);
-		//free_main_exit(pipe_struct->main_data, 0);
-		//free(pipe_struct);
-		printf("\n\nexit exit code %d\n\n", exit_code);
+	if (restore_default_signals(SIGQUIT + SIGINT))
+		exit(errno);
+	tmp_str = checking_exit(exec_node, &exit_code);
+	throw_error_mimic_bash(tmp_str, exit_code);
+	free(tmp_str);
+	//free_main_exit(pipe_struct->main_data, 0);
+	//free(pipe_struct);
 		//exit(exit_code);
 	// }
 	// else

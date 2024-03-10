@@ -4,7 +4,7 @@
 static char	*str_arr_to_str(char **str, bool newline);
 
 char	**build_echo(t_main_data *data, t_node_exec *node,
-	t_pipefd *pipefd, int *exit_code)
+	t_pipefd *pipefd)
 {
 	char	**ret;
 	char	**tmp_str_1;
@@ -12,6 +12,8 @@ char	**build_echo(t_main_data *data, t_node_exec *node,
 	int		i_beginn_cp;
 	char	*err_msg;
 
+	if (!pipefd && !data)
+		printf("fafdsad");
 	err_msg = "function build_echo";
 	tmp_str_1 = NULL;
 	i_beginn_cp = 1;
@@ -26,6 +28,8 @@ char	**build_echo(t_main_data *data, t_node_exec *node,
 	ret[0] = str_arr_to_str(tmp_str_1, !newline);
 	ret[1] = NULL;
 	free_str_arr_null(tmp_str_1);
+	pipefd->exit_code_buildin = 0;
+
 	// if (is_last_node_exec(data->ast, node->file_path) && !from_redir)
 	// 	write_exit_code_0(pipefd, err_msg);
 	return (ret);

@@ -9,7 +9,7 @@
 # define EXIT "EXITPROGRAMM"
 # define CONTINUE 1
 # define QUIT 2
-# define PRINT_DEBUG_1 1
+# define PRINT_DEBUG_1 0	
 # define TEST_MODE 0
 # define MY_SIG_IGNORE 1
 # define MY_SIG_DEFAULT 2
@@ -182,9 +182,9 @@ typedef struct s_node_exec
 typedef struct s_pipefd_main
 {
 	int					*pipefd;
-	bool				direction;
+	//bool				direction;
 	int					*pipefd_exit_code;
-	bool				direction_exit_code;
+	//bool				direction_exit_code;
 	//t_main_data			*main_data;
 	int					exit_code_buildin;
 

@@ -204,38 +204,37 @@ int			write_str_arr_pipe(int *pipefd, char **str, char *err_msg,
 int			read_str_arr_pipe(int *pipefd);
 int			write_pipe_to_executor_pipe(int *pipefd, char **str_arr,
 				char *err_msg);
-int			write_exit_status_to_pipe(int status, t_pipefd *pipe_struct,
-				char *err_msg);
+//int			write_exit_status_to_pipe(int status, t_pipefd *pipe_struct,
+//				char *err_msg);
 
 int			env_add_clr(t_main_data *data, char *env_var);
 int			read_pipe(t_main_data *data, t_pipefd *pipe_struct);
 
 /* builtins */
 char		**chose_buildin(t_main_data *data, t_node_exec *node,
-				t_pipefd *pipe_struct, bool from_redir);
+				t_pipefd *pipe_struct);
 bool		is_last_node_exec(t_node *node, char *path);
 bool		is_last_node_redir(t_node *node, char *filename);
-char		**build_pwd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
-				int *exit_code);
+char		**build_pwd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*use_getcwd(char *err_msg);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*check_cd_argument(t_main_data *data, t_node_exec *node);
 char		*absoult_or_relativ_path(char *path);
-char		**build_echo(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
-				bool from_redir);
+char		**build_echo(t_main_data *data, t_node_exec *node,
+			t_pipefd *pipefd);
 char		**build_export(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		**build_unset(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
-char		**build_env(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
-				bool from_redir);
+char		**build_env(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		**build_exit(t_main_data *data, t_node_exec *node,
 				t_pipefd *pipefd);
 char		*ret_exit_err(bool exit, char *err_msg);
 char		*add_newline(char *str, bool newline);
 char		**copy_str_arr(char **arg, int i_beginn, bool newline);
 bool		check_bash_variable(char *str);
-void		write_exit_code_0(t_pipefd *pipefd, char *err_msg);
+//void		write_exit_code_0(t_pipefd *pipefd, char *err_msg);
+bool		check_flag_err_buildin(t_pipefd *pipefd, char **arg, char *err_msg);
 
 /* execute lib*/
 int			access_handler(const char *path, enum e_access_mode mode,

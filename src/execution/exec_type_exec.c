@@ -4,7 +4,7 @@ static int	exec_exist(t_main_data *data, t_node_exec *exec_node,
 				t_pipefd *pipe_struct, bool from_redir);
 static int	use_execve(t_main_data *data, t_node_exec *exec_node,
 				t_pipefd *pipe_struct, bool from_redir);
-static void	use_buildin(t_main_data *data, t_node_exec *exec_node,
+static int	use_buildin(t_main_data *data, t_node_exec *exec_node,
 				t_pipefd *pipe_struct, bool from_redir);
 
 int	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
@@ -60,7 +60,7 @@ static int	exec_exist(t_main_data *data, t_node_exec *exec_node,
 		// {
 			//write_exit_status_to_pipe(status, pipe_struct, err_msg);
 			//pipe_setting_exit_code
-			ret = get_process_exit_code(status);
+		ret = get_process_exit_code(status);
 		//}
 	}
 	return (ret);
@@ -89,13 +89,13 @@ static int	use_execve(t_main_data *data, t_node_exec *exec_node,
 	return (ret);
 }
 
-static void	use_buildin(t_main_data *data, t_node_exec *exec_node,
+static int	use_buildin(t_main_data *data, t_node_exec *exec_node,
 		t_pipefd *pipe_struct, bool from_redir)
 {
 	char	**temp_str;
 	int		i_count;
 
-	temp_str = chose_buildin(data, exec_node, pipe_struct, from_redir); //
+	temp_str = chose_buildin(data, exec_node, pipe_struct); //
 	if (((is_last_node_exec(data->ast, exec_node->file_path) || from_redir)
 			&& (temp_str != NULL)))
 	{
@@ -106,4 +106,7 @@ static void	use_buildin(t_main_data *data, t_node_exec *exec_node,
 		}
 	}
 	free_str_arr_null(temp_str);
+
+	//--> fedback form buildin !
+	return (pipe_struct->exit_code_buildin);
 }
