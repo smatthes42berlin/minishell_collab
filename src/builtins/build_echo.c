@@ -4,7 +4,7 @@
 static char	*str_arr_to_str(char **str, bool newline);
 
 char	**build_echo(t_main_data *data, t_node_exec *node,
-	t_pipefd *pipefd, bool from_redir)
+	t_pipefd *pipefd, int *exit_code)
 {
 	char	**ret;
 	char	**tmp_str_1;
@@ -26,8 +26,8 @@ char	**build_echo(t_main_data *data, t_node_exec *node,
 	ret[0] = str_arr_to_str(tmp_str_1, !newline);
 	ret[1] = NULL;
 	free_str_arr_null(tmp_str_1);
-	if (is_last_node_exec(data->ast, node->file_path) && !from_redir)
-		write_exit_code_0(pipefd, err_msg);
+	// if (is_last_node_exec(data->ast, node->file_path) && !from_redir)
+	// 	write_exit_code_0(pipefd, err_msg);
 	return (ret);
 }
 

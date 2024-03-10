@@ -17,10 +17,10 @@ char	**build_env(t_main_data *data, t_node_exec *node,
 			set_error_env_cmd(pipefd, err_msg);
 			return (NULL);
 		}
-		else if (!from_redir)
-		{
-			write_exit_code_0(pipefd, err_msg);
-		}
+		// else if (!from_redir)
+		// {
+		// 	write_exit_code_0(pipefd, err_msg);
+		// }
 	}
 	return (ret);
 }

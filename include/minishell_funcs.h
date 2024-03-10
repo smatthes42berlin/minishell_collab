@@ -189,9 +189,9 @@ int			print_all_nodes_ast(t_node *node);
 /* executor */
 int			navigate_tree_forward(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
-void		type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
+int			type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
 				bool from_redir);
-void		exec_null_error(t_main_data *data, t_node_exec *exec_node,
+int			exec_null_error(t_main_data *data, t_node_exec *exec_node,
 				t_pipefd *pipe_struct);
 int			type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
 int			type_pipe(t_main_data *data, t_node *node, t_pipefd *pipe_struct);
@@ -216,7 +216,7 @@ char		**chose_buildin(t_main_data *data, t_node_exec *node,
 bool		is_last_node_exec(t_node *node, char *path);
 bool		is_last_node_redir(t_node *node, char *filename);
 char		**build_pwd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd,
-				bool from_redir);
+				int *exit_code);
 char		*use_getcwd(char *err_msg);
 char		**build_cd(t_main_data *data, t_node_exec *node, t_pipefd *pipefd);
 char		*check_cd_argument(t_main_data *data, t_node_exec *node);

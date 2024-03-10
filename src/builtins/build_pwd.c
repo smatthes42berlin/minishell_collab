@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 char	**build_pwd(t_main_data *data, t_node_exec *node,
-		t_pipefd *pipefd, bool from_redir)
+		t_pipefd *pipefd, int *exit_code)
 {
 	char	**ret_string;
 	char	*str_tmp;
@@ -13,8 +13,9 @@ char	**build_pwd(t_main_data *data, t_node_exec *node,
 	ret_string[0] = add_newline(str_tmp, true);
 	ret_string[1] = NULL;
 	free(str_tmp);
-	if (is_last_node_exec(data->ast, node->file_path) && !from_redir)
-		write_exit_code_0(pipefd, err_msg);
+	*exit_code = 0;
+	// if (is_last_node_exec(data->ast, node->file_path) && !from_redir)
+	// 	write_exit_code_0(pipefd, err_msg);
 	return (ret_string);
 }
 
