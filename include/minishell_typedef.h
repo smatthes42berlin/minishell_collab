@@ -182,10 +182,7 @@ typedef struct s_node_exec
 typedef struct s_pipefd_main
 {
 	int					*pipefd;
-	//bool				direction;
 	int					*pipefd_exit_code;
-	//bool				direction_exit_code;
-	//t_main_data			*main_data;
 	int					exit_code_buildin;
 
 }						t_pipefd;

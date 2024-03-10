@@ -7,20 +7,23 @@ int	write_str_arr_pipe(int *pipefd, char **str, char *err_msg, bool is_pipe)
 	size_t	len;
 
 	i_count = 0;
-	while (str[i_count] != NULL)
+	if (str != NULL)
 	{
-		len = strlen(str[i_count]);
-		if (is_pipe)
-			ret = write(pipefd[1], str[i_count], len);
-		else
-			ret = write(pipefd[1], str[i_count], len + 1);
-		if (ret < 0)
+		while (str[i_count] != NULL)
 		{
-			ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
-					EFUNC_WRITE, err_msg});
-			break ;
+			len = strlen(str[i_count]);
+			if (is_pipe)
+				ret = write(pipefd[1], str[i_count], len + 1);
+			else
+				ret = write(pipefd[1], str[i_count], len + 1);
+			if (ret < 0)
+			{
+				ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
+						EFUNC_WRITE, err_msg});
+				break ;
+			}
+			i_count++;
 		}
-		i_count++;
 	}
 	return (ret);
 }

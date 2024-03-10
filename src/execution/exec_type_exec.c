@@ -45,6 +45,8 @@ static int	exec_exist(t_main_data *data, t_node_exec *exec_node,
 		if (restore_default_signals(SIGQUIT + SIGINT))
 			exit(errno);
 		ret = use_execve(data, exec_node, pipe_struct, from_redir);
+		free_main_exit(data, 0);
+		free(pipe_struct);
 		if (ret == -1)
 			exit(errno);
 		else
@@ -69,6 +71,7 @@ static int	use_execve(t_main_data *data, t_node_exec *exec_node,
 		if (execve_handler(exec_node->file_path,
 				exec_node->argv, exec_node->env) < 0)
 		{
+			free_main_exit(data, 0);
 			free(pipe_struct);
 			exit(errno);
 		}
