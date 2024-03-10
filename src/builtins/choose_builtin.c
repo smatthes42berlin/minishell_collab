@@ -7,13 +7,13 @@ char	**chose_buildin(t_main_data *data, t_node_exec *node,
 		return (build_echo(data, node, pipe_struct));
 	if (str_are_equal(node->file_path, "exit"))
 		return (build_exit(data, node, pipe_struct));
-	if (check_flag_err_buildin(pipe_struct, node->argv, 
+	if (check_flag_err_buildin(pipe_struct, node->argv,
 			"flage error inbuild"))
 		return (NULL);
 	else
 	{
 		if (str_are_equal(node->file_path, "pwd"))
-			return (build_pwd(data, node, pipe_struct));
+			return (build_pwd(pipe_struct));
 		if (str_are_equal(node->file_path, "cd"))
 			return (build_cd(data, node, pipe_struct));
 		if (str_are_equal(node->file_path, "export"))

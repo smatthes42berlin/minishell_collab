@@ -11,7 +11,6 @@ char	**build_unset(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 		return (NULL);
 	}
 	ret = copy_str_arr(node->argv, 0, false);
-
 	add_clr_command_to_arr_str(ret);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_cd\"");
 	free_str_arr_null(ret);
@@ -26,7 +25,6 @@ static void	add_clr_command_to_arr_str(char **arg)
 
 	i_count = 1;
 	err_msg = "function add_clr_command_to_arr_str -> build unset";
-
 	while (arg[i_count] != NULL)
 	{
 		tmp_str = use_strdup(arg[i_count], err_msg);

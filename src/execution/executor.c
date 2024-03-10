@@ -15,7 +15,6 @@ int	executor(t_main_data *data)
 	if (!pipe_struct)
 		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_MALLOC,
 			"function \"executor\""});
-	//pipe_struct->main_data = data;
 	pipe_struct->pipefd = pipefd;
 	pipe_struct->pipefd_exit_code = exit_code_pipe;
 	executor_fork(data, pipe_struct);
@@ -65,7 +64,6 @@ static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
 	waitpid(pid, &status, 0);
 	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, false, &get_exit_code,
 		"function \"executor\" pipe");
-	//printf("return exit code END |%d|\n", get_exit_code);
 	set_exit_code(get_exit_code);
 	return (0);
 }

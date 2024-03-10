@@ -61,12 +61,3 @@ int	write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg)
 	ret = use_close(pipefd[1], err_msg);
 	return (ret);
 }
-
-// int	write_exit_status_to_pipe(int status, t_pipefd *pipe_struct, char *err_msg)
-// {
-// 	int	ret;
-
-// 	ret = get_process_exit_code(status);
-// 	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true, &ret, err_msg);
-// 	return (ret);
-// }

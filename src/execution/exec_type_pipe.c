@@ -75,7 +75,7 @@ bool	check_is_inbuilt(t_node *node)
 }
 
 static int	left_pipe_node(int *pipefd, t_main_data *data,
-		t_node_pipe *pipe_node, t_pipefd *pipe_struct)
+			t_node_pipe *pipe_node, t_pipefd *pipe_struct)
 {
 	char		*err_msg;
 	int			ret;
@@ -96,7 +96,6 @@ static int	left_pipe_node(int *pipefd, t_main_data *data,
 	{
 		exec_node = (t_node_exec *)pipe_node->left_node;
 		str_arr = chose_buildin(data, exec_node, pipe_struct);
-		print_str_arr_null(str_arr);
 		ret = use_close(pipefd[0], err_msg);
 		ret = write_str_arr_pipe(pipefd, str_arr, err_msg, true);
 		ret = use_close(pipefd[1], err_msg);
@@ -124,7 +123,6 @@ static int	right_pipe_node(int *pipefd, t_main_data *data,
 		if (ret != -1)
 			ret = navigate_tree_forward(data, pipe_node->right_node,
 					pipe_struct);
-
 	}
 	return (ret);
 }

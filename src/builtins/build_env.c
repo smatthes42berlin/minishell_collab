@@ -19,10 +19,6 @@ char	**build_env(t_main_data *data, t_node_exec *node,
 		}
 		else
 			pipefd->exit_code_buildin = 0;
-		// else if (!from_redir)
-		// {
-		// 	write_exit_code_0(pipefd, err_msg);
-		// }
 	}
 	return (ret);
 }

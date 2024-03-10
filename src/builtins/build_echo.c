@@ -29,9 +29,6 @@ char	**build_echo(t_main_data *data, t_node_exec *node,
 	ret[1] = NULL;
 	free_str_arr_null(tmp_str_1);
 	pipefd->exit_code_buildin = 0;
-
-	// if (is_last_node_exec(data->ast, node->file_path) && !from_redir)
-	// 	write_exit_code_0(pipefd, err_msg);
 	return (ret);
 }
 

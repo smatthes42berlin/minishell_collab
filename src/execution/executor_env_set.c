@@ -5,7 +5,6 @@ static	void	read_set_exitcode(char *env_var);
 
 int	env_add_clr(t_main_data *data, char *env_var)
 {
-	//printf("given Prinsting |%s|\n", env_var);
 	set_env(data, env_var);
 	read_set_exitcode(env_var);
 	if (ft_strncmp(env_var, EXIT, ft_strlen(EXIT)) == 0)
@@ -35,25 +34,15 @@ static	void	set_env(t_main_data *data, char *env_var)
 
 static	void	read_set_exitcode(char *env_var)
 {
-	//int		exit_code;
 	char	*str_err_msg;
 
 	if (ft_strncmp(env_var, EXIT_CODE, ft_strlen(EXIT_CODE)) == 0)
 	{
-		// if (ft_strncmp(env_var + ft_strlen(EXIT_CODE), "exit=",
-		// 		ft_strlen("exit=")) == 0)
-		// {
-		// 	exit_code = ft_atoi(env_var + ft_strlen(EXIT_CODE)
-		// 			+ ft_strlen("exit="));
-		// 	set_exit_code(exit_code);
 		if (ft_strchr(env_var, '_') != NULL)
 		{
 			str_err_msg = (ft_strchr(env_var, '_')
 					+ ft_strlen("_MSG="));
 			ft_printf_fd(2, "%s\n", str_err_msg);
 		}
-		//}
-		// else
-		// 	set_exit_code(0);
 	}
 }

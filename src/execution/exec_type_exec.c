@@ -28,7 +28,6 @@ int	type_exec(t_main_data *data, t_node *node, t_pipefd *pipe_struct,
 	}
 	else
 		printf("💀 Given node to EXEC is NULL! 💀\n");
-	//printf("return exec > %d\n", 3);
 	return (ret);
 }
 
@@ -38,9 +37,7 @@ static int	exec_exist(t_main_data *data, t_node_exec *exec_node,
 	pid_t	pid;
 	int		status;
 	int		ret;
-	//char	*err_msg;
 
-	//err_msg = "function exec_exist -> type_exec";
 	ret = 0;
 	pid = fork_handler("functtion type_exec -> filepath NULL");
 	if (pid == 0)
@@ -56,12 +53,7 @@ static int	exec_exist(t_main_data *data, t_node_exec *exec_node,
 	else
 	{
 		waitpid(pid, &status, 0);
-		// if (exec_node->is_last_node && from_redir == false)
-		// {
-			//write_exit_status_to_pipe(status, pipe_struct, err_msg);
-			//pipe_setting_exit_code
 		ret = get_process_exit_code(status);
-		//}
 	}
 	return (ret);
 }
@@ -77,7 +69,6 @@ static int	use_execve(t_main_data *data, t_node_exec *exec_node,
 		if (execve_handler(exec_node->file_path,
 				exec_node->argv, exec_node->env) < 0)
 		{
-			//free_main_exit(pipe_struct->main_data, 0);
 			free(pipe_struct);
 			exit(errno);
 		}
@@ -95,7 +86,7 @@ static int	use_buildin(t_main_data *data, t_node_exec *exec_node,
 	char	**temp_str;
 	int		i_count;
 
-	temp_str = chose_buildin(data, exec_node, pipe_struct); //
+	temp_str = chose_buildin(data, exec_node, pipe_struct);
 	if (((is_last_node_exec(data->ast, exec_node->file_path) || from_redir)
 			&& (temp_str != NULL)))
 	{
@@ -106,7 +97,5 @@ static int	use_buildin(t_main_data *data, t_node_exec *exec_node,
 		}
 	}
 	free_str_arr_null(temp_str);
-
-	//--> fedback form buildin !
 	return (pipe_struct->exit_code_buildin);
 }

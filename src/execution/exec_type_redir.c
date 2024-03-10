@@ -3,7 +3,7 @@
 static int	handle_exec(t_main_data *data, t_node_redir *redir_node,
 				t_pipefd *pipe_struct);
 static int	open_handler(const char *path, enum e_open_mode mode);
-static void	creat_and_throw_error(const char *path, int errnum);
+static int	creat_and_throw_error(const char *path, int errnum);
 
 int	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
@@ -36,9 +36,7 @@ static int	handle_exec(t_main_data *data, t_node_redir *redir_node,
 		t_pipefd *pipe_struct)
 {
 	int		ret;
-	char	*err_msg;
 
-	err_msg = "function handle_exec -> type_redir";
 	if (redir_node->left_node->type == EXEC)
 		ret = type_exec(data, redir_node->left_node, pipe_struct, true);
 	else
@@ -57,10 +55,7 @@ static int	open_handler(const char *path, enum e_open_mode mode)
 		if (result == 0)
 			result = open(path, mode);
 		else
-		{
-			creat_and_throw_error(path, errno);
-			return (-1);
-		}
+			return (creat_and_throw_error(path, errno));
 	}
 	else
 	{
@@ -71,15 +66,11 @@ static int	open_handler(const char *path, enum e_open_mode mode)
 			result = open(path, mode | O_CREAT, 0644);
 	}
 	if (result < 0)
-	{
-		creat_and_throw_error(path, errno);
-		return (-1);
-	}
+		return (creat_and_throw_error(path, errno));
 	return (result);
 }
 
-
-static void	creat_and_throw_error(const char *path, int errnum)
+static int	creat_and_throw_error(const char *path, int errnum)
 {
 	char	*err_msg;
 	char	*tmp_str;
@@ -93,5 +84,5 @@ static void	creat_and_throw_error(const char *path, int errnum)
 	throw_error_mimic_bash(err_msg, 1);
 	free(tmp_str);
 	free(err_msg);
-	return ;
+	return (-1);
 }
