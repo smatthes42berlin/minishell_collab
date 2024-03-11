@@ -64,6 +64,8 @@ static int	executor_parent(pid_t pid, t_pipefd *pipe_struct)
 	waitpid(pid, &status, 0);
 	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, false, &get_exit_code,
 		"function \"executor\" pipe");
+	if (PRINT_DEBUG_1)
+		printf("GET EXIT CODE: |%d|\n", get_exit_code);
 	set_exit_code(get_exit_code);
 	return (0);
 }

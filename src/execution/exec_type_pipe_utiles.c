@@ -1,5 +1,8 @@
 #include "minishell.h"
 
+static int	inbuild_left_side(int *pipefd, t_main_data *data,
+				t_node_pipe *pipe_node, t_pipefd *pipe_struct);
+
 static bool	check_is_inbuilt(t_node *node)
 {
 	t_node_exec	*exec_node;
@@ -17,8 +20,6 @@ int	left_pipe_node(int *pipefd, t_main_data *data,
 {
 	char		*err_msg;
 	int			ret;
-	char		**str_arr;
-	t_node_exec	*exec_node;
 
 	err_msg = "function \"type_pipe\" --> left node";
 	if (!check_is_inbuilt(pipe_node->left_node))
@@ -32,14 +33,33 @@ int	left_pipe_node(int *pipefd, t_main_data *data,
 	}
 	else
 	{
+		ret = inbuild_left_side(pipefd, data, pipe_node, pipe_struct);
+	}
+	return (ret);
+}
+
+static int	inbuild_left_side(int *pipefd, t_main_data *data,
+			t_node_pipe *pipe_node, t_pipefd *pipe_struct)
+{
+	t_node_exec	*exec_node;
+	char		**str_arr;
+	int			ret;
+	char		*err_msg;
+
+	err_msg = "function \"type_pipe\" --> left node";
+	if (check_is_inbuilt(pipe_node->left_node)
+		&& (pipe_node->right_node->type != REDIR))
+	{
 		exec_node = (t_node_exec *)pipe_node->left_node;
 		str_arr = chose_buildin(data, exec_node, pipe_struct);
 		ret = use_close(pipefd[0], err_msg);
 		ret = write_str_arr_pipe(pipefd, str_arr, err_msg, true);
 		ret = use_close(pipefd[1], err_msg);
 		free_str_arr_null(str_arr);
+		if (ret < 0)
+			return (-1);
 	}
-	return (ret);
+	return (0);
 }
 
 int	right_pipe_node(int *pipefd, t_main_data *data,

@@ -28,5 +28,5 @@ int	token_syntax_error(char *token_val)
 	(ft_printf_to_str(&res,
 			"minishell: syntax error near unexpected token `%s'\n",
 			token_val));
-	return (throw_error_mimic_bash(res, 127));
+	return (throw_error_mimic_bash(res, 2));
 }
