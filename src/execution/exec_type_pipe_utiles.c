@@ -48,7 +48,8 @@ static int	inbuild_left_side(int *pipefd, t_main_data *data,
 
 	err_msg = "function \"type_pipe\" --> left node";
 	if (check_is_inbuilt(pipe_node->left_node)
-		&& (pipe_node->right_node->type != REDIR))
+		&& (pipe_node->right_node->type != REDIR) 
+		&& (pipe_node->right_node->type != HEREDOC))
 	{
 		exec_node = (t_node_exec *)pipe_node->left_node;
 		str_arr = chose_buildin(data, exec_node, pipe_struct);

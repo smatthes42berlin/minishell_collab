@@ -199,7 +199,7 @@ int			left_pipe_node(int *pipefd, t_main_data *data,
 				t_node_pipe *pipe_node, t_pipefd *pipe_struct);
 int			right_pipe_node(int *pipefd, t_main_data *data,
 				t_node_pipe *pipe_node, t_pipefd *pipe_struct);
-void		type_heredoc(t_main_data *data, t_node *node,
+int			type_heredoc(t_main_data *data, t_node *node,
 				t_pipefd *pipe_struct);
 int			executor(t_main_data *data);
 void		free_ast(t_node *node);

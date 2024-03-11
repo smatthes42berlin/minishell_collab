@@ -15,7 +15,7 @@ int	navigate_tree_forward(t_main_data *data, t_node *node,
 	else if (node->type == EXEC)
 		ret = type_exec(data, node, pipe_struct, false);
 	else if (node->type == HEREDOC)
-		type_heredoc(data, node, pipe_struct);
+		ret = type_heredoc(data, node, pipe_struct);
 	else
 		printf("No Nodetype found\n");
 	return (ret);
