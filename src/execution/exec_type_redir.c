@@ -1,79 +1,82 @@
 #include "minishell.h"
 
-static void	handle_exec(t_main_data *data, t_node_redir *redir_node,
+// static int	exec_redir(t_main_data *data,
+// 				t_node_redir *redir_node, t_pipefd *pipe_struct);
+static int	handle_exec(t_main_data *data, t_node_redir *redir_node,
 				t_pipefd *pipe_struct);
 static int	open_handler(const char *path, enum e_open_mode mode);
-static void	set_error_open_handler(t_main_data *data, t_node_redir *redir_node,
-				t_pipefd *pipe_struct);
-static void	creat_and_throw_error(const char *path, int errnum);
+static int	creat_and_throw_error(const char *path, int errnum);
 
-void	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
+int	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 {
 	t_node_redir	*redir_node;
 	int				fd;
 	char			*err_msg;
+	int				ret;
 
+	ret = 0;
 	err_msg = "function \"type_redir\"";
 	redir_node = (t_node_redir *)node;
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	if (fd < 0)
-	{
-		set_error_open_handler(data, redir_node, pipe_struct);
-		return ;
-	}
+		return (1);
 	if (use_dup2(fd, redir_node->in_or_out, err_msg) != 0)
 	{
 		use_close(fd, err_msg);
-		return ;
+		return (-1);
 	}
+	if (redir_node->is_last_node == 1)
+		return (0);
 	if (redir_node->left_node->type == NOTHING)
-		return ;
+		return (0);
 	else
-		handle_exec(data, redir_node, pipe_struct);
+		ret = handle_exec(data, redir_node, pipe_struct);
 	use_close(fd, "function \"type_redir\"");
-	return ;
+	return (ret);
 }
 
-static void	handle_exec(t_main_data *data, t_node_redir *redir_node,
+// static int	exec_redir(t_main_data *data, 
+// 	t_node_redir *redir_node, t_pipefd *pipe_struct)
+// {
+// 	int	ret;
+
+// 	ret = 0;
+// 	if (redir_node->in_or_out == 0)
+// 	{
+// 		if (redir_node->is_last_node == 1)
+// 			return (0);
+// 	}
+// 	if (redir_node->left_node->type == NOTHING)
+// 		return (0);
+// 	else
+// 		ret = handle_exec(data, redir_node, pipe_struct);
+// 	return (0);
+// }
+
+static int	handle_exec(t_main_data *data, t_node_redir *redir_node,
 		t_pipefd *pipe_struct)
 {
-	pid_t	cpid;
-	int		status;
-	char	*err_msg;
+	int		ret;
 
-	err_msg = "function handle_exec -> type_redir";
-	cpid = fork_handler(err_msg);
-	if (cpid == 0)
-	{
-		if (redir_node->left_node->type == EXEC)
-			type_exec(data, redir_node->left_node, pipe_struct, true);
-		else
-			navigate_tree_forward(data, redir_node->left_node, pipe_struct);
-	}
+	if (redir_node->left_node->type == EXEC)
+		ret = type_exec(data, redir_node->left_node, pipe_struct, true);
 	else
-	{
-		waitpid(cpid, &status, 0);
-		if (is_last_node_redir(data->ast, redir_node->filename))
-			write_exit_status_to_pipe(status, pipe_struct, err_msg);
-	}
-	return ;
+		ret = navigate_tree_forward(data, redir_node->left_node, pipe_struct);
+	return (ret);
 }
 
 static int	open_handler(const char *path, enum e_open_mode mode)
 {
 	int	result;
 
-	result = -1;
+	result = 0;
 	if (mode == FILE_ONLY_READING)
 	{
 		result = access_handler(path, FILE_EXISTS, 0);
 		if (result == 0)
 			result = open(path, mode);
 		else
-		{
-			creat_and_throw_error(path, errno);
-			return (result);
-		}
+			return (creat_and_throw_error(path, errno));
 	}
 	else
 	{
@@ -84,28 +87,11 @@ static int	open_handler(const char *path, enum e_open_mode mode)
 			result = open(path, mode | O_CREAT, 0644);
 	}
 	if (result < 0)
-		creat_and_throw_error(path, errno);
+		return (creat_and_throw_error(path, errno));
 	return (result);
 }
 
-static void	set_error_open_handler(t_main_data *data, t_node_redir *redir_node,
-		t_pipefd *pipe_struct)
-{
-	int		exit_code;
-	char	*err_msg;
-
-	err_msg = "function set_error_open_handler -> type_redir";
-	if (is_last_node_redir(data->ast, redir_node->filename)
-		|| data->ast->type == REDIR)
-	{
-		exit_code = 1;
-		pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true, &exit_code,
-			err_msg);
-	}
-	return ;
-}
-
-static void	creat_and_throw_error(const char *path, int errnum)
+static int	creat_and_throw_error(const char *path, int errnum)
 {
 	char	*err_msg;
 	char	*tmp_str;
@@ -119,5 +105,5 @@ static void	creat_and_throw_error(const char *path, int errnum)
 	throw_error_mimic_bash(err_msg, 1);
 	free(tmp_str);
 	free(err_msg);
-	return ;
+	return (-1);
 }

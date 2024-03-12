@@ -51,6 +51,7 @@ SRC = 	main.c \
 		free_ast.c \
 		exec_type_exec.c \
 		exec_type_pipe.c \
+		exec_type_pipe_utiles.c \
 		exec_type_redir.c \
 		exec_type_heredoc.c \
 		tree_navigation.c \

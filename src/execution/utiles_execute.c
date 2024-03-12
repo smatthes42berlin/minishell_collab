@@ -7,20 +7,24 @@ int	write_str_arr_pipe(int *pipefd, char **str, char *err_msg, bool is_pipe)
 	size_t	len;
 
 	i_count = 0;
-	while (str[i_count] != NULL)
+	ret = 0;
+	if (str != NULL)
 	{
-		len = strlen(str[i_count]);
-		if (is_pipe)
-			ret = write(pipefd[1], str[i_count], len);
-		else
-			ret = write(pipefd[1], str[i_count], len + 1);
-		if (ret < 0)
+		while (str[i_count] != NULL)
 		{
-			ret = throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
+			len = strlen(str[i_count]);
+			if (is_pipe)
+				ret = write(pipefd[1], str[i_count], len);
+			else
+				ret = write(pipefd[1], str[i_count], len + 1);
+			if (ret < 0)
+			{
+				throw_error_custom((t_error_ms){errno, EPART_EXECUTOR,
 					EFUNC_WRITE, err_msg});
-			break ;
+				break ;
+			}
+			i_count++;
 		}
-		i_count++;
 	}
 	return (ret);
 }
@@ -59,14 +63,5 @@ int	write_pipe_to_executor_pipe(int *pipefd, char **str_arr, char *err_msg)
 	ret = use_close(pipefd[0], err_msg);
 	ret = write_str_arr_pipe(pipefd, str_arr, err_msg, false);
 	ret = use_close(pipefd[1], err_msg);
-	return (ret);
-}
-
-int	write_exit_status_to_pipe(int status, t_pipefd *pipe_struct, char *err_msg)
-{
-	int	ret;
-
-	ret = get_process_exit_code(status);
-	pipe_setting_exit_code(pipe_struct->pipefd_exit_code, true, &ret, err_msg);
 	return (ret);
 }

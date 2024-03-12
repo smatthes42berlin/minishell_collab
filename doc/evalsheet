@@ -1,0 +1,84 @@
+exit hello Welt
+exit -r
+exit -x 
+exit 12 34 
+exit 12 34                    12                            77
+exit 32kkkkkk                                                 77
+pwd | cd | export HO=HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+export -x
+pwd -1
+pwd -x 
+cd -ff
+pwd >> out >> out >> out
+pwd >> out >> out >> out
+pwd >> out >> out >> out
+cat out out out
+< out | grep home > out_1
+touch input 
+env >> input 
+env >> input
+< input | grep PWD > out 
+< input grep PWD > out | cat out
+cat out
+rm input out out_1
+rm input out out_1
+env | grep HOME
+env | grep "NOTIHNG ELSE MATTER"
+ls -l | grep NOTING ELSE MATER
+ls -l | grep "NOTING ELSE MATER"
+touch 2 3
+touch 2 3
+rm 2 3
+echo xx > 2 | echo aa > cat 3
+cat 3
+cat 2
+cat 3 2
+touch 1
+chmod 000 1
+echo a > 1 | echo a > 3 > 2 >1
+echo a > 1
+echo echo a > 3 > 2 >1
+echo a > 3 | echo xx > 3 > 2 > 11
+rm 2 3 11
+chomd 777 1
+rm 1
+ls -l | grep noting
+ls -l | grep builtins
+/bin/ls -l
+"/bin/ls"
+'/bin/ls'
+"ls -l | sort -r | grep test"
+/bin/echo hallo welt
+'/bin/echo "das ist ein test " Halleluja '
+echo "Schoene neue Welt" "HUKSLY", HO HO HO "           "        Do noting 
+echo $?
+echo "cat lol.c | cat > lol.c"
+echo '$USER'
+echo "$USER"
+echo -x
+unset -x
+unset -r 12 
+'Bullshit'
+"nothing"
+'ls -l | sort -r | grep NOTING | PLEASE'
+cd -
+cd -
+cd .
+cd ..
+cd ../..
+../bin/ls
+|
+>
+<
+<<
+>>
+|    | 
+rm cat
+
+Spechial valgrind 
+echo < hi 
++
+/bin/ls | /bin/wc -l
+$? $?
+$?$?
+

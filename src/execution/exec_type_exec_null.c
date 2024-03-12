@@ -3,33 +3,20 @@
 static char	*checking_exit(t_node_exec *exec_node, int *exit_code);
 static char	*checking_path(t_node_exec *exec_node, int *exit_code);
 
-void	exec_null_error(t_main_data *data, t_node_exec *exec_node,
+int	exec_null_error(t_main_data *data, t_node_exec *exec_node,
 	t_pipefd *pipe_struct)
 {
-	pid_t	pid;
 	char	*tmp_str;
-	int		status;
 	int		exit_code;
 
-	if (data->ast == NULL)
+	if (data->ast == NULL && !pipe_struct)
 		printf("NO AST FOUND!\n");
-	pid = fork_handler("functtion type_exec -> filepath NULL");
-	if (pid == 0)
-	{
-		if (restore_default_signals(SIGQUIT + SIGINT))
-			exit(errno);
-		tmp_str = checking_exit(exec_node, &exit_code);
-		throw_error_mimic_bash(tmp_str, exit_code);
-		free(tmp_str);
-		free_main_exit(pipe_struct->main_data, 0);
-		free(pipe_struct);
-		exit(exit_code);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		write_exit_status_to_pipe(status, pipe_struct, "err");
-	}
+	if (restore_default_signals(SIGQUIT + SIGINT))
+		exit(errno);
+	tmp_str = checking_exit(exec_node, &exit_code);
+	throw_error_mimic_bash(tmp_str, exit_code);
+	free(tmp_str);
+	return (exit_code);
 }
 
 static char	*checking_exit(t_node_exec *exec_node, int *exit_code)

@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-static char	**set_error_env_cmd(t_pipefd *pipefd, char *err_msg);
+static char	**set_error_env_cmd(t_pipefd *pipefd, char *err_msg, char *arg);
 
 char	**build_env(t_main_data *data, t_node_exec *node,
-	t_pipefd *pipefd, bool from_redir)
+	t_pipefd *pipefd)
 {
 	char	**ret;
 	char	*err_msg;
@@ -14,25 +14,29 @@ char	**build_env(t_main_data *data, t_node_exec *node,
 	{
 		if (node->argv[1] != NULL)
 		{
-			set_error_env_cmd(pipefd, err_msg);
+			set_error_env_cmd(pipefd, err_msg, node->argv[1]);
 			return (NULL);
 		}
-		else if (!from_redir)
-		{
-			write_exit_code_0(pipefd, err_msg);
-		}
+		else
+			pipefd->exit_code_buildin = 0;
 	}
 	return (ret);
 }
 
-static char	**set_error_env_cmd(t_pipefd *pipefd, char *err_msg)
+static char	**set_error_env_cmd(t_pipefd *pipefd, char *err_msg, char *arg)
 {
 	char	**ret;
+	char	*str_tmp_1;
+	char	*str_tmp_2;
 
 	ret = use_malloc(sizeof(char *) * 2, err_msg);
-	ret[0] = use_strjoin(EXIT_CODE,
-			"exit=127_MSG=minishell: No such file or directory", err_msg);
-	ret[3] = NULL;
+	str_tmp_1 = use_strjoin(EXIT_CODE, "_MSG=env: \'", err_msg);
+	str_tmp_2 = use_strjoin(str_tmp_1, arg, err_msg);
+	ret[0] = use_strjoin(str_tmp_2, "\': No such file or directory", err_msg);
+	ret[1] = NULL;
+	free(str_tmp_1);
+	free(str_tmp_2);
+	pipefd->exit_code_buildin = 127;
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret, err_msg);
 	free_str_arr_null(ret);
 	return (NULL);

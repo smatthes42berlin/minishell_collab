@@ -78,13 +78,25 @@ bool	check_bash_variable(char *str)
 	return (true);
 }
 
-void	write_exit_code_0(t_pipefd *pipefd, char *err_msg)
+bool	check_flag_err_buildin(t_pipefd *pipefd, char **arg, char *err_msg)
 {
-	char	**ret;
+	char	*tmp_str_1;
+	char	*tmp_str_2;
 
-	ret = use_malloc(sizeof(char *) * 2, err_msg);
-	ret[0] = use_strjoin(EXIT_CODE, "exit=0", err_msg);
-	ret[1] = NULL;
-	write_pipe_to_executor_pipe(pipefd->pipefd, ret, "function \"build_cd\"");
-	free_str_arr_null(ret);
+	if (arg[1] != NULL && arg[1][0] == '-' && arg[1][1] != '\0')
+	{
+		tmp_str_1 = use_strjoin("minishell: ", arg[0], err_msg);
+		tmp_str_2 = use_strjoin(tmp_str_1, ": ", err_msg);
+		free(tmp_str_1);
+		tmp_str_1 = use_strjoin(tmp_str_2, arg[1], err_msg);
+		free(tmp_str_2);
+		tmp_str_2 = use_strjoin(tmp_str_1, ": invalid option", err_msg);
+		ft_printf_fd(2, "%s\n", tmp_str_2);
+		free(tmp_str_1);
+		free(tmp_str_2);
+		pipefd->exit_code_buildin = 2;
+		return (true);
+	}
+	pipefd->exit_code_buildin = 0;
+	return (false);
 }
