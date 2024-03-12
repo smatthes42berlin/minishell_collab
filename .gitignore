@@ -8,11 +8,11 @@
 **/*.a
 **/*.out
 **/*.txt
-# **/*.sh
+**/*.sh
 *.o
 *.a
 *.txt
-# *.sh
+*.sh
 *.out
 .vscode/
 submission/

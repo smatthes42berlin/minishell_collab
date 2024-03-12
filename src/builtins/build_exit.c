@@ -1,9 +1,9 @@
 #include "minishell.h"
 
 static int	ft_atoi_byte(const char *nptr);
-static char	**check_arg(char **str_arr, bool exit);
-static char	**bigger_two_arg(void);
-static char	*ret_exit_code_line(int nbr, char **str_arr);
+static char	**check_arg(char **str_arr, bool exit, t_pipefd *pipefd);
+static char	**bigger_two_arg(t_pipefd *pipefd);
+static char	*ret_exit_code_line(int nbr, char **str_arr, t_pipefd *pipefd);
 
 char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 {
@@ -11,16 +11,16 @@ char	**build_exit(t_main_data *data, t_node_exec *node, t_pipefd *pipefd)
 
 	if (is_last_node_exec(data->ast, node->file_path)
 		&& data->ast->type == PIPE)
-		ret = check_arg(node->argv, false);
+		ret = check_arg(node->argv, false, pipefd);
 	else
-		ret = check_arg(node->argv, true);
+		ret = check_arg(node->argv, true, pipefd);
 	write_pipe_to_executor_pipe(pipefd->pipefd, ret,
 		"function \"build_export\"");
 	free_str_arr_null(ret);
 	return (NULL);
 }
 
-static char	**check_arg(char **str_arr, bool exit)
+static char	**check_arg(char **str_arr, bool exit, t_pipefd *pipefd)
 {
 	char			**ret;
 	int				nbr;
@@ -31,7 +31,7 @@ static char	**check_arg(char **str_arr, bool exit)
 	while (str_arr[nbr] != NULL)
 	{
 		if (nbr > 1 && ft_atoi_byte(str_arr[1]) != -2)
-			return (bigger_two_arg());
+			return (bigger_two_arg(pipefd));
 		nbr++;
 	}
 	if (nbr == 1)
@@ -39,36 +39,35 @@ static char	**check_arg(char **str_arr, bool exit)
 	else
 		nbr = ft_atoi_byte(str_arr[1]);
 	ret = use_malloc(sizeof(char *) * 3, err_msg);
-	ret[0] = ret_exit_code_line(nbr, str_arr);
+	ret[0] = ret_exit_code_line(nbr, str_arr, pipefd);
 	ret[1] = ret_exit_err(exit, err_msg);
 	ret[2] = NULL;
 	return (ret);
 }
 
-static char	*ret_exit_code_line(int nbr, char **str_arr)
+static char	*ret_exit_code_line(int nbr, char **str_arr, t_pipefd *pipefd)
 {
 	unsigned char	exit_number;
-	char			*str_e_number;
 	char			*str_tmp;
 	char			*err_msg;
 	char			*ret;
 
+	str_tmp = NULL;
 	err_msg = "function ret_exit_code_line -> build exit";
 	if (nbr == -2)
 	{
 		ret = use_strjoin(EXIT_CODE,
-				"exit=2_MSG=minishell: exit: ", err_msg);
+				"_MSG=minishell: exit: ", err_msg);
 		str_tmp = use_strjoin(ret, str_arr[1], err_msg);
 		free(ret);
 		ret = use_strjoin(str_tmp, ": numeric argument required", err_msg);
+		pipefd->exit_code_buildin = 2;
 	}
 	else
 	{
 		exit_number = nbr;
-		str_e_number = ft_itoa(exit_number);
-		str_tmp = use_strjoin("exit=", str_e_number, err_msg);
-		ret = use_strjoin(EXIT_CODE, str_tmp, err_msg);
-		free(str_e_number);
+		pipefd->exit_code_buildin = exit_number;
+		ret = use_strdup("EMPTY", err_msg);
 	}
 	free(str_tmp);
 	return (ret);
@@ -102,15 +101,16 @@ static int	ft_atoi_byte(const char *nptr)
 	return (ret);
 }
 
-static char	**bigger_two_arg(void)
+static char	**bigger_two_arg(t_pipefd *pipefd)
 {
 	char	**ret;
 	char	*err_msg;
 
 	err_msg = "function bigger_two_arg --> exit cmd";
 	ret = use_malloc(sizeof(char *) * 2, err_msg);
-	ret[0] = use_strjoin(EXIT_CODE, "exit=1_MSG=exit: too many arguments",
+	ret[0] = use_strjoin(EXIT_CODE, "_MSG=exit: too many arguments",
 			err_msg);
 	ret[1] = NULL;
+	pipefd->exit_code_buildin = 1;
 	return (ret);
 }

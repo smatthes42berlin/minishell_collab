@@ -23,7 +23,7 @@ static void	add_clr_command_to_arr_str(char **arg)
 	char	*tmp_str;
 	char	*err_msg;
 
-	i_count = 0;
+	i_count = 1;
 	err_msg = "function add_clr_command_to_arr_str -> build unset";
 	while (arg[i_count] != NULL)
 	{
@@ -35,6 +35,4 @@ static void	add_clr_command_to_arr_str(char **arg)
 		tmp_str = NULL;
 		i_count++;
 	}
-	free(arg[0]);
-	arg[0] = use_strjoin(EXIT_CODE, "exit=0", err_msg);
 }

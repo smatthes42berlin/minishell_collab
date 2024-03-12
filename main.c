@@ -60,7 +60,7 @@ static int	handle_one_prompt(t_main_data *main_data, int ret_tokenise)
 	if (handle_sigint_main(ret_tokenise))
 		return (CONTINUE);
 	if (ret_tokenise)
-		return (QUIT);
+		return (CONTINUE);
 	if (expand(main_data))
 		return (QUIT);
 	tmp = token_lst_is_empty(main_data);
