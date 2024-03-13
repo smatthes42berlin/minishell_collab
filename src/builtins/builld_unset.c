@@ -40,7 +40,6 @@ static void	add_clr_command_to_arr_str(t_main_data *data, char **arg)
 		tmp_str = NULL;
 		i_count++;
 	}
-	print_str_arr_null(arg);
 }
 
 static char	*check_is_env(t_main_data *data, char *arg, char *err_msg)
