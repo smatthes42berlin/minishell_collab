@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-// static int	exec_redir(t_main_data *data,
-// 				t_node_redir *redir_node, t_pipefd *pipe_struct);
 static int	handle_exec(t_main_data *data, t_node_redir *redir_node,
 				t_pipefd *pipe_struct);
 static int	open_handler(const char *path, enum e_open_mode mode);
@@ -34,24 +32,6 @@ int	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	use_close(fd, "function \"type_redir\"");
 	return (ret);
 }
-
-// static int	exec_redir(t_main_data *data, 
-// 	t_node_redir *redir_node, t_pipefd *pipe_struct)
-// {
-// 	int	ret;
-
-// 	ret = 0;
-// 	if (redir_node->in_or_out == 0)
-// 	{
-// 		if (redir_node->is_last_node == 1)
-// 			return (0);
-// 	}
-// 	if (redir_node->left_node->type == NOTHING)
-// 		return (0);
-// 	else
-// 		ret = handle_exec(data, redir_node, pipe_struct);
-// 	return (0);
-// }
 
 static int	handle_exec(t_main_data *data, t_node_redir *redir_node,
 		t_pipefd *pipe_struct)
