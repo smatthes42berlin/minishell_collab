@@ -82,3 +82,12 @@ echo < hi
 $? $?
 $?$?
 
+							SPECCHIAL							
+ls | 
+						invalid permissions --> errors 
+echo hi > 1 | echo < 1 
+echo hi > 1 |  < 1 
+echo hi > 1 |  > 1 
+echo hi > 1 | echo < 1 
+
+

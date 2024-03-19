@@ -1,7 +1,7 @@
 #include "minishell.h"
 
-// static int	exec_redir(t_main_data *data,
-// 				t_node_redir *redir_node, t_pipefd *pipe_struct);
+static	int	type_redir_exec(t_main_data *data,
+				t_node_redir *redir_node, t_pipefd *pipe_struct, int fd);
 static int	handle_exec(t_main_data *data, t_node_redir *redir_node,
 				t_pipefd *pipe_struct);
 static int	open_handler(const char *path, enum e_open_mode mode);
@@ -12,46 +12,39 @@ int	type_redir(t_main_data *data, t_node *node, t_pipefd *pipe_struct)
 	t_node_redir	*redir_node;
 	int				fd;
 	char			*err_msg;
-	int				ret;
 
-	ret = 0;
 	err_msg = "function \"type_redir\"";
 	redir_node = (t_node_redir *)node;
 	fd = open_handler(redir_node->filename, redir_node->mode);
 	if (fd < 0)
-		return (1);
+	{
+		if (redir_node->in_or_out == STDIN && redir_node->is_last_node == true)
+			return (0);
+		else
+			return (1);
+	}
 	if (use_dup2(fd, redir_node->in_or_out, err_msg) != 0)
 	{
 		use_close(fd, err_msg);
 		return (-1);
 	}
+	return (type_redir_exec(data, redir_node, pipe_struct, fd));
+}
+
+static	int	type_redir_exec(t_main_data *data,
+		t_node_redir *redir_node, t_pipefd *pipe_struct, int fd)
+{
+	int	ret;
+
 	if (redir_node->is_last_node == 1)
-		return (0);
+		ret = 0;
 	if (redir_node->left_node->type == NOTHING)
-		return (0);
+		ret = 0;
 	else
 		ret = handle_exec(data, redir_node, pipe_struct);
 	use_close(fd, "function \"type_redir\"");
 	return (ret);
 }
-
-// static int	exec_redir(t_main_data *data, 
-// 	t_node_redir *redir_node, t_pipefd *pipe_struct)
-// {
-// 	int	ret;
-
-// 	ret = 0;
-// 	if (redir_node->in_or_out == 0)
-// 	{
-// 		if (redir_node->is_last_node == 1)
-// 			return (0);
-// 	}
-// 	if (redir_node->left_node->type == NOTHING)
-// 		return (0);
-// 	else
-// 		ret = handle_exec(data, redir_node, pipe_struct);
-// 	return (0);
-// }
 
 static int	handle_exec(t_main_data *data, t_node_redir *redir_node,
 		t_pipefd *pipe_struct)
@@ -98,11 +91,16 @@ static int	creat_and_throw_error(const char *path, int errnum)
 	char	*err_msg_strjoin;
 
 	err_msg_strjoin = "function creat_and_throw_error -> executor";
-	err_msg = use_strjoin("minishell: ", path, err_msg_strjoin);
-	tmp_str = use_strjoin(err_msg, ": ", err_msg_strjoin);
+	tmp_str = use_strjoin("minishell: ", path, err_msg_strjoin);
+	err_msg = use_strjoin(tmp_str, ": ", err_msg_strjoin);
+	free(tmp_str);
+	tmp_str = use_strjoin(err_msg, strerror(errnum), err_msg_strjoin);
 	free(err_msg);
-	err_msg = use_strjoin(tmp_str, strerror(errnum), err_msg_strjoin);
-	throw_error_mimic_bash(err_msg, 1);
+	err_msg = use_strjoin(tmp_str, "\n", err_msg);
+	if (write(STDERR_FILENO, err_msg, strlen(err_msg)) < 0)
+		throw_error_custom((t_error_ms){errno, EPART_EXECUTOR, EFUNC_WRITE,
+			"function write err output in redir"});
+	set_exit_code(1);
 	free(tmp_str);
 	free(err_msg);
 	return (-1);
