@@ -45,6 +45,7 @@ static void	add_clr_command_to_arr_str(t_main_data *data, char **arg)
 static char	*check_is_env(t_main_data *data, char *arg, char *err_msg)
 {
 	char	*ret;
+	char	*tmp_str;
 
 	if (ft_strchr(arg, '=') != NULL)
 	{
@@ -52,10 +53,12 @@ static char	*check_is_env(t_main_data *data, char *arg, char *err_msg)
 	}
 	else
 	{
-		if (str_are_equal(env_get_var(data, arg), ""))
+		tmp_str = env_get_var(data, arg);
+		if (str_are_equal(tmp_str, ""))
 			ret = use_strdup("noting", err_msg);
 		else
 			ret = use_strdup(arg, err_msg);
+		free(tmp_str);
 	}
 	return (ret);
 }
