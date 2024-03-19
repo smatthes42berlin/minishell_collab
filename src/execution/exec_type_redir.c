@@ -36,9 +36,7 @@ static	int	type_redir_exec(t_main_data *data,
 {
 	int	ret;
 
-	if (redir_node->is_last_node == 1)
-		ret = 0;
-	if (redir_node->left_node->type == NOTHING)
+	if (redir_node->is_last_node == 1 || redir_node->left_node == NULL)
 		ret = 0;
 	else
 		ret = handle_exec(data, redir_node, pipe_struct);
